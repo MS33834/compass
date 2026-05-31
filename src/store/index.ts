@@ -70,7 +70,7 @@ interface AppState {
 
 export const useAppStore = create<AppState>((set, get) => {
   const initialHistory = storage.get<AssessmentResult[]>(STORAGE_KEY_HISTORY, []);
-  const initialLocale = storage.get<Locale>(STORAGE_KEY_LOCALE, 'en');
+  const initialLocale = storage.get<Locale>(STORAGE_KEY_LOCALE, 'zh');
   const initialUser = authService.getCurrentUser();
   
   return {

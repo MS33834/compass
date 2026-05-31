@@ -37,37 +37,37 @@ export const STRESS_TEST_QUESTIONS: Question[] = [
   // ========== 维度1: 知觉压力感受 (负向题目) ==========
   { 
     id: 's1', 
-    text: '在过去一个月里，你有多少时间感到无法控制生活中的重要事情？', 
+    text: '在过去一个月里，你有多少时间感到生活中重要的事情正脱离你的掌控，而你对此无能为力？', 
     trait: 'perceivedStress',
     reverse: false
   },
   { 
     id: 's2', 
-    text: '在过去一个月里，你有多少时间感到紧张和有压力？', 
+    text: '在过去一个月里，你有多少时间感到一种持续的紧绷感，好像随时有一根弦绷在脑子里？', 
     trait: 'perceivedStress',
     reverse: false
   },
   { 
     id: 's3', 
-    text: '在过去一个月里，你有多少时间感到神经紧张或焦虑？', 
+    text: '在过去一个月里，你有多少时间感到神经像被拉满的弓弦，一点小小的刺激就会弹起来？', 
     trait: 'perceivedStress',
     reverse: false
   },
   { 
     id: 's4', 
-    text: '在过去一个月里，你有多少时间感到事情的发展超出了你的控制？', 
+    text: '在过去一个月里，你有多少时间感到事情正朝着你无法预料的方向发展，而你只能被动承受？', 
     trait: 'perceivedStress',
     reverse: false
   },
   { 
     id: 's5', 
-    text: '在过去一个月里，你有多少时间感到你无法应付所有必须做的事情？', 
+    text: '在过去一个月里，你有多少时间面对待办事项清单感到窒息，觉得即使不睡觉也做不完？', 
     trait: 'perceivedStress',
     reverse: false
   },
   { 
     id: 's6', 
-    text: '在过去一个月里，你有多少时间感到困难堆积如山，无法克服？', 
+    text: '在过去一个月里，你有多少时间感到问题像滚雪球一样越滚越大，每解决一个又冒出两个新的？', 
     trait: 'perceivedStress',
     reverse: false
   },
@@ -75,37 +75,37 @@ export const STRESS_TEST_QUESTIONS: Question[] = [
   // ========== 维度2: 应对能力 (正向题目，反向计分) ==========
   { 
     id: 's7', 
-    text: '在过去一个月里，你有多少时间感到能够成功应对生活中的重要变化？', 
+    text: '在过去一个月里，你有多少时间感到面对生活的重大变化时，你有足够的资源和能力去适应？', 
     trait: 'coping',
     reverse: true
   },
   { 
     id: 's8', 
-    text: '在过去一个月里，你有多少时间感到有信心处理好自己的问题？', 
+    text: '在过去一个月里，你有多少时间感到遇到问题时，你相信自己能找到解决的办法？', 
     trait: 'coping',
     reverse: true
   },
   { 
     id: 's9', 
-    text: '在过去一个月里，你有多少时间感到事情进展顺利？', 
+    text: '在过去一个月里，你有多少时间感到生活的节奏在你的掌控之中，而不是被推着走？', 
     trait: 'coping',
     reverse: true
   },
   { 
     id: 's10', 
-    text: '在过去一个月里，你有多少时间感到能够控制自己的情绪？', 
+    text: '在过去一个月里，你有多少时间感到即使遇到挫折，你也能在合理时间内让自己的情绪平复下来？', 
     trait: 'coping',
     reverse: true
   },
   { 
     id: 's11', 
-    text: '在过去一个月里，你有多少时间感到生活中的事情都在掌控之中？', 
+    text: '在过去一个月里，你有多少时间感到即使出现意外，你也有余力去调整和应对？', 
     trait: 'coping',
     reverse: true
   },
   { 
     id: 's12', 
-    text: '在过去一个月里，你有多少时间感到能够有效应对困难？', 
+    text: '在过去一个月里，你有多少时间感到面对困难时，你能够冷静分析并采取行动，而不是陷入无助？', 
     trait: 'coping',
     reverse: true
   },
@@ -113,31 +113,31 @@ export const STRESS_TEST_QUESTIONS: Question[] = [
   // ========== 维度3: 工作压力 ==========
   { 
     id: 'ext_work_1', 
-    text: '工作负担过重让你感到压力大？', 
+    text: '我经常在下班后仍无法停止思考工作中的问题，即使那并不是紧急事务', 
     trait: 'workStress',
     reverse: false
   },
   { 
     id: 'ext_work_2', 
-    text: '工作/学习的时间压力让你难以承受？', 
+    text: '截止日期临近时，我会感到一种窒息般的紧迫感，即使提前开始了也觉得来不及', 
     trait: 'workStress',
     reverse: false
   },
   { 
     id: 'ext_work_3', 
-    text: '工作中的人际冲突让你感到困扰？', 
+    text: '工作中某些人的态度或行为让我消耗大量精力去应对，以至于正事反而做不好', 
     trait: 'workStress',
     reverse: false
   },
   { 
     id: 'ext_work_4', 
-    text: '对职业发展和未来的担忧让你感到压力？', 
+    text: '看到同龄人的职业进展，我会陷入自我怀疑，不确定自己是否走在了正确的路上', 
     trait: 'workStress',
     reverse: false
   },
   { 
     id: 'ext_work_5', 
-    text: '工作生活不平衡让你感到疲惫？', 
+    text: '我发现自己已经很久没有纯粹地享受一个没有工作打扰的周末了', 
     trait: 'workStress',
     reverse: false
   },
@@ -145,25 +145,25 @@ export const STRESS_TEST_QUESTIONS: Question[] = [
   // ========== 维度4: 关系/家庭压力 ==========
   { 
     id: 'ext_relationship_1', 
-    text: '与家人/伴侣的关系让你感到压力？', 
+    text: '与家人或伴侣的某些对话总是以争吵或冷战收场，让我在开口之前就开始紧张', 
     trait: 'relationshipStress',
     reverse: false
   },
   { 
     id: 'ext_relationship_2', 
-    text: '家庭责任让你感到不堪重负？', 
+    text: '我承担的家庭责任让我几乎没有属于自己的时间，有时候会感到喘不过气', 
     trait: 'relationshipStress',
     reverse: false
   },
   { 
     id: 'ext_relationship_3', 
-    text: '与朋友/社交关系的问题让你困扰？', 
+    text: '维护社交关系让我感到疲惫，有时候宁愿独处也不愿赴约，但独处时又觉得孤独', 
     trait: 'relationshipStress',
     reverse: false
   },
   { 
     id: 'ext_relationship_4', 
-    text: '缺乏社交支持让你感到孤独？', 
+    text: '遇到困难时，我翻遍通讯录却找不到一个可以毫无顾虑倾诉的人', 
     trait: 'relationshipStress',
     reverse: false
   },
@@ -171,19 +171,19 @@ export const STRESS_TEST_QUESTIONS: Question[] = [
   // ========== 维度5: 健康压力 ==========
   { 
     id: 'ext_health_1', 
-    text: '自己或家人的健康问题让你感到担忧？', 
+    text: '每当身体出现一点小症状，我就会忍不住往最坏的方向想，即使理智告诉我可能没什么', 
     trait: 'healthStress',
     reverse: false
   },
   { 
     id: 'ext_health_2', 
-    text: '睡眠质量问题让你感到压力？', 
+    text: '躺在床上脑子里还在不停转，好不容易睡着了又容易醒来，第二天像没睡一样', 
     trait: 'healthStress',
     reverse: false
   },
   { 
     id: 'ext_health_3', 
-    text: '长期感到疲劳或精力不足？', 
+    text: '即使没有做太多事情，我也经常感到一种深入骨髓的疲惫，休息似乎也无法恢复精力', 
     trait: 'healthStress',
     reverse: false
   },
@@ -191,19 +191,19 @@ export const STRESS_TEST_QUESTIONS: Question[] = [
   // ========== 维度6: 财务压力 ==========
   { 
     id: 'ext_finance_1', 
-    text: '经济压力让你感到焦虑？', 
+    text: '即使目前的财务状况尚可，我仍会为未来可能的经济风险而辗转难眠', 
     trait: 'financeStress',
     reverse: false
   },
   { 
     id: 'ext_finance_2', 
-    text: '对未来经济状况的担忧让你不安？', 
+    text: '每次看到物价上涨或经济新闻，我都会重新计算自己的存款还能撑多久', 
     trait: 'financeStress',
     reverse: false
   },
   { 
     id: 'ext_finance_3', 
-    text: '债务或财务问题让你感到压力？', 
+    text: '每到还款日前后，我都会感到一阵焦虑，有时候不得不拆东墙补西墙', 
     trait: 'financeStress',
     reverse: false
   },
@@ -211,19 +211,19 @@ export const STRESS_TEST_QUESTIONS: Question[] = [
   // ========== 维度7: 生理反应 ==========
   { 
     id: 'ext_physiological_1', 
-    text: '经常感到头痛或身体紧张？', 
+    text: '我经常在傍晚发现肩膀僵硬得像石头，或者太阳穴隐隐作痛，才意识到自己又紧张了一整天', 
     trait: 'physiological',
     reverse: false
   },
   { 
     id: 'ext_physiological_2', 
-    text: '食欲发生明显变化（吃太多或太少）？', 
+    text: '压力大的时候，我要么完全吃不下东西，要么不自觉地暴吃零食，很难保持正常的饮食习惯', 
     trait: 'physiological',
     reverse: false
   },
   { 
     id: 'ext_physiological_3', 
-    text: '心率加快、呼吸急促或肠胃不适？', 
+    text: '在压力特别大的时期，我的肠胃就像有了自己的情绪，稍微吃点东西就不舒服', 
     trait: 'physiological',
     reverse: false
   },
@@ -231,19 +231,19 @@ export const STRESS_TEST_QUESTIONS: Question[] = [
   // ========== 维度8: 情绪反应 ==========
   { 
     id: 'ext_emotional_1', 
-    text: '容易感到愤怒或烦躁？', 
+    text: '一些以前能轻松应对的小事，现在却会让我瞬间火冒三丈，事后又觉得自己反应过度', 
     trait: 'emotional',
     reverse: false
   },
   { 
     id: 'ext_emotional_2', 
-    text: '容易感到悲伤或情绪低落？', 
+    text: '有时候并没有发生什么特别的事，但我就是感到一阵莫名的低落，对什么都提不起兴趣', 
     trait: 'emotional',
     reverse: false
   },
   { 
     id: 'ext_emotional_3', 
-    text: '情绪波动较大，难以控制？', 
+    text: '我的情绪像坐过山车，早上还觉得一切还好，下午就突然陷入低谷，自己也说不清为什么', 
     trait: 'emotional',
     reverse: false
   }

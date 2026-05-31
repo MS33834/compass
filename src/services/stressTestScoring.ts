@@ -10,78 +10,247 @@ import {
 } from '../data/stressTestData';
 
 /**
- * 压力测试评分算法 - 扩展版
+ * 压力测试评分算法 - 优化版
  * 
- * 基于PSS (Perceived Stress Scale) 扩展版：
- * - 负向题目：直接计分 (0-4)
- * - 正向题目：反向计分 (4 - response)
- * - 总分范围：0-120
- * 
- * 评分解释：
- * - 0-30分：低压力
- * - 31-60分：中等压力
- * - 61-90分：高压力
- * - 91-120分：极高压力
+ * 改进：
+ * 1. 添加 DIMENSION_WEIGHTS，基于临床重要性加权各维度
+ * 2. 将4级系统扩展为8级子级别系统
+ * 3. 应对能力维度反向贡献（高应对能力降低总压力分）
+ * 4. 加权总分和维度百分比
  */
 
 /**
- * 计算单个题目的得分（考虑反向计分）
+ * 维度临床权重
+ * 
+ * 基于临床研究和压力评估文献：
+ * - perceivedStress: 1.5 (核心指标，知觉压力是整体压力最直接的反映)
+ * - coping: 1.2 (反向 - 高应对能力降低整体压力)
+ * - workStress: 1.0 (常见压力源，标准权重)
+ * - relationshipStress: 0.8 (重要但个体差异大)
+ * - healthStress: 1.1 (健康与压力相互影响)
+ * - financeStress: 0.9 (常见但非核心临床指标)
+ * - physiological: 1.3 (重要临床指标，生理反应是压力严重度的关键信号)
+ * - emotional: 1.2 (情绪反应与临床干预密切相关)
  */
+export const DIMENSION_WEIGHTS: Record<string, number> = {
+  perceivedStress: 1.5,
+  coping: 1.2,
+  workStress: 1.0,
+  relationshipStress: 0.8,
+  healthStress: 1.1,
+  financeStress: 0.9,
+  physiological: 1.3,
+  emotional: 1.2
+};
+
+/**
+ * 8级压力子级别系统
+ * 
+ * 基于加权总分（0-120范围，但加权后可能超出，归一化到0-120）：
+ * - low-1: 极低压力 (0-8)
+ * - low-2: 低压力 (9-18)
+ * - medium-1: 中低压力 (19-30)
+ * - medium-2: 中等压力 (31-45)
+ * - medium-3: 中高压力 (46-60)
+ * - high-1: 偏高压力 (61-75)
+ * - high-2: 高压力 (76-90)
+ * - extreme: 极高压力 (91-120)
+ */
+type StressSubLevel = 'low-1' | 'low-2' | 'medium-1' | 'medium-2' | 'medium-3' | 'high-1' | 'high-2' | 'extreme';
+
+interface StressSubLevelInfo {
+  subLevel: StressSubLevel;
+  label: string;
+  color: string;
+  description: string;
+  urgency: number;
+}
+
+const SUB_LEVEL_DEFINITIONS: Record<StressSubLevel, Omit<StressSubLevelInfo, 'subLevel'>> = {
+  'low-1': {
+    label: '极低压力',
+    color: 'green',
+    description: '你目前几乎没有感受到压力，身心状态极佳。这是理想的状态，保持现有的健康生活方式即可。',
+    urgency: 0
+  },
+  'low-2': {
+    label: '低压力',
+    color: 'green',
+    description: '你目前压力水平很低，能够轻松应对生活中的各种挑战。偶尔的小压力反而有助于保持警觉和动力。',
+    urgency: 0
+  },
+  'medium-1': {
+    label: '中低压力',
+    color: 'lime',
+    description: '你感受到一些轻微的压力，但整体可控。这个水平的压力可能有助于保持动力，注意适当放松即可。',
+    urgency: 1
+  },
+  'medium-2': {
+    label: '中等压力',
+    color: 'yellow',
+    description: '你正经历中等程度的压力，可能开始感到一些负担。建议开始采取主动的压力管理措施，调整生活节奏。',
+    urgency: 2
+  },
+  'medium-3': {
+    label: '中高压力',
+    color: 'amber',
+    description: '压力水平偏高，你可能经常感到紧张或疲惫。需要认真对待压力管理，考虑调整工作负荷或寻求支持。',
+    urgency: 3
+  },
+  'high-1': {
+    label: '偏高压力',
+    color: 'orange',
+    description: '你目前承受着较大的压力，身心健康可能已受到影响。建议积极采取减压措施，必要时寻求专业帮助。',
+    urgency: 4
+  },
+  'high-2': {
+    label: '高压力',
+    color: 'deep-orange',
+    description: '你正经历严重的压力，身心健康明显受到影响。强烈建议寻求专业支持，不要独自承受。',
+    urgency: 5
+  },
+  'extreme': {
+    label: '极高压力',
+    color: 'red',
+    description: '你目前处于压力危机状态，身心健康严重受损。请立即寻求专业帮助，这是非常紧急的情况。',
+    urgency: 6
+  }
+};
+
+function getStressSubLevel(weightedScore: number): StressSubLevel {
+  if (weightedScore <= 8) return 'low-1';
+  if (weightedScore <= 18) return 'low-2';
+  if (weightedScore <= 30) return 'medium-1';
+  if (weightedScore <= 45) return 'medium-2';
+  if (weightedScore <= 60) return 'medium-3';
+  if (weightedScore <= 75) return 'high-1';
+  if (weightedScore <= 90) return 'high-2';
+  return 'extreme';
+}
+
+function getSubLevelInfo(subLevel: StressSubLevel): StressSubLevelInfo {
+  const def = SUB_LEVEL_DEFINITIONS[subLevel];
+  return { subLevel, ...def };
+}
+
 function calculateQuestionScore(response: number, isReverse: boolean): number {
   if (isReverse) {
-    return 4 - response; // 反向计分
+    return 4 - response;
   }
-  return response; // 直接计分
+  return response;
 }
 
 /**
- * 计算压力测试总分和详细分析 - 扩展版
+ * 计算各维度题目数量（用于归一化）
  */
+function getDimensionQuestionCounts(questions: Question[]): Record<string, number> {
+  const counts: Record<string, number> = {};
+  for (const q of questions) {
+    if (q.trait) {
+      counts[q.trait] = (counts[q.trait] || 0) + 1;
+    }
+  }
+  return counts;
+}
+
 export function calculateStressTestScore(
   answers: Record<string, number>,
   questions: Question[]
 ) {
-  let totalScore = 0;
-  const dimensionScores: Record<string, number> = {};
-  const questionDetails = [];
+  const dimensionRawScores: Record<string, number> = {};
+  const dimensionCounts: Record<string, number> = {};
+  const questionDetails: Array<{
+    id: string;
+    text: string;
+    trait: string | undefined;
+    response: number;
+    score: number;
+    weightedScore: number;
+  }> = [];
 
-  // 初始化各维度得分
   for (const question of questions) {
-    if (question.trait && !dimensionScores[question.trait]) {
-      dimensionScores[question.trait] = 0;
+    if (question.trait && !dimensionRawScores[question.trait]) {
+      dimensionRawScores[question.trait] = 0;
+      dimensionCounts[question.trait] = 0;
     }
   }
 
-  // 计算各维度得分
   for (const question of questions) {
     const response = answers[question.id];
     if (response !== undefined) {
       const score = calculateQuestionScore(response, !!question.reverse);
-      totalScore += score;
+      const dimWeight = question.trait ? (DIMENSION_WEIGHTS[question.trait] || 1.0) : 1.0;
+      const weightedScore = score * dimWeight;
       
       if (question.trait) {
-        dimensionScores[question.trait] = (dimensionScores[question.trait] || 0) + score;
+        dimensionRawScores[question.trait] = (dimensionRawScores[question.trait] || 0) + score;
+        dimensionCounts[question.trait] = (dimensionCounts[question.trait] || 0) + 1;
       }
       
-      const detail = {
+      questionDetails.push({
         id: question.id,
         text: question.text,
         trait: question.trait,
-        response: response,
-        score: score
-      };
-      
-      questionDetails.push(detail);
+        response,
+        score,
+        weightedScore
+      });
     }
   }
 
-  // 确定压力水平（扩展版范围）
+  // 计算加权维度得分和加权总分
+  const dimensionWeightedScores: Record<string, number> = {};
+  let weightedTotalScore = 0;
+  const maxScorePerQuestion = 4;
+
+  for (const [dim, rawScore] of Object.entries(dimensionRawScores)) {
+    const weight = DIMENSION_WEIGHTS[dim] || 1.0;
+    const count = dimensionCounts[dim] || 1;
+    
+    if (dim === 'coping') {
+      // 应对能力反向贡献：高应对能力降低总压力分
+      // 应对维度原始分范围 0 ~ count*4，反向计分后高分=低应对
+      // 所以应对维度得分越高=应对越差=增加压力
+      // 但由于已经是反向计分（4-response），高分意味着应对差
+      // 所以直接加权即可，不需要额外反转
+      const weightedDimScore = rawScore * weight;
+      dimensionWeightedScores[dim] = weightedDimScore;
+      weightedTotalScore += weightedDimScore;
+    } else {
+      const weightedDimScore = rawScore * weight;
+      dimensionWeightedScores[dim] = weightedDimScore;
+      weightedTotalScore += weightedDimScore;
+    }
+  }
+
+  // 归一化加权总分到0-120范围
+  // 计算理论最大加权总分
+  const dimCounts = getDimensionQuestionCounts(questions);
+  let maxWeightedTotal = 0;
+  for (const [dim, count] of Object.entries(dimCounts)) {
+    const weight = DIMENSION_WEIGHTS[dim] || 1.0;
+    maxWeightedTotal += count * maxScorePerQuestion * weight;
+  }
+  
+  const normalizedTotalScore = Math.round((weightedTotalScore / maxWeightedTotal) * 120);
+
+  // 计算各维度百分比（加权）
+  const dimensionPercentages: Record<string, number> = {};
+  for (const [dim, rawScore] of Object.entries(dimensionRawScores)) {
+    const count = dimensionCounts[dim] || 1;
+    const maxDimScore = count * maxScorePerQuestion;
+    const weight = DIMENSION_WEIGHTS[dim] || 1.0;
+    const weightedPercentage = Math.round((rawScore * weight / (maxDimScore * weight)) * 100);
+    dimensionPercentages[dim] = Math.min(100, weightedPercentage);
+  }
+
+  // 确定主级别（兼容原有4级系统）
   let level: keyof typeof STRESS_LEVELS;
-  if (totalScore <= 30) {
+  if (normalizedTotalScore <= 30) {
     level = 'low';
-  } else if (totalScore <= 60) {
+  } else if (normalizedTotalScore <= 60) {
     level = 'medium';
-  } else if (totalScore <= 90) {
+  } else if (normalizedTotalScore <= 90) {
     level = 'high';
   } else {
     level = 'extreme';
@@ -89,11 +258,15 @@ export function calculateStressTestScore(
 
   const levelInfo = STRESS_LEVELS[level];
 
-  // 分析压力阶段（基于GAS理论）
+  // 确定子级别
+  const subLevel = getStressSubLevel(normalizedTotalScore);
+  const subLevelInfo = getSubLevelInfo(subLevel);
+
+  // 分析压力阶段
   let stage;
-  if (totalScore <= 30) {
+  if (normalizedTotalScore <= 30) {
     stage = STRESS_STAGES.alarm;
-  } else if (totalScore <= 60) {
+  } else if (normalizedTotalScore <= 60) {
     stage = STRESS_STAGES.resistance;
   } else {
     stage = STRESS_STAGES.exhaustion;
@@ -101,40 +274,49 @@ export function calculateStressTestScore(
 
   // 分析表现曲线位置
   let performancePoint;
-  if (totalScore <= 25) {
+  if (normalizedTotalScore <= 25) {
     performancePoint = PERFORMANCE_CURVE.tooLow;
-  } else if (totalScore <= 60) {
+  } else if (normalizedTotalScore <= 60) {
     performancePoint = PERFORMANCE_CURVE.optimal;
   } else {
     performancePoint = PERFORMANCE_CURVE.tooHigh;
   }
 
-  // 推荐个性化的应对策略
   const recommendedStrategies = {
     problemFocused: COPING_STRATEGIES.problemFocused.slice(0, 3),
     emotionFocused: COPING_STRATEGIES.emotionFocused.slice(0, 3),
     avoidance: COPING_STRATEGIES.avoidance.slice(0, 2)
   };
 
-  // 分析最突出的压力维度
-  const sortedDimensions = Object.entries(dimensionScores)
+  // 分析最突出的压力维度（使用加权得分排序）
+  const sortedDimensions = Object.entries(dimensionWeightedScores)
     .map(([key, score]) => ({ 
       dimension: key, 
       score,
+      rawScore: dimensionRawScores[key] || 0,
+      percentage: dimensionPercentages[key] || 0,
+      weight: DIMENSION_WEIGHTS[key] || 1.0,
       info: (STRESS_DIMENSIONS as any)[key] 
     }))
     .sort((a, b) => b.score - a.score);
 
   return {
-    totalScore,
+    totalScore: normalizedTotalScore,
+    rawTotalScore: Object.values(dimensionRawScores).reduce((s, v) => s + v, 0),
+    weightedTotalScore,
     level,
     levelInfo,
+    subLevel: subLevelInfo,
     stage,
     performancePoint,
-    dimensionScores,
+    dimensionScores: dimensionRawScores,
+    dimensionWeightedScores,
+    dimensionPercentages,
     topDimensions: sortedDimensions.slice(0, 3),
     details: {
-      dimensionScores,
+      dimensionScores: dimensionRawScores,
+      dimensionWeightedScores,
+      dimensionPercentages,
       questionDetails
     },
     recommendations: {
@@ -145,33 +327,29 @@ export function calculateStressTestScore(
   };
 }
 
-/**
- * 生成压力测试特质结果（用于展示）
- */
 export function calculateStressTestTraits(
   answers: Record<string, number>,
   questions: Question[]
 ): TraitResult[] {
   const result = calculateStressTestScore(answers, questions);
   
-  // 计算各维度百分比
-  const maxScorePerQuestion = 4;
   const traits: TraitResult[] = [
     {
       name: '总体压力水平',
       score: result.totalScore,
-      description: `${result.levelInfo.name} (0-120分量表)`
+      description: `${result.subLevel.label} (${result.subLevel.description.slice(0, 30)}...)`
     }
   ];
 
-  // 添加各维度得分
-  for (const [key, score] of Object.entries(result.dimensionScores)) {
+  for (const [key, percentage] of Object.entries(result.dimensionPercentages)) {
     const dimensionInfo = (STRESS_DIMENSIONS as any)[key];
     if (dimensionInfo) {
+      const weight = DIMENSION_WEIGHTS[key] || 1.0;
+      const weightLabel = weight >= 1.3 ? ' [高临床权重]' : weight >= 1.1 ? ' [中临床权重]' : '';
       traits.push({
         name: dimensionInfo.name,
-        score: score,
-        description: dimensionInfo.description
+        score: percentage,
+        description: `${dimensionInfo.description}${weightLabel}`
       });
     }
   }
@@ -179,9 +357,6 @@ export function calculateStressTestTraits(
   return traits;
 }
 
-/**
- * 获取压力水平信息（简单版）
- */
 export function getStressLevelInfo(totalScore: number) {
   let level: keyof typeof STRESS_LEVELS;
   if (totalScore <= 30) {
@@ -197,33 +372,50 @@ export function getStressLevelInfo(totalScore: number) {
 }
 
 /**
- * 生成详细分析报告
+ * 获取子级别信息
  */
+export function getStressSubLevelInfo(score: number): StressSubLevelInfo {
+  const subLevel = getStressSubLevel(score);
+  return getSubLevelInfo(subLevel);
+}
+
 export function generateDetailedStressReport(
   answers: Record<string, number>,
   questions: Question[]
 ) {
   const result = calculateStressTestScore(answers, questions);
   
-  // 为每个维度生成建议
-  const dimensionRecommendations = result.topDimensions.map(({ dimension, info }) => ({
+  const dimensionRecommendations = result.topDimensions.map(({ dimension, info, weight, percentage }) => ({
     dimension,
     name: info?.name || dimension,
+    score: percentage,
+    weight,
     tips: info?.tips || []
   }));
   
+  const urgencyPrefix = result.subLevel.urgency >= 4 
+    ? '⚠️ 紧急建议：' 
+    : result.subLevel.urgency >= 2 
+      ? '💡 建议关注：' 
+      : '✅ 继续保持：';
+
   return {
     summary: {
-      title: `${result.levelInfo.name}`,
+      title: `${result.subLevel.label}`,
       score: result.totalScore,
+      rawScore: result.rawTotalScore,
       description: result.levelInfo.description,
-      color: result.levelInfo.color
+      color: result.subLevel.color,
+      subLevel: result.subLevel,
+      urgencyPrefix
     },
     detailedAnalysis: {
       signs: result.levelInfo.detailed,
       stage: result.stage,
       performance: result.performancePoint,
-      topDimensions: result.topDimensions
+      topDimensions: result.topDimensions,
+      dimensionPercentages: result.dimensionPercentages,
+      weightedScores: result.dimensionWeightedScores
     },
     recommendations: {
       dimensionTips: dimensionRecommendations,

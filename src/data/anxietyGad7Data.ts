@@ -26,25 +26,25 @@ export const GAD7_QUESTIONS: Question[] = [
   // ========== 维度1: 过度担忧 (Original GAD-7) ==========
   {
     id: 'gad7_q1',
-    text: '感到紧张、焦虑或急切',
+    text: '即使在没有任何明确威胁的情况下，我也会感到一种说不清的不安，仿佛有什么不好的事即将发生',
     trait: 'worries',
     reverse: false
   },
   {
     id: 'gad7_q2',
-    text: '不能停止或控制担忧',
+    text: '我明明知道某件事不值得担心，但大脑就是自动开始反复推演各种可能的坏结果',
     trait: 'worries',
     reverse: false
   },
   {
     id: 'gad7_q3',
-    text: '对各种各样的事情担忧过多',
+    text: '我会为一些别人觉得微不足道的事情提前做最坏的打算，比如出门前反复确认门窗是否锁好',
     trait: 'worries',
     reverse: false
   },
   {
     id: 'ext_worry_1',
-    text: '担心未来可能发生的各种事情',
+    text: '当一件事情还没有确定结果时，我会忍不住在脑海中预演所有可能的糟糕结局，即使大多数都不会发生',
     trait: 'worries',
     reverse: false
   },
@@ -52,25 +52,25 @@ export const GAD7_QUESTIONS: Question[] = [
   // ========== 维度2: 运动性紧张 ==========
   {
     id: 'gad7_q4',
-    text: '很难放松下来',
+    text: '即使是在周末或假期，我的大脑也像一台关不掉的机器，不停地运转，无法真正享受休息',
     trait: 'tension',
     reverse: false
   },
   {
     id: 'gad7_q5',
-    text: '非常焦躁以至于难以静坐',
+    text: '在需要安静坐着的场合（如开会、看电影），我会不自觉地抖腿、搓手或频繁变换姿势',
     trait: 'tension',
     reverse: false
   },
   {
     id: 'ext_tension_1',
-    text: '感到肌肉紧张或僵硬',
+    text: '到了晚上才发现自己肩膀一直紧绷着，或者下颌因为长时间咬紧而酸痛',
     trait: 'tension',
     reverse: false
   },
   {
     id: 'ext_tension_2',
-    text: '不自觉地咬指甲、踱步或坐立不安',
+    text: '等待结果或消息时，我会反复查看手机、来回踱步，或者不自觉地咬嘴唇、抠手指',
     trait: 'tension',
     reverse: false
   },
@@ -78,25 +78,25 @@ export const GAD7_QUESTIONS: Question[] = [
   // ========== 维度3: 易激惹 ==========
   {
     id: 'gad7_q6',
-    text: '变得容易烦恼或急躁',
+    text: '当事情没有按预期发展时，我需要比以前更长的时间才能恢复平静',
     trait: 'irritability',
     reverse: false
   },
   {
     id: 'ext_irritability_1',
-    text: '对小事情反应过度',
+    text: '别人一句无心的话或一个小小的延误，就能让我瞬间爆发强烈的烦躁感',
     trait: 'irritability',
     reverse: false
   },
   {
     id: 'ext_irritability_2',
-    text: '失去耐心的频率增加',
+    text: '排队等待、交通堵塞或网速变慢这些日常小事，现在会让我感到难以忍受',
     trait: 'irritability',
     reverse: false
   },
   {
     id: 'ext_irritability_3',
-    text: '对家人或朋友说话变得刻薄',
+    text: '事后回想起来，我发现自己对亲近的人说了过分的话，但当时就是控制不住语气',
     trait: 'irritability',
     reverse: false
   },
@@ -104,25 +104,25 @@ export const GAD7_QUESTIONS: Question[] = [
   // ========== 维度4: 恐惧/焦虑感受 ==========
   {
     id: 'gad7_q7',
-    text: '感到似乎有什么可怕的事将要发生',
+    text: '有时候会突然涌上一股莫名的恐惧感，心跳加速，但完全说不清在怕什么',
     trait: 'fear',
     reverse: false
   },
   {
     id: 'ext_fear_1',
-    text: '感到内心深处的恐惧',
+    text: '在某些安全的环境里（如家中、办公室），我也会突然感到一种不真实的威胁感，好像周围的一切随时会崩塌',
     trait: 'fear',
     reverse: false
   },
   {
     id: 'ext_fear_2',
-    text: '害怕失去控制',
+    text: '我担心自己会在公共场合突然失控——比如晕倒、崩溃或做出丢脸的事',
     trait: 'fear',
     reverse: false
   },
   {
     id: 'ext_fear_3',
-    text: '对某些场景或事物产生过度恐惧',
+    text: '我会刻意回避某些特定的场景（如密闭空间、高处、人多的地方），因为一想到要去就感到窒息般的恐惧',
     trait: 'fear',
     reverse: false
   },
@@ -130,25 +130,25 @@ export const GAD7_QUESTIONS: Question[] = [
   // ========== 维度5: 躯体症状 ==========
   {
     id: 'ext_physical_1',
-    text: '心跳加速或心悸',
+    text: '在没有进行体力活动的情况下，我会突然感到心脏砰砰跳，甚至能感觉到脉搏在脖子上跳动',
     trait: 'physical',
     reverse: false
   },
   {
     id: 'ext_physical_2',
-    text: '感到呼吸急促或胸闷',
+    text: '有时候会觉得空气不够用，需要深吸一口气才能缓解胸口那种被压住的感觉',
     trait: 'physical',
     reverse: false
   },
   {
     id: 'ext_physical_3',
-    text: '手心出汗、手脚冰凉',
+    text: '在并不热的房间里，我的手心却不断冒汗，或者手指冰凉到握不住笔',
     trait: 'physical',
     reverse: false
   },
   {
     id: 'ext_physical_4',
-    text: '感到胃部不适或恶心',
+    text: '一遇到紧张的事情，我的胃就会先有反应——要么翻江倒海，要么完全吃不下东西',
     trait: 'physical',
     reverse: false
   },
@@ -156,25 +156,25 @@ export const GAD7_QUESTIONS: Question[] = [
   // ========== 维度6: 认知症状 ==========
   {
     id: 'ext_cognitive_1',
-    text: '难以集中注意力',
+    text: '阅读同一段文字需要反复看好几遍，因为思绪总是飘到别的事情上',
     trait: 'cognitive',
     reverse: false
   },
   {
     id: 'ext_cognitive_2',
-    text: '脑子一片空白或思绪混杂',
+    text: '面对需要做决定的时候，脑子里同时涌出太多想法，反而什么都想不清楚',
     trait: 'cognitive',
     reverse: false
   },
   {
     id: 'ext_cognitive_3',
-    text: '反复想同一件事无法停止',
+    text: '某件已经过去的事会在脑海中反复回放，我告诉自己别想了，但过一会儿它又冒出来',
     trait: 'cognitive',
     reverse: false
   },
   {
     id: 'ext_cognitive_4',
-    text: '对最坏情况的预期挥之不去',
+    text: '即使一切顺利，我也会忍不住想"万一出了问题怎么办"，这种念头像背景噪音一样挥之不去',
     trait: 'cognitive',
     reverse: false
   },
@@ -182,25 +182,25 @@ export const GAD7_QUESTIONS: Question[] = [
   // ========== 维度7: 社会功能影响 ==========
   {
     id: 'ext_social_1',
-    text: '避免社交场合或害怕与人接触',
+    text: '收到聚会邀请时，我的第一反应是找理由推掉，即使去了也一直在想什么时候能离开',
     trait: 'social',
     reverse: false
   },
   {
     id: 'ext_social_2',
-    text: '在工作/学习中效率下降',
+    text: '因为焦虑的干扰，完成同样的任务需要比以前花更多时间，而且经常出错',
     trait: 'social',
     reverse: false
   },
   {
     id: 'ext_social_3',
-    text: '放弃了曾经喜欢的活动',
+    text: '以前喜欢的事情（如运动、画画、旅行），现在提不起劲去做，总觉得"算了，太麻烦"',
     trait: 'social',
     reverse: false
   },
   {
     id: 'ext_social_4',
-    text: '需要回避某些地方或场景',
+    text: '我会绕远路避开某些地方，或者提前规划好逃跑路线，只为了不去面对那种被围困的感觉',
     trait: 'social',
     reverse: false
   }

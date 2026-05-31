@@ -55,9 +55,7 @@ function IntroPage({ onStart }: { onStart: () => void }) {
           <div className="bg-blue-50 rounded-xl p-6 text-left mb-8">
             <h3 className="font-semibold text-blue-800 mb-3">{i18n.assessments.title}</h3>
             <p className="text-blue-700 text-sm leading-relaxed">
-              大五人格测评（Five Factor Model）是当今心理学界最权威的性格测评工具之一。
-              本测评从<span className="font-semibold">开放性、尽责性、外向性、宜人性、情绪稳定性</span>五个维度
-              全面分析你的性格特点。
+              {i18n.results.bigFiveIntro}
             </p>
             <div className="mt-4 grid sm:grid-cols-5 gap-2">
               {Object.entries(BIG_FIVE_TRAITS).map(([key, trait]) => (
@@ -73,9 +71,7 @@ function IntroPage({ onStart }: { onStart: () => void }) {
           <div className="bg-purple-50 rounded-xl p-6 text-left mb-8">
             <h3 className="font-semibold text-purple-800 mb-3">{i18n.assessments.title}</h3>
             <p className="text-purple-700 text-sm leading-relaxed">
-              压力水平测试基于PSS（知觉压力量表），是心理学界广泛使用的压力评估工具。
-              本测评将从<span className="font-semibold">压力感受、应对能力、情绪状态</span>等方面
-              全面评估你当前的压力水平。
+              {i18n.results.stressIntro}
             </p>
             <div className="mt-4 grid sm:grid-cols-3 gap-2">
               {Object.entries(STRESS_LEVELS).map(([key, level]) => (
@@ -91,9 +87,7 @@ function IntroPage({ onStart }: { onStart: () => void }) {
           <div className="bg-teal-50 rounded-xl p-6 text-left mb-8">
             <h3 className="font-semibold text-teal-800 mb-3">{i18n.assessments.title}</h3>
             <p className="text-teal-700 text-sm leading-relaxed">
-              GAD-7是国际通用的广泛性焦虑障碍筛查量表，具有良好的信度和效度。
-              本测评将评估你过去两周内的<span className="font-semibold">焦虑症状、担忧水平、身体反应</span>等方面，
-              帮助你更好地了解自己的焦虑状态。
+              {i18n.results.anxietyIntro}
             </p>
             <div className="mt-4 grid sm:grid-cols-4 gap-2">
               {Object.entries(ANXIETY_LEVELS).map(([key, level]) => (
@@ -207,8 +201,8 @@ function QuizPage() {
         <div className="text-center mb-8">
           {currentQuestion.trait && (
             <span className={cn("inline-block px-4 py-1 rounded-full text-sm font-medium mb-4", tagColor)}>
-              {currentQuestion.trait === 'negative' ? '压力感受' : 
-               currentQuestion.trait === 'positive' ? '应对能力' :
+              {currentQuestion.trait === 'negative' ? i18n.results.pressureFeel : 
+               currentQuestion.trait === 'positive' ? i18n.results.copingAbility :
                BIG_FIVE_TRAITS[currentQuestion.trait as keyof typeof BIG_FIVE_TRAITS]?.name || 
                currentQuestion.trait}
             </span>
@@ -321,7 +315,7 @@ function BigFiveResultDetail({
           </div>
         )}
         <p className="text-lg text-slate-700 max-w-xl mx-auto leading-relaxed">
-          你最突出的特质是【{report.summary.topTraits[0].name}】，{report.summary.topTraits[0].description}
+          {i18n.results.topTraitHighlight.replace('{name}', report.summary.topTraits[0].name).replace('{description}', report.summary.topTraits[0].description)}
         </p>
       </div>
 
@@ -394,7 +388,7 @@ function BigFiveResultDetail({
                   <div className="grid md:grid-cols-2 gap-4 mt-4">
                     {analysis.fullInterpretation.detailed.strengths && (
                       <div className="bg-green-50 rounded-xl p-4">
-                        <h5 className="font-semibold text-green-800 mb-2">优势表现</h5>
+                        <h5 className="font-semibold text-green-800 mb-2">{i18n.results.strengthsDisplay}</h5>
                         <ul className="text-sm text-slate-700 space-y-1">
                           {analysis.fullInterpretation.detailed.strengths.slice(0, 3).map((s: string, i: number) => (
                             <li key={i} className="flex items-start gap-2">
@@ -407,7 +401,7 @@ function BigFiveResultDetail({
                     )}
                     {analysis.fullInterpretation.detailed.potentialChallenges && (
                       <div className="bg-amber-50 rounded-xl p-4">
-                        <h5 className="font-semibold text-amber-800 mb-2">需要注意</h5>
+                        <h5 className="font-semibold text-amber-800 mb-2">{i18n.results.attentionNeeded}</h5>
                         <ul className="text-sm text-slate-700 space-y-1">
                           {analysis.fullInterpretation.detailed.potentialChallenges.slice(0, 3).map((c: string, i: number) => (
                             <li key={i} className="flex items-start gap-2">
@@ -589,7 +583,7 @@ function StressTestResultDetail({
         <h3 className="text-2xl font-bold text-slate-800 mb-6 text-center">🛠️ {i18n.results.strategies}</h3>
         <div className="grid md:grid-cols-3 gap-4">
           <div className="bg-blue-50 rounded-xl p-4">
-            <h4 className="font-semibold text-blue-800 mb-3">问题导向</h4>
+            <h4 className="font-semibold text-blue-800 mb-3">{i18n.results.problemFocused}</h4>
             <ul className="text-sm text-slate-700 space-y-2">
               {report.recommendations.strategies.problemFocused.map((s: { name: string; description: string }, i: number) => (
                 <li key={i} className="flex items-start gap-2">
@@ -600,7 +594,7 @@ function StressTestResultDetail({
             </ul>
           </div>
           <div className="bg-purple-50 rounded-xl p-4">
-            <h4 className="font-semibold text-purple-800 mb-3">情绪导向</h4>
+            <h4 className="font-semibold text-purple-800 mb-3">{i18n.results.emotionFocused}</h4>
             <ul className="text-sm text-slate-700 space-y-2">
               {report.recommendations.strategies.emotionFocused.map((s: { name: string; description: string }, i: number) => (
                 <li key={i} className="flex items-start gap-2">
@@ -611,7 +605,7 @@ function StressTestResultDetail({
             </ul>
           </div>
           <div className="bg-amber-50 rounded-xl p-4">
-            <h4 className="font-semibold text-amber-800 mb-3">回避策略</h4>
+            <h4 className="font-semibold text-amber-800 mb-3">{i18n.results.avoidanceStrategy}</h4>
             <ul className="text-sm text-slate-700 space-y-2">
               {report.recommendations.strategies.avoidance.map((s: { name: string; description: string }, i: number) => (
                 <li key={i} className="flex items-start gap-2">
@@ -627,7 +621,7 @@ function StressTestResultDetail({
       {/* 主要压力维度分析 */}
       {report.detailedAnalysis.topDimensions && report.detailedAnalysis.topDimensions.length > 0 && (
         <div className="bg-white rounded-3xl p-8 shadow-lg border border-slate-100">
-          <h3 className="text-2xl font-bold text-slate-800 mb-6 text-center">📌 主要压力维度</h3>
+          <h3 className="text-2xl font-bold text-slate-800 mb-6 text-center">📌 {i18n.results.mainStressDimension}</h3>
           <div className="space-y-4">
             {report.detailedAnalysis.topDimensions.map((dim: { dimension: string; info?: { name: string; description: string; tips: string[] }; score: number }, i: number) => (
               <div key={i} className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-5 border-l-4 border-blue-500">
@@ -640,7 +634,7 @@ function StressTestResultDetail({
                 )}
                 {dim.info?.tips && dim.info.tips.length > 0 && (
                   <div>
-                    <h5 className="font-semibold text-slate-700 mb-2">💡 建议：</h5>
+                    <h5 className="font-semibold text-slate-700 mb-2">💡 {i18n.results.suggestions}：</h5>
                     <ul className="text-sm text-slate-600 space-y-1">
                       {dim.info.tips.map((tip: string, j: number) => (
                         <li key={j} className="flex items-start gap-2">
@@ -662,7 +656,7 @@ function StressTestResultDetail({
         <h3 className="text-2xl font-bold text-slate-800 mb-6 text-center">🌿 {i18n.results.healthHabits}</h3>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
           <div className="bg-amber-50 rounded-xl p-4">
-            <h4 className="font-semibold text-amber-800 mb-2">😴 睡眠</h4>
+            <h4 className="font-semibold text-amber-800 mb-2">😴 {i18n.results.sleep}</h4>
             <ul className="text-sm text-slate-700 space-y-1">
               {report.recommendations.healthyHabits.sleep.map((h: string, i: number) => (
                 <li key={i}>• {h}</li>
@@ -670,7 +664,7 @@ function StressTestResultDetail({
             </ul>
           </div>
           <div className="bg-green-50 rounded-xl p-4">
-            <h4 className="font-semibold text-green-800 mb-2">🥗 饮食</h4>
+            <h4 className="font-semibold text-green-800 mb-2">🥗 {i18n.results.diet}</h4>
             <ul className="text-sm text-slate-700 space-y-1">
               {report.recommendations.healthyHabits.nutrition.map((h: string, i: number) => (
                 <li key={i}>• {h}</li>
@@ -678,7 +672,7 @@ function StressTestResultDetail({
             </ul>
           </div>
           <div className="bg-blue-50 rounded-xl p-4">
-            <h4 className="font-semibold text-blue-800 mb-2">🏃 运动</h4>
+            <h4 className="font-semibold text-blue-800 mb-2">🏃 {i18n.results.exercise}</h4>
             <ul className="text-sm text-slate-700 space-y-1">
               {report.recommendations.healthyHabits.movement.map((h: string, i: number) => (
                 <li key={i}>• {h}</li>
@@ -686,7 +680,7 @@ function StressTestResultDetail({
             </ul>
           </div>
           <div className="bg-purple-50 rounded-xl p-4">
-            <h4 className="font-semibold text-purple-800 mb-2">👫 社交</h4>
+            <h4 className="font-semibold text-purple-800 mb-2">👫 {i18n.results.social}</h4>
             <ul className="text-sm text-slate-700 space-y-1">
               {report.recommendations.healthyHabits.social.map((h: string, i: number) => (
                 <li key={i}>• {h}</li>
@@ -790,7 +784,7 @@ function GAD7ResultDetail({
       {/* 主要症状提示 */}
       {report.detailedAnalysis.primarySymptom && (
         <div className="bg-white rounded-3xl p-8 shadow-lg border border-slate-100">
-          <h3 className="text-2xl font-bold text-slate-800 mb-6 text-center">🔍 主要症状类型</h3>
+          <h3 className="text-2xl font-bold text-slate-800 mb-6 text-center">🔍 {i18n.results.mainSymptomType}</h3>
           <div className="text-center">
             <div className="inline-block bg-gradient-to-r from-teal-100 to-cyan-100 rounded-2xl p-6">
               <p className="text-xl font-semibold text-teal-800">{report.detailedAnalysis.primarySymptom}</p>
@@ -805,7 +799,7 @@ function GAD7ResultDetail({
         <div className="grid md:grid-cols-3 gap-6">
           {report.recommendations.immediate && (
             <div className="bg-red-50 rounded-xl p-4">
-              <h4 className="font-semibold text-red-800 mb-3">⚡ 立即行动</h4>
+              <h4 className="font-semibold text-red-800 mb-3">⚡ {i18n.results.immediateAction}</h4>
               <ul className="text-sm text-slate-700 space-y-2">
                 {Array.isArray(report.recommendations.immediate) 
                   ? report.recommendations.immediate.map((s: string, i: number) => (
@@ -821,7 +815,7 @@ function GAD7ResultDetail({
           )}
           {report.recommendations.cognitive && (
             <div className="bg-blue-50 rounded-xl p-4">
-              <h4 className="font-semibold text-blue-800 mb-3">💭 认知调节</h4>
+              <h4 className="font-semibold text-blue-800 mb-3">💭 {i18n.results.cognitiveAdjustment}</h4>
               <ul className="text-sm text-slate-700 space-y-2">
                 {report.recommendations.cognitive.map((s: string, i: number) => (
                   <li key={i} className="flex items-start gap-2">
@@ -834,7 +828,7 @@ function GAD7ResultDetail({
           )}
           {report.recommendations.lifestyle && (
             <div className="bg-green-50 rounded-xl p-4">
-              <h4 className="font-semibold text-green-800 mb-3">🌿 生活调整</h4>
+              <h4 className="font-semibold text-green-800 mb-3">🌿 {i18n.results.lifestyleAdjustment}</h4>
               <ul className="text-sm text-slate-700 space-y-2">
                 {report.recommendations.lifestyle.map((s: string, i: number) => (
                   <li key={i} className="flex items-start gap-2">
@@ -853,15 +847,15 @@ function GAD7ResultDetail({
         <h3 className="text-2xl font-bold text-slate-800 mb-6 text-center">🧘 {i18n.results.relaxation}</h3>
         <div className="grid md:grid-cols-3 gap-4">
           <div className="bg-green-50 rounded-xl p-4">
-            <h4 className="font-semibold text-green-800 mb-2">🌬️ 呼吸练习</h4>
+            <h4 className="font-semibold text-green-800 mb-2">🌬️ {i18n.results.breathingExercise}</h4>
             <p className="text-sm text-slate-700">{(report.recommendations.relaxation.breathing as { name: string; description: string }).name}: {(report.recommendations.relaxation.breathing as { name: string; description: string }).description}</p>
           </div>
           <div className="bg-blue-50 rounded-xl p-4">
-            <h4 className="font-semibold text-blue-800 mb-2">🤸 身体放松</h4>
+            <h4 className="font-semibold text-blue-800 mb-2">🤸 {i18n.results.bodyRelaxation}</h4>
             <p className="text-sm text-slate-700">{(report.recommendations.relaxation.muscle as { name: string; description: string }).name}: {(report.recommendations.relaxation.muscle as { name: string; description: string }).description}</p>
           </div>
           <div className="bg-purple-50 rounded-xl p-4">
-            <h4 className="font-semibold text-purple-800 mb-2">🧠 心理调节</h4>
+            <h4 className="font-semibold text-purple-800 mb-2">🧠 {i18n.results.mentalAdjustment}</h4>
             <p className="text-sm text-slate-700">{(report.recommendations.relaxation.mindfulness as { name: string; description: string }).name}: {(report.recommendations.relaxation.mindfulness as { name: string; description: string }).description}</p>
           </div>
         </div>
@@ -872,7 +866,7 @@ function GAD7ResultDetail({
         <h3 className="text-2xl font-bold text-slate-800 mb-6 text-center">🌿 {i18n.results.healthHabits}</h3>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
           <div className="bg-amber-50 rounded-xl p-4">
-            <h4 className="font-semibold text-amber-800 mb-2">😴 睡眠</h4>
+            <h4 className="font-semibold text-amber-800 mb-2">😴 {i18n.results.sleep}</h4>
             <ul className="text-sm text-slate-700 space-y-1">
               {report.recommendations.healthyHabits.sleep.map((h: string, i: number) => (
                 <li key={i}>• {h}</li>
@@ -880,7 +874,7 @@ function GAD7ResultDetail({
             </ul>
           </div>
           <div className="bg-green-50 rounded-xl p-4">
-            <h4 className="font-semibold text-green-800 mb-2">🥗 饮食</h4>
+            <h4 className="font-semibold text-green-800 mb-2">🥗 {i18n.results.diet}</h4>
             <ul className="text-sm text-slate-700 space-y-1">
               {report.recommendations.healthyHabits.nutrition.map((h: string, i: number) => (
                 <li key={i}>• {h}</li>
@@ -888,7 +882,7 @@ function GAD7ResultDetail({
             </ul>
           </div>
           <div className="bg-blue-50 rounded-xl p-4">
-            <h4 className="font-semibold text-blue-800 mb-2">🏃 运动</h4>
+            <h4 className="font-semibold text-blue-800 mb-2">🏃 {i18n.results.exercise}</h4>
             <ul className="text-sm text-slate-700 space-y-1">
               {report.recommendations.healthyHabits.movement.map((h: string, i: number) => (
                 <li key={i}>• {h}</li>
@@ -896,7 +890,7 @@ function GAD7ResultDetail({
             </ul>
           </div>
           <div className="bg-purple-50 rounded-xl p-4">
-            <h4 className="font-semibold text-purple-800 mb-2">👫 社交</h4>
+            <h4 className="font-semibold text-purple-800 mb-2">👫 {i18n.results.social}</h4>
             <ul className="text-sm text-slate-700 space-y-1">
               {report.recommendations.healthyHabits.connection.map((h: string, i: number) => (
                 <li key={i}>• {h}</li>
@@ -912,7 +906,7 @@ function GAD7ResultDetail({
           <h3 className="text-2xl font-bold text-slate-800 mb-6 text-center">🆘 {i18n.results.professionalResources}</h3>
           <div className="space-y-4">
             <div className="bg-red-50 rounded-xl p-4">
-              <h4 className="font-semibold text-red-800 mb-2">寻求专业帮助</h4>
+              <h4 className="font-semibold text-red-800 mb-2">{i18n.results.seekProfessionalHelp}</h4>
               <ul className="text-sm text-slate-700 space-y-2">
                 {report.resources.professional.map((r: string, i: number) => (
                   <li key={i}>• {r}</li>
@@ -1008,25 +1002,25 @@ function ResultPage() {
                     onClick={() => handleExport('pdf')}
                     className="w-full px-4 py-3 text-left hover:bg-slate-50 transition-colors flex items-center gap-2"
                   >
-                    <span>📄</span> PDF 格式
+                    <span>📄</span> {i18n.results.pdfFormat}
                   </button>
                   <button
                     onClick={() => handleExport('markdown')}
                     className="w-full px-4 py-3 text-left hover:bg-slate-50 transition-colors flex items-center gap-2"
                   >
-                    <span>📝</span> Markdown 格式
+                    <span>📝</span> {i18n.results.markdownFormat}
                   </button>
                   <button
                     onClick={() => handleExport('text')}
                     className="w-full px-4 py-3 text-left hover:bg-slate-50 transition-colors flex items-center gap-2"
                   >
-                    <span>📃</span> 纯文本格式
+                    <span>📃</span> {i18n.results.textFormat}
                   </button>
                   <button
                     onClick={() => handleExport('json')}
                     className="w-full px-4 py-3 text-left hover:bg-slate-50 transition-colors flex items-center gap-2"
                   >
-                    <span>📊</span> JSON 格式
+                    <span>📊</span> {i18n.results.jsonFormat}
                   </button>
                 </div>
               )}
