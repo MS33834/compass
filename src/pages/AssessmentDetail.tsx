@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useAppStore } from '../store';
 import { mockAssessments, getQuestionsForAssessment } from '../data/mockData';
@@ -7,8 +7,15 @@ import {
   STRESS_RESPONSE_OPTIONS, 
   STRESS_LEVELS
 } from '../data/stressTestData';
+import { 
+  GAD7_RESPONSE_OPTIONS, 
+  ANXIETY_LEVELS 
+} from '../data/anxietyGad7Data';
 import { calculateProgress, generateBigFiveReport } from '../services/bigFiveScoring';
 import { getStressLevelInfo, generateDetailedStressReport } from '../services/stressTestScoring';
+import { getAnxietyLevelInfo, generateDetailedGAD7Report } from '../services/anxietyGad7Scoring';
+import { exportService, shareService } from '../services/share/ExportShareService';
+import { TracePanel } from '../components/TracePanel';
 import { cn } from '../lib/utils';
 
 // 介绍页面组件
@@ -77,6 +84,24 @@ function IntroPage({ onStart }: { onStart: () => void }) {
           </div>
         )}
         
+        {(currentAssessment.id === 'anxiety-gad7' || currentAssessment.id === '3') && (
+          <div className="bg-teal-50 rounded-xl p-6 text-left mb-8">
+            <h3 className="font-semibold text-teal-800 mb-3">测评介绍</h3>
+            <p className="text-teal-700 text-sm leading-relaxed">
+              GAD-7是国际通用的广泛性焦虑障碍筛查量表，具有良好的信度和效度。
+              本测评将评估你过去两周内的<span className="font-semibold">焦虑症状、担忧水平、身体反应</span>等方面，
+              帮助你更好地了解自己的焦虑状态。
+            </p>
+            <div className="mt-4 grid sm:grid-cols-4 gap-2">
+              {Object.entries(ANXIETY_LEVELS).map(([key, level]) => (
+                <div key={key} className="bg-white rounded-lg p-2 text-center">
+                  <div className="font-medium text-teal-700 text-sm">{level.name}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+        
         <div className="bg-amber-50 rounded-xl p-6 text-left mb-8">
           <h3 className="font-semibold text-amber-800 mb-2">💡 测评提示</h3>
           <ul className="text-amber-700 text-sm space-y-1">
@@ -118,7 +143,9 @@ function QuizPage() {
   // 根据测评类型选择选项
   const options = (currentAssessment?.id === 'stress-test' || currentAssessment?.id === '2') 
     ? STRESS_RESPONSE_OPTIONS 
-    : RESPONSE_OPTIONS;
+    : (currentAssessment?.id === 'anxiety-gad7' || currentAssessment?.id === '3')
+      ? GAD7_RESPONSE_OPTIONS
+      : RESPONSE_OPTIONS;
   
   const handleAnswer = (value: number) => {
     setAnswer(currentQuestion.id, value);
@@ -146,7 +173,9 @@ function QuizPage() {
   // 根据测评类型选择标签颜色
   const tagColor = (currentAssessment?.id === 'stress-test' || currentAssessment?.id === '2')
     ? 'bg-purple-100 text-purple-700'
-    : 'bg-blue-100 text-blue-700';
+    : (currentAssessment?.id === 'anxiety-gad7' || currentAssessment?.id === '3')
+      ? 'bg-teal-100 text-teal-700'
+      : 'bg-blue-100 text-blue-700';
   
   return (
     <div className="max-w-2xl mx-auto">
@@ -642,31 +671,383 @@ function StressTestResultDetail({
   );
 }
 
+// GAD-7焦虑测试详细结果组件
+function GAD7ResultDetail({ 
+  result, 
+  questions, 
+  answers 
+}: { 
+  result: {
+    totalScore: number;
+    traits: Array<{ name: string; score: number; description: string }>;
+  };
+  questions: unknown[];
+  answers: Record<string, number>;
+}) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const report = useMemo(() => generateDetailedGAD7Report(answers, questions as any), [answers, questions]);
+  const anxietyLevelInfo = getAnxietyLevelInfo(result.totalScore);
+
+  return (
+    <div className="max-w-4xl mx-auto space-y-8">
+      {/* 头部 */}
+      <div className="text-center">
+        <div className="inline-block bg-gradient-to-r from-teal-100 to-cyan-100 rounded-full px-6 py-2 mb-4">
+          <span className="font-semibold text-teal-700">🎉 测评完成！</span>
+        </div>
+        <h2 className="text-3xl font-bold text-slate-800 mb-4">你的焦虑分析报告</h2>
+        <p className="text-lg text-slate-600">基于你的回答，这是你的焦虑状态分析</p>
+      </div>
+
+      {/* 焦虑水平总体评估 */}
+      <div className={`bg-white rounded-3xl p-8 shadow-lg border-2 ${anxietyLevelInfo.color === 'green' ? 'border-green-200' : anxietyLevelInfo.color === 'yellow' ? 'border-yellow-200' : anxietyLevelInfo.color === 'orange' ? 'border-orange-200' : 'border-red-200'}`}>
+        <div className="text-center">
+          <div className="text-6xl font-bold mb-2" style={{ color: anxietyLevelInfo.color === 'green' ? '#10b981' : anxietyLevelInfo.color === 'yellow' ? '#f59e0b' : anxietyLevelInfo.color === 'orange' ? '#f97316' : '#ef4444' }}>
+            {report.summary.score}
+          </div>
+          <h3 className="text-2xl font-bold text-slate-800 mb-2">{report.summary.title}</h3>
+          <p className="text-lg text-slate-600 mb-4">{report.summary.description}</p>
+        </div>
+      </div>
+
+      {/* 主要症状分析 */}
+      <div className="bg-white rounded-3xl p-8 shadow-lg border border-slate-100">
+        <h3 className="text-2xl font-bold text-slate-800 mb-6 text-center">📊 你的焦虑表现</h3>
+        <div className="grid md:grid-cols-3 gap-6">
+          {report.detailedAnalysis.signs.physicalSigns && (
+            <div className="bg-teal-50 rounded-xl p-4">
+              <h5 className="font-semibold text-teal-800 mb-3">🏃 身体表现</h5>
+              <ul className="text-sm text-slate-700 space-y-2">
+                {report.detailedAnalysis.signs.physicalSigns.map((s: string, i: number) => (
+                  <li key={i} className="flex items-start gap-2">
+                    <span className="text-teal-600 mt-0.5">•</span>
+                    {s}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {report.detailedAnalysis.signs.emotionalSigns && (
+            <div className="bg-cyan-50 rounded-xl p-4">
+              <h5 className="font-semibold text-cyan-800 mb-3">💭 情绪表现</h5>
+              <ul className="text-sm text-slate-700 space-y-2">
+                {report.detailedAnalysis.signs.emotionalSigns.map((s: string, i: number) => (
+                  <li key={i} className="flex items-start gap-2">
+                    <span className="text-cyan-600 mt-0.5">•</span>
+                    {s}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {report.detailedAnalysis.signs.cognitiveSigns && (
+            <div className="bg-blue-50 rounded-xl p-4">
+              <h5 className="font-semibold text-blue-800 mb-3">🧠 思维表现</h5>
+              <ul className="text-sm text-slate-700 space-y-2">
+                {report.detailedAnalysis.signs.cognitiveSigns.map((s: string, i: number) => (
+                  <li key={i} className="flex items-start gap-2">
+                    <span className="text-blue-600 mt-0.5">•</span>
+                    {s}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* 主要症状提示 */}
+      {report.detailedAnalysis.primarySymptom && (
+        <div className="bg-white rounded-3xl p-8 shadow-lg border border-slate-100">
+          <h3 className="text-2xl font-bold text-slate-800 mb-6 text-center">🔍 主要症状类型</h3>
+          <div className="text-center">
+            <div className="inline-block bg-gradient-to-r from-teal-100 to-cyan-100 rounded-2xl p-6">
+              <p className="text-xl font-semibold text-teal-800">{report.detailedAnalysis.primarySymptom}</p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 应对策略 */}
+      <div className="bg-white rounded-3xl p-8 shadow-lg border border-slate-100">
+        <h3 className="text-2xl font-bold text-slate-800 mb-6 text-center">🛠️ 应对策略</h3>
+        <div className="grid md:grid-cols-3 gap-6">
+          {report.recommendations.immediate && (
+            <div className="bg-red-50 rounded-xl p-4">
+              <h4 className="font-semibold text-red-800 mb-3">⚡ 立即行动</h4>
+              <ul className="text-sm text-slate-700 space-y-2">
+                {Array.isArray(report.recommendations.immediate) 
+                  ? report.recommendations.immediate.map((s: string, i: number) => (
+                    <li key={i} className="flex items-start gap-2">
+                      <span className="text-red-600 mt-0.5">•</span>
+                      {s}
+                    </li>
+                  ))
+                  : null
+                }
+              </ul>
+            </div>
+          )}
+          {report.recommendations.cognitive && (
+            <div className="bg-blue-50 rounded-xl p-4">
+              <h4 className="font-semibold text-blue-800 mb-3">💭 认知调节</h4>
+              <ul className="text-sm text-slate-700 space-y-2">
+                {report.recommendations.cognitive.map((s: string, i: number) => (
+                  <li key={i} className="flex items-start gap-2">
+                    <span className="text-blue-600 mt-0.5">•</span>
+                    {s}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {report.recommendations.lifestyle && (
+            <div className="bg-green-50 rounded-xl p-4">
+              <h4 className="font-semibold text-green-800 mb-3">🌿 生活调整</h4>
+              <ul className="text-sm text-slate-700 space-y-2">
+                {report.recommendations.lifestyle.map((s: string, i: number) => (
+                  <li key={i} className="flex items-start gap-2">
+                    <span className="text-green-600 mt-0.5">•</span>
+                    {s}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* 放松技术 */}
+      <div className="bg-white rounded-3xl p-8 shadow-lg border border-slate-100">
+        <h3 className="text-2xl font-bold text-slate-800 mb-6 text-center">🧘 放松技术</h3>
+        <div className="grid md:grid-cols-3 gap-4">
+          <div className="bg-green-50 rounded-xl p-4">
+            <h4 className="font-semibold text-green-800 mb-2">🌬️ 呼吸练习</h4>
+            <p className="text-sm text-slate-700">{(report.recommendations.relaxation.breathing as { name: string; description: string }).name}: {(report.recommendations.relaxation.breathing as { name: string; description: string }).description}</p>
+          </div>
+          <div className="bg-blue-50 rounded-xl p-4">
+            <h4 className="font-semibold text-blue-800 mb-2">🤸 身体放松</h4>
+            <p className="text-sm text-slate-700">{(report.recommendations.relaxation.muscle as { name: string; description: string }).name}: {(report.recommendations.relaxation.muscle as { name: string; description: string }).description}</p>
+          </div>
+          <div className="bg-purple-50 rounded-xl p-4">
+            <h4 className="font-semibold text-purple-800 mb-2">🧠 心理调节</h4>
+            <p className="text-sm text-slate-700">{(report.recommendations.relaxation.mindfulness as { name: string; description: string }).name}: {(report.recommendations.relaxation.mindfulness as { name: string; description: string }).description}</p>
+          </div>
+        </div>
+      </div>
+
+      {/* 健康习惯 */}
+      <div className="bg-white rounded-3xl p-8 shadow-lg border border-slate-100">
+        <h3 className="text-2xl font-bold text-slate-800 mb-6 text-center">🌿 健康习惯</h3>
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="bg-amber-50 rounded-xl p-4">
+            <h4 className="font-semibold text-amber-800 mb-2">😴 睡眠</h4>
+            <ul className="text-sm text-slate-700 space-y-1">
+              {report.recommendations.healthyHabits.sleep.map((h: string, i: number) => (
+                <li key={i}>• {h}</li>
+              ))}
+            </ul>
+          </div>
+          <div className="bg-green-50 rounded-xl p-4">
+            <h4 className="font-semibold text-green-800 mb-2">🥗 饮食</h4>
+            <ul className="text-sm text-slate-700 space-y-1">
+              {report.recommendations.healthyHabits.nutrition.map((h: string, i: number) => (
+                <li key={i}>• {h}</li>
+              ))}
+            </ul>
+          </div>
+          <div className="bg-blue-50 rounded-xl p-4">
+            <h4 className="font-semibold text-blue-800 mb-2">🏃 运动</h4>
+            <ul className="text-sm text-slate-700 space-y-1">
+              {report.recommendations.healthyHabits.movement.map((h: string, i: number) => (
+                <li key={i}>• {h}</li>
+              ))}
+            </ul>
+          </div>
+          <div className="bg-purple-50 rounded-xl p-4">
+            <h4 className="font-semibold text-purple-800 mb-2">👫 社交</h4>
+            <ul className="text-sm text-slate-700 space-y-1">
+              {report.recommendations.healthyHabits.connection.map((h: string, i: number) => (
+                <li key={i}>• {h}</li>
+              ))}
+            </ul>
+          </div>
+          </div>
+      </div>
+
+      {/* 专业资源 */}
+      {report.resources.professional && (
+        <div className="bg-white rounded-3xl p-8 shadow-lg border border-slate-100 border-l-4 border-l-red-400">
+          <h3 className="text-2xl font-bold text-slate-800 mb-6 text-center">🆘 专业资源</h3>
+          <div className="space-y-4">
+            <div className="bg-red-50 rounded-xl p-4">
+              <h4 className="font-semibold text-red-800 mb-2">寻求专业帮助</h4>
+              <ul className="text-sm text-slate-700 space-y-2">
+                {report.resources.professional.map((r: string, i: number) => (
+                  <li key={i}>• {r}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 // 结果页面主组件
 function ResultPage() {
   const { result, resetAssessment, currentAssessment, questions, answers } = useAppStore();
+  const [showTracePanel, setShowTracePanel] = useState(false);
+  const [shareUrl, setShareUrl] = useState<string | null>(null);
+  const [showExportMenu, setShowExportMenu] = useState(false);
   
   if (!result) return null;
   
   const isStressTest = currentAssessment?.id === 'stress-test' || currentAssessment?.id === '2';
+  const isGAD7 = currentAssessment?.id === 'anxiety-gad7' || currentAssessment?.id === '3';
   
   // 类型断言
   const displayResult = result as { 
+    id: string;
     totalScore: number; 
-    traits: Array<{ name: string; score: number; description: string }>; 
+    traits: Array<{ name: string; score: number; description: string }>;
+    title?: string;
+    assessmentId?: string;
+    timestamp?: number;
+    report?: any;
+    rawAnswers?: Record<string, number>;
   };
   const displayQuestions = questions as unknown[];
+
+  const handleExport = async (format: 'pdf' | 'markdown' | 'text' | 'json') => {
+    try {
+      await exportService.download(displayResult, format);
+      setShowExportMenu(false);
+    } catch (error) {
+      console.error('Export failed:', error);
+    }
+  };
+
+  const handleShare = async () => {
+    try {
+      const url = await shareService.createShareLink(displayResult);
+      setShareUrl(url);
+    } catch (error) {
+      console.error('Share failed:', error);
+    }
+  };
+
+  const copyShareUrl = () => {
+    if (shareUrl) {
+      navigator.clipboard.writeText(shareUrl);
+      alert('链接已复制到剪贴板！');
+    }
+  };
   
   return (
     <div className="pb-12">
-      {isStressTest ? (
+      {isGAD7 ? (
+        <GAD7ResultDetail result={displayResult} questions={displayQuestions} answers={answers} />
+      ) : isStressTest ? (
         <StressTestResultDetail result={displayResult} questions={displayQuestions} answers={answers} />
       ) : (
         <BigFiveResultDetail result={displayResult} questions={displayQuestions} answers={answers} />
       )}
       
+      {/* 操作工具栏 */}
+      <div className="max-w-4xl mx-auto mt-12">
+        <div className="bg-white rounded-2xl p-6 shadow-lg border border-slate-200">
+          <h3 className="text-lg font-semibold text-slate-800 mb-4">📋 报告操作</h3>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            {/* 导出按钮 */}
+            <div className="relative">
+              <button
+                onClick={() => setShowExportMenu(!showExportMenu)}
+                className="w-full py-3 bg-slate-100 text-slate-700 rounded-xl font-semibold hover:bg-slate-200 transition-colors flex items-center justify-center gap-2"
+              >
+                📥 导出
+              </button>
+              {showExportMenu && (
+                <div className="absolute top-full left-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-slate-200 z-10 overflow-hidden">
+                  <button
+                    onClick={() => handleExport('pdf')}
+                    className="w-full px-4 py-3 text-left hover:bg-slate-50 transition-colors flex items-center gap-2"
+                  >
+                    <span>📄</span> PDF 格式
+                  </button>
+                  <button
+                    onClick={() => handleExport('markdown')}
+                    className="w-full px-4 py-3 text-left hover:bg-slate-50 transition-colors flex items-center gap-2"
+                  >
+                    <span>📝</span> Markdown 格式
+                  </button>
+                  <button
+                    onClick={() => handleExport('text')}
+                    className="w-full px-4 py-3 text-left hover:bg-slate-50 transition-colors flex items-center gap-2"
+                  >
+                    <span>📃</span> 纯文本格式
+                  </button>
+                  <button
+                    onClick={() => handleExport('json')}
+                    className="w-full px-4 py-3 text-left hover:bg-slate-50 transition-colors flex items-center gap-2"
+                  >
+                    <span>📊</span> JSON 格式
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {/* 分享按钮 */}
+            <button
+              onClick={handleShare}
+              className="w-full py-3 bg-green-100 text-green-700 rounded-xl font-semibold hover:bg-green-200 transition-colors flex items-center justify-center gap-2"
+            >
+              🔗 分享
+            </button>
+
+            {/* 溯源按钮 */}
+            <button
+              onClick={() => setShowTracePanel(true)}
+              className="w-full py-3 bg-purple-100 text-purple-700 rounded-xl font-semibold hover:bg-purple-200 transition-colors flex items-center justify-center gap-2"
+            >
+              🔍 溯源
+            </button>
+
+            {/* 训练推荐 */}
+            <Link
+              to="/training"
+              className="w-full py-3 bg-orange-100 text-orange-700 rounded-xl font-semibold hover:bg-orange-200 transition-colors flex items-center justify-center gap-2 text-center"
+            >
+              💪 训练
+            </Link>
+          </div>
+
+          {/* 分享链接显示 */}
+          {shareUrl && (
+            <div className="mt-4 p-4 bg-green-50 rounded-xl border border-green-200">
+              <div className="flex items-center gap-3">
+                <span className="text-green-700 font-medium">分享链接：</span>
+                <input
+                  type="text"
+                  value={shareUrl}
+                  readOnly
+                  className="flex-1 px-3 py-2 bg-white border border-green-300 rounded-lg text-sm text-slate-700"
+                />
+                <button
+                  onClick={copyShareUrl}
+                  className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                >
+                  复制
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+      
       {/* 行动按钮 */}
-      <div className="max-w-4xl mx-auto mt-12 flex flex-col sm:flex-row gap-4">
+      <div className="max-w-4xl mx-auto mt-8 flex flex-col sm:flex-row gap-4">
         <Link
           to="/assessments"
           onClick={resetAssessment}
@@ -681,6 +1062,14 @@ function ResultPage() {
           查看历史记录
         </Link>
       </div>
+
+      {/* 溯源面板 */}
+      {showTracePanel && (
+        <TracePanel
+          assessmentId={displayResult.id || currentAssessment?.id || 'unknown'}
+          onClose={() => setShowTracePanel(false)}
+        />
+      )}
     </div>
   );
 }

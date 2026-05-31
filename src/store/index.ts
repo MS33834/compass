@@ -6,6 +6,7 @@ import {
   calculateOverallScore 
 } from '../services/bigFiveScoring';
 import { calculateStressTestTraits } from '../services/stressTestScoring';
+import { calculateGAD7Traits } from '../services/anxietyGad7Scoring';
 
 const STORAGE_KEY_HISTORY = 'assessmentHistory';
 
@@ -104,6 +105,11 @@ export const useAppStore = create<AppState>((set, get) => {
         // 压力测试评分
         traits = calculateStressTestTraits(answers, questions);
         // 压力测试的总分就是压力水平得分
+        totalScore = traits[0]?.score || 0;
+      } else if (assessmentId === 'anxiety-gad7' || assessmentId === '3') {
+        // GAD-7焦虑测试评分
+        traits = calculateGAD7Traits(answers, questions);
+        // 焦虑测试的总分就是GAD-7得分
         totalScore = traits[0]?.score || 0;
       } else {
         // 大五人格评分（默认）

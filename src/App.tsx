@@ -5,6 +5,9 @@ import AssessmentDetail from './pages/AssessmentDetail';
 import { History } from './pages/History';
 import { Settings } from './pages/Settings';
 import { About } from './pages/About';
+import { Training } from './pages/Training';
+import TrainingDetail from './pages/TrainingDetail';
+import { PersonalDashboard } from './components/dashboard/PersonalDashboard';
 import { Sidebar, MenuButton } from './components/Sidebar';
 import './index.css';
 
@@ -20,8 +23,8 @@ export default function App() {
                 <div className="w-9 h-9 sm:w-10 sm:h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center text-white text-lg sm:text-xl">
                   🧠
                 </div>
-                <span className="hidden sm:inline">心测助手</span>
-                <span className="sm:hidden">心测</span>
+                <span className="hidden sm:inline">MindMirror</span>
+                <span className="sm:hidden">MindMirror</span>
               </Link>
               
               {/* 桌面端导航链接 - 隐藏，都放在侧边栏 */}
@@ -48,21 +51,24 @@ export default function App() {
         <Sidebar />
 
         {/* 主内容区 */}
-        <main className="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/assessments" element={<Assessments />} />
-            <Route path="/assessments/:id" element={<AssessmentDetail />} />
-            <Route path="/history" element={<History />} />
-            <Route path="/settings" element={<Settings />} />
-            <Route path="/about" element={<About />} />
-          </Routes>
-        </main>
+      <main className="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/assessments" element={<Assessments />} />
+          <Route path="/assessments/:id" element={<AssessmentDetail />} />
+          <Route path="/training" element={<Training />} />
+          <Route path="/training/:id" element={<TrainingDetail />} />
+          <Route path="/dashboard" element={<PersonalDashboard />} />
+          <Route path="/history" element={<History />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/about" element={<About />} />
+        </Routes>
+      </main>
 
         {/* 页脚 */}
         <footer className="mt-auto border-t border-slate-200 py-6 sm:py-10 bg-white/50">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 text-center text-slate-500">
-            <p className="text-sm sm:text-lg">© 2024 心测助手 - 让每一次探索都有意义</p>
+            <p className="text-sm sm:text-lg">© 2024 MindMirror - 发现自我，每天成长</p>
           </div>
         </footer>
       </div>

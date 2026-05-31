@@ -1,8 +1,8 @@
 {
-  "name": "badhope",
+  "name": "mindmirror",
   "private": false,
   "version": "1.0.0",
-  "description": "Professional psychological assessment platform featuring Big Five personality test and stress level evaluation with detailed analysis and personalized recommendations",
+  "description": "Professional psychological assessment and training platform - MindMirror: Discover yourself, grow every day. Featuring Big Five personality test, stress evaluation, anxiety assessment and personalized mental training programs.",
   "type": "module",
   "scripts": {
     "client:dev": "vite",

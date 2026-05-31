@@ -9,6 +9,10 @@ import {
   STRESS_TEST_ASSESSMENT, 
   STRESS_TEST_QUESTIONS 
 } from './stressTestData';
+import { 
+  GAD7_ASSESSMENT, 
+  GAD7_QUESTIONS 
+} from './anxietyGad7Data';
 
 // 其他测评（保留用于演示）
 const otherAssessments: Assessment[] = [
@@ -28,6 +32,7 @@ const otherAssessments: Assessment[] = [
 export const mockAssessments: Assessment[] = [
   BIG_FIVE_ASSESSMENT,
   STRESS_TEST_ASSESSMENT,
+  GAD7_ASSESSMENT,
   ...otherAssessments
 ];
 
@@ -67,6 +72,9 @@ export function getQuestionsForAssessment(assessmentId: string): Question[] {
   }
   if (assessmentId === 'stress-test' || assessmentId === '2') {
     return STRESS_TEST_QUESTIONS;
+  }
+  if (assessmentId === 'anxiety-gad7' || assessmentId === '3') {
+    return GAD7_QUESTIONS;
   }
   return generateMockQuestions(10);
 }

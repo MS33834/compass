@@ -18,6 +18,18 @@ const navItems = [
     icon: '📝'
   },
   {
+    id: 'training',
+    label: '心理训练',
+    href: '/training',
+    icon: '💪'
+  },
+  {
+    id: 'dashboard',
+    label: '个人中心',
+    href: '/dashboard',
+    icon: '📊'
+  },
+  {
     id: 'history',
     label: '历史记录',
     href: '/history',
@@ -95,8 +107,8 @@ export function Sidebar() {
                   🧠
                 </div>
                 <div>
-                  <h2 className="text-xl font-bold text-slate-800">心测助手</h2>
-                  <p className="text-sm text-slate-500">让每一次探索都有意义</p>
+                  <h2 className="text-xl font-bold text-slate-800">MindMirror</h2>
+                  <p className="text-sm text-slate-500">发现自我，每天成长</p>
                 </div>
               </div>
               <button
@@ -153,8 +165,8 @@ export function Sidebar() {
           {/* 底部信息 */}
           <div className="p-6 border-t border-slate-200">
             <div className="text-center text-sm text-slate-500">
-              <p>© 2024 心测助手</p>
-              <p className="mt-1 text-xs">让每一次探索都有意义</p>
+              <p>© 2024 MindMirror</p>
+              <p className="mt-1 text-xs">发现自我，每天成长</p>
             </div>
           </div>
         </div>

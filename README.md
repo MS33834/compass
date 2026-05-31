@@ -75,8 +75,8 @@
 
 ```bash
 # Clone the repository
-git clone https://github.com/badhope/badhope.git
-cd badhope
+git clone https://github.com/badhope/mindmirror.git
+cd mindmirror
 
 # Install dependencies
 npm install
@@ -106,7 +106,7 @@ npm run lint
 ## 📁 Project Structure
 
 ```
-badhope/
+mindmirror/
 ├── public/
 │   └── vite.svg
 ├── src/
@@ -215,7 +215,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👤 Author
 
-**badhope**
+**MindMirror Team**
 
 - GitHub: [@badhope](https://github.com/badhope)
 
