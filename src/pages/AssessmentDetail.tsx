@@ -550,11 +550,12 @@ function StressTestResultDetail({
         <div className="space-y-6">
           {result.traits.map((trait: { name: string; score: number; description: string }, index: number) => {
             let colorClass = 'from-green-400 to-emerald-500';
-            if (trait.name === '压力水平') {
-              colorClass = trait.score <= 13 ? 'from-green-400 to-emerald-500' :
-                          trait.score <= 26 ? 'from-yellow-400 to-orange-500' :
-                          'from-red-400 to-rose-500';
-            } else if (trait.name === '压力感受') {
+            if (trait.name === '压力水平' || trait.name === '总体压力水平') {
+              colorClass = trait.score <= 30 ? 'from-green-400 to-emerald-500' :
+                          trait.score <= 60 ? 'from-yellow-400 to-orange-500' :
+                          trait.score <= 90 ? 'from-orange-400 to-rose-500' :
+                          'from-red-400 to-rose-600';
+            } else if (trait.name === '压力感受' || trait.name === '工作压力' || trait.name === '关系压力' || trait.name === '健康压力' || trait.name === '财务压力') {
               colorClass = trait.score >= 50 ? 'from-yellow-400 to-orange-500' : 'from-green-400 to-emerald-500';
             } else if (trait.name === '应对能力') {
               colorClass = trait.score >= 50 ? 'from-green-400 to-emerald-500' : 'from-yellow-400 to-orange-500';
@@ -569,7 +570,11 @@ function StressTestResultDetail({
                 <div className="w-full bg-slate-100 rounded-full h-4">
                   <div 
                     className={cn("h-4 rounded-full bg-gradient-to-r transition-all duration-1000", colorClass)}
-                    style={{ width: `${Math.min(trait.score, 90)}%` }}
+                    style={{ 
+                      width: trait.name === '总体压力水平' 
+                        ? `${Math.min(trait.score / 1.2, 100)}%` 
+                        : `${Math.min(trait.score, 100)}%` 
+                    }}
                   />
                 </div>
                 <p className="text-slate-600">{trait.description}</p>
@@ -619,24 +624,38 @@ function StressTestResultDetail({
         </div>
       </div>
 
-      {/* 放松技术 */}
-      <div className="bg-white rounded-3xl p-8 shadow-lg border border-slate-100">
-        <h3 className="text-2xl font-bold text-slate-800 mb-6 text-center">🧘 {i18n.results.relaxation}</h3>
-        <div className="grid md:grid-cols-3 gap-4">
-          <div className="bg-green-50 rounded-xl p-4">
-            <h4 className="font-semibold text-green-800 mb-2">🌬️ 呼吸练习</h4>
-            <p className="text-sm text-slate-700">{(report.recommendations.relaxation.breathing as { name: string; description: string }).name}: {(report.recommendations.relaxation.breathing as { name: string; description: string }).description}</p>
-          </div>
-          <div className="bg-blue-50 rounded-xl p-4">
-            <h4 className="font-semibold text-blue-800 mb-2">🤸 身体放松</h4>
-            <p className="text-sm text-slate-700">{(report.recommendations.relaxation.body as { name: string; description: string }).name}: {(report.recommendations.relaxation.body as { name: string; description: string }).description}</p>
-          </div>
-          <div className="bg-purple-50 rounded-xl p-4">
-            <h4 className="font-semibold text-purple-800 mb-2">🧠 心理调节</h4>
-            <p className="text-sm text-slate-700">{(report.recommendations.relaxation.mental as { name: string; description: string }).name}: {(report.recommendations.relaxation.mental as { name: string; description: string }).description}</p>
+      {/* 主要压力维度分析 */}
+      {report.detailedAnalysis.topDimensions && report.detailedAnalysis.topDimensions.length > 0 && (
+        <div className="bg-white rounded-3xl p-8 shadow-lg border border-slate-100">
+          <h3 className="text-2xl font-bold text-slate-800 mb-6 text-center">📌 主要压力维度</h3>
+          <div className="space-y-4">
+            {report.detailedAnalysis.topDimensions.map((dim: { dimension: string; info?: { name: string; description: string; tips: string[] }; score: number }, i: number) => (
+              <div key={i} className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-5 border-l-4 border-blue-500">
+                <div className="flex items-center justify-between mb-3">
+                  <h4 className="font-bold text-lg text-blue-800">{dim.info?.name || dim.dimension}</h4>
+                  <span className="px-3 py-1 bg-blue-200 text-blue-800 rounded-full text-sm font-semibold">{dim.score} 分</span>
+                </div>
+                {dim.info?.description && (
+                  <p className="text-slate-700 mb-3 text-sm">{dim.info.description}</p>
+                )}
+                {dim.info?.tips && dim.info.tips.length > 0 && (
+                  <div>
+                    <h5 className="font-semibold text-slate-700 mb-2">💡 建议：</h5>
+                    <ul className="text-sm text-slate-600 space-y-1">
+                      {dim.info.tips.map((tip: string, j: number) => (
+                        <li key={j} className="flex items-start gap-2">
+                          <span className="text-blue-600 mt-0.5">•</span>
+                          {tip}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
         </div>
-      </div>
+      )}
 
       {/* 健康习惯 */}
       <div className="bg-white rounded-3xl p-8 shadow-lg border border-slate-100">

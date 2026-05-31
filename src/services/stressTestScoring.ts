@@ -4,23 +4,24 @@ import {
   COPING_STRATEGIES,
   STRESS_STAGES,
   PERFORMANCE_CURVE,
-  RELAXATION_TECHNIQUES,
   HEALTHY_HABITS,
-  PROFESSIONAL_RESOURCES
+  PROFESSIONAL_RESOURCES,
+  STRESS_DIMENSIONS
 } from '../data/stressTestData';
 
 /**
- * 压力测试评分算法
+ * 压力测试评分算法 - 扩展版
  * 
- * 基于PSS (Perceived Stress Scale) 标准：
+ * 基于PSS (Perceived Stress Scale) 扩展版：
  * - 负向题目：直接计分 (0-4)
  * - 正向题目：反向计分 (4 - response)
- * - 总分范围：0-40
+ * - 总分范围：0-120
  * 
  * 评分解释：
- * - 0-13分：低压力
- * - 14-26分：中等压力
- * - 27-40分：高压力
+ * - 0-30分：低压力
+ * - 31-60分：中等压力
+ * - 61-90分：高压力
+ * - 91-120分：极高压力
  */
 
 /**
@@ -34,16 +35,22 @@ function calculateQuestionScore(response: number, isReverse: boolean): number {
 }
 
 /**
- * 计算压力测试总分和详细分析
+ * 计算压力测试总分和详细分析 - 扩展版
  */
 export function calculateStressTestScore(
   answers: Record<string, number>,
   questions: Question[]
 ) {
   let totalScore = 0;
-  let negativeScore = 0;
-  let positiveScore = 0;
+  const dimensionScores: Record<string, number> = {};
   const questionDetails = [];
+
+  // 初始化各维度得分
+  for (const question of questions) {
+    if (question.trait && !dimensionScores[question.trait]) {
+      dimensionScores[question.trait] = 0;
+    }
+  }
 
   // 计算各维度得分
   for (const question of questions) {
@@ -51,6 +58,10 @@ export function calculateStressTestScore(
     if (response !== undefined) {
       const score = calculateQuestionScore(response, !!question.reverse);
       totalScore += score;
+      
+      if (question.trait) {
+        dimensionScores[question.trait] = (dimensionScores[question.trait] || 0) + score;
+      }
       
       const detail = {
         id: question.id,
@@ -61,32 +72,28 @@ export function calculateStressTestScore(
       };
       
       questionDetails.push(detail);
-      
-      if (question.trait === 'negative') {
-        negativeScore += score;
-      } else if (question.trait === 'positive') {
-        positiveScore += score;
-      }
     }
   }
 
-  // 确定压力水平
+  // 确定压力水平（扩展版范围）
   let level: keyof typeof STRESS_LEVELS;
-  if (totalScore <= 13) {
+  if (totalScore <= 30) {
     level = 'low';
-  } else if (totalScore <= 26) {
+  } else if (totalScore <= 60) {
     level = 'medium';
-  } else {
+  } else if (totalScore <= 90) {
     level = 'high';
+  } else {
+    level = 'extreme';
   }
 
   const levelInfo = STRESS_LEVELS[level];
 
   // 分析压力阶段（基于GAS理论）
   let stage;
-  if (totalScore <= 8) {
+  if (totalScore <= 30) {
     stage = STRESS_STAGES.alarm;
-  } else if (totalScore <= 20) {
+  } else if (totalScore <= 60) {
     stage = STRESS_STAGES.resistance;
   } else {
     stage = STRESS_STAGES.exhaustion;
@@ -94,9 +101,9 @@ export function calculateStressTestScore(
 
   // 分析表现曲线位置
   let performancePoint;
-  if (totalScore <= 10) {
+  if (totalScore <= 25) {
     performancePoint = PERFORMANCE_CURVE.tooLow;
-  } else if (totalScore <= 20) {
+  } else if (totalScore <= 60) {
     performancePoint = PERFORMANCE_CURVE.optimal;
   } else {
     performancePoint = PERFORMANCE_CURVE.tooHigh;
@@ -104,17 +111,19 @@ export function calculateStressTestScore(
 
   // 推荐个性化的应对策略
   const recommendedStrategies = {
-    problemFocused: COPING_STRATEGIES.problemFocused.slice(0, 2),
-    emotionFocused: COPING_STRATEGIES.emotionFocused.slice(0, 2),
+    problemFocused: COPING_STRATEGIES.problemFocused.slice(0, 3),
+    emotionFocused: COPING_STRATEGIES.emotionFocused.slice(0, 3),
     avoidance: COPING_STRATEGIES.avoidance.slice(0, 2)
   };
 
-  // 推荐放松技术
-  const recommendedRelaxation = {
-    breathing: RELAXATION_TECHNIQUES.breathing[0],
-    body: RELAXATION_TECHNIQUES.body[0],
-    mental: RELAXATION_TECHNIQUES.mental[0]
-  };
+  // 分析最突出的压力维度
+  const sortedDimensions = Object.entries(dimensionScores)
+    .map(([key, score]) => ({ 
+      dimension: key, 
+      score,
+      info: (STRESS_DIMENSIONS as any)[key] 
+    }))
+    .sort((a, b) => b.score - a.score);
 
   return {
     totalScore,
@@ -122,18 +131,16 @@ export function calculateStressTestScore(
     levelInfo,
     stage,
     performancePoint,
+    dimensionScores,
+    topDimensions: sortedDimensions.slice(0, 3),
     details: {
-      negativeScore,
-      positiveScore,
-      negativePercentage: Math.round((negativeScore / 28) * 100), // 7题×4分
-      positivePercentage: Math.round((positiveScore / 28) * 100),
+      dimensionScores,
       questionDetails
     },
     recommendations: {
       strategies: recommendedStrategies,
-      relaxation: recommendedRelaxation,
       healthyHabits: HEALTHY_HABITS,
-      professionalResources: level === 'high' ? PROFESSIONAL_RESOURCES : null
+      professionalResources: (level === 'high' || level === 'extreme') ? PROFESSIONAL_RESOURCES : null
     }
   };
 }
@@ -147,23 +154,29 @@ export function calculateStressTestTraits(
 ): TraitResult[] {
   const result = calculateStressTestScore(answers, questions);
   
-  return [
+  // 计算各维度百分比
+  const maxScorePerQuestion = 4;
+  const traits: TraitResult[] = [
     {
-      name: '压力水平',
+      name: '总体压力水平',
       score: result.totalScore,
-      description: `${result.levelInfo.name} (0-40分量表)`
-    },
-    {
-      name: '压力感受',
-      score: Math.round((result.details.negativeScore / 28) * 100),
-      description: '负向情绪和压力感受程度'
-    },
-    {
-      name: '应对能力',
-      score: Math.round((result.details.positiveScore / 28) * 100),
-      description: '应对压力和保持平静的能力'
+      description: `${result.levelInfo.name} (0-120分量表)`
     }
   ];
+
+  // 添加各维度得分
+  for (const [key, score] of Object.entries(result.dimensionScores)) {
+    const dimensionInfo = (STRESS_DIMENSIONS as any)[key];
+    if (dimensionInfo) {
+      traits.push({
+        name: dimensionInfo.name,
+        score: score,
+        description: dimensionInfo.description
+      });
+    }
+  }
+  
+  return traits;
 }
 
 /**
@@ -171,12 +184,14 @@ export function calculateStressTestTraits(
  */
 export function getStressLevelInfo(totalScore: number) {
   let level: keyof typeof STRESS_LEVELS;
-  if (totalScore <= 13) {
+  if (totalScore <= 30) {
     level = 'low';
-  } else if (totalScore <= 26) {
+  } else if (totalScore <= 60) {
     level = 'medium';
-  } else {
+  } else if (totalScore <= 90) {
     level = 'high';
+  } else {
+    level = 'extreme';
   }
   return STRESS_LEVELS[level];
 }
@@ -190,6 +205,13 @@ export function generateDetailedStressReport(
 ) {
   const result = calculateStressTestScore(answers, questions);
   
+  // 为每个维度生成建议
+  const dimensionRecommendations = result.topDimensions.map(({ dimension, info }) => ({
+    dimension,
+    name: info?.name || dimension,
+    tips: info?.tips || []
+  }));
+  
   return {
     summary: {
       title: `${result.levelInfo.name}`,
@@ -200,18 +222,13 @@ export function generateDetailedStressReport(
     detailedAnalysis: {
       signs: result.levelInfo.detailed,
       stage: result.stage,
-      performance: result.performancePoint
+      performance: result.performancePoint,
+      topDimensions: result.topDimensions
     },
     recommendations: {
-      immediate: result.levelInfo.recommendations,
-      dailyPractices: result.levelInfo.dailyPractices,
+      dimensionTips: dimensionRecommendations,
       strategies: result.recommendations.strategies,
-      relaxation: result.recommendations.relaxation,
       healthyHabits: result.recommendations.healthyHabits,
-      professional: result.recommendations.professionalResources
-    },
-    resources: {
-      available: result.levelInfo.resources,
       professional: result.recommendations.professionalResources
     }
   };

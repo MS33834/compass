@@ -1,6 +1,6 @@
 import { Question, Assessment } from '../types';
 
-// GAD-7 量表选项
+// GAD-7+扩展版 量表选项
 export const GAD7_RESPONSE_OPTIONS = [
   { value: 0, label: '完全不会', color: 'bg-green-100 text-green-800' },
   { value: 1, label: '好几天', color: 'bg-yellow-100 text-yellow-800' },
@@ -8,60 +8,200 @@ export const GAD7_RESPONSE_OPTIONS = [
   { value: 3, label: '几乎每天', color: 'bg-red-100 text-red-800' }
 ];
 
-// GAD-7 测评信息
+// GAD-7+扩展版 测评信息
 export const GAD7_ASSESSMENT: Assessment = {
   id: 'anxiety-gad7',
-  title: 'GAD-7 焦虑水平测试',
-  description: 'GAD-7 是国际通用的广泛性焦虑障碍筛查量表，帮助您了解过去2周内的焦虑状况。',
+  title: '全面焦虑水平测试',
+  description: '基于GAD-7等多个专业量表的综合焦虑评估，帮助您深入了解过去2周内的焦虑状况。',
   category: '心理健康',
-  totalQuestions: 7,
+  totalQuestions: 28,
   icon: '🧠',
-  difficulty: '简单',
-  estimatedTime: '2分钟'
+  difficulty: '中等',
+  estimatedTime: '8分钟'
 };
 
-// GAD-7 题目
+// GAD-7+扩展版题目 - 共28题
+// 分为7个维度，每个维度4题
 export const GAD7_QUESTIONS: Question[] = [
+  // ========== 维度1: 过度担忧 (Original GAD-7) ==========
   {
     id: 'gad7_q1',
     text: '感到紧张、焦虑或急切',
-    trait: 'ANXIETY',
+    trait: 'worries',
     reverse: false
   },
   {
     id: 'gad7_q2',
     text: '不能停止或控制担忧',
-    trait: 'ANXIETY',
+    trait: 'worries',
     reverse: false
   },
   {
     id: 'gad7_q3',
     text: '对各种各样的事情担忧过多',
-    trait: 'ANXIETY',
+    trait: 'worries',
     reverse: false
   },
   {
+    id: 'ext_worry_1',
+    text: '担心未来可能发生的各种事情',
+    trait: 'worries',
+    reverse: false
+  },
+
+  // ========== 维度2: 运动性紧张 ==========
+  {
     id: 'gad7_q4',
     text: '很难放松下来',
-    trait: 'ANXIETY',
+    trait: 'tension',
     reverse: false
   },
   {
     id: 'gad7_q5',
     text: '非常焦躁以至于难以静坐',
-    trait: 'ANXIETY',
+    trait: 'tension',
     reverse: false
   },
+  {
+    id: 'ext_tension_1',
+    text: '感到肌肉紧张或僵硬',
+    trait: 'tension',
+    reverse: false
+  },
+  {
+    id: 'ext_tension_2',
+    text: '不自觉地咬指甲、踱步或坐立不安',
+    trait: 'tension',
+    reverse: false
+  },
+
+  // ========== 维度3: 易激惹 ==========
   {
     id: 'gad7_q6',
     text: '变得容易烦恼或急躁',
-    trait: 'ANXIETY',
+    trait: 'irritability',
     reverse: false
   },
   {
+    id: 'ext_irritability_1',
+    text: '对小事情反应过度',
+    trait: 'irritability',
+    reverse: false
+  },
+  {
+    id: 'ext_irritability_2',
+    text: '失去耐心的频率增加',
+    trait: 'irritability',
+    reverse: false
+  },
+  {
+    id: 'ext_irritability_3',
+    text: '对家人或朋友说话变得刻薄',
+    trait: 'irritability',
+    reverse: false
+  },
+
+  // ========== 维度4: 恐惧/焦虑感受 ==========
+  {
     id: 'gad7_q7',
     text: '感到似乎有什么可怕的事将要发生',
-    trait: 'ANXIETY',
+    trait: 'fear',
+    reverse: false
+  },
+  {
+    id: 'ext_fear_1',
+    text: '感到内心深处的恐惧',
+    trait: 'fear',
+    reverse: false
+  },
+  {
+    id: 'ext_fear_2',
+    text: '害怕失去控制',
+    trait: 'fear',
+    reverse: false
+  },
+  {
+    id: 'ext_fear_3',
+    text: '对某些场景或事物产生过度恐惧',
+    trait: 'fear',
+    reverse: false
+  },
+
+  // ========== 维度5: 躯体症状 ==========
+  {
+    id: 'ext_physical_1',
+    text: '心跳加速或心悸',
+    trait: 'physical',
+    reverse: false
+  },
+  {
+    id: 'ext_physical_2',
+    text: '感到呼吸急促或胸闷',
+    trait: 'physical',
+    reverse: false
+  },
+  {
+    id: 'ext_physical_3',
+    text: '手心出汗、手脚冰凉',
+    trait: 'physical',
+    reverse: false
+  },
+  {
+    id: 'ext_physical_4',
+    text: '感到胃部不适或恶心',
+    trait: 'physical',
+    reverse: false
+  },
+
+  // ========== 维度6: 认知症状 ==========
+  {
+    id: 'ext_cognitive_1',
+    text: '难以集中注意力',
+    trait: 'cognitive',
+    reverse: false
+  },
+  {
+    id: 'ext_cognitive_2',
+    text: '脑子一片空白或思绪混杂',
+    trait: 'cognitive',
+    reverse: false
+  },
+  {
+    id: 'ext_cognitive_3',
+    text: '反复想同一件事无法停止',
+    trait: 'cognitive',
+    reverse: false
+  },
+  {
+    id: 'ext_cognitive_4',
+    text: '对最坏情况的预期挥之不去',
+    trait: 'cognitive',
+    reverse: false
+  },
+
+  // ========== 维度7: 社会功能影响 ==========
+  {
+    id: 'ext_social_1',
+    text: '避免社交场合或害怕与人接触',
+    trait: 'social',
+    reverse: false
+  },
+  {
+    id: 'ext_social_2',
+    text: '在工作/学习中效率下降',
+    trait: 'social',
+    reverse: false
+  },
+  {
+    id: 'ext_social_3',
+    text: '放弃了曾经喜欢的活动',
+    trait: 'social',
+    reverse: false
+  },
+  {
+    id: 'ext_social_4',
+    text: '需要回避某些地方或场景',
+    trait: 'social',
     reverse: false
   }
 ];

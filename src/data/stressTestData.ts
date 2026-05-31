@@ -1,122 +1,251 @@
 import { Assessment, Question } from '../types';
 
 /**
- * 压力水平测试 (基于PSS - Perceived Stress Scale)
+ * 压力水平测试 - 扩展版 (基于PSS - Perceived Stress Scale)
  * 
  * 理论基础：
- * - 知觉压力量表 (PSS-10/PSS-14) 是目前使用最广泛的压力评估工具
+ * - 知觉压力量表 (PSS-10/PSS-14) 扩展到PSS-30
  * - 测量个体在过去一个月内对生活情境的主观压力感受
  * - 包含负向和正向题目，全面评估压力感受和应对能力
  * 
- * 评分系统：
- * - 0-13分：低压力水平
- * - 14-26分：中等压力水平
- * - 27-40分：高压力水平
+ * 扩展维度：
+ * - 压力源（工作、家庭、社交、健康、财务）
+ * - 情绪反应（焦虑、愤怒、抑郁、疲劳）
+ * - 认知功能（注意力、决策、记忆）
+ * - 生理反应（睡眠、食欲、健康）
+ * - 应对资源（社会支持、自我效能、应对方式）
  * 
- * 心理理论参考：
- * - 拉扎勒斯的压力与应对理论
- * - 塞里的一般适应综合征（GAS）
- * - 霍姆斯和拉赫的社会再适应量表
+ * 评分系统：
+ * - 0-30分：低压力水平
+ * - 31-60分：中等压力水平
+ * - 61-90分：高压力水平
+ * - 91-120分：极高压力水平
  */
 
 export const STRESS_TEST_ASSESSMENT: Assessment = {
   id: 'stress-test',
-  title: '压力水平测试',
-  description: '了解你当前的压力状态，获得专业的分析和建议。基于心理学界广泛使用的知觉压力量表(PSS)。',
+  title: '全面压力水平测试',
+  description: '基于PSS量表的扩展版压力测评，深入分析压力源和应对能力，获得专业的分析和建议。',
   category: '健康',
-  totalQuestions: 14,
+  totalQuestions: 30,
   icon: '😌',
-  difficulty: '简单',
-  estimatedTime: '3分钟'
+  difficulty: '中等',
+  estimatedTime: '10分钟'
 };
 
 export const STRESS_TEST_QUESTIONS: Question[] = [
-  // 第1部分：负向题目（直接计分，压力来源）
+  // ========== 维度1: 知觉压力感受 (负向题目) ==========
   { 
     id: 's1', 
     text: '在过去一个月里，你有多少时间感到无法控制生活中的重要事情？', 
-    trait: 'negative',
+    trait: 'perceivedStress',
     reverse: false
   },
   { 
     id: 's2', 
     text: '在过去一个月里，你有多少时间感到紧张和有压力？', 
-    trait: 'negative',
+    trait: 'perceivedStress',
     reverse: false
   },
   { 
     id: 's3', 
     text: '在过去一个月里，你有多少时间感到神经紧张或焦虑？', 
-    trait: 'negative',
+    trait: 'perceivedStress',
     reverse: false
   },
   { 
     id: 's4', 
     text: '在过去一个月里，你有多少时间感到事情的发展超出了你的控制？', 
-    trait: 'negative',
+    trait: 'perceivedStress',
     reverse: false
   },
   { 
     id: 's5', 
     text: '在过去一个月里，你有多少时间感到你无法应付所有必须做的事情？', 
-    trait: 'negative',
+    trait: 'perceivedStress',
     reverse: false
   },
   { 
     id: 's6', 
     text: '在过去一个月里，你有多少时间感到困难堆积如山，无法克服？', 
-    trait: 'negative',
+    trait: 'perceivedStress',
     reverse: false
   },
+
+  // ========== 维度2: 应对能力 (正向题目，反向计分) ==========
   { 
     id: 's7', 
-    text: '在过去一个月里，你有多少时间感到烦躁不安？', 
-    trait: 'negative',
-    reverse: false
+    text: '在过去一个月里，你有多少时间感到能够成功应对生活中的重要变化？', 
+    trait: 'coping',
+    reverse: true
   },
-  
-  // 第2部分：正向题目（反向计分，应对资源）
   { 
     id: 's8', 
-    text: '在过去一个月里，你有多少时间感到能够成功应对生活中的重要变化？', 
-    trait: 'positive',
+    text: '在过去一个月里，你有多少时间感到有信心处理好自己的问题？', 
+    trait: 'coping',
     reverse: true
   },
   { 
     id: 's9', 
-    text: '在过去一个月里，你有多少时间感到有信心处理好自己的问题？', 
-    trait: 'positive',
+    text: '在过去一个月里，你有多少时间感到事情进展顺利？', 
+    trait: 'coping',
     reverse: true
   },
   { 
     id: 's10', 
-    text: '在过去一个月里，你有多少时间感到事情进展顺利？', 
-    trait: 'positive',
+    text: '在过去一个月里，你有多少时间感到能够控制自己的情绪？', 
+    trait: 'coping',
     reverse: true
   },
   { 
     id: 's11', 
-    text: '在过去一个月里，你有多少时间感到能够控制自己的情绪？', 
-    trait: 'positive',
+    text: '在过去一个月里，你有多少时间感到生活中的事情都在掌控之中？', 
+    trait: 'coping',
     reverse: true
   },
   { 
     id: 's12', 
-    text: '在过去一个月里，你有多少时间感到生活中的事情都在掌控之中？', 
-    trait: 'positive',
-    reverse: true
-  },
-  { 
-    id: 's13', 
     text: '在过去一个月里，你有多少时间感到能够有效应对困难？', 
-    trait: 'positive',
+    trait: 'coping',
     reverse: true
   },
+
+  // ========== 维度3: 工作压力 ==========
   { 
-    id: 's14', 
-    text: '在过去一个月里，你有多少时间感到保持着内心的平静？', 
-    trait: 'positive',
-    reverse: true
+    id: 'ext_work_1', 
+    text: '工作负担过重让你感到压力大？', 
+    trait: 'workStress',
+    reverse: false
+  },
+  { 
+    id: 'ext_work_2', 
+    text: '工作/学习的时间压力让你难以承受？', 
+    trait: 'workStress',
+    reverse: false
+  },
+  { 
+    id: 'ext_work_3', 
+    text: '工作中的人际冲突让你感到困扰？', 
+    trait: 'workStress',
+    reverse: false
+  },
+  { 
+    id: 'ext_work_4', 
+    text: '对职业发展和未来的担忧让你感到压力？', 
+    trait: 'workStress',
+    reverse: false
+  },
+  { 
+    id: 'ext_work_5', 
+    text: '工作生活不平衡让你感到疲惫？', 
+    trait: 'workStress',
+    reverse: false
+  },
+
+  // ========== 维度4: 关系/家庭压力 ==========
+  { 
+    id: 'ext_relationship_1', 
+    text: '与家人/伴侣的关系让你感到压力？', 
+    trait: 'relationshipStress',
+    reverse: false
+  },
+  { 
+    id: 'ext_relationship_2', 
+    text: '家庭责任让你感到不堪重负？', 
+    trait: 'relationshipStress',
+    reverse: false
+  },
+  { 
+    id: 'ext_relationship_3', 
+    text: '与朋友/社交关系的问题让你困扰？', 
+    trait: 'relationshipStress',
+    reverse: false
+  },
+  { 
+    id: 'ext_relationship_4', 
+    text: '缺乏社交支持让你感到孤独？', 
+    trait: 'relationshipStress',
+    reverse: false
+  },
+
+  // ========== 维度5: 健康压力 ==========
+  { 
+    id: 'ext_health_1', 
+    text: '自己或家人的健康问题让你感到担忧？', 
+    trait: 'healthStress',
+    reverse: false
+  },
+  { 
+    id: 'ext_health_2', 
+    text: '睡眠质量问题让你感到压力？', 
+    trait: 'healthStress',
+    reverse: false
+  },
+  { 
+    id: 'ext_health_3', 
+    text: '长期感到疲劳或精力不足？', 
+    trait: 'healthStress',
+    reverse: false
+  },
+
+  // ========== 维度6: 财务压力 ==========
+  { 
+    id: 'ext_finance_1', 
+    text: '经济压力让你感到焦虑？', 
+    trait: 'financeStress',
+    reverse: false
+  },
+  { 
+    id: 'ext_finance_2', 
+    text: '对未来经济状况的担忧让你不安？', 
+    trait: 'financeStress',
+    reverse: false
+  },
+  { 
+    id: 'ext_finance_3', 
+    text: '债务或财务问题让你感到压力？', 
+    trait: 'financeStress',
+    reverse: false
+  },
+
+  // ========== 维度7: 生理反应 ==========
+  { 
+    id: 'ext_physiological_1', 
+    text: '经常感到头痛或身体紧张？', 
+    trait: 'physiological',
+    reverse: false
+  },
+  { 
+    id: 'ext_physiological_2', 
+    text: '食欲发生明显变化（吃太多或太少）？', 
+    trait: 'physiological',
+    reverse: false
+  },
+  { 
+    id: 'ext_physiological_3', 
+    text: '心率加快、呼吸急促或肠胃不适？', 
+    trait: 'physiological',
+    reverse: false
+  },
+
+  // ========== 维度8: 情绪反应 ==========
+  { 
+    id: 'ext_emotional_1', 
+    text: '容易感到愤怒或烦躁？', 
+    trait: 'emotional',
+    reverse: false
+  },
+  { 
+    id: 'ext_emotional_2', 
+    text: '容易感到悲伤或情绪低落？', 
+    trait: 'emotional',
+    reverse: false
+  },
+  { 
+    id: 'ext_emotional_3', 
+    text: '情绪波动较大，难以控制？', 
+    trait: 'emotional',
+    reverse: false
   }
 ];
 
@@ -137,19 +266,21 @@ export const STRESS_SOURCES = [
   { type: 'lifeChange', name: '生活变化', examples: ['搬家', '工作变动', '失去亲友', '重大决策'] }
 ];
 
-// 压力应对策略
+// 扩展版压力应对策略
 export const COPING_STRATEGIES = {
   problemFocused: [
     { name: '制定计划', description: '将大问题分解成小步骤，制定具体行动计划' },
     { name: '时间管理', description: '学习优先级管理，使用时间管理工具' },
     { name: '寻求支持', description: '向朋友、家人或专业人士寻求帮助' },
-    { name: '问题解决', description: '直接面对问题，寻找解决方案' }
+    { name: '问题解决', description: '直接面对问题，寻找解决方案' },
+    { name: '边界设定', description: '学会说不，保护自己的时间和能量' }
   ],
   emotionFocused: [
     { name: '冥想放松', description: '正念冥想、深呼吸、渐进式肌肉放松' },
     { name: '运动锻炼', description: '有氧运动、瑜伽、跑步等，释放压力激素' },
     { name: '艺术创作', description: '绘画、音乐、写作等表达性艺术' },
-    { name: '自然接触', description: '接触自然、散步、户外活动' }
+    { name: '自然接触', description: '接触自然、散步、户外活动' },
+    { name: '情绪日记', description: '记录和分析自己的情绪反应' }
   ],
   avoidance: [
     { name: '健康回避', description: '暂时分散注意力，但不过度逃避' },
@@ -158,10 +289,11 @@ export const COPING_STRATEGIES = {
   ]
 };
 
+// 扩展版压力水平解释
 export const STRESS_LEVELS = {
   low: {
     name: '低压力水平',
-    range: [0, 13],
+    range: [0, 30],
     description: '你目前处于良好的压力管理状态，能够很好地应对生活中的各种挑战。保持现在的生活方式，继续关注自己的身心健康。',
     color: 'green',
     detailed: {
@@ -169,23 +301,11 @@ export const STRESS_LEVELS = {
       emotionalSigns: ['情绪稳定', '乐观积极', '平静自信', '能享受生活'],
       cognitiveSigns: ['思维清晰', '决策力强', '专注力好', '解决问题能力强'],
       socialSigns: ['社交活跃', '享受人际交往', '有支持网络', '善于沟通']
-    },
-    recommendations: {
-      continue: ['继续保持规律的作息', '维持健康的生活方式', '保持社交联系', '定期放松和娱乐'],
-      enhance: ['尝试新的放松技巧', '拓展兴趣爱好', '设定新的个人目标', '帮助他人'],
-      watch: ['不过度承担新责任', '关注压力的早期预警信号', '保持工作生活平衡']
-    },
-    dailyPractices: [
-      '每天5-10分钟的感恩日记',
-      '保持规律的运动习惯',
-      '每周安排放松时间',
-      '与朋友家人保持联系'
-    ],
-    resources: ['冥想应用', '减压音频', '自然环境接触', '爱好活动']
+    }
   },
   medium: {
     name: '中等压力水平',
-    range: [14, 26],
+    range: [31, 60],
     description: '你正经历一定程度的压力，但还在可控范围内。适当调整生活节奏，采取一些压力管理措施会对你有帮助。',
     color: 'yellow',
     detailed: {
@@ -193,50 +313,79 @@ export const STRESS_LEVELS = {
       emotionalSigns: ['有时烦躁', '情绪波动', '担心未来', '偶尔感到不堪重负'],
       cognitiveSigns: ['注意力有时分散', '决策困难', '思虑过多', '记忆力轻微下降'],
       socialSigns: ['社交减少', '有时感到孤独', '沟通困难', '容易不耐烦']
-    },
-    recommendations: {
-      immediate: ['减少工作量/责任', '安排专门的休息时间', '与信任的人交谈', '开始规律运动'],
-      medium: ['学习压力管理技巧', '建立健康边界', '改善睡眠习惯', '培养放松爱好'],
-      longTerm: ['重新评估优先级', '学习时间管理', '建立健康生活方式', '考虑专业咨询']
-    },
-    dailyPractices: [
-      '每天10分钟的深呼吸或冥想',
-      '30分钟的轻度运动',
-      '7-8小时的规律睡眠',
-      '健康均衡的饮食',
-      '与朋友交流15分钟'
-    ],
-    resources: ['减压书籍', '正念应用', '压力管理课程', '咨询师（可选）']
+    }
   },
   high: {
     name: '高压力水平',
-    range: [27, 40],
+    range: [61, 90],
     description: '你目前正经历较高的压力水平，这可能会影响你的身心健康。建议采取积极的应对措施，必要时寻求专业帮助。',
-    color: 'red',
+    color: 'orange',
     detailed: {
-      physicalSigns: ['持续疲劳', '睡眠问题严重', '头痛/肌肉紧张', '消化问题', '免疫系统下降'],
+      physicalSigns: ['持续疲劳', '睡眠问题明显', '头痛/肌肉紧张', '消化问题', '免疫系统下降'],
       emotionalSigns: ['持续焦虑', '情绪低落', '易怒', '感到绝望', '失去兴趣'],
       cognitiveSigns: ['难以集中注意力', '决策困难', '消极思维', '记忆力下降', '感到不知所措'],
       socialSigns: ['社交回避', '孤立自己', '关系冲突', '缺乏支持感']
-    },
-    recommendations: {
-      urgent: ['尽快减轻压力源', '寻求专业帮助', '告诉家人/朋友你的状况', '暂停新的责任'],
-      medical: ['考虑咨询医生', '心理咨询', '压力管理课程', '可能需要药物支持（医生建议）'],
-      lifestyle: ['简化生活', '强制休息', '寻求支持网络', '健康第一'],
-      selfCare: ['不要自责', '一步一步来', '寻求帮助不是软弱', '优先照顾自己']
-    },
-    dailyPractices: [
-      '简化日程，只做最重要的事',
-      '每天至少放松30分钟',
-      '保证充足睡眠',
-      '温和的身体活动（散步/瑜伽）',
-      '与信任的人交流'
-    ],
-    resources: ['心理健康专业人士', '压力管理专家', '支持小组', '危机热线（如需要）']
+    }
+  },
+  extreme: {
+    name: '极高压力水平',
+    range: [91, 120],
+    description: '你目前正经历严重的压力危机，这可能严重影响你的身心健康。请立即寻求专业帮助，不要独自面对。',
+    color: 'red',
+    detailed: {
+      physicalSigns: ['严重身体不适', '几乎无法入睡', '明显的身体症状', '可能需要医疗关注'],
+      emotionalSigns: ['极度痛苦', '感到崩溃', '可能有抑郁或焦虑发作', '情绪麻木或失控'],
+      cognitiveSigns: ['基本无法正常思考', '判断力受损', '可能有灾难化思维', '考虑极端情况'],
+      socialSigns: ['完全孤立', '关系可能破裂', '无法工作或学习', '基本功能受损']
+    }
   }
 };
 
-// 压力阶段模型（基于塞里的GAS理论）
+// 压力维度详细分析
+export const STRESS_DIMENSIONS = {
+  perceivedStress: {
+    name: '知觉压力感受',
+    description: '主观感受到的压力程度和控制感',
+    tips: ['练习正念觉察', '写压力日记', '认知重构']
+  },
+  coping: {
+    name: '应对能力',
+    description: '你应对压力的有效程度',
+    tips: ['建立应对工具箱', '寻求社会支持', '培养心理弹性']
+  },
+  workStress: {
+    name: '工作压力',
+    description: '来自职业/学业的压力程度',
+    tips: ['更好的时间管理', '工作边界设定', '职业发展规划']
+  },
+  relationshipStress: {
+    name: '关系压力',
+    description: '人际关系带来的压力',
+    tips: ['沟通技巧提升', '建立健康边界', '寻求关系辅导']
+  },
+  healthStress: {
+    name: '健康压力',
+    description: '健康相关的压力',
+    tips: ['健康管理', '改善睡眠', '建立医疗支持系统']
+  },
+  financeStress: {
+    name: '财务压力',
+    description: '财务相关的压力',
+    tips: ['财务规划', '预算管理', '寻求专业财务建议']
+  },
+  physiological: {
+    name: '生理反应',
+    description: '压力在身体上的表现',
+    tips: ['放松训练', '规律运动', '关注身体信号']
+  },
+  emotional: {
+    name: '情绪反应',
+    description: '压力在情绪上的表现',
+    tips: ['情绪调节', '表达情绪', '心理辅导']
+  }
+};
+
+// 压力阶段模型
 export const STRESS_STAGES = {
   alarm: {
     name: '警报阶段',
@@ -258,7 +407,7 @@ export const STRESS_STAGES = {
   }
 };
 
-// 压力-表现曲线（耶基斯-多德森定律）
+// 压力-表现曲线
 export const PERFORMANCE_CURVE = {
   tooLow: {
     state: '低压力-低表现',
@@ -300,43 +449,6 @@ export const STRESS_CHECKLIST = {
     '明确的生活目标',
     '健康的边界',
     '积极的自我对话'
-  ]
-};
-
-// 压力日记模板
-export const STRESS_DIARY_TEMPLATE = {
-  entries: [
-    { question: '今天主要的压力源是什么？', key: 'source' },
-    { question: '压力的程度（1-10分）？', key: 'level' },
-    { question: '你当时的感受是怎样的？', key: 'feelings' },
-    { question: '你是如何应对的？', key: 'coping' },
-    { question: '现在感觉如何？', key: 'after' }
-  ],
-  benefits: [
-    '识别压力模式',
-    '了解个人触发器',
-    '发现有效应对策略',
-    '监控进步',
-    '增强自我觉察'
-  ]
-};
-
-// 放松技术数据库
-export const RELAXATION_TECHNIQUES = {
-  breathing: [
-    { name: '4-7-8呼吸法', description: '吸气4秒，屏气7秒，呼气8秒，重复4次' },
-    { name: '腹式呼吸', description: '深呼吸，用腹部而不是胸部呼吸，每分钟5-8次' },
-    { name: '平衡呼吸', description: '吸气和呼气时间相同，如吸气4秒，呼气4秒' }
-  ],
-  body: [
-    { name: '渐进式肌肉放松', description: '从脚趾开始，逐组肌肉紧张再放松' },
-    { name: '身体扫描', description: '从上到下，觉察每个身体部位的感觉' },
-    { name: '伸展运动', description: '简单的瑜伽动作或伸展，释放肌肉紧张' }
-  ],
-  mental: [
-    { name: '正念冥想', description: '专注于当下，不评判地觉察想法和感受' },
-    { name: '引导想象', description: '想象一个平静的场景，调动所有感官' },
-    { name: '感恩练习', description: '回想3-5件今天值得感恩的事情' }
   ]
 };
 
