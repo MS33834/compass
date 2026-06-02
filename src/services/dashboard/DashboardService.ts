@@ -1,8 +1,8 @@
-import { 
+import {
   UnifiedAssessmentResult,
   DataStatistics,
   AssessmentTrend,
-  PeriodicSummary 
+  PeriodicSummary,
 } from '../../types/dataAbstraction';
 import { dataAggregationService } from '../dataAbstraction/DataAggregationService';
 import { dataSyncService } from '../dataAbstraction/DataSyncService';
@@ -11,20 +11,20 @@ import { tagService } from './TagService';
 class DashboardService {
   async initializeDashboard(_userId: string): Promise<any> {
     await dataSyncService.syncAllAssessments();
-    
+
     const personalCenter = dataSyncService.getPersonalDataCenter();
     const results = personalCenter.results;
 
     const statistics = dataAggregationService.calculateStatistics(results);
-    
+
     const recentResults = this.getRecentResults(results, 10);
-    
+
     const trends = this.calculateKeyTrends(results);
-    
+
     const summaries = this.generateRecentSummaries();
-    
+
     const topTags = tagService.getTopTags(10);
-    
+
     const insights = this.getInsights();
 
     return {
@@ -33,32 +33,41 @@ class DashboardService {
       trends,
       summaries,
       topTags,
-      insights
+      insights,
     };
   }
 
-  private getRecentResults(results: UnifiedAssessmentResult[], limit: number): UnifiedAssessmentResult[] {
-    return [...results]
-      .sort((a, b) => b.timestamp - a.timestamp)
-      .slice(0, limit);
+  private getRecentResults(
+    results: UnifiedAssessmentResult[],
+    limit: number
+  ): UnifiedAssessmentResult[] {
+    return [...results].sort((a, b) => b.timestamp - a.timestamp).slice(0, limit);
   }
 
   private calculateKeyTrends(results: UnifiedAssessmentResult[]): AssessmentTrend[] {
     const trends: AssessmentTrend[] = [];
-    
+
     if (results.length < 2) return trends;
 
     const personalityResults = results.filter(r => r.assessmentType === 'personality');
     const stressResults = results.filter(r => r.assessmentType === 'stress');
     const anxietyResults = results.filter(r => r.assessmentType === 'anxiety');
-    void personalityResults; void stressResults; void anxietyResults;
+    void personalityResults;
+    void stressResults;
+    void anxietyResults;
 
-    const keyTraits = ['开放性', '尽责性', '外向性', '宜人性', '情绪稳定性', '压力水平', '焦虑水平'];
+    const keyTraits = [
+      '开放性',
+      '尽责性',
+      '外向性',
+      '宜人性',
+      '情绪稳定性',
+      '压力水平',
+      '焦虑水平',
+    ];
 
     keyTraits.forEach(traitName => {
-      const traitResults = results.filter(r => 
-        r.traits.some(t => t.name === traitName)
-      );
+      const traitResults = results.filter(r => r.traits.some(t => t.name === traitName));
 
       if (traitResults.length >= 2) {
         const trend = dataAggregationService.calculateTraitTrend(traitResults, traitName);
@@ -73,10 +82,10 @@ class DashboardService {
 
   private generateRecentSummaries(): PeriodicSummary[] {
     const summaries: PeriodicSummary[] = [];
-    
+
     const weekly = dataAggregationService.generatePeriodicSummary('weekly');
     if (weekly) summaries.push(weekly);
-    
+
     const monthly = dataAggregationService.generatePeriodicSummary('monthly');
     if (monthly) summaries.push(monthly);
 
@@ -98,7 +107,7 @@ class DashboardService {
     return {
       results,
       statistics,
-      trends
+      trends,
     };
   }
 
@@ -109,27 +118,27 @@ class DashboardService {
   } {
     const results = dataSyncService.getResultsByType(type);
     const statistics = dataAggregationService.calculateStatistics(results);
-    const aggregated = dataAggregationService.getAggregatedData(
-      this.getAssessmentIdByType(type)
-    );
+    const aggregated = dataAggregationService.getAggregatedData(this.getAssessmentIdByType(type));
 
     return {
       results,
       statistics,
-      aggregated
+      aggregated,
     };
   }
 
   private getAssessmentIdByType(type: UnifiedAssessmentResult['assessmentType']): string {
     const typeMap: Record<string, string> = {
-      'personality': 'big-five',
-      'stress': 'stress-test',
-      'anxiety': 'anxiety-gad7'
+      personality: 'big-five',
+      stress: 'stress-test',
+      anxiety: 'anxiety-gad7',
     };
     return typeMap[type] || 'unknown';
   }
 
-  async generateComprehensiveReport(period: 'weekly' | 'monthly' | 'quarterly' | 'yearly'): Promise<string> {
+  async generateComprehensiveReport(
+    period: 'weekly' | 'monthly' | 'quarterly' | 'yearly'
+  ): Promise<string> {
     const summary = dataAggregationService.generatePeriodicSummary(period);
 
     if (!summary) {
@@ -195,8 +204,9 @@ class DashboardService {
 
     const recentResults = this.getRecentResults(results, 5);
     if (recentResults.length > 0) {
-      const avgRecentScore = recentResults.reduce((sum, r) => sum + r.totalScore, 0) / recentResults.length;
-      
+      const avgRecentScore =
+        recentResults.reduce((sum, r) => sum + r.totalScore, 0) / recentResults.length;
+
       if (avgRecentScore > 70) {
         insights.push('近期状态良好，继续保持！');
       } else if (avgRecentScore < 40) {
@@ -223,7 +233,7 @@ class DashboardService {
       totalAssessments: statistics.totalAssessments,
       streakDays: statistics.streakDays,
       averageScore: Math.round(statistics.averageScore),
-      mostRecentType: recent[0]?.assessmentType
+      mostRecentType: recent[0]?.assessmentType,
     };
   }
 }

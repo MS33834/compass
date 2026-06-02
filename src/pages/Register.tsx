@@ -8,14 +8,22 @@ import { ShakeOnError } from '../components/animations/AnimatedComponents';
 
 export const Register = () => {
   const navigate = useNavigate();
-  const { register, authLoading, authError, isAuthenticated, clearAuthError, locale, loginWithOAuth } = useAppStore();
+  const {
+    register,
+    authLoading,
+    authError,
+    isAuthenticated,
+    clearAuthError,
+    locale,
+    loginWithOAuth,
+  } = useAppStore();
   const i18n = getTranslation(locale);
 
   const [formData, setFormData] = useState<RegisterData>({
     email: '',
     username: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
   });
 
   const [touched, setTouched] = useState<Partial<Record<keyof RegisterData, boolean>>>({});
@@ -26,7 +34,7 @@ export const Register = () => {
   // 验证错误
   const getErrors = () => {
     const errors: Partial<RegisterData> & { terms?: string } = {};
-    
+
     if (touched.email) {
       if (!formData.email) {
         errors.email = i18n.auth.emailRequired;
@@ -34,7 +42,7 @@ export const Register = () => {
         errors.email = i18n.auth.emailInvalid;
       }
     }
-    
+
     if (touched.username) {
       if (!formData.username) {
         errors.username = i18n.auth.usernameRequired;
@@ -46,7 +54,7 @@ export const Register = () => {
         errors.username = i18n.auth.usernameInvalidFormat;
       }
     }
-    
+
     if (touched.password) {
       if (!formData.password) {
         errors.password = i18n.auth.passwordRequired;
@@ -56,7 +64,7 @@ export const Register = () => {
         errors.password = i18n.auth.passwordTooLong;
       }
     }
-    
+
     if (touched.confirmPassword) {
       if (!formData.confirmPassword) {
         errors.confirmPassword = i18n.auth.confirmPasswordRequired;
@@ -68,7 +76,7 @@ export const Register = () => {
     if (termsTouched && !agreedTerms) {
       errors.terms = i18n.auth.termsRequired;
     }
-    
+
     return errors;
   };
 
@@ -92,7 +100,7 @@ export const Register = () => {
     e.preventDefault();
     setTouched({ email: true, username: true, password: true, confirmPassword: true });
     setTermsTouched(true);
-    
+
     if (!isValid) {
       return;
     }
@@ -106,9 +114,7 @@ export const Register = () => {
     }
   };
 
-  const handleChange = (field: keyof RegisterData) => (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleChange = (field: keyof RegisterData) => (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [field]: e.target.value });
     setTouched({ ...touched, [field]: true });
   };
@@ -197,7 +203,9 @@ export const Register = () => {
                   onChange={handleChange('email')}
                   onBlur={() => setTouched({ ...touched, email: true })}
                   className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors ${
-                    errors.email ? 'border-red-500 bg-red-50' : 'border-slate-300 hover:border-slate-400'
+                    errors.email
+                      ? 'border-red-500 bg-red-50'
+                      : 'border-slate-300 hover:border-slate-400'
                   }`}
                   placeholder="name@example.com"
                   autoComplete="email"
@@ -205,7 +213,12 @@ export const Register = () => {
                 />
                 <AnimatePresence>
                   {errors.email && (
-                    <motion.p className="mt-1 text-sm text-red-600" initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -5 }}>
+                    <motion.p
+                      className="mt-1 text-sm text-red-600"
+                      initial={{ opacity: 0, y: -5 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -5 }}
+                    >
                       {errors.email}
                     </motion.p>
                   )}
@@ -223,7 +236,9 @@ export const Register = () => {
                   onChange={handleChange('username')}
                   onBlur={() => setTouched({ ...touched, username: true })}
                   className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors ${
-                    errors.username ? 'border-red-500 bg-red-50' : 'border-slate-300 hover:border-slate-400'
+                    errors.username
+                      ? 'border-red-500 bg-red-50'
+                      : 'border-slate-300 hover:border-slate-400'
                   }`}
                   placeholder="johndoe"
                   autoComplete="username"
@@ -231,15 +246,18 @@ export const Register = () => {
                 />
                 <AnimatePresence>
                   {errors.username && (
-                    <motion.p className="mt-1 text-sm text-red-600" initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -5 }}>
+                    <motion.p
+                      className="mt-1 text-sm text-red-600"
+                      initial={{ opacity: 0, y: -5 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -5 }}
+                    >
                       {errors.username}
                     </motion.p>
                   )}
                 </AnimatePresence>
                 {touched.username && !errors.username && (
-                  <p className="mt-1 text-xs text-slate-500">
-                    {i18n.auth.usernameHint}
-                  </p>
+                  <p className="mt-1 text-xs text-slate-500">{i18n.auth.usernameHint}</p>
                 )}
               </div>
 
@@ -254,7 +272,9 @@ export const Register = () => {
                   onChange={handleChange('password')}
                   onBlur={() => setTouched({ ...touched, password: true })}
                   className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors ${
-                    errors.password ? 'border-red-500 bg-red-50' : 'border-slate-300 hover:border-slate-400'
+                    errors.password
+                      ? 'border-red-500 bg-red-50'
+                      : 'border-slate-300 hover:border-slate-400'
                   }`}
                   placeholder="••••••••"
                   autoComplete="new-password"
@@ -262,20 +282,26 @@ export const Register = () => {
                 />
                 <AnimatePresence>
                   {errors.password && (
-                    <motion.p className="mt-1 text-sm text-red-600" initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -5 }}>
+                    <motion.p
+                      className="mt-1 text-sm text-red-600"
+                      initial={{ opacity: 0, y: -5 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -5 }}
+                    >
                       {errors.password}
                     </motion.p>
                   )}
                 </AnimatePresence>
                 {touched.password && !errors.password && (
-                  <p className="mt-1 text-xs text-slate-500">
-                    {i18n.auth.passwordHint}
-                  </p>
+                  <p className="mt-1 text-xs text-slate-500">{i18n.auth.passwordHint}</p>
                 )}
               </div>
 
               <div>
-                <label htmlFor="confirmPassword" className="block text-sm font-medium text-slate-700 mb-2">
+                <label
+                  htmlFor="confirmPassword"
+                  className="block text-sm font-medium text-slate-700 mb-2"
+                >
                   {i18n.auth.confirmPassword}
                 </label>
                 <motion.input
@@ -285,7 +311,9 @@ export const Register = () => {
                   onChange={handleChange('confirmPassword')}
                   onBlur={() => setTouched({ ...touched, confirmPassword: true })}
                   className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors ${
-                    errors.confirmPassword ? 'border-red-500 bg-red-50' : 'border-slate-300 hover:border-slate-400'
+                    errors.confirmPassword
+                      ? 'border-red-500 bg-red-50'
+                      : 'border-slate-300 hover:border-slate-400'
                   }`}
                   placeholder="••••••••"
                   autoComplete="new-password"
@@ -293,7 +321,12 @@ export const Register = () => {
                 />
                 <AnimatePresence>
                   {errors.confirmPassword && (
-                    <motion.p className="mt-1 text-sm text-red-600" initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -5 }}>
+                    <motion.p
+                      className="mt-1 text-sm text-red-600"
+                      initial={{ opacity: 0, y: -5 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -5 }}
+                    >
                       {errors.confirmPassword}
                     </motion.p>
                   )}
@@ -305,7 +338,7 @@ export const Register = () => {
                   id="terms"
                   type="checkbox"
                   checked={agreedTerms}
-                  onChange={(e) => {
+                  onChange={e => {
                     setAgreedTerms(e.target.checked);
                     setTermsTouched(true);
                   }}
@@ -324,7 +357,12 @@ export const Register = () => {
               </div>
               <AnimatePresence>
                 {errors.terms && (
-                  <motion.p className="text-sm text-red-600" initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -5 }}>
+                  <motion.p
+                    className="text-sm text-red-600"
+                    initial={{ opacity: 0, y: -5 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -5 }}
+                  >
                     {errors.terms}
                   </motion.p>
                 )}
@@ -340,8 +378,20 @@ export const Register = () => {
                 {authLoading ? (
                   <>
                     <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                        fill="none"
+                      />
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      />
                     </svg>
                     {i18n.auth.registering}
                   </>
@@ -355,9 +405,7 @@ export const Register = () => {
                   <div className="w-full border-t border-slate-200" />
                 </div>
                 <div className="relative flex justify-center text-sm">
-                  <span className="px-4 bg-white text-slate-500">
-                    {i18n.auth.orContinueWith}
-                  </span>
+                  <span className="px-4 bg-white text-slate-500">{i18n.auth.orContinueWith}</span>
                 </div>
               </div>
 
@@ -391,10 +439,7 @@ export const Register = () => {
           <div className="mt-6 text-center">
             <p className="text-slate-600">
               {i18n.auth.hasAccount}{' '}
-              <Link
-                to="/login"
-                className="text-blue-600 hover:text-blue-700 font-semibold"
-              >
+              <Link to="/login" className="text-blue-600 hover:text-blue-700 font-semibold">
                 {i18n.auth.loginHere}
               </Link>
             </p>
@@ -402,10 +447,7 @@ export const Register = () => {
         </motion.div>
 
         <div className="mt-6 text-center">
-          <Link
-            to="/"
-            className="text-slate-600 hover:text-slate-700 text-sm font-medium"
-          >
+          <Link to="/" className="text-slate-600 hover:text-slate-700 text-sm font-medium">
             ← {i18n.common.back} {i18n.nav.home}
           </Link>
         </div>

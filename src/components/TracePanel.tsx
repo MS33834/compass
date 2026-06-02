@@ -4,27 +4,27 @@ import { traceService } from '../services/trace/TraceService';
 import type { TraceLogEntry } from '../services/trace/TraceService';
 
 const ACTION_LABELS: Record<string, { en: string; zh: string }> = {
-  'answer_selected': { en: 'Answer Selected', zh: '选择答案' },
-  'answer_changed': { en: 'Answer Changed', zh: '修改答案' },
-  'question_skipped': { en: 'Question Skipped', zh: '跳过题目' },
-  'score_calculated': { en: 'Score Calculated', zh: '计算分数' },
-  'score_transformed': { en: 'Score Transformed', zh: '分数转换' },
-  'trait_aggregated': { en: 'Trait Aggregated', zh: '特质聚合' },
-  'report_generated': { en: 'Report Generated', zh: '生成报告' },
-  'tag_applied': { en: 'Tag Applied', zh: '添加标签' },
-  'result_stored': { en: 'Result Stored', zh: '保存结果' },
+  answer_selected: { en: 'Answer Selected', zh: '选择答案' },
+  answer_changed: { en: 'Answer Changed', zh: '修改答案' },
+  question_skipped: { en: 'Question Skipped', zh: '跳过题目' },
+  score_calculated: { en: 'Score Calculated', zh: '计算分数' },
+  score_transformed: { en: 'Score Transformed', zh: '分数转换' },
+  trait_aggregated: { en: 'Trait Aggregated', zh: '特质聚合' },
+  report_generated: { en: 'Report Generated', zh: '生成报告' },
+  tag_applied: { en: 'Tag Applied', zh: '添加标签' },
+  result_stored: { en: 'Result Stored', zh: '保存结果' },
 };
 
 const ACTION_COLORS: Record<string, string> = {
-  'answer_selected': 'bg-blue-100 text-blue-700',
-  'answer_changed': 'bg-yellow-100 text-yellow-700',
-  'question_skipped': 'bg-gray-100 text-gray-700',
-  'score_calculated': 'bg-green-100 text-green-700',
-  'score_transformed': 'bg-purple-100 text-purple-700',
-  'trait_aggregated': 'bg-pink-100 text-pink-700',
-  'report_generated': 'bg-indigo-100 text-indigo-700',
-  'tag_applied': 'bg-orange-100 text-orange-700',
-  'result_stored': 'bg-teal-100 text-teal-700'
+  answer_selected: 'bg-blue-100 text-blue-700',
+  answer_changed: 'bg-yellow-100 text-yellow-700',
+  question_skipped: 'bg-gray-100 text-gray-700',
+  score_calculated: 'bg-green-100 text-green-700',
+  score_transformed: 'bg-purple-100 text-purple-700',
+  trait_aggregated: 'bg-pink-100 text-pink-700',
+  report_generated: 'bg-indigo-100 text-indigo-700',
+  tag_applied: 'bg-orange-100 text-orange-700',
+  result_stored: 'bg-teal-100 text-teal-700',
 };
 
 interface TracePanelProps {
@@ -33,17 +33,14 @@ interface TracePanelProps {
 }
 
 export function TracePanel({ assessmentId, onClose }: TracePanelProps) {
-  const locale = useAppStore((state) => state.locale);
+  const locale = useAppStore(state => state.locale);
   const t = (zh: string, en: string) => (locale === 'zh' ? zh : en);
 
   const traces = useMemo<TraceLogEntry[]>(
     () => traceService.getTraceForAssessment(assessmentId),
-    [assessmentId],
+    [assessmentId]
   );
-  const verification = useMemo(
-    () => traceService.verifyIntegrity(assessmentId),
-    [assessmentId],
-  );
+  const verification = useMemo(() => traceService.verifyIntegrity(assessmentId), [assessmentId]);
 
   const exportReport = () => {
     const report = traceService.exportTraceReport(assessmentId);
@@ -88,14 +85,19 @@ export function TracePanel({ assessmentId, onClose }: TracePanelProps) {
           </button>
         </div>
 
-        <div className={`p-6 border-b ${
-          verification.valid ? 'bg-green-50 border-green-200' : 'bg-yellow-50 border-yellow-200'
-        }`}>
+        <div
+          className={`p-6 border-b ${
+            verification.valid ? 'bg-green-50 border-green-200' : 'bg-yellow-50 border-yellow-200'
+          }`}
+        >
           <div className="flex items-center gap-3">
-            <span className="text-2xl" aria-hidden="true">{verification.valid ? '✅' : '⚠️'}</span>
+            <span className="text-2xl" aria-hidden="true">
+              {verification.valid ? '✅' : '⚠️'}
+            </span>
             <div>
               <h3 className="font-semibold text-slate-800">
-                {t('完整性检查', 'Integrity Check')}: {verification.valid ? t('通过', 'Passed') : t('发现问题', 'Issues Found')}
+                {t('完整性检查', 'Integrity Check')}:{' '}
+                {verification.valid ? t('通过', 'Passed') : t('发现问题', 'Issues Found')}
               </h3>
               {verification.issues.length > 0 && (
                 <ul className="text-sm text-slate-600 mt-1">
@@ -118,21 +120,22 @@ export function TracePanel({ assessmentId, onClose }: TracePanelProps) {
 
           {traces.length === 0 ? (
             <div className="text-center py-8 text-slate-500">
-              <div className="text-4xl mb-2" aria-hidden="true">📭</div>
+              <div className="text-4xl mb-2" aria-hidden="true">
+                📭
+              </div>
               <p>{t('暂无溯源记录', 'No trace records')}</p>
             </div>
           ) : (
             <div className="space-y-3">
-              {traces.map((trace) => (
-                <div
-                  key={trace.id}
-                  className="p-4 bg-slate-50 rounded-xl border border-slate-200"
-                >
+              {traces.map(trace => (
+                <div key={trace.id} className="p-4 bg-slate-50 rounded-xl border border-slate-200">
                   <div className="flex items-start justify-between mb-2">
                     <div className="flex items-center gap-3">
-                      <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                        ACTION_COLORS[trace.action] || 'bg-gray-100 text-gray-700'
-                      }`}>
+                      <span
+                        className={`px-3 py-1 rounded-full text-xs font-medium ${
+                          ACTION_COLORS[trace.action] || 'bg-gray-100 text-gray-700'
+                        }`}
+                      >
                         {getActionLabel(trace.action)}
                       </span>
                       {trace.questionId && (
@@ -142,7 +145,9 @@ export function TracePanel({ assessmentId, onClose }: TracePanelProps) {
                       )}
                     </div>
                     <span className="text-xs text-slate-400">
-                      {new Date(trace.timestamp).toLocaleString(locale === 'zh' ? 'zh-CN' : 'en-US')}
+                      {new Date(trace.timestamp).toLocaleString(
+                        locale === 'zh' ? 'zh-CN' : 'en-US'
+                      )}
                     </span>
                   </div>
                   <div className="text-sm text-slate-600 bg-white p-3 rounded-lg border border-slate-200">

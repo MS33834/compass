@@ -43,13 +43,15 @@ export function DailyTips() {
       </div>
 
       <div className="space-y-3">
-        {tips.map((tip) => (
+        {tips.map(tip => (
           <div
             key={tip.id}
             className="bg-white rounded-xl p-4 shadow-sm border border-slate-100 hover:shadow-md transition-all"
           >
             <div className="flex items-start gap-3">
-              <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${categoryColors[tip.category] || 'from-slate-400 to-slate-500'} flex items-center justify-center text-lg shrink-0`}>
+              <div
+                className={`w-10 h-10 rounded-xl bg-gradient-to-br ${categoryColors[tip.category] || 'from-slate-400 to-slate-500'} flex items-center justify-center text-lg shrink-0`}
+              >
                 {categoryIcons[tip.category] || '💡'}
               </div>
               <div className="flex-1 min-w-0">

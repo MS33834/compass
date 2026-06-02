@@ -32,9 +32,15 @@ export const SharedView = () => {
       if (!result) {
         const verify = shareService.verifyShare(id);
         setNeedsPassword(verify);
-        setError(verify
-          ? (locale === 'zh' ? '密码错误' : 'Wrong password')
-          : (locale === 'zh' ? '链接已失效或不存在' : 'Link expired or not found'));
+        setError(
+          verify
+            ? locale === 'zh'
+              ? '密码错误'
+              : 'Wrong password'
+            : locale === 'zh'
+              ? '链接已失效或不存在'
+              : 'Link expired or not found'
+        );
         return;
       }
       setData(result.data);
@@ -55,9 +61,16 @@ export const SharedView = () => {
 
   if (loading) {
     return (
-      <div className="min-h-[60vh] flex items-center justify-center" role="status" aria-live="polite">
+      <div
+        className="min-h-[60vh] flex items-center justify-center"
+        role="status"
+        aria-live="polite"
+      >
         <div className="flex flex-col items-center gap-3">
-          <div className="w-10 h-10 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin" aria-hidden="true" />
+          <div
+            className="w-10 h-10 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin"
+            aria-hidden="true"
+          />
           <p className="text-sm text-slate-500">{i18n.common.loading}</p>
         </div>
       </div>
@@ -72,7 +85,9 @@ export const SharedView = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
         >
-          <div className="text-6xl mb-4" aria-hidden="true">🔒</div>
+          <div className="text-6xl mb-4" aria-hidden="true">
+            🔒
+          </div>
           <h1 className="text-2xl font-bold text-slate-800 mb-3">
             {locale === 'zh' ? '链接无法访问' : 'Link Unavailable'}
           </h1>
@@ -83,7 +98,7 @@ export const SharedView = () => {
               <input
                 type="password"
                 value={passwordInput}
-                onChange={(e) => setPasswordInput(e.target.value)}
+                onChange={e => setPasswordInput(e.target.value)}
                 placeholder={locale === 'zh' ? '请输入访问密码' : 'Enter access password'}
                 className="w-full px-4 py-2.5 border border-slate-300 rounded-xl mb-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 aria-label={locale === 'zh' ? '访问密码' : 'Access password'}
@@ -120,7 +135,9 @@ export const SharedView = () => {
       <div className="bg-white rounded-2xl sm:rounded-3xl shadow-xl border border-slate-100 overflow-hidden">
         <div className="bg-gradient-to-r from-blue-500 to-indigo-600 p-6 sm:p-8 text-white">
           <div className="flex items-center gap-3 mb-2">
-            <span className="text-2xl" aria-hidden="true">📊</span>
+            <span className="text-2xl" aria-hidden="true">
+              📊
+            </span>
             <h1 className="text-2xl sm:text-3xl font-bold">
               {data.title || (locale === 'zh' ? '心理测评报告' : 'Assessment Report')}
             </h1>
@@ -156,17 +173,21 @@ export const SharedView = () => {
                 {locale === 'zh' ? '特质得分' : 'Trait Scores'}
               </h2>
               <div className="space-y-3">
-                {data.traits.map((trait: { name: string; score: number; description?: string }, idx: number) => (
-                  <div key={idx} className="bg-slate-50 rounded-xl p-4">
-                    <div className="flex items-center justify-between mb-1.5">
-                      <span className="font-semibold text-slate-800">{trait.name}</span>
-                      <span className="text-blue-600 font-bold">{trait.score}</span>
+                {data.traits.map(
+                  (trait: { name: string; score: number; description?: string }, idx: number) => (
+                    <div key={idx} className="bg-slate-50 rounded-xl p-4">
+                      <div className="flex items-center justify-between mb-1.5">
+                        <span className="font-semibold text-slate-800">{trait.name}</span>
+                        <span className="text-blue-600 font-bold">{trait.score}</span>
+                      </div>
+                      {trait.description && (
+                        <p className="text-sm text-slate-600 leading-relaxed">
+                          {trait.description}
+                        </p>
+                      )}
                     </div>
-                    {trait.description && (
-                      <p className="text-sm text-slate-600 leading-relaxed">{trait.description}</p>
-                    )}
-                  </div>
-                ))}
+                  )
+                )}
               </div>
             </div>
           )}
@@ -183,13 +204,8 @@ export const SharedView = () => {
           )}
 
           <div className="pt-4 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-slate-500">
-            <span>
-              {locale === 'zh' ? '由 MindMirror 分享' : 'Shared via MindMirror'}
-            </span>
-            <Link
-              to="/assessments"
-              className="text-blue-600 font-medium hover:text-blue-700"
-            >
+            <span>{locale === 'zh' ? '由 MindMirror 分享' : 'Shared via MindMirror'}</span>
+            <Link to="/assessments" className="text-blue-600 font-medium hover:text-blue-700">
               {locale === 'zh' ? '查看更多测评 →' : 'Explore more assessments →'}
             </Link>
           </div>

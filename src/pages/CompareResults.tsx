@@ -27,7 +27,9 @@ export function CompareResults() {
   }, [assessmentHistory, assessmentFilter]);
 
   const selectedResults = useMemo(() => {
-    return selectedIds.map(id => assessmentHistory.find(r => r.id === id)).filter(Boolean) as AssessmentResult[];
+    return selectedIds
+      .map(id => assessmentHistory.find(r => r.id === id))
+      .filter(Boolean) as AssessmentResult[];
   }, [selectedIds, assessmentHistory]);
 
   const toggleSelection = (id: string) => {
@@ -53,16 +55,27 @@ export function CompareResults() {
 
   const getAssessmentColor = (id: string) => {
     switch (id) {
-      case 'big-five': case '1': return 'from-blue-500 to-indigo-600';
-      case 'stress-test': case '2': return 'from-orange-500 to-red-500';
-      case 'anxiety-gad7': case '3': return 'from-purple-500 to-pink-500';
-      default: return 'from-slate-400 to-slate-500';
+      case 'big-five':
+      case '1':
+        return 'from-blue-500 to-indigo-600';
+      case 'stress-test':
+      case '2':
+        return 'from-orange-500 to-red-500';
+      case 'anxiety-gad7':
+      case '3':
+        return 'from-purple-500 to-pink-500';
+      default:
+        return 'from-slate-400 to-slate-500';
     }
   };
 
   const formatDate = (date: Date | string) => {
     const d = typeof date === 'string' ? new Date(date) : date;
-    return d.toLocaleDateString(locale === 'zh' ? 'zh-CN' : 'en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    return d.toLocaleDateString(locale === 'zh' ? 'zh-CN' : 'en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+    });
   };
 
   const renderComparison = () => {
@@ -86,7 +99,12 @@ export function CompareResults() {
               <div key={result.id}>
                 <div className="flex items-center justify-between mb-1">
                   <div className="flex items-center gap-2">
-                    <div className={cn('w-3 h-3 rounded-full bg-gradient-to-r', getAssessmentColor(result.assessmentId))} />
+                    <div
+                      className={cn(
+                        'w-3 h-3 rounded-full bg-gradient-to-r',
+                        getAssessmentColor(result.assessmentId)
+                      )}
+                    />
                     <span className="text-sm font-medium text-slate-700">
                       {formatDate(result.completedAt)}
                     </span>
@@ -98,7 +116,10 @@ export function CompareResults() {
                 </div>
                 <div className="w-full bg-slate-100 rounded-full h-4">
                   <div
-                    className={cn('h-4 rounded-full bg-gradient-to-r transition-all duration-700', getAssessmentColor(result.assessmentId))}
+                    className={cn(
+                      'h-4 rounded-full bg-gradient-to-r transition-all duration-700',
+                      getAssessmentColor(result.assessmentId)
+                    )}
                     style={{ width: `${Math.min((result.totalScore / 100) * 100, 100)}%` }}
                   />
                 </div>
@@ -110,12 +131,23 @@ export function CompareResults() {
             <div className="mt-6 pt-4 border-t border-slate-100">
               <div className="grid grid-cols-3 gap-4">
                 <div className="text-center">
-                  <div className={cn(
-                    'text-2xl font-bold',
-                    selectedResults[0].totalScore > selectedResults[selectedResults.length - 1].totalScore ? 'text-green-600' : 'text-red-600'
-                  )}>
-                    {selectedResults[0].totalScore > selectedResults[selectedResults.length - 1].totalScore ? '↑' : '↓'}
-                    {Math.abs(selectedResults[0].totalScore - selectedResults[selectedResults.length - 1].totalScore)}
+                  <div
+                    className={cn(
+                      'text-2xl font-bold',
+                      selectedResults[0].totalScore >
+                        selectedResults[selectedResults.length - 1].totalScore
+                        ? 'text-green-600'
+                        : 'text-red-600'
+                    )}
+                  >
+                    {selectedResults[0].totalScore >
+                    selectedResults[selectedResults.length - 1].totalScore
+                      ? '↑'
+                      : '↓'}
+                    {Math.abs(
+                      selectedResults[0].totalScore -
+                        selectedResults[selectedResults.length - 1].totalScore
+                    )}
                   </div>
                   <div className="text-xs text-slate-500 mt-1">{t.scoreChange}</div>
                 </div>
@@ -127,7 +159,8 @@ export function CompareResults() {
                 </div>
                 <div className="text-center">
                   <div className="text-2xl font-bold text-purple-600">
-                    {Math.max(...selectedResults.map(r => r.totalScore)) - Math.min(...selectedResults.map(r => r.totalScore))}
+                    {Math.max(...selectedResults.map(r => r.totalScore)) -
+                      Math.min(...selectedResults.map(r => r.totalScore))}
                   </div>
                   <div className="text-xs text-slate-500 mt-1">{t.scoreRange}</div>
                 </div>
@@ -151,14 +184,21 @@ export function CompareResults() {
                         if (!t) return null;
                         return (
                           <div key={result.id} className="flex items-center gap-2">
-                            <span className="text-xs text-slate-400 w-20">{formatDate(result.completedAt)}</span>
+                            <span className="text-xs text-slate-400 w-20">
+                              {formatDate(result.completedAt)}
+                            </span>
                             <div className="flex-1 bg-slate-100 rounded-full h-3">
                               <div
-                                className={cn('h-3 rounded-full bg-gradient-to-r transition-all duration-700', getAssessmentColor(result.assessmentId))}
+                                className={cn(
+                                  'h-3 rounded-full bg-gradient-to-r transition-all duration-700',
+                                  getAssessmentColor(result.assessmentId)
+                                )}
                                 style={{ width: `${Math.min(t.score, 100)}%` }}
                               />
                             </div>
-                            <span className="text-xs font-medium text-slate-600 w-10 text-right">{t.score}</span>
+                            <span className="text-xs font-medium text-slate-600 w-10 text-right">
+                              {t.score}
+                            </span>
                           </div>
                         );
                       })}
@@ -173,48 +213,60 @@ export function CompareResults() {
         <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
           <h3 className="font-semibold text-slate-800 mb-4">{t.insights}</h3>
           <div className="space-y-3">
-            {sameType && (() => {
-              const first = selectedResults[0];
-              const last = selectedResults[selectedResults.length - 1];
-              const scoreDiff = last.totalScore - first.totalScore;
-              const insights: string[] = [];
+            {sameType &&
+              (() => {
+                const first = selectedResults[0];
+                const last = selectedResults[selectedResults.length - 1];
+                const scoreDiff = last.totalScore - first.totalScore;
+                const insights: string[] = [];
 
-              if (scoreDiff > 5) {
-                insights.push(locale === 'zh'
-                  ? `你的${getAssessmentName(first.assessmentId)}得分从${first.totalScore}上升到${last.totalScore}，整体呈上升趋势。`
-                  : `Your ${getAssessmentName(first.assessmentId)} score increased from ${first.totalScore} to ${last.totalScore}, showing an upward trend.`);
-              } else if (scoreDiff < -5) {
-                insights.push(locale === 'zh'
-                  ? `你的${getAssessmentName(first.assessmentId)}得分从${first.totalScore}下降到${last.totalScore}，整体呈下降趋势。`
-                  : `Your ${getAssessmentName(first.assessmentId)} score decreased from ${first.totalScore} to ${last.totalScore}, showing a downward trend.`);
-              } else {
-                insights.push(locale === 'zh'
-                  ? `你的${getAssessmentName(first.assessmentId)}得分变化不大，保持在相对稳定的水平。`
-                  : `Your ${getAssessmentName(first.assessmentId)} score has remained relatively stable.`);
-              }
-
-              if (first.traits.length > 0) {
-                const maxChange = first.traits.reduce((max, trait, i) => {
-                  const lastTrait = last.traits[i];
-                  if (!lastTrait) return max;
-                  const diff = Math.abs(lastTrait.score - trait.score);
-                  return diff > max.diff ? { name: trait.name, diff } : max;
-                }, { name: '', diff: 0 });
-
-                if (maxChange.diff > 5) {
-                  insights.push(locale === 'zh'
-                    ? `变化最大的维度是"${maxChange.name}"，变化幅度为${maxChange.diff}分。`
-                    : `The dimension with the most change is "${maxChange.name}", with a change of ${maxChange.diff} points.`);
+                if (scoreDiff > 5) {
+                  insights.push(
+                    locale === 'zh'
+                      ? `你的${getAssessmentName(first.assessmentId)}得分从${first.totalScore}上升到${last.totalScore}，整体呈上升趋势。`
+                      : `Your ${getAssessmentName(first.assessmentId)} score increased from ${first.totalScore} to ${last.totalScore}, showing an upward trend.`
+                  );
+                } else if (scoreDiff < -5) {
+                  insights.push(
+                    locale === 'zh'
+                      ? `你的${getAssessmentName(first.assessmentId)}得分从${first.totalScore}下降到${last.totalScore}，整体呈下降趋势。`
+                      : `Your ${getAssessmentName(first.assessmentId)} score decreased from ${first.totalScore} to ${last.totalScore}, showing a downward trend.`
+                  );
+                } else {
+                  insights.push(
+                    locale === 'zh'
+                      ? `你的${getAssessmentName(first.assessmentId)}得分变化不大，保持在相对稳定的水平。`
+                      : `Your ${getAssessmentName(first.assessmentId)} score has remained relatively stable.`
+                  );
                 }
-              }
 
-              return insights.map((insight, i) => (
-                <div key={i} className="flex items-start gap-3 p-3 bg-blue-50 rounded-xl">
-                  <span className="text-blue-500">💡</span>
-                  <p className="text-sm text-blue-800">{insight}</p>
-                </div>
-              ));
-            })()}
+                if (first.traits.length > 0) {
+                  const maxChange = first.traits.reduce(
+                    (max, trait, i) => {
+                      const lastTrait = last.traits[i];
+                      if (!lastTrait) return max;
+                      const diff = Math.abs(lastTrait.score - trait.score);
+                      return diff > max.diff ? { name: trait.name, diff } : max;
+                    },
+                    { name: '', diff: 0 }
+                  );
+
+                  if (maxChange.diff > 5) {
+                    insights.push(
+                      locale === 'zh'
+                        ? `变化最大的维度是"${maxChange.name}"，变化幅度为${maxChange.diff}分。`
+                        : `The dimension with the most change is "${maxChange.name}", with a change of ${maxChange.diff} points.`
+                    );
+                  }
+                }
+
+                return insights.map((insight, i) => (
+                  <div key={i} className="flex items-start gap-3 p-3 bg-blue-50 rounded-xl">
+                    <span className="text-blue-500">💡</span>
+                    <p className="text-sm text-blue-800">{insight}</p>
+                  </div>
+                ));
+              })()}
 
             {!sameType && (
               <div className="flex items-start gap-3 p-3 bg-amber-50 rounded-xl">
@@ -289,18 +341,30 @@ export function CompareResults() {
                       : 'bg-slate-50 border-2 border-transparent hover:bg-slate-100'
                   )}
                 >
-                  <div className={cn(
-                    'w-5 h-5 rounded-md border-2 flex items-center justify-center shrink-0',
-                    selectedIds.includes(result.id) ? 'bg-teal-500 border-teal-500' : 'border-slate-300'
-                  )}>
-                    {selectedIds.includes(result.id) && <span className="text-white text-xs">✓</span>}
+                  <div
+                    className={cn(
+                      'w-5 h-5 rounded-md border-2 flex items-center justify-center shrink-0',
+                      selectedIds.includes(result.id)
+                        ? 'bg-teal-500 border-teal-500'
+                        : 'border-slate-300'
+                    )}
+                  >
+                    {selectedIds.includes(result.id) && (
+                      <span className="text-white text-xs">✓</span>
+                    )}
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
-                      <span className="text-sm font-medium text-slate-700">{getAssessmentName(result.assessmentId)}</span>
-                      <span className="text-xs text-slate-400">{formatDate(result.completedAt)}</span>
+                      <span className="text-sm font-medium text-slate-700">
+                        {getAssessmentName(result.assessmentId)}
+                      </span>
+                      <span className="text-xs text-slate-400">
+                        {formatDate(result.completedAt)}
+                      </span>
                     </div>
-                    <span className="text-xs text-slate-500">{t.score}: {result.totalScore}</span>
+                    <span className="text-xs text-slate-500">
+                      {t.score}: {result.totalScore}
+                    </span>
                   </div>
                 </button>
               ))}

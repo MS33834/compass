@@ -59,8 +59,34 @@ export const MOOD_COLORS: Record<MoodLevel, string> = {
 };
 
 export const MOOD_TAGS = {
-  zh: ['工作', '学习', '社交', '运动', '家庭', '健康', '休闲', '创造', '冥想', '旅行', '美食', '音乐'],
-  en: ['Work', 'Study', 'Social', 'Exercise', 'Family', 'Health', 'Leisure', 'Creative', 'Meditation', 'Travel', 'Food', 'Music'],
+  zh: [
+    '工作',
+    '学习',
+    '社交',
+    '运动',
+    '家庭',
+    '健康',
+    '休闲',
+    '创造',
+    '冥想',
+    '旅行',
+    '美食',
+    '音乐',
+  ],
+  en: [
+    'Work',
+    'Study',
+    'Social',
+    'Exercise',
+    'Family',
+    'Health',
+    'Leisure',
+    'Creative',
+    'Meditation',
+    'Travel',
+    'Food',
+    'Music',
+  ],
 };
 
 const STORAGE_KEY = 'moodTracker_entries';
@@ -118,16 +144,30 @@ class MoodTrackerService {
     const recentEntries = entries.filter(e => new Date(e.createdAt) >= cutoff);
 
     const moodDistribution: Record<number, number> = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
-    recentEntries.forEach(e => { moodDistribution[e.mood] = (moodDistribution[e.mood] || 0) + 1; });
+    recentEntries.forEach(e => {
+      moodDistribution[e.mood] = (moodDistribution[e.mood] || 0) + 1;
+    });
 
     const weeklyTrend = this.getTrend(entries, 7);
     const monthlyTrend = this.getTrend(entries, 30);
 
     return {
-      averageMood: recentEntries.length > 0 ? recentEntries.reduce((s, e) => s + e.mood, 0) / recentEntries.length : 0,
-      averageEnergy: recentEntries.length > 0 ? recentEntries.reduce((s, e) => s + e.energy, 0) / recentEntries.length : 0,
-      averageAnxiety: recentEntries.length > 0 ? recentEntries.reduce((s, e) => s + e.anxiety, 0) / recentEntries.length : 0,
-      averageSleep: recentEntries.length > 0 ? recentEntries.reduce((s, e) => s + e.sleep, 0) / recentEntries.length : 0,
+      averageMood:
+        recentEntries.length > 0
+          ? recentEntries.reduce((s, e) => s + e.mood, 0) / recentEntries.length
+          : 0,
+      averageEnergy:
+        recentEntries.length > 0
+          ? recentEntries.reduce((s, e) => s + e.energy, 0) / recentEntries.length
+          : 0,
+      averageAnxiety:
+        recentEntries.length > 0
+          ? recentEntries.reduce((s, e) => s + e.anxiety, 0) / recentEntries.length
+          : 0,
+      averageSleep:
+        recentEntries.length > 0
+          ? recentEntries.reduce((s, e) => s + e.sleep, 0) / recentEntries.length
+          : 0,
       totalEntries: entries.length,
       streakDays: this.calculateStreak(entries),
       moodDistribution,
@@ -171,7 +211,9 @@ class MoodTrackerService {
     const result: Record<string, MoodEntry> = {};
     entries
       .filter(e => e.date.startsWith(prefix))
-      .forEach(e => { result[e.date] = e; });
+      .forEach(e => {
+        result[e.date] = e;
+      });
     return result;
   }
 }

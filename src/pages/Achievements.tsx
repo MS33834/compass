@@ -1,7 +1,11 @@
 import { useMemo, useState } from 'react';
 import { useAppStore } from '../store';
 import { getTranslation } from '../i18n';
-import { achievementService, ACHIEVEMENT_DEFINITIONS, type AchievementCheckState } from '../services/achievement/AchievementService';
+import {
+  achievementService,
+  ACHIEVEMENT_DEFINITIONS,
+  type AchievementCheckState,
+} from '../services/achievement/AchievementService';
 import { moodTrackerService } from '../services/mood/MoodTrackerService';
 import { cn } from '../lib/utils';
 
@@ -12,9 +16,15 @@ export function Achievements() {
   const [filter, setFilter] = useState<string>('all');
 
   const checkState = useMemo<AchievementCheckState>(() => {
-    const bigFiveCount = assessmentHistory.filter(a => a.assessmentId === 'big-five' || a.assessmentId === '1').length;
-    const stressCount = assessmentHistory.filter(a => a.assessmentId === 'stress-test' || a.assessmentId === '2').length;
-    const anxietyCount = assessmentHistory.filter(a => a.assessmentId === 'anxiety-gad7' || a.assessmentId === '3').length;
+    const bigFiveCount = assessmentHistory.filter(
+      a => a.assessmentId === 'big-five' || a.assessmentId === '1'
+    ).length;
+    const stressCount = assessmentHistory.filter(
+      a => a.assessmentId === 'stress-test' || a.assessmentId === '2'
+    ).length;
+    const anxietyCount = assessmentHistory.filter(
+      a => a.assessmentId === 'anxiety-gad7' || a.assessmentId === '3'
+    ).length;
     const moodEntries = moodTrackerService.getAll().length;
     const streakDays = moodTrackerService.getStats().streakDays;
 
@@ -34,9 +44,8 @@ export function Achievements() {
   const achievements = useMemo(() => achievementService.getAchievements(checkState), [checkState]);
   const stats = useMemo(() => achievementService.getStats(checkState), [checkState]);
 
-  const filteredAchievements = filter === 'all'
-    ? achievements
-    : achievements.filter(a => a.category === filter);
+  const filteredAchievements =
+    filter === 'all' ? achievements : achievements.filter(a => a.category === filter);
 
   const categories = [
     { key: 'all', label: t.allCategories, icon: '🏆' },
@@ -48,11 +57,16 @@ export function Achievements() {
 
   const getCategoryColor = (cat: string) => {
     switch (cat) {
-      case 'assessment': return 'from-blue-500 to-blue-600';
-      case 'training': return 'from-green-500 to-green-600';
-      case 'streak': return 'from-orange-500 to-red-500';
-      case 'special': return 'from-purple-500 to-indigo-600';
-      default: return 'from-slate-400 to-slate-500';
+      case 'assessment':
+        return 'from-blue-500 to-blue-600';
+      case 'training':
+        return 'from-green-500 to-green-600';
+      case 'streak':
+        return 'from-orange-500 to-red-500';
+      case 'special':
+        return 'from-purple-500 to-indigo-600';
+      default:
+        return 'from-slate-400 to-slate-500';
     }
   };
 
@@ -75,7 +89,9 @@ export function Achievements() {
           <div className="text-xs text-slate-500 mt-1">{t.total}</div>
         </div>
         <div className="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-2xl p-4 text-center border border-amber-100">
-          <div className="text-2xl sm:text-3xl font-bold text-amber-600">{Math.round((stats.unlocked / stats.total) * 100)}%</div>
+          <div className="text-2xl sm:text-3xl font-bold text-amber-600">
+            {Math.round((stats.unlocked / stats.total) * 100)}%
+          </div>
           <div className="text-xs text-amber-500 mt-1">{t.completionRate}</div>
         </div>
       </div>
@@ -83,7 +99,9 @@ export function Achievements() {
       <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-4">
         <div className="flex items-center justify-between mb-2">
           <span className="text-sm font-medium text-slate-700">{t.overallProgress}</span>
-          <span className="text-sm text-slate-500">{stats.unlocked}/{stats.total}</span>
+          <span className="text-sm text-slate-500">
+            {stats.unlocked}/{stats.total}
+          </span>
         </div>
         <div className="w-full bg-slate-100 rounded-full h-3">
           <div
@@ -115,7 +133,10 @@ export function Achievements() {
         {filteredAchievements.map(achievement => {
           const def = ACHIEVEMENT_DEFINITIONS.find(d => d.id === achievement.id);
           const isUnlocked = !!achievement.unlockedAt;
-          const progressPercent = Math.min((achievement.progress / achievement.requirement) * 100, 100);
+          const progressPercent = Math.min(
+            (achievement.progress / achievement.requirement) * 100,
+            100
+          );
 
           return (
             <div
@@ -129,17 +150,21 @@ export function Achievements() {
             >
               {isUnlocked && (
                 <div className="absolute top-3 right-3">
-                  <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full font-medium">✓ {t.unlocked}</span>
+                  <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full font-medium">
+                    ✓ {t.unlocked}
+                  </span>
                 </div>
               )}
 
               <div className="flex items-start gap-4">
-                <div className={cn(
-                  'w-14 h-14 rounded-2xl flex items-center justify-center text-2xl shrink-0',
-                  isUnlocked
-                    ? `bg-gradient-to-br ${getCategoryColor(achievement.category)} shadow-lg`
-                    : 'bg-slate-200'
-                )}>
+                <div
+                  className={cn(
+                    'w-14 h-14 rounded-2xl flex items-center justify-center text-2xl shrink-0',
+                    isUnlocked
+                      ? `bg-gradient-to-br ${getCategoryColor(achievement.category)} shadow-lg`
+                      : 'bg-slate-200'
+                  )}
+                >
                   {isUnlocked ? achievement.icon : '🔒'}
                 </div>
 
@@ -154,7 +179,9 @@ export function Achievements() {
                   {!isUnlocked && (
                     <div className="mt-2">
                       <div className="flex justify-between text-xs text-slate-400 mb-1">
-                        <span>{achievement.progress}/{achievement.requirement}</span>
+                        <span>
+                          {achievement.progress}/{achievement.requirement}
+                        </span>
                         <span>{Math.round(progressPercent)}%</span>
                       </div>
                       <div className="w-full bg-slate-200 rounded-full h-1.5">
@@ -168,7 +195,9 @@ export function Achievements() {
 
                   {isUnlocked && achievement.unlockedAt && (
                     <p className="text-xs text-slate-400 mt-1">
-                      {new Date(achievement.unlockedAt).toLocaleDateString(locale === 'zh' ? 'zh-CN' : 'en-US')}
+                      {new Date(achievement.unlockedAt).toLocaleDateString(
+                        locale === 'zh' ? 'zh-CN' : 'en-US'
+                      )}
                     </p>
                   )}
                 </div>

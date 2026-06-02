@@ -32,7 +32,7 @@ export const Profile = () => {
       navigate('/login');
       return;
     }
-    
+
     if (user) {
       setUsername(user.username);
       setEmail(user.email);
@@ -59,7 +59,7 @@ export const Profile = () => {
     try {
       const result = await authService.updateProfile({
         username,
-        email
+        email,
       });
 
       if (result.success && result.user) {
@@ -131,7 +131,7 @@ export const Profile = () => {
     return d.toLocaleDateString(locale === 'zh' ? 'zh-CN' : 'en-US', {
       year: 'numeric',
       month: 'long',
-      day: 'numeric'
+      day: 'numeric',
     });
   };
 
@@ -144,8 +144,8 @@ export const Profile = () => {
       <div className="max-w-3xl mx-auto px-4">
         {/* 导航返回 */}
         <div className="mb-6">
-          <Link 
-            to="/" 
+          <Link
+            to="/"
             className="inline-flex items-center text-slate-600 hover:text-blue-600 transition-colors"
           >
             ← {i18n.common.back}
@@ -156,20 +156,14 @@ export const Profile = () => {
         <div className="bg-white rounded-2xl shadow-xl p-8 mb-6">
           <div className="flex items-center gap-4 mb-6">
             {user?.avatar ? (
-              <img 
-                src={user.avatar} 
-                alt={user.username} 
-                className="w-20 h-20 rounded-full"
-              />
+              <img src={user.avatar} alt={user.username} className="w-20 h-20 rounded-full" />
             ) : (
               <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center text-white text-2xl">
                 {user?.username?.[0]?.toUpperCase() || 'U'}
               </div>
             )}
             <div>
-              <h1 className="text-2xl font-bold text-slate-800">
-                {user?.username}
-              </h1>
+              <h1 className="text-2xl font-bold text-slate-800">{user?.username}</h1>
               <p className="text-slate-500">{user?.email}</p>
             </div>
             {!editMode && (
@@ -203,7 +197,7 @@ export const Profile = () => {
                 <input
                   type="text"
                   value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  onChange={e => setUsername(e.target.value)}
                   className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>
@@ -214,7 +208,7 @@ export const Profile = () => {
                 <input
                   type="email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={e => setEmail(e.target.value)}
                   className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>
@@ -261,7 +255,9 @@ export const Profile = () => {
         <div className="bg-white rounded-2xl shadow-xl p-8">
           {!showPasswordForm ? (
             <div>
-              <h2 className="text-lg font-semibold text-slate-800 mb-4">{i18n.profile.changePassword}</h2>
+              <h2 className="text-lg font-semibold text-slate-800 mb-4">
+                {i18n.profile.changePassword}
+              </h2>
               <button
                 onClick={() => setShowPasswordForm(true)}
                 className="w-full px-4 py-3 border border-slate-300 text-slate-700 rounded-lg hover:bg-slate-50 transition-colors"
@@ -271,8 +267,10 @@ export const Profile = () => {
             </div>
           ) : (
             <form onSubmit={handleChangePassword} className="space-y-4">
-              <h2 className="text-lg font-semibold text-slate-800">{i18n.profile.changePassword}</h2>
-              
+              <h2 className="text-lg font-semibold text-slate-800">
+                {i18n.profile.changePassword}
+              </h2>
+
               {passwordSuccess && (
                 <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg">
                   {passwordSuccess}
@@ -291,7 +289,7 @@ export const Profile = () => {
                 <input
                   type="password"
                   value={currentPassword}
-                  onChange={(e) => setCurrentPassword(e.target.value)}
+                  onChange={e => setCurrentPassword(e.target.value)}
                   className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>
@@ -302,7 +300,7 @@ export const Profile = () => {
                 <input
                   type="password"
                   value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
+                  onChange={e => setNewPassword(e.target.value)}
                   className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>
@@ -313,7 +311,7 @@ export const Profile = () => {
                 <input
                   type="password"
                   value={confirmNewPassword}
-                  onChange={(e) => setConfirmNewPassword(e.target.value)}
+                  onChange={e => setConfirmNewPassword(e.target.value)}
                   className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>

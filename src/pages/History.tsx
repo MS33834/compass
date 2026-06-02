@@ -26,17 +26,20 @@ function formatDateTime(date: Date | string, i18n: ReturnType<typeof getTranslat
   return `${d.getFullYear()}-${(d.getMonth() + 1).toString().padStart(2, '0')}-${d.getDate().toString().padStart(2, '0')} ${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}`;
 }
 
-function HistoryCard({ result, onDelete, i18n }: { result: AssessmentResult; onDelete: (id: string) => void; i18n: ReturnType<typeof getTranslation> }) {
-  const { 
-    setCurrentAssessment, 
-    setQuestions, 
-    setCurrentQuestionIndex, 
-    setCurrentStep, 
-    setResult 
-  } = useAppStore();
+function HistoryCard({
+  result,
+  onDelete,
+  i18n,
+}: {
+  result: AssessmentResult;
+  onDelete: (id: string) => void;
+  i18n: ReturnType<typeof getTranslation>;
+}) {
+  const { setCurrentAssessment, setQuestions, setCurrentQuestionIndex, setCurrentStep, setResult } =
+    useAppStore();
 
   const handleViewAgain = () => {
-    const assessment = mockAssessments.find((a: { id: string; }) => a.id === result.assessmentId);
+    const assessment = mockAssessments.find((a: { id: string }) => a.id === result.assessmentId);
     if (assessment) {
       setCurrentAssessment(assessment);
       const questions = getQuestionsForAssessment(assessment.id);
@@ -58,7 +61,9 @@ function HistoryCard({ result, onDelete, i18n }: { result: AssessmentResult; onD
       <div className="flex items-start justify-between mb-4 sm:mb-6">
         <div>
           <h3 className="text-xl sm:text-2xl font-bold text-slate-800">{result.assessmentTitle}</h3>
-          <p className="text-sm sm:text-base text-slate-500 mt-1">{formatDateTime(result.completedAt, i18n)}</p>
+          <p className="text-sm sm:text-base text-slate-500 mt-1">
+            {formatDateTime(result.completedAt, i18n)}
+          </p>
         </div>
         <button
           onClick={handleDelete}
@@ -72,17 +77,16 @@ function HistoryCard({ result, onDelete, i18n }: { result: AssessmentResult; onD
         <div className="flex items-center justify-center">
           <div className="text-center">
             <div className="text-4xl sm:text-5xl font-bold text-blue-600">{result.totalScore}</div>
-            <div className="text-sm sm:text-base text-slate-600 mt-1">{i18n.results.comprehensiveScore}</div>
+            <div className="text-sm sm:text-base text-slate-600 mt-1">
+              {i18n.results.comprehensiveScore}
+            </div>
           </div>
         </div>
       </div>
 
       <div className="flex flex-wrap gap-2 mb-4 sm:mb-6">
         {result.traits.slice(0, 3).map((trait, idx) => (
-          <span
-            key={idx}
-            className="px-3 py-1.5 bg-slate-100 text-slate-700 rounded-full text-sm"
-          >
+          <span key={idx} className="px-3 py-1.5 bg-slate-100 text-slate-700 rounded-full text-sm">
             {trait.name} {i18n.common.points.replace('{score}', String(trait.score))}
           </span>
         ))}
@@ -105,7 +109,9 @@ function EmptyState({ i18n }: { i18n: ReturnType<typeof getTranslation> }) {
   return (
     <div className="bg-white rounded-2xl sm:rounded-3xl p-12 sm:p-16 shadow-lg border border-slate-100 text-center">
       <div className="text-6xl sm:text-7xl mb-4 sm:mb-6">📚</div>
-      <h2 className="text-2xl sm:text-3xl font-bold text-slate-800 mb-3 sm:mb-4">{i18n.history.empty}</h2>
+      <h2 className="text-2xl sm:text-3xl font-bold text-slate-800 mb-3 sm:mb-4">
+        {i18n.history.empty}
+      </h2>
       <p className="text-slate-600 mb-8 max-w-md mx-auto text-base sm:text-lg">
         {i18n.history.emptyDesc}
       </p>
@@ -157,13 +163,8 @@ export const History = () => {
         <EmptyState i18n={i18n} />
       ) : (
         <div className="grid gap-6">
-          {assessmentHistory.map((result) => (
-            <HistoryCard
-              key={result.id}
-              result={result}
-              onDelete={deleteHistoryItem}
-              i18n={i18n}
-            />
+          {assessmentHistory.map(result => (
+            <HistoryCard key={result.id} result={result} onDelete={deleteHistoryItem} i18n={i18n} />
           ))}
         </div>
       )}

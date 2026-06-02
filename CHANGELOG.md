@@ -10,6 +10,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
 ## [Unreleased]
 
 ### 🐛 Bug Fixes
+
 - **Router basename** — add `basename={import.meta.env.BASE_URL}` to
   `<Router>` in `src/App.tsx`. Without it, when deployed under a sub-path
   (e.g. GitHub Pages at `/MindMirror/`), every route falls through to
@@ -21,6 +22,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
   clean BrowserRouter URLs (`/assessments`) in `public/sitemap.xml`.
 
 ### 📚 Documentation
+
 - **Repository hygiene** — added `.editorconfig`, `.github/CODEOWNERS`,
   `.github/dependabot.yml`, and `CITATION.cff`.
 - **README rewrite** — split the monolithic bilingual README into
@@ -32,6 +34,7 @@ This project adheres to [Semantic Versioning](https://semver.org/).
   switched the default branch reference from `main` to `master`.
 
 ### ⚙️ Configuration
+
 - **`package.json`** — added `engines` (Node ≥ 18, npm ≥ 9), `format`
   / `format:check` scripts, added `prettier` as a dev dependency,
   expanded keywords, fixed `homepage` to point to the live GitHub Pages
@@ -49,6 +52,7 @@ First public release of MindMirror as a fully self-hostable, Docker-based
 psychological assessment platform.
 
 #### ✨ Frontend
+
 - Big Five personality assessment (NEO-PI-R based, 50 items, IPIP-derived)
 - PSS-10 perceived stress scale
 - GAD-7 anxiety screening
@@ -67,6 +71,7 @@ psychological assessment platform.
   GitHub Pages and quick previews
 
 #### 🛠 Backend (new, replaces previous Supabase + Vercel stack)
+
 - FastAPI 0.115 + Python 3.12
 - SQLAlchemy 2 + Pydantic v2
 - JWT (HS256) auth via `python-jose`
@@ -80,6 +85,7 @@ psychological assessment platform.
 - CORS-aware, secure headers, input validation
 
 #### 🐳 Container & Deployment
+
 - Multi-service `docker compose`: `postgres`, `backend`, `frontend`
 - Multi-stage frontend build: Vite → nginx
 - nginx reverse proxy for `/api/*` to backend
@@ -88,6 +94,7 @@ psychological assessment platform.
 - Persistent PostgreSQL volume
 
 #### 🌐 GitHub Pages (showcase)
+
 - Live demo at <https://badhope.github.io/MindMirror/>
 - BrowserRouter with `basename=/MindMirror/`
 - `postbuild.mjs` produces `dist/404.html` for clean deep links
@@ -95,6 +102,7 @@ psychological assessment platform.
   on push to `master`
 
 #### 📦 Project Hygiene
+
 - Removed Vercel serverless `api/`, `vercel.json`, `@vercel/node`
 - Removed Supabase directory and `src/lib/supabase.ts`
 - Removed unused Express / CORS / dotenv / nodemon / tsx dependencies

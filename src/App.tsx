@@ -11,7 +11,9 @@ import { useAppStore } from './store';
 import { getTranslation } from './i18n';
 import './index.css';
 
-const Assessments = lazy(() => import('./pages/Assessments').then(m => ({ default: m.Assessments })));
+const Assessments = lazy(() =>
+  import('./pages/Assessments').then(m => ({ default: m.Assessments }))
+);
 const AssessmentDetail = lazy(() => import('./pages/AssessmentDetail'));
 const History = lazy(() => import('./pages/History').then(m => ({ default: m.History })));
 const Settings = lazy(() => import('./pages/Settings').then(m => ({ default: m.Settings })));
@@ -21,13 +23,27 @@ const TrainingDetail = lazy(() => import('./pages/TrainingDetail'));
 const Login = lazy(() => import('./pages/Login').then(m => ({ default: m.Login })));
 const Register = lazy(() => import('./pages/Register').then(m => ({ default: m.Register })));
 const Profile = lazy(() => import('./pages/Profile').then(m => ({ default: m.Profile })));
-const MoodTracker = lazy(() => import('./pages/MoodTracker').then(m => ({ default: m.MoodTracker })));
-const Achievements = lazy(() => import('./pages/Achievements').then(m => ({ default: m.Achievements })));
-const CrisisResources = lazy(() => import('./pages/CrisisResources').then(m => ({ default: m.CrisisResources })));
-const CompareResults = lazy(() => import('./pages/CompareResults').then(m => ({ default: m.CompareResults })));
-const PersonalDashboard = lazy(() => import('./components/dashboard/PersonalDashboard').then(m => ({ default: m.PersonalDashboard })));
-const PluginManager = lazy(() => import('./components/plugin/PluginManager').then(m => ({ default: m.PluginManager })));
-const AuthCallback = lazy(() => import('./pages/AuthCallback').then(m => ({ default: m.AuthCallback })));
+const MoodTracker = lazy(() =>
+  import('./pages/MoodTracker').then(m => ({ default: m.MoodTracker }))
+);
+const Achievements = lazy(() =>
+  import('./pages/Achievements').then(m => ({ default: m.Achievements }))
+);
+const CrisisResources = lazy(() =>
+  import('./pages/CrisisResources').then(m => ({ default: m.CrisisResources }))
+);
+const CompareResults = lazy(() =>
+  import('./pages/CompareResults').then(m => ({ default: m.CompareResults }))
+);
+const PersonalDashboard = lazy(() =>
+  import('./components/dashboard/PersonalDashboard').then(m => ({ default: m.PersonalDashboard }))
+);
+const PluginManager = lazy(() =>
+  import('./components/plugin/PluginManager').then(m => ({ default: m.PluginManager }))
+);
+const AuthCallback = lazy(() =>
+  import('./pages/AuthCallback').then(m => ({ default: m.AuthCallback }))
+);
 const NotFound = lazy(() => import('./pages/NotFound').then(m => ({ default: m.NotFound })));
 const SharedView = lazy(() => import('./pages/SharedView').then(m => ({ default: m.SharedView })));
 
@@ -54,26 +70,204 @@ function AnimatedRoutes() {
   return (
     <AnimatePresence mode="wait">
       <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<PageTransition direction="up"><Home /></PageTransition>} />
-        <Route path="/login" element={<PageTransition direction="fade"><LazyRoute><Login /></LazyRoute></PageTransition>} />
-        <Route path="/register" element={<PageTransition direction="fade"><LazyRoute><Register /></LazyRoute></PageTransition>} />
-        <Route path="/profile" element={<PageTransition direction="up"><LazyRoute><Profile /></LazyRoute></PageTransition>} />
-        <Route path="/assessments" element={<PageTransition direction="up"><LazyRoute><Assessments /></LazyRoute></PageTransition>} />
-        <Route path="/assessments/:id" element={<PageTransition direction="left"><LazyRoute><AssessmentDetail /></LazyRoute></PageTransition>} />
-        <Route path="/training" element={<PageTransition direction="up"><LazyRoute><Training /></LazyRoute></PageTransition>} />
-        <Route path="/training/:id" element={<PageTransition direction="left"><LazyRoute><TrainingDetail /></LazyRoute></PageTransition>} />
-        <Route path="/dashboard" element={<PageTransition direction="up"><LazyRoute><PersonalDashboard /></LazyRoute></PageTransition>} />
-        <Route path="/plugins" element={<PageTransition direction="up"><LazyRoute><PluginManager /></LazyRoute></PageTransition>} />
-        <Route path="/mood" element={<PageTransition direction="up"><LazyRoute><MoodTracker /></LazyRoute></PageTransition>} />
-        <Route path="/achievements" element={<PageTransition direction="up"><LazyRoute><Achievements /></LazyRoute></PageTransition>} />
-        <Route path="/crisis" element={<PageTransition direction="up"><LazyRoute><CrisisResources /></LazyRoute></PageTransition>} />
-        <Route path="/compare" element={<PageTransition direction="up"><LazyRoute><CompareResults /></LazyRoute></PageTransition>} />
-        <Route path="/history" element={<PageTransition direction="up"><LazyRoute><History /></LazyRoute></PageTransition>} />
-        <Route path="/settings" element={<PageTransition direction="up"><LazyRoute><Settings /></LazyRoute></PageTransition>} />
-        <Route path="/about" element={<PageTransition direction="up"><LazyRoute><About /></LazyRoute></PageTransition>} />
-        <Route path="/auth/callback" element={<PageTransition direction="fade"><LazyRoute><AuthCallback /></LazyRoute></PageTransition>} />
-        <Route path="/shared/:id" element={<PageTransition direction="fade"><LazyRoute><SharedView /></LazyRoute></PageTransition>} />
-        <Route path="*" element={<PageTransition direction="fade"><LazyRoute><NotFound /></LazyRoute></PageTransition>} />
+        <Route
+          path="/"
+          element={
+            <PageTransition direction="up">
+              <Home />
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <PageTransition direction="fade">
+              <LazyRoute>
+                <Login />
+              </LazyRoute>
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <PageTransition direction="fade">
+              <LazyRoute>
+                <Register />
+              </LazyRoute>
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <PageTransition direction="up">
+              <LazyRoute>
+                <Profile />
+              </LazyRoute>
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/assessments"
+          element={
+            <PageTransition direction="up">
+              <LazyRoute>
+                <Assessments />
+              </LazyRoute>
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/assessments/:id"
+          element={
+            <PageTransition direction="left">
+              <LazyRoute>
+                <AssessmentDetail />
+              </LazyRoute>
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/training"
+          element={
+            <PageTransition direction="up">
+              <LazyRoute>
+                <Training />
+              </LazyRoute>
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/training/:id"
+          element={
+            <PageTransition direction="left">
+              <LazyRoute>
+                <TrainingDetail />
+              </LazyRoute>
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/dashboard"
+          element={
+            <PageTransition direction="up">
+              <LazyRoute>
+                <PersonalDashboard />
+              </LazyRoute>
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/plugins"
+          element={
+            <PageTransition direction="up">
+              <LazyRoute>
+                <PluginManager />
+              </LazyRoute>
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/mood"
+          element={
+            <PageTransition direction="up">
+              <LazyRoute>
+                <MoodTracker />
+              </LazyRoute>
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/achievements"
+          element={
+            <PageTransition direction="up">
+              <LazyRoute>
+                <Achievements />
+              </LazyRoute>
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/crisis"
+          element={
+            <PageTransition direction="up">
+              <LazyRoute>
+                <CrisisResources />
+              </LazyRoute>
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/compare"
+          element={
+            <PageTransition direction="up">
+              <LazyRoute>
+                <CompareResults />
+              </LazyRoute>
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/history"
+          element={
+            <PageTransition direction="up">
+              <LazyRoute>
+                <History />
+              </LazyRoute>
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/settings"
+          element={
+            <PageTransition direction="up">
+              <LazyRoute>
+                <Settings />
+              </LazyRoute>
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/about"
+          element={
+            <PageTransition direction="up">
+              <LazyRoute>
+                <About />
+              </LazyRoute>
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/auth/callback"
+          element={
+            <PageTransition direction="fade">
+              <LazyRoute>
+                <AuthCallback />
+              </LazyRoute>
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/shared/:id"
+          element={
+            <PageTransition direction="fade">
+              <LazyRoute>
+                <SharedView />
+              </LazyRoute>
+            </PageTransition>
+          }
+        />
+        <Route
+          path="*"
+          element={
+            <PageTransition direction="fade">
+              <LazyRoute>
+                <NotFound />
+              </LazyRoute>
+            </PageTransition>
+          }
+        />
       </Routes>
     </AnimatePresence>
   );
@@ -108,7 +302,10 @@ function AppContent() {
         <nav className="bg-white/80 backdrop-blur-lg border-b border-slate-200 sticky top-0 z-50">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 py-4 sm:py-5">
             <div className="flex items-center justify-between">
-              <Link to="/" className="flex items-center gap-2 sm:gap-3 text-xl sm:text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+              <Link
+                to="/"
+                className="flex items-center gap-2 sm:gap-3 text-xl sm:text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent"
+              >
                 <motion.div
                   className="w-9 h-9 sm:w-10 sm:h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center text-white text-lg sm:text-xl"
                   whileHover={{ rotate: [0, -10, 10, 0], scale: 1.1 }}
@@ -125,7 +322,7 @@ function AppContent() {
                   { to: '/assessments', label: i18n.nav.assessments },
                   { to: '/training', label: i18n.nav.training },
                   { to: '/dashboard', label: i18n.nav.dashboard },
-                ].map((item) => (
+                ].map(item => (
                   <Link
                     key={item.to}
                     to={item.to}

@@ -17,7 +17,9 @@ export function LanguageSwitcher() {
       aria-pressed={false}
       type="button"
     >
-      <span className="text-lg" aria-hidden="true">{locale === 'en' ? '🇺🇸' : '🇨🇳'}</span>
+      <span className="text-lg" aria-hidden="true">
+        {locale === 'en' ? '🇺🇸' : '🇨🇳'}
+      </span>
       <span>{locale === 'en' ? '中文' : 'English'}</span>
     </button>
   );

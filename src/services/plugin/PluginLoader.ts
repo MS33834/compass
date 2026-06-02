@@ -1,8 +1,4 @@
-import {
-  Plugin,
-  PluginConfig,
-  PluginAPI
-} from '../../types/plugin';
+import { Plugin, PluginConfig, PluginAPI } from '../../types/plugin';
 import { pluginRegistry } from './PluginRegistry';
 import { hookManager } from './HookSystem';
 import { storage } from '../../lib/utils';
@@ -32,7 +28,7 @@ export class PluginLoader {
 
   private async loadBuiltInPlugins(): Promise<void> {
     const builtInPlugins = this.getBuiltInPlugins();
-    
+
     for (const pluginConfig of builtInPlugins) {
       try {
         const plugin = await this.createPluginInstance(pluginConfig);
@@ -50,7 +46,8 @@ export class PluginLoader {
       {
         id: 'big-five-personality',
         name: 'Big Five Personality Assessment',
-        description: 'Standard Big Five personality test with 60 questions covering Openness, Conscientiousness, Extraversion, Agreeableness, and Neuroticism dimensions.',
+        description:
+          'Standard Big Five personality test with 60 questions covering Openness, Conscientiousness, Extraversion, Agreeableness, and Neuroticism dimensions.',
         version: '2.0.0',
         author: 'MindMirror Team',
         type: 'assessment',
@@ -61,13 +58,20 @@ export class PluginLoader {
         metadata: {
           questionCount: 60,
           estimatedTime: '15min',
-          dimensions: ['openness', 'conscientiousness', 'extraversion', 'agreeableness', 'neuroticism']
-        }
+          dimensions: [
+            'openness',
+            'conscientiousness',
+            'extraversion',
+            'agreeableness',
+            'neuroticism',
+          ],
+        },
       },
       {
         id: 'stress-test',
         name: 'Comprehensive Stress Assessment',
-        description: 'Extended PSS-based stress assessment with 30 questions covering perceived stress, coping ability, work stress, relationship stress, health stress, financial stress, physiological and emotional responses.',
+        description:
+          'Extended PSS-based stress assessment with 30 questions covering perceived stress, coping ability, work stress, relationship stress, health stress, financial stress, physiological and emotional responses.',
         version: '2.0.0',
         author: 'MindMirror Team',
         type: 'assessment',
@@ -78,13 +82,23 @@ export class PluginLoader {
         metadata: {
           questionCount: 30,
           estimatedTime: '10min',
-          dimensions: ['perceivedStress', 'coping', 'workStress', 'relationshipStress', 'healthStress', 'financeStress', 'physiological', 'emotional']
-        }
+          dimensions: [
+            'perceivedStress',
+            'coping',
+            'workStress',
+            'relationshipStress',
+            'healthStress',
+            'financeStress',
+            'physiological',
+            'emotional',
+          ],
+        },
       },
       {
         id: 'gad7-anxiety',
         name: 'Comprehensive Anxiety Assessment',
-        description: 'Extended GAD-7 anxiety assessment with 28 questions covering excessive worry, motor tension, irritability, fear, physical symptoms, cognitive symptoms, and social functioning impact.',
+        description:
+          'Extended GAD-7 anxiety assessment with 28 questions covering excessive worry, motor tension, irritability, fear, physical symptoms, cognitive symptoms, and social functioning impact.',
         version: '2.0.0',
         author: 'MindMirror Team',
         type: 'assessment',
@@ -95,13 +109,22 @@ export class PluginLoader {
         metadata: {
           questionCount: 28,
           estimatedTime: '8min',
-          dimensions: ['worries', 'tension', 'irritability', 'fear', 'physical', 'cognitive', 'social']
-        }
+          dimensions: [
+            'worries',
+            'tension',
+            'irritability',
+            'fear',
+            'physical',
+            'cognitive',
+            'social',
+          ],
+        },
       },
       {
         id: 'mindfulness-training',
         name: 'Mindfulness & Relaxation Training',
-        description: 'Comprehensive mindfulness and relaxation training module including 4-7-8 breathing, body scan meditation, stress management, gratitude journaling, progressive muscle relaxation, and anxiety coping techniques.',
+        description:
+          'Comprehensive mindfulness and relaxation training module including 4-7-8 breathing, body scan meditation, stress management, gratitude journaling, progressive muscle relaxation, and anxiety coping techniques.',
         version: '2.0.0',
         author: 'MindMirror Team',
         type: 'training',
@@ -111,13 +134,14 @@ export class PluginLoader {
         autoLoad: true,
         metadata: {
           courses: 6,
-          categories: ['breathing', 'meditation', 'stress', 'gratitude', 'relaxation', 'anxiety']
-        }
+          categories: ['breathing', 'meditation', 'stress', 'gratitude', 'relaxation', 'anxiety'],
+        },
       },
       {
         id: 'theme-system',
         name: 'Theme & UI System',
-        description: 'UI theme management, style customization, and visual consistency controls. Supports light/dark mode and custom accent colors.',
+        description:
+          'UI theme management, style customization, and visual consistency controls. Supports light/dark mode and custom accent colors.',
         version: '2.0.0',
         author: 'MindMirror Team',
         type: 'ui',
@@ -127,13 +151,14 @@ export class PluginLoader {
         autoLoad: true,
         metadata: {
           themes: ['light', 'dark', 'auto'],
-          customizable: true
-        }
+          customizable: true,
+        },
       },
       {
         id: 'data-analytics',
         name: 'Data Analytics Engine',
-        description: 'Core data analytics engine providing trend analysis, pattern recognition, and personalized insights based on assessment history and training progress.',
+        description:
+          'Core data analytics engine providing trend analysis, pattern recognition, and personalized insights based on assessment history and training progress.',
         version: '1.0.0',
         author: 'MindMirror Team',
         type: 'core',
@@ -142,9 +167,9 @@ export class PluginLoader {
         enabled: true,
         autoLoad: true,
         metadata: {
-          capabilities: ['trend_analysis', 'pattern_recognition', 'insight_generation']
-        }
-      }
+          capabilities: ['trend_analysis', 'pattern_recognition', 'insight_generation'],
+        },
+      },
     ];
   }
 
@@ -179,7 +204,7 @@ export class PluginLoader {
       trainings: config.type === 'training' ? this.createTrainingExports(config) : undefined,
       uiComponents: config.type === 'ui' ? this.createUIExports(config) : undefined,
       hooks: this.createPluginHookMap(config),
-      services: this.createPluginServices(config, api)
+      services: this.createPluginServices(config, api),
     };
 
     return plugin;
@@ -189,67 +214,107 @@ export class PluginLoader {
     const pid = config.id;
     switch (pid) {
       case 'big-five-personality':
-        hookManager.registerHook('beforeAssessment', (data: any) => {
-          if (data.assessmentId === 'big-five') {
-            return { ...data, pluginEnhanced: true, source: 'big-five-plugin' };
-          }
-          return data;
-        }, pid);
-        hookManager.registerHook('afterAssessment', (result: any) => {
-          if (result.assessmentId === 'big-five') {
-            return { ...result, pluginProcessed: true };
-          }
-          return result;
-        }, pid);
+        hookManager.registerHook(
+          'beforeAssessment',
+          (data: any) => {
+            if (data.assessmentId === 'big-five') {
+              return { ...data, pluginEnhanced: true, source: 'big-five-plugin' };
+            }
+            return data;
+          },
+          pid
+        );
+        hookManager.registerHook(
+          'afterAssessment',
+          (result: any) => {
+            if (result.assessmentId === 'big-five') {
+              return { ...result, pluginProcessed: true };
+            }
+            return result;
+          },
+          pid
+        );
         break;
 
       case 'stress-test':
-        hookManager.registerHook('beforeAssessment', (data: any) => {
-          if (data.assessmentId === 'stress-test') {
-            return { ...data, pluginEnhanced: true, source: 'stress-plugin' };
-          }
-          return data;
-        }, pid);
-        hookManager.registerHook('onCalculate', (answers: any) => {
-          return { ...answers, extendedScoring: true };
-        }, pid);
+        hookManager.registerHook(
+          'beforeAssessment',
+          (data: any) => {
+            if (data.assessmentId === 'stress-test') {
+              return { ...data, pluginEnhanced: true, source: 'stress-plugin' };
+            }
+            return data;
+          },
+          pid
+        );
+        hookManager.registerHook(
+          'onCalculate',
+          (answers: any) => {
+            return { ...answers, extendedScoring: true };
+          },
+          pid
+        );
         break;
 
       case 'gad7-anxiety':
-        hookManager.registerHook('beforeAssessment', (data: any) => {
-          if (data.assessmentId === 'anxiety-gad7') {
-            return { ...data, pluginEnhanced: true, source: 'anxiety-plugin' };
-          }
-          return data;
-        }, pid);
-        hookManager.registerHook('onCalculate', (answers: any) => {
-          return { ...answers, dimensionAnalysis: true };
-        }, pid);
+        hookManager.registerHook(
+          'beforeAssessment',
+          (data: any) => {
+            if (data.assessmentId === 'anxiety-gad7') {
+              return { ...data, pluginEnhanced: true, source: 'anxiety-plugin' };
+            }
+            return data;
+          },
+          pid
+        );
+        hookManager.registerHook(
+          'onCalculate',
+          (answers: any) => {
+            return { ...answers, dimensionAnalysis: true };
+          },
+          pid
+        );
         break;
 
       case 'mindfulness-training':
-        hookManager.registerHook('beforeRender', (context: any) => {
-          if (context.page === 'training') {
-            return { ...context, trainingPluginActive: true };
-          }
-          return context;
-        }, pid);
+        hookManager.registerHook(
+          'beforeRender',
+          (context: any) => {
+            if (context.page === 'training') {
+              return { ...context, trainingPluginActive: true };
+            }
+            return context;
+          },
+          pid
+        );
         break;
 
       case 'theme-system':
-        hookManager.registerHook('beforeRender', (context: any) => {
-          const theme = storage.get('theme', 'light');
-          return { ...context, theme };
-        }, pid);
+        hookManager.registerHook(
+          'beforeRender',
+          (context: any) => {
+            const theme = storage.get('theme', 'light');
+            return { ...context, theme };
+          },
+          pid
+        );
         break;
 
       case 'data-analytics':
-        hookManager.registerHook('afterAssessment', (result: any) => {
-          return { ...result, analyticsProcessed: true };
-        }, pid);
-        hookManager.registerHook('onGenerateReport', (data: any) => {
-          return { ...data, analyticsIncluded: true };
-        }, pid);
+        hookManager.registerHook(
+          'afterAssessment',
+          (result: any) => {
+            return { ...result, analyticsProcessed: true };
+          },
+          pid
+        );
+        hookManager.registerHook(
+          'onGenerateReport',
+          (data: any) => {
+            return { ...data, analyticsIncluded: true };
+          },
+          pid
+        );
         break;
     }
   }
@@ -264,20 +329,43 @@ export class PluginLoader {
       case 'big-five-personality':
         return {
           scoringEngine: 'bigFiveScoring',
-          dimensions: ['openness', 'conscientiousness', 'extraversion', 'agreeableness', 'neuroticism'],
-          questionCount: 60
+          dimensions: [
+            'openness',
+            'conscientiousness',
+            'extraversion',
+            'agreeableness',
+            'neuroticism',
+          ],
+          questionCount: 60,
         };
       case 'stress-test':
         return {
           scoringEngine: 'stressTestScoring',
-          dimensions: ['perceivedStress', 'coping', 'workStress', 'relationshipStress', 'healthStress', 'financeStress', 'physiological', 'emotional'],
-          questionCount: 30
+          dimensions: [
+            'perceivedStress',
+            'coping',
+            'workStress',
+            'relationshipStress',
+            'healthStress',
+            'financeStress',
+            'physiological',
+            'emotional',
+          ],
+          questionCount: 30,
         };
       case 'gad7-anxiety':
         return {
           scoringEngine: 'anxietyGad7Scoring',
-          dimensions: ['worries', 'tension', 'irritability', 'fear', 'physical', 'cognitive', 'social'],
-          questionCount: 28
+          dimensions: [
+            'worries',
+            'tension',
+            'irritability',
+            'fear',
+            'physical',
+            'cognitive',
+            'social',
+          ],
+          questionCount: 28,
         };
       default:
         return {};
@@ -286,9 +374,16 @@ export class PluginLoader {
 
   private createTrainingExports(_config: PluginConfig): Record<string, any> {
     return {
-      courses: ['4-7-8-breathing', 'body-scan', 'stress-management', 'gratitude-journal', 'muscle-relaxation', 'anxiety-coping'],
+      courses: [
+        '4-7-8-breathing',
+        'body-scan',
+        'stress-management',
+        'gratitude-journal',
+        'muscle-relaxation',
+        'anxiety-coping',
+      ],
       categories: ['breathing', 'meditation', 'stress', 'gratitude', 'relaxation', 'anxiety'],
-      totalCourses: 6
+      totalCourses: 6,
     };
   }
 
@@ -296,28 +391,28 @@ export class PluginLoader {
     return {
       themes: ['light', 'dark', 'auto'],
       customizable: true,
-      currentTheme: storage.get('theme', 'light')
+      currentTheme: storage.get('theme', 'light'),
     };
   }
 
   private createPluginHookMap(config: PluginConfig): Record<string, any> {
     const hooks: Record<string, any> = {};
-    
+
     if (config.type === 'assessment') {
       hooks.beforeAssessment = (data: any) => ({ ...data, pluginId: config.id });
       hooks.afterAssessment = (result: any) => ({ ...result, processedBy: config.id });
       hooks.onCalculate = (answers: any) => answers;
       hooks.onGenerateReport = (data: any) => ({ ...data, reportPlugin: config.id });
     }
-    
+
     if (config.type === 'training') {
       hooks.beforeRender = (context: any) => context;
     }
-    
+
     if (config.type === 'ui') {
       hooks.beforeRender = (context: any) => ({ ...context, themePlugin: config.id });
     }
-    
+
     return hooks;
   }
 
@@ -331,7 +426,7 @@ export class PluginLoader {
           calculate: (answers: any, questions: any) => {
             api.log('Calculating Big Five scores');
             return { answers, questions, engine: 'bigFive' };
-          }
+          },
         };
         break;
 
@@ -341,7 +436,7 @@ export class PluginLoader {
           calculate: (answers: any, questions: any) => {
             api.log('Calculating stress test scores');
             return { answers, questions, engine: 'stressTest' };
-          }
+          },
         };
         break;
 
@@ -351,7 +446,7 @@ export class PluginLoader {
           calculate: (answers: any, questions: any) => {
             api.log('Calculating GAD-7 scores');
             return { answers, questions, engine: 'gad7' };
-          }
+          },
         };
         break;
 
@@ -365,7 +460,7 @@ export class PluginLoader {
           generateInsights: (_data: any) => {
             api.log('Generating insights');
             return { insights: [], generated: true };
-          }
+          },
         };
         break;
     }
@@ -383,10 +478,17 @@ export class PluginLoader {
       log: (message: string, level = 'info') => {
         const prefix = `[Plugin:${config.id}]`;
         switch (level) {
-          case 'error': console.error(prefix, message); break;
-          case 'warn': console.warn(prefix, message); break;
-          case 'debug': console.debug(prefix, message); break;
-          default: console.log(prefix, message);
+          case 'error':
+            console.error(prefix, message);
+            break;
+          case 'warn':
+            console.warn(prefix, message);
+            break;
+          case 'debug':
+            console.debug(prefix, message);
+            break;
+          default:
+            console.log(prefix, message);
         }
       },
       getService: (name: string) => {
@@ -414,7 +516,7 @@ export class PluginLoader {
           if (!plugin.services) plugin.services = {};
           plugin.services[name] = service;
         }
-      }
+      },
     };
   }
 

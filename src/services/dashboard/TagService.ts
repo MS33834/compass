@@ -1,8 +1,4 @@
-import { 
-  UserTag, 
-  TagCriteria, 
-  UnifiedAssessmentResult 
-} from '../../types/dataAbstraction';
+import { UserTag, TagCriteria, UnifiedAssessmentResult } from '../../types/dataAbstraction';
 import { storage } from '../../lib/utils';
 import { dataSyncService } from '../dataAbstraction/DataSyncService';
 
@@ -22,11 +18,9 @@ const AUTO_TAGS: Array<{
     icon: '🧘',
     criteria: {
       type: 'automatic',
-      conditions: [
-        { trait: '情绪稳定性', operator: 'gt', value: 70 }
-      ],
-      operator: 'and'
-    }
+      conditions: [{ trait: '情绪稳定性', operator: 'gt', value: 70 }],
+      operator: 'and',
+    },
   },
   {
     id: 'improving',
@@ -36,8 +30,8 @@ const AUTO_TAGS: Array<{
     criteria: {
       type: 'automatic',
       conditions: [],
-      operator: 'and'
-    }
+      operator: 'and',
+    },
   },
   {
     id: 'stable',
@@ -47,8 +41,8 @@ const AUTO_TAGS: Array<{
     criteria: {
       type: 'automatic',
       conditions: [],
-      operator: 'and'
-    }
+      operator: 'and',
+    },
   },
   {
     id: 'attention_needed',
@@ -57,11 +51,9 @@ const AUTO_TAGS: Array<{
     icon: '⚠️',
     criteria: {
       type: 'automatic',
-      conditions: [
-        { assessmentType: 'stress', operator: 'gt', value: 20 }
-      ],
-      operator: 'or'
-    }
+      conditions: [{ assessmentType: 'stress', operator: 'gt', value: 20 }],
+      operator: 'or',
+    },
   },
   {
     id: 'stressed',
@@ -70,11 +62,9 @@ const AUTO_TAGS: Array<{
     icon: '😰',
     criteria: {
       type: 'automatic',
-      conditions: [
-        { assessmentType: 'stress', operator: 'gt', value: 25 }
-      ],
-      operator: 'and'
-    }
+      conditions: [{ assessmentType: 'stress', operator: 'gt', value: 25 }],
+      operator: 'and',
+    },
   },
   {
     id: 'anxious',
@@ -83,11 +73,9 @@ const AUTO_TAGS: Array<{
     icon: '😟',
     criteria: {
       type: 'automatic',
-      conditions: [
-        { assessmentType: 'anxiety', operator: 'gt', value: 10 }
-      ],
-      operator: 'and'
-    }
+      conditions: [{ assessmentType: 'anxiety', operator: 'gt', value: 10 }],
+      operator: 'and',
+    },
   },
   {
     id: 'balanced',
@@ -97,8 +85,8 @@ const AUTO_TAGS: Array<{
     criteria: {
       type: 'automatic',
       conditions: [],
-      operator: 'and'
-    }
+      operator: 'and',
+    },
   },
   {
     id: 'creative',
@@ -107,12 +95,10 @@ const AUTO_TAGS: Array<{
     icon: '🎨',
     criteria: {
       type: 'automatic',
-      conditions: [
-        { trait: '开放性', operator: 'gt', value: 75 }
-      ],
-      operator: 'and'
-    }
-  }
+      conditions: [{ trait: '开放性', operator: 'gt', value: 75 }],
+      operator: 'and',
+    },
+  },
 ];
 
 class TagService {
@@ -131,7 +117,7 @@ class TagService {
       criteria: autoTag.criteria,
       manual: false,
       createdAt: Date.now(),
-      resultCount: 0
+      resultCount: 0,
     }));
   }
 
@@ -160,7 +146,7 @@ class TagService {
       icon,
       manual: true,
       createdAt: Date.now(),
-      resultCount: 0
+      resultCount: 0,
     };
 
     const userTags = this.getUserTags();
@@ -173,7 +159,7 @@ class TagService {
   deleteUserTag(tagId: string): boolean {
     const userTags = this.getUserTags();
     const filtered = userTags.filter(t => t.id !== tagId);
-    
+
     if (filtered.length === userTags.length) {
       return false;
     }
@@ -227,9 +213,11 @@ class TagService {
     const results = criteria.conditions.map(condition => {
       if (condition.trait) {
         const trait = result.traits.find(t => t.name === condition.trait);
-        return trait ? this.checkCondition(trait.score, condition.operator, condition.value) : false;
+        return trait
+          ? this.checkCondition(trait.score, condition.operator, condition.value)
+          : false;
       }
-      
+
       if (condition.assessmentType) {
         return this.checkCondition(
           result.assessmentType === condition.assessmentType ? result.totalScore : 0,
@@ -296,10 +284,8 @@ class TagService {
 
   getTopTags(limit: number): string[] {
     const allTags = this.getAllTags();
-    
-    const sortedTags = [...allTags]
-      .sort((a, b) => b.resultCount - a.resultCount)
-      .slice(0, limit);
+
+    const sortedTags = [...allTags].sort((a, b) => b.resultCount - a.resultCount).slice(0, limit);
 
     return sortedTags.map(t => t.name);
   }
@@ -312,10 +298,8 @@ class TagService {
   searchTags(query: string): UserTag[] {
     const allTags = this.getAllTags();
     const lowerQuery = query.toLowerCase();
-    
-    return allTags.filter(t => 
-      t.name.toLowerCase().includes(lowerQuery)
-    );
+
+    return allTags.filter(t => t.name.toLowerCase().includes(lowerQuery));
   }
 }
 

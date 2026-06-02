@@ -5,13 +5,13 @@ import {
   GAD7_RELAXATION_TECHNIQUES,
   GAD7_HEALTHY_HABITS,
   ANXIETY_DIMENSIONS,
-  EXTENDED_ANXIETY_LEVELS
+  EXTENDED_ANXIETY_LEVELS,
 } from '../data/anxietyGad7Data';
 import { Question } from '../types';
 
 /**
  * 焦虑GAD-7评分算法 - 优化版
- * 
+ *
  * 改进：
  * 1. 添加 DIMENSION_WEIGHTS，基于临床重要性加权各维度
  * 2. 将4级系统扩展为7级子级别系统
@@ -21,7 +21,7 @@ import { Question } from '../types';
 
 /**
  * 焦虑维度临床权重
- * 
+ *
  * 基于GAD临床研究和DSM-5诊断标准：
  * - worries: 1.4 (过度担忧是GAD的核心诊断特征)
  * - tension: 1.2 (运动性紧张是GAD的典型躯体表现)
@@ -38,12 +38,12 @@ export const DIMENSION_WEIGHTS: Record<string, number> = {
   fear: 1.1,
   physical: 1.3,
   cognitive: 1.0,
-  social: 1.1
+  social: 1.1,
 };
 
 /**
  * 7级焦虑子级别系统
- * 
+ *
  * 基于加权总分（归一化到0-84范围）：
  * - minimal-1: 几乎无焦虑 (0-6)
  * - minimal-2: 极轻微焦虑 (7-12)
@@ -53,7 +53,14 @@ export const DIMENSION_WEIGHTS: Record<string, number> = {
  * - severe-1: 重度焦虑偏低 (43-56)
  * - severe-2: 重度焦虑偏高 (57-84)
  */
-type AnxietySubLevel = 'minimal-1' | 'minimal-2' | 'mild-1' | 'mild-2' | 'moderate' | 'severe-1' | 'severe-2';
+type AnxietySubLevel =
+  | 'minimal-1'
+  | 'minimal-2'
+  | 'mild-1'
+  | 'mild-2'
+  | 'moderate'
+  | 'severe-1'
+  | 'severe-2';
 
 interface AnxietySubLevelInfo {
   subLevel: AnxietySubLevel;
@@ -64,56 +71,66 @@ interface AnxietySubLevelInfo {
   urgency: number;
 }
 
-const ANXIETY_SUB_LEVEL_DEFINITIONS: Record<AnxietySubLevel, Omit<AnxietySubLevelInfo, 'subLevel'>> = {
+const ANXIETY_SUB_LEVEL_DEFINITIONS: Record<
+  AnxietySubLevel,
+  Omit<AnxietySubLevelInfo, 'subLevel'>
+> = {
   'minimal-1': {
     label: '几乎无焦虑',
     color: 'green',
-    description: '你几乎没有体验到焦虑症状，心理状态非常健康。这是理想的状态，继续保持良好的生活习惯和积极的心态。',
+    description:
+      '你几乎没有体验到焦虑症状，心理状态非常健康。这是理想的状态，继续保持良好的生活习惯和积极的心态。',
     clinicalNote: '无需临床干预',
-    urgency: 0
+    urgency: 0,
   },
   'minimal-2': {
     label: '极轻微焦虑',
     color: 'green',
-    description: '你偶尔会有非常轻微的焦虑感受，但完全在正常范围内。这种程度的焦虑有时反而有助于保持警觉和动力。',
+    description:
+      '你偶尔会有非常轻微的焦虑感受，但完全在正常范围内。这种程度的焦虑有时反而有助于保持警觉和动力。',
     clinicalNote: '正常范围，无需干预',
-    urgency: 0
+    urgency: 0,
   },
   'mild-1': {
     label: '轻度焦虑偏低',
     color: 'lime',
-    description: '你有一些轻微的焦虑症状，主要体现在偶尔的担忧和轻度紧张。这些症状对日常生活影响很小，但值得留意。',
+    description:
+      '你有一些轻微的焦虑症状，主要体现在偶尔的担忧和轻度紧张。这些症状对日常生活影响很小，但值得留意。',
     clinicalNote: '建议自我调节和放松练习',
-    urgency: 1
+    urgency: 1,
   },
   'mild-2': {
     label: '轻度焦虑偏高',
     color: 'yellow',
-    description: '你有较为明显的轻度焦虑症状，可能开始影响日常生活的某些方面。建议主动学习压力管理和放松技巧。',
+    description:
+      '你有较为明显的轻度焦虑症状，可能开始影响日常生活的某些方面。建议主动学习压力管理和放松技巧。',
     clinicalNote: '建议开始心理自助和放松训练',
-    urgency: 2
+    urgency: 2,
   },
-  'moderate': {
+  moderate: {
     label: '中度焦虑',
     color: 'orange',
-    description: '你有明显的中度焦虑症状，可能已经影响到工作、学习和人际关系。建议认真对待，考虑寻求专业心理咨询。',
+    description:
+      '你有明显的中度焦虑症状，可能已经影响到工作、学习和人际关系。建议认真对待，考虑寻求专业心理咨询。',
     clinicalNote: '建议专业心理评估和干预',
-    urgency: 3
+    urgency: 3,
   },
   'severe-1': {
     label: '重度焦虑偏低',
     color: 'deep-orange',
-    description: '你有严重的焦虑症状，日常生活功能受到明显影响。强烈建议尽快寻求专业心理或精神科帮助，不要独自承受。',
+    description:
+      '你有严重的焦虑症状，日常生活功能受到明显影响。强烈建议尽快寻求专业心理或精神科帮助，不要独自承受。',
     clinicalNote: '需要专业治疗，考虑CBT和/或药物治疗',
-    urgency: 4
+    urgency: 4,
   },
   'severe-2': {
     label: '重度焦虑偏高',
     color: 'red',
-    description: '你正经历极其严重的焦虑，可能伴有明显的躯体症状和功能损害。请立即寻求专业精神科帮助，这是非常紧急的情况。',
+    description:
+      '你正经历极其严重的焦虑，可能伴有明显的躯体症状和功能损害。请立即寻求专业精神科帮助，这是非常紧急的情况。',
     clinicalNote: '紧急需要精神科评估和治疗',
-    urgency: 5
-  }
+    urgency: 5,
+  },
 };
 
 function getAnxietySubLevel(weightedScore: number): AnxietySubLevel {
@@ -150,7 +167,7 @@ export function calculateWeightedGAD7Score(
 
   for (const question of questions) {
     const answer = answers[question.id] || 0;
-    const weight = question.trait ? (DIMENSION_WEIGHTS[question.trait] || 1.0) : 1.0;
+    const weight = question.trait ? DIMENSION_WEIGHTS[question.trait] || 1.0 : 1.0;
     weightedTotal += answer * weight;
     maxWeightedTotal += 3 * weight;
   }
@@ -160,25 +177,30 @@ export function calculateWeightedGAD7Score(
   return { weightedTotal, normalizedTotal };
 }
 
-export function calculateGAD7Traits(answers: Record<string, number>, questions: Question[]): TraitResult[] {
+export function calculateGAD7Traits(
+  answers: Record<string, number>,
+  questions: Question[]
+): TraitResult[] {
   const totalScore = calculateGAD7Score(answers);
   const { normalizedTotal } = calculateWeightedGAD7Score(answers, questions);
-  void totalScore; void normalizedTotal;
-  
+  void totalScore;
+  void normalizedTotal;
+
   const dimensionScores: Record<string, number> = {};
   const dimensionCounts: Record<string, number> = {};
   const dimensionWeightedScores: Record<string, number> = {};
-  
+
   for (const question of questions) {
     if (question.trait) {
       const answer = answers[question.id] || 0;
       const weight = DIMENSION_WEIGHTS[question.trait] || 1.0;
       dimensionScores[question.trait] = (dimensionScores[question.trait] || 0) + answer;
       dimensionCounts[question.trait] = (dimensionCounts[question.trait] || 0) + 1;
-      dimensionWeightedScores[question.trait] = (dimensionWeightedScores[question.trait] || 0) + answer * weight;
+      dimensionWeightedScores[question.trait] =
+        (dimensionWeightedScores[question.trait] || 0) + answer * weight;
     }
   }
-  
+
   const subLevel = getAnxietySubLevel(normalizedTotal);
   const subLevelInfo = getAnxietySubLevelInfo(subLevel);
 
@@ -186,25 +208,25 @@ export function calculateGAD7Traits(answers: Record<string, number>, questions: 
     {
       name: '焦虑水平',
       score: normalizedTotal,
-      description: `${subLevelInfo.label} - ${subLevelInfo.description}`
-    }
+      description: `${subLevelInfo.label} - ${subLevelInfo.description}`,
+    },
   ];
-  
+
   for (const [dimKey, score] of Object.entries(dimensionScores)) {
     const dimInfo = ANXIETY_DIMENSIONS[dimKey as keyof typeof ANXIETY_DIMENSIONS];
     if (dimInfo) {
       const maxDimScore = (dimensionCounts[dimKey] || 1) * 3;
       const weight = DIMENSION_WEIGHTS[dimKey] || 1.0;
-      const weightedPercentage = Math.round((score * weight / (maxDimScore * weight)) * 100);
+      const weightedPercentage = Math.round(((score * weight) / (maxDimScore * weight)) * 100);
       const weightLabel = weight >= 1.3 ? ' [高临床权重]' : weight >= 1.1 ? ' [中临床权重]' : '';
       traits.push({
         name: dimInfo.name,
         score: Math.min(100, weightedPercentage),
-        description: `${dimInfo.description}${weightLabel}`
+        description: `${dimInfo.description}${weightLabel}`,
       });
     }
   }
-  
+
   return traits;
 }
 
@@ -238,7 +260,7 @@ function generateAnxietyProfile(
   dimensionCounts: Record<string, number>
 ): string {
   const dimensionRatios: Record<string, number> = {};
-  
+
   for (const [dim, weightedScore] of Object.entries(dimensionWeightedScores)) {
     const count = dimensionCounts[dim] || 1;
     const maxScore = count * 3 * (DIMENSION_WEIGHTS[dim] || 1.0);
@@ -256,7 +278,7 @@ function generateAnxietyProfile(
     fear: '恐惧感受',
     physical: '躯体症状',
     cognitive: '认知症状',
-    social: '社会功能影响'
+    social: '社会功能影响',
   };
 
   const profileParts: string[] = [];
@@ -284,9 +306,13 @@ function generateAnxietyProfile(
   if (worriesRatio > 0.6 && physicalRatio > 0.6) {
     profileParts.push('你的担忧和躯体症状同时突出，这符合广泛性焦虑障碍(GAD)的典型表现。');
   } else if (physicalRatio > 0.6 && worriesRatio < 0.3) {
-    profileParts.push('你的焦虑主要表现为躯体症状而非心理担忧，这可能是躯体化倾向，建议关注身心联系。');
+    profileParts.push(
+      '你的焦虑主要表现为躯体症状而非心理担忧，这可能是躯体化倾向，建议关注身心联系。'
+    );
   } else if (worriesRatio > 0.6 && cognitiveRatio > 0.5) {
-    profileParts.push('过度担忧伴随认知症状，你可能陷入反复思考的循环，建议练习认知重构和正念技术。');
+    profileParts.push(
+      '过度担忧伴随认知症状，你可能陷入反复思考的循环，建议练习认知重构和正念技术。'
+    );
   }
 
   if (socialRatio > 0.6) {
@@ -300,32 +326,31 @@ export function calculateAnxietyProgress(currentQuestion: number, totalQuestions
   return Math.round((currentQuestion / totalQuestions) * 100);
 }
 
-export function generateDetailedGAD7Report(
-  answers: Record<string, number>,
-  questions: Question[]
-) {
+export function generateDetailedGAD7Report(answers: Record<string, number>, questions: Question[]) {
   const totalScore = calculateGAD7Score(answers);
   const { weightedTotal, normalizedTotal } = calculateWeightedGAD7Score(answers, questions);
   const anxietyLevel = getAnxietyLevelInfo(totalScore);
   const extendedLevel = getExtendedAnxietyLevel(totalScore);
-  void anxietyLevel; void extendedLevel;
+  void anxietyLevel;
+  void extendedLevel;
   const subLevel = getAnxietySubLevel(normalizedTotal);
   const subLevelInfo = getAnxietySubLevelInfo(subLevel);
-  
+
   const dimensionScores: Record<string, number> = {};
   const dimensionCounts: Record<string, number> = {};
   const dimensionWeightedScores: Record<string, number> = {};
-  
+
   for (const question of questions) {
     if (question.trait) {
       const answer = answers[question.id] || 0;
       const weight = DIMENSION_WEIGHTS[question.trait] || 1.0;
       dimensionScores[question.trait] = (dimensionScores[question.trait] || 0) + answer;
       dimensionCounts[question.trait] = (dimensionCounts[question.trait] || 0) + 1;
-      dimensionWeightedScores[question.trait] = (dimensionWeightedScores[question.trait] || 0) + answer * weight;
+      dimensionWeightedScores[question.trait] =
+        (dimensionWeightedScores[question.trait] || 0) + answer * weight;
     }
   }
-  
+
   const sortedDimensions = Object.entries(dimensionScores)
     .map(([key, score]) => {
       const weight = DIMENSION_WEIGHTS[key] || 1.0;
@@ -336,36 +361,36 @@ export function generateDetailedGAD7Report(
         weightedScore: dimensionWeightedScores[key] || 0,
         maxScore,
         percentage: Math.round((score / maxScore) * 100),
-        weightedPercentage: Math.round((score * weight / (maxScore * weight)) * 100),
+        weightedPercentage: Math.round(((score * weight) / (maxScore * weight)) * 100),
         weight,
-        info: ANXIETY_DIMENSIONS[key as keyof typeof ANXIETY_DIMENSIONS]
+        info: ANXIETY_DIMENSIONS[key as keyof typeof ANXIETY_DIMENSIONS],
       };
     })
     .sort((a, b) => b.weightedScore - a.weightedScore);
-  
+
   const topDimension = sortedDimensions[0];
   const primarySymptom = topDimension?.info?.name || '总体焦虑';
 
   const anxietyProfile = generateAnxietyProfile(dimensionWeightedScores, dimensionCounts);
-  
-  const questionAnalysis = questions.map((question) => {
+
+  const questionAnalysis = questions.map(question => {
     const answer = answers[question.id] || 0;
-    const weight = question.trait ? (DIMENSION_WEIGHTS[question.trait] || 1.0) : 1.0;
+    const weight = question.trait ? DIMENSION_WEIGHTS[question.trait] || 1.0 : 1.0;
     return {
       question: question.text,
       score: answer,
       weightedScore: Math.round(answer * weight * 10) / 10,
       severity: answer === 0 ? '无' : answer === 1 ? '轻度' : answer === 2 ? '中度' : '重度',
       dimension: question.trait,
-      dimensionWeight: weight
+      dimensionWeight: weight,
     };
   });
-  
-  const mostSevere = questionAnalysis.reduce((max, q) => 
-    (q.score > max.score ? q : max),
+
+  const mostSevere = questionAnalysis.reduce(
+    (max, q) => (q.score > max.score ? q : max),
     questionAnalysis[0]
   );
-  
+
   const personalizedTips: string[] = [];
   if (normalizedTotal >= 43) {
     personalizedTips.push('建议尽快安排时间咨询专业心理师或精神科医生');
@@ -387,24 +412,25 @@ export function generateDetailedGAD7Report(
     personalizedTips.push('增加与家人朋友的交流，不要孤立自己');
   }
   personalizedTips.push('关注自己的情绪变化，及时调整');
-  
+
   const dimensionRecommendations = sortedDimensions.slice(0, 3).map(dim => ({
     dimension: dim.dimension,
     name: dim.info?.name || dim.dimension,
     score: dim.percentage,
     weightedScore: Math.round(dim.weightedScore * 10) / 10,
     weight: dim.weight,
-    tips: dim.info?.recommendations || []
+    tips: dim.info?.recommendations || [],
   }));
-  
+
   const recs = anxietyLevel.recommendations as any;
 
-  const urgencyPrefix = subLevelInfo.urgency >= 4 
-    ? '⚠️ 紧急建议：' 
-    : subLevelInfo.urgency >= 2 
-      ? '💡 建议关注：' 
-      : '✅ 继续保持：';
-  
+  const urgencyPrefix =
+    subLevelInfo.urgency >= 4
+      ? '⚠️ 紧急建议：'
+      : subLevelInfo.urgency >= 2
+        ? '💡 建议关注：'
+        : '✅ 继续保持：';
+
   return {
     summary: {
       title: `${subLevelInfo.label}`,
@@ -414,7 +440,7 @@ export function generateDetailedGAD7Report(
       description: anxietyLevel.description,
       color: subLevelInfo.color,
       subLevel: subLevelInfo,
-      urgencyPrefix
+      urgencyPrefix,
     },
     detailedAnalysis: {
       signs: anxietyLevel.detailed,
@@ -423,7 +449,7 @@ export function generateDetailedGAD7Report(
       mostSevereSymptom: mostSevere,
       topDimensions: sortedDimensions.slice(0, 3),
       questionAnalysis,
-      dimensionWeightedScores
+      dimensionWeightedScores,
     },
     recommendations: {
       immediate: GAD7_COPING_STRATEGIES.immediate,
@@ -433,17 +459,14 @@ export function generateDetailedGAD7Report(
       professional: GAD7_COPING_STRATEGIES.professional,
       dimensionTips: dimensionRecommendations,
       relaxation: GAD7_RELAXATION_TECHNIQUES,
-      healthyHabits: GAD7_HEALTHY_HABITS
+      healthyHabits: GAD7_HEALTHY_HABITS,
     },
     personalizedTips,
     dailyPractices: anxietyLevel.dailyPractices,
     clinicalNote: subLevelInfo.clinicalNote,
     resources: {
       available: recs?.continue || recs?.immediate,
-      professional: [
-        '全国心理援助热线：400-161-9995',
-        '北京心理危机研究与干预中心：010-82951332'
-      ]
-    }
+      professional: ['全国心理援助热线：400-161-9995', '北京心理危机研究与干预中心：010-82951332'],
+    },
   };
 }

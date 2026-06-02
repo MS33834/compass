@@ -2,8 +2,8 @@
 
 ## Supported Versions
 
-| Version | Supported          |
-| ------- | ------------------ |
+| Version         | Supported          |
+| --------------- | ------------------ |
 | latest (master) | :white_check_mark: |
 | older           | :x:                |
 

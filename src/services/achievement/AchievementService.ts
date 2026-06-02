@@ -50,8 +50,8 @@ export const ACHIEVEMENT_DEFINITIONS: AchievementDefinition[] = [
     descriptionZh: '完成第一次心理测评',
     descriptionEn: 'Complete your first assessment',
     requirement: 1,
-    condition: (s) => s.totalAssessments >= 1,
-    progressFn: (s) => Math.min(s.totalAssessments, 1),
+    condition: s => s.totalAssessments >= 1,
+    progressFn: s => Math.min(s.totalAssessments, 1),
   },
   {
     id: 'explorer',
@@ -63,8 +63,8 @@ export const ACHIEVEMENT_DEFINITIONS: AchievementDefinition[] = [
     descriptionZh: '完成3次心理测评',
     descriptionEn: 'Complete 3 assessments',
     requirement: 3,
-    condition: (s) => s.totalAssessments >= 3,
-    progressFn: (s) => Math.min(s.totalAssessments, 3),
+    condition: s => s.totalAssessments >= 3,
+    progressFn: s => Math.min(s.totalAssessments, 3),
   },
   {
     id: 'self_knower',
@@ -76,8 +76,8 @@ export const ACHIEVEMENT_DEFINITIONS: AchievementDefinition[] = [
     descriptionZh: '完成10次心理测评',
     descriptionEn: 'Complete 10 assessments',
     requirement: 10,
-    condition: (s) => s.totalAssessments >= 10,
-    progressFn: (s) => Math.min(s.totalAssessments, 10),
+    condition: s => s.totalAssessments >= 10,
+    progressFn: s => Math.min(s.totalAssessments, 10),
   },
   {
     id: 'personality_master',
@@ -89,8 +89,8 @@ export const ACHIEVEMENT_DEFINITIONS: AchievementDefinition[] = [
     descriptionZh: '完成大五人格测评3次',
     descriptionEn: 'Complete Big Five assessment 3 times',
     requirement: 3,
-    condition: (s) => s.bigFiveCount >= 3,
-    progressFn: (s) => Math.min(s.bigFiveCount, 3),
+    condition: s => s.bigFiveCount >= 3,
+    progressFn: s => Math.min(s.bigFiveCount, 3),
   },
   {
     id: 'stress_aware',
@@ -102,8 +102,8 @@ export const ACHIEVEMENT_DEFINITIONS: AchievementDefinition[] = [
     descriptionZh: '完成压力测评3次',
     descriptionEn: 'Complete stress assessment 3 times',
     requirement: 3,
-    condition: (s) => s.stressCount >= 3,
-    progressFn: (s) => Math.min(s.stressCount, 3),
+    condition: s => s.stressCount >= 3,
+    progressFn: s => Math.min(s.stressCount, 3),
   },
   {
     id: 'anxiety_guardian',
@@ -115,8 +115,8 @@ export const ACHIEVEMENT_DEFINITIONS: AchievementDefinition[] = [
     descriptionZh: '完成焦虑测评3次',
     descriptionEn: 'Complete anxiety assessment 3 times',
     requirement: 3,
-    condition: (s) => s.anxietyCount >= 3,
-    progressFn: (s) => Math.min(s.anxietyCount, 3),
+    condition: s => s.anxietyCount >= 3,
+    progressFn: s => Math.min(s.anxietyCount, 3),
   },
   {
     id: 'first_training',
@@ -128,8 +128,8 @@ export const ACHIEVEMENT_DEFINITIONS: AchievementDefinition[] = [
     descriptionZh: '完成第一次心理训练',
     descriptionEn: 'Complete your first training',
     requirement: 1,
-    condition: (s) => s.trainingCompleted >= 1,
-    progressFn: (s) => Math.min(s.trainingCompleted, 1),
+    condition: s => s.trainingCompleted >= 1,
+    progressFn: s => Math.min(s.trainingCompleted, 1),
   },
   {
     id: 'dedicated_learner',
@@ -141,8 +141,8 @@ export const ACHIEVEMENT_DEFINITIONS: AchievementDefinition[] = [
     descriptionZh: '完成5次心理训练',
     descriptionEn: 'Complete 5 training sessions',
     requirement: 5,
-    condition: (s) => s.trainingCompleted >= 5,
-    progressFn: (s) => Math.min(s.trainingCompleted, 5),
+    condition: s => s.trainingCompleted >= 5,
+    progressFn: s => Math.min(s.trainingCompleted, 5),
   },
   {
     id: 'training_master',
@@ -154,8 +154,8 @@ export const ACHIEVEMENT_DEFINITIONS: AchievementDefinition[] = [
     descriptionZh: '完成15次心理训练',
     descriptionEn: 'Complete 15 training sessions',
     requirement: 15,
-    condition: (s) => s.trainingCompleted >= 15,
-    progressFn: (s) => Math.min(s.trainingCompleted, 15),
+    condition: s => s.trainingCompleted >= 15,
+    progressFn: s => Math.min(s.trainingCompleted, 15),
   },
   {
     id: 'week_streak',
@@ -167,8 +167,8 @@ export const ACHIEVEMENT_DEFINITIONS: AchievementDefinition[] = [
     descriptionZh: '连续7天使用应用',
     descriptionEn: 'Use the app for 7 consecutive days',
     requirement: 7,
-    condition: (s) => s.streakDays >= 7,
-    progressFn: (s) => Math.min(s.streakDays, 7),
+    condition: s => s.streakDays >= 7,
+    progressFn: s => Math.min(s.streakDays, 7),
   },
   {
     id: 'month_streak',
@@ -180,8 +180,8 @@ export const ACHIEVEMENT_DEFINITIONS: AchievementDefinition[] = [
     descriptionZh: '连续30天使用应用',
     descriptionEn: 'Use the app for 30 consecutive days',
     requirement: 30,
-    condition: (s) => s.streakDays >= 30,
-    progressFn: (s) => Math.min(s.streakDays, 30),
+    condition: s => s.streakDays >= 30,
+    progressFn: s => Math.min(s.streakDays, 30),
   },
   {
     id: 'mood_tracker_start',
@@ -193,8 +193,8 @@ export const ACHIEVEMENT_DEFINITIONS: AchievementDefinition[] = [
     descriptionZh: '记录7天心情',
     descriptionEn: 'Track your mood for 7 days',
     requirement: 7,
-    condition: (s) => s.moodEntries >= 7,
-    progressFn: (s) => Math.min(s.moodEntries, 7),
+    condition: s => s.moodEntries >= 7,
+    progressFn: s => Math.min(s.moodEntries, 7),
   },
   {
     id: 'mood_habit',
@@ -206,8 +206,8 @@ export const ACHIEVEMENT_DEFINITIONS: AchievementDefinition[] = [
     descriptionZh: '记录30天心情',
     descriptionEn: 'Track your mood for 30 days',
     requirement: 30,
-    condition: (s) => s.moodEntries >= 30,
-    progressFn: (s) => Math.min(s.moodEntries, 30),
+    condition: s => s.moodEntries >= 30,
+    progressFn: s => Math.min(s.moodEntries, 30),
   },
   {
     id: 'comparative_analyst',
@@ -219,8 +219,8 @@ export const ACHIEVEMENT_DEFINITIONS: AchievementDefinition[] = [
     descriptionZh: '使用3次测评对比功能',
     descriptionEn: 'Use the comparison feature 3 times',
     requirement: 3,
-    condition: (s) => s.compareCount >= 3,
-    progressFn: (s) => Math.min(s.compareCount, 3),
+    condition: s => s.compareCount >= 3,
+    progressFn: s => Math.min(s.compareCount, 3),
   },
   {
     id: 'all_rounder',
@@ -232,9 +232,13 @@ export const ACHIEVEMENT_DEFINITIONS: AchievementDefinition[] = [
     descriptionZh: '完成所有类型的测评各至少1次',
     descriptionEn: 'Complete each type of assessment at least once',
     requirement: 3,
-    condition: (s) => s.bigFiveCount >= 1 && s.stressCount >= 1 && s.anxietyCount >= 1,
-    progressFn: (s) => {
-      const types = [s.bigFiveCount >= 1 ? 1 : 0, s.stressCount >= 1 ? 1 : 0, s.anxietyCount >= 1 ? 1 : 0];
+    condition: s => s.bigFiveCount >= 1 && s.stressCount >= 1 && s.anxietyCount >= 1,
+    progressFn: s => {
+      const types = [
+        s.bigFiveCount >= 1 ? 1 : 0,
+        s.stressCount >= 1 ? 1 : 0,
+        s.anxietyCount >= 1 ? 1 : 0,
+      ];
       return types.reduce((a, b) => a + b, 0);
     },
   },
@@ -276,7 +280,11 @@ class AchievementService {
     }));
   }
 
-  getStats(state: AchievementCheckState): { total: number; unlocked: number; byCategory: Record<string, { total: number; unlocked: number }> } {
+  getStats(state: AchievementCheckState): {
+    total: number;
+    unlocked: number;
+    byCategory: Record<string, { total: number; unlocked: number }>;
+  } {
     const unlocked = this.getUnlocked();
     const achievements = this.getAchievements(state);
     const byCategory: Record<string, { total: number; unlocked: number }> = {};

@@ -30,7 +30,7 @@ export class PluginRegistryManager {
         return {
           ...saved,
           plugins: new Map(Object.entries(saved.plugins || {})),
-          activePlugins: new Set(saved.activePlugins || [])
+          activePlugins: new Set(saved.activePlugins || []),
         };
       }
     } catch (_e) {
@@ -40,7 +40,7 @@ export class PluginRegistryManager {
     return {
       plugins: new Map(),
       activePlugins: new Set(),
-      pluginStates: new Map()
+      pluginStates: new Map(),
     };
   }
 
@@ -49,7 +49,7 @@ export class PluginRegistryManager {
       const toSave = {
         ...this.registry,
         plugins: Object.fromEntries(this.registry.plugins.entries()),
-        activePlugins: Array.from(this.registry.activePlugins)
+        activePlugins: Array.from(this.registry.activePlugins),
       };
       storage.set(PLUGIN_REGISTRY_KEY, toSave);
     } catch (e) {
@@ -64,9 +64,9 @@ export class PluginRegistryManager {
       globalSettings: {
         autoLoadDefaults: true,
         sandboxMode: false,
-        strictPermissions: false
+        strictPermissions: false,
       },
-      theme: null
+      theme: null,
     };
   }
 
@@ -87,7 +87,7 @@ export class PluginRegistryManager {
       type: 'install',
       pluginId: plugin.id,
       data: plugin,
-      timestamp: Date.now()
+      timestamp: Date.now(),
     });
 
     if (plugin.autoLoad && this.manifest.globalSettings.autoLoadDefaults) {
@@ -112,7 +112,7 @@ export class PluginRegistryManager {
     this.emitEvent({
       type: 'uninstall',
       pluginId,
-      timestamp: Date.now()
+      timestamp: Date.now(),
     });
 
     return true;
@@ -138,7 +138,7 @@ export class PluginRegistryManager {
       this.emitEvent({
         type: 'activate',
         pluginId,
-        timestamp: Date.now()
+        timestamp: Date.now(),
       });
 
       return true;
@@ -148,7 +148,7 @@ export class PluginRegistryManager {
         code: 'ACTIVATION_FAILED',
         message: error instanceof Error ? error.message : 'Activation failed',
         details: error,
-        timestamp: Date.now()
+        timestamp: Date.now(),
       });
       return false;
     }
@@ -169,7 +169,7 @@ export class PluginRegistryManager {
           code: 'DEACTIVATION_FAILED',
           message: error instanceof Error ? error.message : 'Deactivation failed',
           details: error,
-          timestamp: Date.now()
+          timestamp: Date.now(),
         });
       }
     }
@@ -179,7 +179,7 @@ export class PluginRegistryManager {
     this.emitEvent({
       type: 'deactivate',
       pluginId,
-      timestamp: Date.now()
+      timestamp: Date.now(),
     });
 
     return true;
@@ -224,7 +224,10 @@ export class PluginRegistryManager {
     this.eventListeners.get(eventType)!.add(callback);
   }
 
-  removeEventListener(eventType: PluginEvent['type'], callback: (event: PluginEvent) => void): void {
+  removeEventListener(
+    eventType: PluginEvent['type'],
+    callback: (event: PluginEvent) => void
+  ): void {
     if (this.eventListeners.has(eventType)) {
       this.eventListeners.get(eventType)!.delete(callback);
     }
@@ -267,7 +270,7 @@ export class PluginRegistryManager {
     const stats = {
       total: this.registry.plugins.size,
       active: this.registry.activePlugins.size,
-      byType: {} as Record<string, number>
+      byType: {} as Record<string, number>,
     };
 
     this.registry.plugins.forEach(plugin => {

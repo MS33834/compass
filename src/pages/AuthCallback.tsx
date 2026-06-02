@@ -44,7 +44,9 @@ export const AuthCallback = () => {
       <div className="text-center max-w-md">
         {error ? (
           <div role="alert" aria-live="assertive">
-            <div className="text-4xl mb-4" aria-hidden="true">❌</div>
+            <div className="text-4xl mb-4" aria-hidden="true">
+              ❌
+            </div>
             <h1 className="text-2xl font-bold text-slate-800 mb-2">{i18n.auth.loginFailed}</h1>
             <p className="text-slate-600 mb-4 break-words">{error}</p>
             <p className="text-sm text-slate-500">{i18n.auth.redirectingToLogin}</p>

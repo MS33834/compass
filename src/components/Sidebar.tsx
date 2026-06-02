@@ -29,7 +29,7 @@ export function Sidebar() {
     { id: 'history', label: i18n.nav.history, href: '/history', icon: '📚' },
     { id: 'plugins', label: i18n.nav.plugins, href: '/plugins', icon: '🧩' },
     { id: 'settings', label: i18n.nav.settings, href: '/settings', icon: '⚙️' },
-    { id: 'about', label: i18n.nav.about, href: '/about', icon: 'ℹ️' }
+    { id: 'about', label: i18n.nav.about, href: '/about', icon: 'ℹ️' },
   ];
 
   // 点击外部区域关闭侧边栏
@@ -117,12 +117,17 @@ export function Sidebar() {
                   >
                     <div className="flex items-center gap-4">
                       <img
-                        src={user.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.username)}&background=4F46E5&color=fff&size=128`}
+                        src={
+                          user.avatar ||
+                          `https://ui-avatars.com/api/?name=${encodeURIComponent(user.username)}&background=4F46E5&color=fff&size=128`
+                        }
                         alt={user.username}
                         className="w-12 h-12 rounded-full"
                       />
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-slate-800 truncate">{user.username}</p>
+                        <p className="text-sm font-medium text-slate-800 truncate">
+                          {user.username}
+                        </p>
                         <p className="text-xs text-slate-500 truncate">{user.email}</p>
                       </div>
                     </div>
@@ -156,9 +161,7 @@ export function Sidebar() {
                         <p className="text-sm font-medium text-slate-700">
                           {i18n.settings.guestMode}
                         </p>
-                        <p className="text-xs text-slate-500">
-                          {i18n.settings.loginForMore}
-                        </p>
+                        <p className="text-xs text-slate-500">{i18n.settings.loginForMore}</p>
                       </div>
                     </div>
                     <div className="mt-3 space-y-2">

@@ -31,15 +31,17 @@ export function RadarChart({ results, width = 500, height = 500 }: RadarChartPro
     const angle = startAngle + index * angleStep;
     return {
       x: centerX + r * Math.cos(angle),
-      y: centerY + r * Math.sin(angle)
+      y: centerY + r * Math.sin(angle),
     };
   };
 
   const gridPoints = levels.map(level => {
-    return traits.map((_, index) => {
-      const point = getPointCoordinates(level, index, radius);
-      return `${point.x},${point.y}`;
-    }).join(' ');
+    return traits
+      .map((_, index) => {
+        const point = getPointCoordinates(level, index, radius);
+        return `${point.x},${point.y}`;
+      })
+      .join(' ');
   });
 
   const dataPoints = traits.map((trait, index) => {
@@ -47,9 +49,12 @@ export function RadarChart({ results, width = 500, height = 500 }: RadarChartPro
     return getPointCoordinates(normalizedValue, index, radius);
   });
 
-  const dataPath = dataPoints.map((point, index) => {
-    return `${index === 0 ? 'M' : 'L'} ${point.x} ${point.y}`;
-  }).join(' ') + ' Z';
+  const dataPath =
+    dataPoints
+      .map((point, index) => {
+        return `${index === 0 ? 'M' : 'L'} ${point.x} ${point.y}`;
+      })
+      .join(' ') + ' Z';
   void dataPath;
 
   return (
@@ -70,13 +75,7 @@ export function RadarChart({ results, width = 500, height = 500 }: RadarChartPro
         </defs>
 
         {gridPoints.map((points, levelIndex) => (
-          <polygon
-            key={levelIndex}
-            points={points}
-            fill="none"
-            stroke="#E5E7EB"
-            strokeWidth="1"
-          />
+          <polygon key={levelIndex} points={points} fill="none" stroke="#E5E7EB" strokeWidth="1" />
         ))}
 
         {traits.map((_, index) => {
@@ -103,20 +102,8 @@ export function RadarChart({ results, width = 500, height = 500 }: RadarChartPro
 
         {dataPoints.map((point, index) => (
           <g key={index}>
-            <circle
-              cx={point.x}
-              cy={point.y}
-              r="6"
-              fill="#8B5CF6"
-              stroke="white"
-              strokeWidth="2"
-            />
-            <circle
-              cx={point.x}
-              cy={point.y}
-              r="3"
-              fill="white"
-            />
+            <circle cx={point.x} cy={point.y} r="6" fill="#8B5CF6" stroke="white" strokeWidth="2" />
+            <circle cx={point.x} cy={point.y} r="3" fill="white" />
           </g>
         ))}
 
@@ -154,9 +141,7 @@ export function RadarChart({ results, width = 500, height = 500 }: RadarChartPro
 
       <div className="mt-4 text-center text-sm text-slate-600">
         {results.length > 1 && (
-          <span className="text-blue-600">
-            对比 {results.length} 次测评结果
-          </span>
+          <span className="text-blue-600">对比 {results.length} 次测评结果</span>
         )}
       </div>
     </div>

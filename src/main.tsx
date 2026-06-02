@@ -11,7 +11,10 @@ function showFatalError(err: unknown) {
   const boot = document.getElementById('__app_boot__');
   const root = document.getElementById('root');
   const message = err instanceof Error ? `${err.message}\n\n${err.stack ?? ''}` : String(err);
-  const safe = message.replace(/[<>&]/g, (c) => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;' }[c] as string));
+  const safe = message.replace(
+    /[<>&]/g,
+    c => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;' })[c] as string
+  );
   const html = `
     <div style="text-align:left;max-width:640px;padding:0 24px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace">
       <div style="width:64px;height:64px;margin:0 0 20px;background:#fee2e2;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:32px">⚠️</div>
@@ -25,7 +28,7 @@ function showFatalError(err: unknown) {
   else document.body.innerHTML = html;
 }
 
-window.addEventListener('error', (e) => {
+window.addEventListener('error', e => {
   if (document.getElementById('__app_boot__')) {
     setTimeout(() => {
       if (document.getElementById('__app_boot__')) {
@@ -57,7 +60,7 @@ if (!rootElement) {
     createRoot(rootElement).render(
       <StrictMode>
         <App />
-      </StrictMode>,
+      </StrictMode>
     );
   } catch (err) {
     showFatalError(err);

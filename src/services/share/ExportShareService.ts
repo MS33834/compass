@@ -71,12 +71,12 @@ async function sha256Hex(input: string): Promise<string> {
   if (typeof crypto !== 'undefined' && crypto.subtle) {
     const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(input));
     return Array.from(new Uint8Array(buf))
-      .map((b) => b.toString(16).padStart(2, '0'))
+      .map(b => b.toString(16).padStart(2, '0'))
       .join('');
   }
   let h = 0;
   for (let i = 0; i < input.length; i++) {
-    h = ((h << 5) - h) + input.charCodeAt(i);
+    h = (h << 5) - h + input.charCodeAt(i);
     h |= 0;
   }
   return 'sha256_' + Math.abs(h).toString(16).padStart(16, '0');
@@ -86,7 +86,9 @@ function buildReportHtml(result: any, lang: 'en' | 'zh' = 'zh'): string {
   const t = LABELS[lang];
   const title = result.title || t.title;
   const assessmentId = result.assessmentId || t.unknown;
-  const time = new Date(result.timestamp || Date.now()).toLocaleString(lang === 'zh' ? 'zh-CN' : 'en-US');
+  const time = new Date(result.timestamp || Date.now()).toLocaleString(
+    lang === 'zh' ? 'zh-CN' : 'en-US'
+  );
   const totalScore = result.totalScore ?? 0;
   const traitsHtml = (result.traits || [])
     .map(
@@ -95,7 +97,7 @@ function buildReportHtml(result: any, lang: 'en' | 'zh' = 'zh'): string {
         <td style="padding:10px 12px;border-bottom:1px solid #e5e7eb;font-weight:600;">${escapeHtml(trait.name)}</td>
         <td style="padding:10px 12px;border-bottom:1px solid #e5e7eb;text-align:right;">${trait.score}</td>
         <td style="padding:10px 12px;border-bottom:1px solid #e5e7eb;color:#475569;">${escapeHtml(trait.description || '')}</td>
-      </tr>`,
+      </tr>`
     )
     .join('');
 
@@ -127,10 +129,14 @@ function buildReportHtml(result: any, lang: 'en' | 'zh' = 'zh'): string {
     <div><div class="meta-label">${t.time}</div><div class="meta-value">${escapeHtml(time)}</div></div>
     <div><div class="meta-label">${t.totalScore}</div><div class="meta-value">${totalScore}</div></div>
   </div>
-  ${traitsHtml ? `<table>
+  ${
+    traitsHtml
+      ? `<table>
     <thead><tr><th>${t.traits}</th><th style="text-align:right;">${t.totalScore}</th><th>${t.summary}</th></tr></thead>
     <tbody>${traitsHtml}</tbody>
-  </table>` : ''}
+  </table>`
+      : ''
+  }
   ${summary ? `<div class="summary">${escapeHtml(summary)}</div>` : ''}
   <div class="footer">MindMirror · mindmirror.app</div>
 </body>

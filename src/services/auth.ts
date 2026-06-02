@@ -1,4 +1,10 @@
-import type { User, AuthCredentials, RegisterData, AuthResponse, ValidationError } from '../types/auth';
+import type {
+  User,
+  AuthCredentials,
+  RegisterData,
+  AuthResponse,
+  ValidationError,
+} from '../types/auth';
 import { apiRequest, configureApi, ApiError, API_BASE_URL } from '../lib/apiClient';
 
 const STORAGE_KEY_USER = 'mindmirror_user';
@@ -86,7 +92,7 @@ async function sha256(text: string): Promise<string> {
   if (typeof crypto !== 'undefined' && crypto.subtle) {
     const buf = await crypto.subtle.digest('SHA-256', data);
     return Array.from(new Uint8Array(buf))
-      .map((b) => b.toString(16).padStart(2, '0'))
+      .map(b => b.toString(16).padStart(2, '0'))
       .join('');
   }
   // Fallback (older browsers) - not cryptographically strong but OK for local demo
@@ -106,7 +112,7 @@ function uuid(): string {
   if (typeof crypto !== 'undefined' && 'randomUUID' in crypto) {
     return crypto.randomUUID();
   }
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
     const r = (Math.random() * 16) | 0;
     const v = c === 'x' ? r : (r & 0x3) | 0x8;
     return v.toString(16);
@@ -227,10 +233,10 @@ export class AuthService {
 
   private async registerLocal(data: RegisterData): Promise<AuthResponse> {
     const users = getLocalUsers();
-    if (users.find((u) => u.email.toLowerCase() === data.email.toLowerCase())) {
+    if (users.find(u => u.email.toLowerCase() === data.email.toLowerCase())) {
       return { success: false, error: 'An account with this email already exists' };
     }
-    if (users.find((u) => u.username.toLowerCase() === data.username.toLowerCase())) {
+    if (users.find(u => u.username.toLowerCase() === data.username.toLowerCase())) {
       return { success: false, error: 'This username is already taken' };
     }
     const id = uuid();
@@ -287,9 +293,12 @@ export class AuthService {
 
   private async loginLocal(credentials: AuthCredentials): Promise<AuthResponse> {
     const users = getLocalUsers();
-    const record = users.find((u) => u.email.toLowerCase() === credentials.email.toLowerCase());
+    const record = users.find(u => u.email.toLowerCase() === credentials.email.toLowerCase());
     if (!record) {
-      return { success: false, error: 'No account found. Try the demo account demo@mindmirror.app / demo123' };
+      return {
+        success: false,
+        error: 'No account found. Try the demo account demo@mindmirror.app / demo123',
+      };
     }
     const [salt, expected] = record.passwordHash.split('$');
     const provided = await hashPassword(credentials.password, salt);
@@ -373,7 +382,10 @@ export class AuthService {
   }
 
   async resetPasswordForEmail(_email: string): Promise<AuthResponse> {
-    return { success: false, error: 'Password reset via email is not configured on this deployment.' };
+    return {
+      success: false,
+      error: 'Password reset via email is not configured on this deployment.',
+    };
   }
 
   getCurrentUser(): User | null {
@@ -418,7 +430,16 @@ export class AuthService {
   }
 
   generateAvatar(username: string): string {
-    const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7', '#DDA0DD', '#98D8C8', '#F7DC6F'];
+    const colors = [
+      '#FF6B6B',
+      '#4ECDC4',
+      '#45B7D1',
+      '#96CEB4',
+      '#FFEAA7',
+      '#DDA0DD',
+      '#98D8C8',
+      '#F7DC6F',
+    ];
     const color = colors[(username || 'X').charCodeAt(0) % colors.length];
     return `https://ui-avatars.com/api/?name=${encodeURIComponent(username)}&background=${color.slice(1)}&color=fff&size=128`;
   }
@@ -435,7 +456,7 @@ export class AuthService {
       const cached = this.getCurrentUser();
       if (!cached) return { success: false, error: 'Not signed in' };
       const users = getLocalUsers();
-      const record = users.find((u) => u.id === cached.id);
+      const record = users.find(u => u.id === cached.id);
       if (!record) return { success: false, error: 'Account not found' };
       if (payload.username) record.username = payload.username;
       if (payload.email) record.email = payload.email;
@@ -479,7 +500,7 @@ export class AuthService {
 function seedLocalDemoIfEmpty() {
   try {
     if (localStorage.getItem(STORAGE_KEY_LOCAL_USERS)) return;
-    void hashPassword('demo123', 'demo-salt').then((hash) => {
+    void hashPassword('demo123', 'demo-salt').then(hash => {
       const record: LocalUserRecord = {
         id: uuid(),
         email: 'demo@mindmirror.app',

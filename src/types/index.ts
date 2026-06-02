@@ -13,7 +13,7 @@ export interface Question {
   id: string;
   text: string;
   options?: string[];
-  trait?: string;    // 所属特质
+  trait?: string; // 所属特质
   reverse?: boolean; // 是否反向计分
 }
 

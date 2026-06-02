@@ -1,8 +1,8 @@
-import { 
-  UnifiedAssessmentResult, 
+import {
+  UnifiedAssessmentResult,
   DataValidation,
   ValidationError,
-  ValidationWarning 
+  ValidationWarning,
 } from '../../types/dataAbstraction';
 
 class DataValidationService {
@@ -25,10 +25,15 @@ class DataValidationService {
       metadata: {
         checkedAt: Date.now(),
         checkedFields: [
-          'id', 'assessmentId', 'timestamp', 'totalScore',
-          'traits', 'rawAnswers', 'metadata'
-        ]
-      }
+          'id',
+          'assessmentId',
+          'timestamp',
+          'totalScore',
+          'traits',
+          'rawAnswers',
+          'metadata',
+        ],
+      },
     };
   }
 
@@ -38,25 +43,29 @@ class DataValidationService {
         field: 'id',
         message: '结果ID不能为空',
         code: 'MISSING_ID',
-        severity: 'error'
+        severity: 'error',
       });
     } else if (typeof result.id !== 'string') {
       errors.push({
         field: 'id',
         message: '结果ID必须是字符串类型',
         code: 'INVALID_ID_TYPE',
-        severity: 'error'
+        severity: 'error',
       });
     }
   }
 
-  private validateAssessmentId(result: UnifiedAssessmentResult, errors: ValidationError[], warnings: ValidationWarning[]): void {
+  private validateAssessmentId(
+    result: UnifiedAssessmentResult,
+    errors: ValidationError[],
+    warnings: ValidationWarning[]
+  ): void {
     if (!result.assessmentId) {
       errors.push({
         field: 'assessmentId',
         message: '测评ID不能为空',
         code: 'MISSING_ASSESSMENT_ID',
-        severity: 'error'
+        severity: 'error',
       });
     }
 
@@ -65,36 +74,40 @@ class DataValidationService {
       warnings.push({
         field: 'assessmentId',
         message: '测评ID不在已知列表中',
-        suggestion: '请确保这是正确的测评ID'
+        suggestion: '请确保这是正确的测评ID',
       });
     }
   }
 
-  private validateTimestamp(result: UnifiedAssessmentResult, errors: ValidationError[], warnings: ValidationWarning[]): void {
+  private validateTimestamp(
+    result: UnifiedAssessmentResult,
+    errors: ValidationError[],
+    warnings: ValidationWarning[]
+  ): void {
     if (!result.timestamp) {
       errors.push({
         field: 'timestamp',
         message: '时间戳不能为空',
         code: 'MISSING_TIMESTAMP',
-        severity: 'error'
+        severity: 'error',
       });
     } else {
       const timestamp = result.timestamp;
       const now = Date.now();
-      
+
       if (timestamp > now) {
         errors.push({
           field: 'timestamp',
           message: '时间戳不能是未来时间',
           code: 'FUTURE_TIMESTAMP',
-          severity: 'error'
+          severity: 'error',
         });
       } else if (timestamp < 0) {
         errors.push({
           field: 'timestamp',
           message: '时间戳不能为负数',
           code: 'NEGATIVE_TIMESTAMP',
-          severity: 'error'
+          severity: 'error',
         });
       }
 
@@ -103,19 +116,23 @@ class DataValidationService {
         warnings.push({
           field: 'timestamp',
           message: '测评时间已超过一年',
-          suggestion: '建议重新进行测评以获得更准确的结果'
+          suggestion: '建议重新进行测评以获得更准确的结果',
         });
       }
     }
   }
 
-  private validateTotalScore(result: UnifiedAssessmentResult, errors: ValidationError[], warnings: ValidationWarning[]): void {
+  private validateTotalScore(
+    result: UnifiedAssessmentResult,
+    errors: ValidationError[],
+    warnings: ValidationWarning[]
+  ): void {
     if (typeof result.totalScore !== 'number') {
       errors.push({
         field: 'totalScore',
         message: '总分必须是数字类型',
         code: 'INVALID_SCORE_TYPE',
-        severity: 'error'
+        severity: 'error',
       });
     } else {
       if (result.totalScore < 0) {
@@ -123,7 +140,7 @@ class DataValidationService {
           field: 'totalScore',
           message: '总分不能为负数',
           code: 'NEGATIVE_SCORE',
-          severity: 'error'
+          severity: 'error',
         });
       }
 
@@ -133,7 +150,7 @@ class DataValidationService {
           field: 'totalScore',
           message: `总分超过最大允许值 ${maxScore}`,
           code: 'SCORE_EXCEEDS_MAX',
-          severity: 'error'
+          severity: 'error',
         });
       }
 
@@ -141,19 +158,23 @@ class DataValidationService {
         warnings.push({
           field: 'totalScore',
           message: '总分为0，可能表示测评未完成',
-          suggestion: '请检查测评是否已完成'
+          suggestion: '请检查测评是否已完成',
         });
       }
     }
   }
 
-  private validateTraits(result: UnifiedAssessmentResult, errors: ValidationError[], warnings: ValidationWarning[]): void {
+  private validateTraits(
+    result: UnifiedAssessmentResult,
+    errors: ValidationError[],
+    warnings: ValidationWarning[]
+  ): void {
     if (!result.traits || !Array.isArray(result.traits)) {
       errors.push({
         field: 'traits',
         message: '特质数据必须是数组类型',
         code: 'INVALID_TRAITS_TYPE',
-        severity: 'error'
+        severity: 'error',
       });
       return;
     }
@@ -162,7 +183,7 @@ class DataValidationService {
       warnings.push({
         field: 'traits',
         message: '特质数据为空',
-        suggestion: '测评结果可能不完整'
+        suggestion: '测评结果可能不完整',
       });
     }
 
@@ -172,7 +193,7 @@ class DataValidationService {
           field: `traits[${index}].name`,
           message: `第${index + 1}个特质名称不能为空`,
           code: 'MISSING_TRAIT_NAME',
-          severity: 'error'
+          severity: 'error',
         });
       }
 
@@ -181,37 +202,41 @@ class DataValidationService {
           field: `traits[${index}].score`,
           message: `第${index + 1}个特质的分数必须是数字`,
           code: 'INVALID_TRAIT_SCORE',
-          severity: 'error'
+          severity: 'error',
         });
       } else if (trait.score < 0 || trait.score > 100) {
         warnings.push({
           field: `traits[${index}].score`,
           message: `第${index + 1}个特质的分数超出正常范围(0-100)`,
-          suggestion: '请检查分数计算是否正确'
+          suggestion: '请检查分数计算是否正确',
         });
       }
     });
   }
 
-  private validateRawAnswers(result: UnifiedAssessmentResult, errors: ValidationError[], warnings: ValidationWarning[]): void {
+  private validateRawAnswers(
+    result: UnifiedAssessmentResult,
+    errors: ValidationError[],
+    warnings: ValidationWarning[]
+  ): void {
     if (!result.rawAnswers || typeof result.rawAnswers !== 'object') {
       errors.push({
         field: 'rawAnswers',
         message: '原始答案必须是对象类型',
         code: 'INVALID_ANSWERS_TYPE',
-        severity: 'error'
+        severity: 'error',
       });
       return;
     }
 
     const answerCount = Object.keys(result.rawAnswers).length;
     const expectedCount = this.getExpectedQuestionCount(result.assessmentId);
-    
+
     if (expectedCount && answerCount < expectedCount) {
       warnings.push({
         field: 'rawAnswers',
         message: `答案数量(${answerCount})少于预期(${expectedCount})`,
-        suggestion: '部分题目可能未作答'
+        suggestion: '部分题目可能未作答',
       });
     }
   }
@@ -221,7 +246,7 @@ class DataValidationService {
       warnings.push({
         field: 'metadata',
         message: '元数据缺失',
-        suggestion: '建议补充完整的元数据信息'
+        suggestion: '建议补充完整的元数据信息',
       });
       return;
     }
@@ -230,7 +255,7 @@ class DataValidationService {
       warnings.push({
         field: 'metadata.duration',
         message: '测评时长不能为负数',
-        suggestion: '请检查时长记录'
+        suggestion: '请检查时长记录',
       });
     }
 
@@ -238,7 +263,7 @@ class DataValidationService {
       warnings.push({
         field: 'metadata.completed',
         message: '测评标记为未完成',
-        suggestion: '建议完成测评或删除此结果'
+        suggestion: '建议完成测评或删除此结果',
       });
     }
   }
@@ -247,7 +272,7 @@ class DataValidationService {
     const maxScores: Record<string, number> = {
       'big-five': 300,
       'stress-test': 120,
-      'anxiety-gad7': 84
+      'anxiety-gad7': 84,
     };
     return maxScores[assessmentId] || 0;
   }
@@ -256,7 +281,7 @@ class DataValidationService {
     const questionCounts: Record<string, number> = {
       'big-five': 60,
       'stress-test': 30,
-      'anxiety-gad7': 28
+      'anxiety-gad7': 28,
     };
     return questionCounts[assessmentId] || 0;
   }
@@ -275,7 +300,7 @@ class DataValidationService {
       total: validations.length,
       valid: validations.filter(v => v.valid).length,
       invalid: validations.filter(v => !v.valid).length,
-      warnings: validations.reduce((sum, v) => sum + v.warnings.length, 0)
+      warnings: validations.reduce((sum, v) => sum + v.warnings.length, 0),
     };
   }
 

@@ -62,16 +62,16 @@ python3 run.py
 
 ### Useful Scripts
 
-| Command                | Purpose                                          |
-|------------------------|--------------------------------------------------|
-| `npm run dev`          | Start Vite dev server with HMR                   |
-| `npm run typecheck`    | Run TypeScript type checking                     |
-| `npm run lint`         | Run ESLint                                       |
-| `npm run format`       | Auto-format with Prettier                        |
-| `npm run format:check` | Verify formatting without writing                 |
-| `npm run build`        | Production build (custom backend deployment)     |
-| `npm run build:pages`  | Build with `--base=/MindMirror/` (for Pages)     |
-| `npm run preview`      | Preview the production build locally             |
+| Command                | Purpose                                      |
+| ---------------------- | -------------------------------------------- |
+| `npm run dev`          | Start Vite dev server with HMR               |
+| `npm run typecheck`    | Run TypeScript type checking                 |
+| `npm run lint`         | Run ESLint                                   |
+| `npm run format`       | Auto-format with Prettier                    |
+| `npm run format:check` | Verify formatting without writing            |
+| `npm run build`        | Production build (custom backend deployment) |
+| `npm run build:pages`  | Build with `--base=/MindMirror/` (for Pages) |
+| `npm run preview`      | Preview the production build locally         |
 
 ### Project Structure
 
@@ -254,7 +254,7 @@ When writing a new assessment scoring algorithm, please:
          text: { en: 'Question text', zh: '问题文本' },
          options: [
            { value: 1, label: { en: 'Strongly disagree', zh: '非常不同意' } },
-           { value: 5, label: { en: 'Strongly agree',    zh: '非常同意' } },
+           { value: 5, label: { en: 'Strongly agree', zh: '非常同意' } },
          ],
          reverse: false,
          facet: 'openness', // which Big-Five facet, if applicable

@@ -40,7 +40,7 @@ export class ErrorBoundary extends Component<Props, State> {
       const err = this.state.error;
       const safe = (err ? `${err.message}\n\n${err.stack ?? ''}` : 'Unknown error').replace(
         /[<>&]/g,
-        (c) => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;' }[c] as string),
+        c => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;' })[c] as string
       );
       return (
         <div
@@ -55,7 +55,9 @@ export class ErrorBoundary extends Component<Props, State> {
             <div className="w-14 h-14 bg-red-100 rounded-2xl flex items-center justify-center text-2xl mb-4">
               ⚠️
             </div>
-            <h1 className="text-2xl font-bold text-slate-800 mb-2">页面出错了 / Something went wrong</h1>
+            <h1 className="text-2xl font-bold text-slate-800 mb-2">
+              页面出错了 / Something went wrong
+            </h1>
             <p className="text-slate-600 mb-4 leading-relaxed">
               MindMirror 渲染时遇到错误。最常见的原因是浏览器缓存了旧版本。
             </p>

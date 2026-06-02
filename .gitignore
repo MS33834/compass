@@ -65,3 +65,6 @@ backend/mental_health.db
 backend/.venv/
 backend/venv/
 backend/.env
+.trae/
+
+# Trae IDE workspace metadata

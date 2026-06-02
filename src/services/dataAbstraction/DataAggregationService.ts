@@ -1,12 +1,12 @@
 import { storage } from '../../lib/utils';
-import { 
+import {
   UnifiedAssessmentResult,
   DataStatistics,
   AssessmentTrend,
   TrendDataPoint,
   AssessmentComparison,
   PeriodicSummary,
-  TrendAnalysis
+  TrendAnalysis,
 } from '../../types/dataAbstraction';
 
 const PERSONAL_CENTER_KEY = 'personalDataCenter';
@@ -26,11 +26,11 @@ class DataAggregationService {
           emotional: 0,
           cognitive: 0,
           social: 0,
-          other: 0
+          other: 0,
         } as Record<string, number>,
         traitAverages: {},
         tagDistribution: {},
-        streakDays: 0
+        streakDays: 0,
       };
     }
 
@@ -71,7 +71,7 @@ class DataAggregationService {
       assessmentTypes: assessmentTypes as any as Record<string, number>,
       traitAverages,
       tagDistribution: tagCounts,
-      streakDays: this.calculateStreak(results)
+      streakDays: this.calculateStreak(results),
     };
   }
 
@@ -117,7 +117,7 @@ class DataAggregationService {
         return {
           timestamp: r.timestamp,
           score: trait?.score || 0,
-          resultId: r.id
+          resultId: r.id,
         };
       })
       .sort((a, b) => a.timestamp - b.timestamp);
@@ -127,14 +127,12 @@ class DataAggregationService {
     const dataPoints: TrendDataPoint[] = traitData.map(d => ({
       timestamp: d.timestamp,
       score: d.score,
-      resultId: d.resultId
+      resultId: d.resultId,
     }));
 
     const trend = this.determineTrend(dataPoints);
     const change = dataPoints[dataPoints.length - 1].score - dataPoints[0].score;
-    const changePercent = dataPoints[0].score !== 0 
-      ? (change / dataPoints[0].score) * 100 
-      : 0;
+    const changePercent = dataPoints[0].score !== 0 ? (change / dataPoints[0].score) * 100 : 0;
 
     return {
       assessmentId: results[0].assessmentId,
@@ -142,7 +140,7 @@ class DataAggregationService {
       dataPoints,
       trend,
       change,
-      changePercent
+      changePercent,
     };
   }
 
@@ -182,11 +180,12 @@ class DataAggregationService {
         scores,
         average,
         trend,
-        change: scores.length > 1 ? scores[scores.length - 1] - scores[0] : 0
+        change: scores.length > 1 ? scores[scores.length - 1] - scores[0] : 0,
       };
     });
 
-    const overallScore = comparisonTraits.reduce((sum, t) => sum + t.average, 0) / comparisonTraits.length;
+    const overallScore =
+      comparisonTraits.reduce((sum, t) => sum + t.average, 0) / comparisonTraits.length;
 
     const insights = this.generateComparisonInsights(comparisonTraits, results);
 
@@ -194,7 +193,7 @@ class DataAggregationService {
       resultIds,
       traits: comparisonTraits,
       overallScore,
-      insights
+      insights,
     };
   }
 
@@ -238,8 +237,10 @@ class DataAggregationService {
       insights.push(`以下特质保持稳定：${stableTraits.map(t => t.name).join('、')}`);
     }
 
-    const highestTrait = traits.reduce((max, t) => t.average > max.average ? t : max, traits[0]);
-    insights.push(`综合表现最强的特质是${highestTrait.name}（平均${highestTrait.average.toFixed(1)}分）`);
+    const highestTrait = traits.reduce((max, t) => (t.average > max.average ? t : max), traits[0]);
+    insights.push(
+      `综合表现最强的特质是${highestTrait.name}（平均${highestTrait.average.toFixed(1)}分）`
+    );
 
     return insights;
   }
@@ -257,7 +258,7 @@ class DataAggregationService {
       weekly: 7 * 24 * 60 * 60 * 1000,
       monthly: 30 * 24 * 60 * 60 * 1000,
       quarterly: 90 * 24 * 60 * 60 * 1000,
-      yearly: 365 * 24 * 60 * 60 * 1000
+      yearly: 365 * 24 * 60 * 60 * 1000,
     };
 
     const startDate = now - periodLengths[period];
@@ -274,9 +275,10 @@ class DataAggregationService {
       const trend = this.calculateTraitTrend(periodResults, traitName);
       if (trend) {
         trends[traitName] = {
-          direction: trend.trend === 'increasing' ? 'up' : trend.trend === 'decreasing' ? 'down' : 'stable',
+          direction:
+            trend.trend === 'increasing' ? 'up' : trend.trend === 'decreasing' ? 'down' : 'stable',
           change: trend.change,
-          changePercent: trend.changePercent
+          changePercent: trend.changePercent,
         };
       }
     });
@@ -285,7 +287,8 @@ class DataAggregationService {
     const insights = this.generatePeriodInsights(periodResults, trends);
     const recommendations = this.generateRecommendations(periodResults, trends);
 
-    const overallScore = periodResults.reduce((sum, r) => sum + r.totalScore, 0) / periodResults.length;
+    const overallScore =
+      periodResults.reduce((sum, r) => sum + r.totalScore, 0) / periodResults.length;
 
     return {
       id: `summary_${period}_${now}`,
@@ -295,12 +298,12 @@ class DataAggregationService {
       assessments: assessmentIds,
       trends: {
         traits: trends,
-        overall: overallTrend
+        overall: overallTrend,
       },
       insights,
       recommendations,
       overallScore,
-      createdAt: now
+      createdAt: now,
     };
   }
 
@@ -322,7 +325,10 @@ class DataAggregationService {
     return { direction, change };
   }
 
-  private generatePeriodInsights(results: UnifiedAssessmentResult[], trends: TrendAnalysis['traits']): string[] {
+  private generatePeriodInsights(
+    results: UnifiedAssessmentResult[],
+    trends: TrendAnalysis['traits']
+  ): string[] {
     const insights: string[] = [];
 
     insights.push(`本周期共完成${results.length}次测评`);
@@ -340,14 +346,18 @@ class DataAggregationService {
 
     const recentResults = [...results].sort((a, b) => b.timestamp - a.timestamp).slice(0, 3);
     if (recentResults.length > 0) {
-      const avgRecentScore = recentResults.reduce((sum, r) => sum + r.totalScore, 0) / recentResults.length;
+      const avgRecentScore =
+        recentResults.reduce((sum, r) => sum + r.totalScore, 0) / recentResults.length;
       insights.push(`近期平均得分：${avgRecentScore.toFixed(1)}`);
     }
 
     return insights;
   }
 
-  private generateRecommendations(results: UnifiedAssessmentResult[], trends: TrendAnalysis['traits']): string[] {
+  private generateRecommendations(
+    results: UnifiedAssessmentResult[],
+    trends: TrendAnalysis['traits']
+  ): string[] {
     const recommendations: string[] = [];
 
     const decliningTraits = Object.entries(trends)
@@ -389,7 +399,7 @@ class DataAggregationService {
       return {
         count: 0,
         averageScore: 0,
-        traitAverages: {}
+        traitAverages: {},
       };
     }
 
@@ -400,8 +410,7 @@ class DataAggregationService {
     const traitAverages: Record<string, number> = {};
 
     traitNames.forEach(name => {
-      const scores = results
-        .map(r => r.traits.find(t => t.name === name)?.score || 0);
+      const scores = results.map(r => r.traits.find(t => t.name === name)?.score || 0);
       traitAverages[name] = scores.reduce((a, b) => a + b, 0) / scores.length;
     });
 
@@ -411,7 +420,7 @@ class DataAggregationService {
       count,
       averageScore,
       traitAverages,
-      lastResult: sorted[0]
+      lastResult: sorted[0],
     };
   }
 }

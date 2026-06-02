@@ -33,12 +33,7 @@ export class TraceService {
     this.loadLogs();
   }
 
-  log(
-    action: TraceAction,
-    assessmentId: string,
-    details: any,
-    questionId?: string
-  ): void {
+  log(action: TraceAction, assessmentId: string, details: any, questionId?: string): void {
     const entry: TraceLogEntry = {
       id: `trace_${Date.now()}_${Math.random()}`,
       timestamp: Date.now(),
@@ -47,7 +42,7 @@ export class TraceService {
       questionId,
       userId: this.userId,
       sessionId: this.sessionId,
-      details
+      details,
     };
 
     this.logs.push(entry);
@@ -78,8 +73,8 @@ export class TraceService {
     const traces = this.getTraceForAssessment(assessmentId);
     const issues: string[] = [];
 
-    const answerActions = traces.filter(t =>
-      t.action === 'answer_selected' || t.action === 'answer_changed'
+    const answerActions = traces.filter(
+      t => t.action === 'answer_selected' || t.action === 'answer_changed'
     );
 
     const calcActions = traces.filter(t => t.action === 'score_calculated');
@@ -100,17 +95,17 @@ export class TraceService {
     return {
       valid: issues.length === 0,
       issues,
-      checkedAt: Date.now()
+      checkedAt: Date.now(),
     };
   }
 
   clearOldTraces(olderThanDays: number = 30): number {
     const cutoffDate = Date.now() - olderThanDays * 24 * 60 * 60 * 1000;
     const oldLength = this.logs.length;
-    
+
     this.logs = this.logs.filter(log => log.timestamp >= cutoffDate);
     this.saveLogs();
-    
+
     return oldLength - this.logs.length;
   }
 
@@ -128,15 +123,20 @@ export class TraceService {
       ``,
       `**状态**: ${integrity.valid ? '✅ 通过' : '❌ 警告'}`,
       ``,
-      integrity.issues.length > 0 ? `**问题**:\n${integrity.issues.map(i => `- ${i}`).join('\n')}\n` : '',
+      integrity.issues.length > 0
+        ? `**问题**:\n${integrity.issues.map(i => `- ${i}`).join('\n')}\n`
+        : '',
       `## 操作记录`,
       ``,
       `| 时间 | 操作 | 题目 | 详情 |`,
       `|------|------|------|------|`,
-      ...traces.map(trace => `| ${new Date(trace.timestamp).toLocaleString('zh-CN')} | ${trace.action} | ${trace.questionId || '-'} | ${JSON.stringify(trace.details).substring(0, 50)}... |`),
+      ...traces.map(
+        trace =>
+          `| ${new Date(trace.timestamp).toLocaleString('zh-CN')} | ${trace.action} | ${trace.questionId || '-'} | ${JSON.stringify(trace.details).substring(0, 50)}... |`
+      ),
       ``,
       `---`,
-      `共 ${traces.length} 条记录`
+      `共 ${traces.length} 条记录`,
     ].join('\n');
 
     return report;
@@ -163,7 +163,7 @@ export class TraceService {
       totalTraces: this.logs.length,
       todayTraces: todayTraces.length,
       thisWeekTraces: weekTraces.length,
-      assessmentsTracked: uniqueAssessments.size
+      assessmentsTracked: uniqueAssessments.size,
     };
   }
 

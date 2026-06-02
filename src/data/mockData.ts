@@ -1,18 +1,12 @@
 import { Assessment, Question } from '../types';
-import { 
-  BIG_FIVE_ASSESSMENT, 
+import {
+  BIG_FIVE_ASSESSMENT,
   BIG_FIVE_QUESTIONS,
   BIG_FIVE_TRAITS,
-  TRAIT_INTERPRETATIONS
+  TRAIT_INTERPRETATIONS,
 } from './bigFiveData';
-import { 
-  STRESS_TEST_ASSESSMENT, 
-  STRESS_TEST_QUESTIONS 
-} from './stressTestData';
-import { 
-  GAD7_ASSESSMENT, 
-  GAD7_QUESTIONS 
-} from './anxietyGad7Data';
+import { STRESS_TEST_ASSESSMENT, STRESS_TEST_QUESTIONS } from './stressTestData';
+import { GAD7_ASSESSMENT, GAD7_QUESTIONS } from './anxietyGad7Data';
 
 const otherAssessments: Assessment[] = [
   {
@@ -23,15 +17,15 @@ const otherAssessments: Assessment[] = [
     totalQuestions: 10,
     icon: '💗',
     difficulty: '简单',
-    estimatedTime: '5分钟'
-  }
+    estimatedTime: '5分钟',
+  },
 ];
 
 export const mockAssessments: Assessment[] = [
   BIG_FIVE_ASSESSMENT,
   STRESS_TEST_ASSESSMENT,
   GAD7_ASSESSMENT,
-  ...otherAssessments
+  ...otherAssessments,
 ];
 
 export function generateMockQuestions(count: number): Question[] {
@@ -40,23 +34,23 @@ export function generateMockQuestions(count: number): Question[] {
     { id: 'q2', text: '你经常思考问题的本质吗？', trait: 'O', reverse: false },
     { id: 'q3', text: '你做事有条理吗？', trait: 'C', reverse: false },
     { id: 'q4', text: '你容易信任他人吗？', trait: 'A', reverse: false },
-    { id: 'q5', text: '你经常感到焦虑吗？', trait: 'N', reverse: true }
+    { id: 'q5', text: '你经常感到焦虑吗？', trait: 'N', reverse: true },
   ];
-  
+
   if (count === 60) {
     return BIG_FIVE_QUESTIONS;
   }
-  
+
   return Array.from({ length: count }, (_, i) => ({
     ...sampleQuestions[i % sampleQuestions.length],
-    id: `q${i + 1}`
+    id: `q${i + 1}`,
   }));
 }
 
 export const traitDescriptions = Object.entries(BIG_FIVE_TRAITS).map(([key, trait]) => ({
   name: trait.name,
   score: 50 + Math.floor(Math.random() * 30),
-  description: TRAIT_INTERPRETATIONS[key as keyof typeof TRAIT_INTERPRETATIONS].high.description
+  description: TRAIT_INTERPRETATIONS[key as keyof typeof TRAIT_INTERPRETATIONS].high.description,
 }));
 
 export function getQuestionsForAssessment(assessmentId: string): Question[] {

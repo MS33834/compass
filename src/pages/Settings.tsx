@@ -6,7 +6,7 @@ import { useToasts } from '../store/toastStore';
 export const Settings = () => {
   const { locale, clearHistory, assessmentHistory } = useAppStore();
   const i18n = getTranslation(locale);
-  const addToast = useToasts((s) => s.addToast);
+  const addToast = useToasts(s => s.addToast);
   const [notifications, setNotifications] = useState(true);
   const [isClearing, setIsClearing] = useState(false);
 
@@ -27,7 +27,7 @@ export const Settings = () => {
     if (window.confirm(i18n.settings.data.resetAppDesc)) {
       const keysToKeep = ['locale', 'mindmirror_token', 'mindmirror_user', 'moodTracker_entries'];
       const preserved: Record<string, string | null> = {};
-      keysToKeep.forEach((key) => {
+      keysToKeep.forEach(key => {
         const val = localStorage.getItem(key);
         if (val) preserved[key] = val;
       });
@@ -36,17 +36,16 @@ export const Settings = () => {
         if (val) localStorage.setItem(key, val);
       });
       setTimeout(() => window.location.reload(), 600);
-      addToast(
-        locale === 'zh' ? '应用已重置，正在刷新…' : 'App reset, refreshing…',
-        'success'
-      );
+      addToast(locale === 'zh' ? '应用已重置，正在刷新…' : 'App reset, refreshing…', 'success');
     }
   };
 
   return (
     <div className="space-y-8">
       <div className="text-center py-4">
-        <h1 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-2">{i18n.settings.title}</h1>
+        <h1 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-2">
+          {i18n.settings.title}
+        </h1>
         <p className="text-lg text-slate-600">{i18n.settings.subtitle}</p>
       </div>
 
@@ -97,7 +96,12 @@ export const Settings = () => {
                   <p className="text-sm text-slate-500">{i18n.settings.data.clearHistoryDesc}</p>
                 </div>
                 <span className="text-slate-400">
-                  {isClearing ? i18n.settings.data.clearing : i18n.settings.data.records.replace('{count}', String(assessmentHistory.length))}
+                  {isClearing
+                    ? i18n.settings.data.clearing
+                    : i18n.settings.data.records.replace(
+                        '{count}',
+                        String(assessmentHistory.length)
+                      )}
                 </span>
               </div>
             </button>

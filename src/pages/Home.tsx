@@ -6,18 +6,23 @@ import { mockAssessments } from '../data/mockData';
 import { useAppStore } from '../store';
 import { getTranslation, t } from '../i18n';
 import { DailyTips } from '../components/DailyTips';
-import { SlideUp, StaggerContainer, StaggerItem, AnimatedCard } from '../components/animations/AnimatedComponents';
+import {
+  SlideUp,
+  StaggerContainer,
+  StaggerItem,
+  AnimatedCard,
+} from '../components/animations/AnimatedComponents';
 
 const features = [
   { icon: '📊', key: 'scientific' },
   { icon: '🎯', key: 'precise' },
-  { icon: '🚀', key: 'guidance' }
+  { icon: '🚀', key: 'guidance' },
 ];
 
 export const Home = () => {
   const { setAssessments, assessments, locale } = useAppStore();
   const i18n = getTranslation(locale);
-  
+
   useEffect(() => {
     setAssessments(mockAssessments);
   }, [setAssessments]);
@@ -58,10 +63,7 @@ export const Home = () => {
         </SlideUp>
         <SlideUp delay={0.35}>
           <div className="flex items-center justify-center gap-3 sm:gap-4">
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Link
                 to="/assessments"
                 className="inline-flex items-center gap-2 sm:gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-base sm:text-lg font-semibold rounded-2xl hover:from-blue-600 hover:to-indigo-700 transition-all shadow-xl hover:shadow-2xl"
@@ -82,7 +84,8 @@ export const Home = () => {
       <section>
         <StaggerContainer className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {features.map((feature, idx) => {
-            const featureData = i18n.home.features[feature.key as 'scientific' | 'precise' | 'guidance'];
+            const featureData =
+              i18n.home.features[feature.key as 'scientific' | 'precise' | 'guidance'];
             return (
               <StaggerItem key={idx}>
                 <motion.div
@@ -100,9 +103,7 @@ export const Home = () => {
                   <h3 className="text-lg sm:text-xl font-bold text-slate-800 mb-2 sm:mb-3">
                     {featureData.title}
                   </h3>
-                  <p className="text-sm sm:text-base text-slate-600">
-                    {featureData.desc}
-                  </p>
+                  <p className="text-sm sm:text-base text-slate-600">{featureData.desc}</p>
                 </motion.div>
               </StaggerItem>
             );
@@ -114,10 +115,15 @@ export const Home = () => {
         <SlideUp>
           <div className="flex items-center justify-between mb-6 sm:mb-10">
             <div>
-              <h2 className="text-2xl sm:text-3xl font-bold text-slate-800 mb-1 sm:mb-2">{i18n.home.hotAssessments}</h2>
+              <h2 className="text-2xl sm:text-3xl font-bold text-slate-800 mb-1 sm:mb-2">
+                {i18n.home.hotAssessments}
+              </h2>
               <p className="text-sm sm:text-base text-slate-600">{i18n.home.selectAssessment}</p>
             </div>
-            <Link to="/assessments" className="text-blue-600 font-medium hover:text-blue-700 flex items-center gap-1 sm:gap-2 text-sm">
+            <Link
+              to="/assessments"
+              className="text-blue-600 font-medium hover:text-blue-700 flex items-center gap-1 sm:gap-2 text-sm"
+            >
               {i18n.home.viewAll} <span>→</span>
             </Link>
           </div>
@@ -126,7 +132,12 @@ export const Home = () => {
         <StaggerContainer className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {assessments.slice(0, 3).map((assessment, idx) => (
             <StaggerItem key={assessment.id}>
-              <AssessmentCard assessment={assessment} i18n={i18n} locale={locale} delay={idx * 0.1} />
+              <AssessmentCard
+                assessment={assessment}
+                i18n={i18n}
+                locale={locale}
+                delay={idx * 0.1}
+              />
             </StaggerItem>
           ))}
         </StaggerContainer>
@@ -135,7 +146,9 @@ export const Home = () => {
       <SlideUp>
         <section className="bg-gradient-to-br from-white to-blue-50 rounded-2xl sm:rounded-3xl p-6 sm:p-10 shadow-lg border border-blue-100">
           <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-xl sm:text-3xl font-bold text-slate-800 mb-4 sm:mb-6">{i18n.home.aboutAssessment.title}</h2>
+            <h2 className="text-xl sm:text-3xl font-bold text-slate-800 mb-4 sm:mb-6">
+              {i18n.home.aboutAssessment.title}
+            </h2>
             <p className="text-sm sm:text-lg text-slate-600 leading-relaxed mb-6 sm:mb-8">
               {i18n.home.aboutAssessment.description}
             </p>
@@ -163,15 +176,37 @@ export const Home = () => {
 
       <section>
         <SlideUp>
-          <h2 className="text-2xl sm:text-3xl font-bold text-slate-800 mb-6">{i18n.home.moreFeatures}</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold text-slate-800 mb-6">
+            {i18n.home.moreFeatures}
+          </h2>
         </SlideUp>
         <StaggerContainer className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {[
-            { to: '/mood', icon: '😊', label: i18n.home.quickLinks.mood, border: 'hover:border-blue-200' },
-            { to: '/achievements', icon: '🏆', label: i18n.home.quickLinks.achievements, border: 'hover:border-purple-200' },
-            { to: '/compare', icon: '📊', label: i18n.home.quickLinks.compare, border: 'hover:border-teal-200' },
-            { to: '/crisis', icon: '🆘', label: i18n.home.quickLinks.crisis, border: 'hover:border-red-200' },
-          ].map((item) => (
+            {
+              to: '/mood',
+              icon: '😊',
+              label: i18n.home.quickLinks.mood,
+              border: 'hover:border-blue-200',
+            },
+            {
+              to: '/achievements',
+              icon: '🏆',
+              label: i18n.home.quickLinks.achievements,
+              border: 'hover:border-purple-200',
+            },
+            {
+              to: '/compare',
+              icon: '📊',
+              label: i18n.home.quickLinks.compare,
+              border: 'hover:border-teal-200',
+            },
+            {
+              to: '/crisis',
+              icon: '🆘',
+              label: i18n.home.quickLinks.crisis,
+              border: 'hover:border-red-200',
+            },
+          ].map(item => (
             <StaggerItem key={item.to}>
               <Link
                 to={item.to}
@@ -230,10 +265,7 @@ function AssessmentCard({ assessment, i18n, locale, delay = 0 }: AssessmentCardP
             <span>📝</span>
             {t(locale, 'assessments.questions', { count: assessment.totalQuestions })}
           </span>
-          <motion.span
-            whileHover={{ x: 4 }}
-            transition={{ type: 'spring', stiffness: 300 }}
-          >
+          <motion.span whileHover={{ x: 4 }} transition={{ type: 'spring', stiffness: 300 }}>
             {i18n.assessments.start} →
           </motion.span>
         </div>

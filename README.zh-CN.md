@@ -7,7 +7,7 @@
 
 **开源 · 自托管 · 隐私优先的心理测评平台**
 
-> *发现自我，每天成长。*
+> _发现自我，每天成长。_
 
 ---
 
@@ -16,6 +16,7 @@
 ---
 
 <!-- 徽章 -->
+
 [![License: MIT](https://img.shields.io/badge/license-MIT-6DD58C?style=for-the-badge)](LICENSE)
 [![Stars](https://img.shields.io/github/stars/badhope/MindMirror?style=for-the-badge&color=FF6B6B)](https://github.com/badhope/MindMirror/stargazers)
 [![Forks](https://img.shields.io/github/forks/badhope/MindMirror?style=for-the-badge&color=4ECDC4)](https://github.com/badhope/MindMirror/network/members)
@@ -41,7 +42,7 @@
 
 ## ✨ 为什么选择 MindMirror？
 
-- **🔒 隐私优先** — 数据保存在 *你的* 数据库里，永不进入第三方云。
+- **🔒 隐私优先** — 数据保存在 _你的_ 数据库里，永不进入第三方云。
 - **🧪 科学量表** — 大五人格 (IPIP / NEO-PI-R)、PSS-10、GAD-7，均有规范引用。
 - **🌐 完整双语** — 英文与简体中文，顶部一键切换。
 - **📦 双模式** — 完整 FastAPI + PostgreSQL 后端 **或** 零后端离线 demo（`localStorage`），可部署到任何静态托管（含 GitHub Pages）。
@@ -76,12 +77,12 @@
 
 > 打开 **[线上演示](https://badhope.github.io/MindMirror/)** 查看真实可交互的 UI —— 同样的代码也驱动自托管部署。
 
-| 首页 | 测评中心 |
-|:---:|:---:|
+|  首页  |     测评中心     |
+| :----: | :--------------: |
 | 主视觉 | 全部内置量表目录 |
 
-| 大五人格结果 | 心情追踪 |
-|:---:|:---:|
+|   大五人格结果   |     心情追踪      |
+| :--------------: | :---------------: |
 | 雷达图与特质解读 | 每日记录 + 趋势图 |
 
 （截图来自最新线上构建，源文件见 `public/docs/`。）
@@ -127,11 +128,11 @@ docker compose up -d --build
 
 启动后三个容器共用端口 `80`：
 
-| 服务         | 宿主机端口 | 用途                                                       |
-|--------------|-----------|------------------------------------------------------------|
-| `frontend`   | **80**    | nginx → React SPA，反向代理 `/api/*` 到后端                |
-| `backend`    | —         | FastAPI（8000，仅 Docker 内网）                            |
-| `postgres`   | —         | PostgreSQL 15（仅 Docker 内网）                            |
+| 服务       | 宿主机端口 | 用途                                        |
+| ---------- | ---------- | ------------------------------------------- |
+| `frontend` | **80**     | nginx → React SPA，反向代理 `/api/*` 到后端 |
+| `backend`  | —          | FastAPI（8000，仅 Docker 内网）             |
+| `postgres` | —          | PostgreSQL 15（仅 Docker 内网）             |
 
 验证：
 
@@ -191,19 +192,19 @@ open http://localhost/api/v1/docs       # Swagger UI
 
 ## 🛠️ 技术栈
 
-| 层级           | 选型                                                            | 理由                              |
-|----------------|-----------------------------------------------------------------|-----------------------------------|
-| **前端**       | React 18 + TypeScript 5.8 + Vite 6                              | 最佳 DX、快速 HMR、类型安全        |
-| **状态**       | Zustand 5                                                       | 极简、零样板、可持久化             |
-| **样式**       | Tailwind 3 + Framer Motion 12                                   | 原子化 CSS + 流畅动画              |
-| **路由**       | React Router v7（BrowserRouter + `basename`）                   | 任意子路径下都是干净 URL          |
-| **i18n**       | 手写 EN / ZH 字典                                               | 零依赖、完全可控                   |
-| **后端**       | Python 3.12 + FastAPI 0.115 + Pydantic v2                       | 异步、极速、类型安全、自动文档     |
-| **ORM**        | SQLAlchemy 2                                                    | 跨方言（PG / SQLite），含 JSONB 兼容层 |
-| **认证**       | JWT (HS256) via `python-jose` + `bcrypt`                        | 简单、无外部 IdP                   |
-| **数据库**     | PostgreSQL 15（Docker）/ SQLite（开发兜底）                      | 久经考验，SQLite 单文件兜底        |
-| **容器**       | Docker + Compose，多阶段构建                                    | 一条命令部署                       |
-| **CI / CD**    | GitHub Actions（typecheck + lint + Pages）                      | 开源免费、零配置                   |
+| 层级        | 选型                                          | 理由                                   |
+| ----------- | --------------------------------------------- | -------------------------------------- |
+| **前端**    | React 18 + TypeScript 5.8 + Vite 6            | 最佳 DX、快速 HMR、类型安全            |
+| **状态**    | Zustand 5                                     | 极简、零样板、可持久化                 |
+| **样式**    | Tailwind 3 + Framer Motion 12                 | 原子化 CSS + 流畅动画                  |
+| **路由**    | React Router v7（BrowserRouter + `basename`） | 任意子路径下都是干净 URL               |
+| **i18n**    | 手写 EN / ZH 字典                             | 零依赖、完全可控                       |
+| **后端**    | Python 3.12 + FastAPI 0.115 + Pydantic v2     | 异步、极速、类型安全、自动文档         |
+| **ORM**     | SQLAlchemy 2                                  | 跨方言（PG / SQLite），含 JSONB 兼容层 |
+| **认证**    | JWT (HS256) via `python-jose` + `bcrypt`      | 简单、无外部 IdP                       |
+| **数据库**  | PostgreSQL 15（Docker）/ SQLite（开发兜底）   | 久经考验，SQLite 单文件兜底            |
+| **容器**    | Docker + Compose，多阶段构建                  | 一条命令部署                           |
+| **CI / CD** | GitHub Actions（typecheck + lint + Pages）    | 开源免费、零配置                       |
 
 ---
 
@@ -277,41 +278,41 @@ MindMirror/
 所有接口前缀为 `/api/v1`，交互式文档见 `/api/v1/docs`。
 `✅` = 需要 `Authorization: Bearer <jwt>`。
 
-| 方法       | 路径                          | 鉴权 | 描述                                                       |
-|------------|-------------------------------|------|------------------------------------------------------------|
-| `GET`      | `/health`                     | —    | 健康探针                                                   |
-| `POST`     | `/auth/register`              | —    | 注册（`email` / `username` / `password`）                  |
-| `POST`     | `/auth/login`                 | —    | OAuth2 密码流登录 → JWT                                    |
-| `POST`     | `/auth/guest`                 | —    | 申请游客账号                                               |
-| `GET`      | `/auth/me`                    | ✅   | 当前用户                                                   |
-| `PATCH`    | `/auth/me`                    | ✅   | 更新 `username` / `email` / `avatar_url`                   |
-| `POST`     | `/auth/logout`                | ✅   | 注销会话                                                   |
-| `DELETE`   | `/auth/account`               | ✅   | 删除账号                                                   |
-| `GET`      | `/assessments/`               | —    | 列出内置测评定义                                           |
-| `GET`      | `/results/`                   | ✅   | 列出当前用户的结果（`?assessment_id=` 过滤）               |
-| `POST`     | `/results/`                   | ✅   | 提交预计算结果（前端本地评分）                             |
-| `GET`      | `/results/{id}`               | ✅   | 取单条结果                                                 |
-| `DELETE`   | `/results/{id}`               | ✅   | 删除单条结果                                               |
-| `GET`      | `/mood/`                      | ✅   | 列出心情记录                                               |
-| `POST`     | `/mood/`                      | ✅   | 新建心情记录                                               |
-| `PATCH`    | `/mood/{id}`                  | ✅   | 更新心情记录                                               |
-| `DELETE`   | `/mood/{id}`                  | ✅   | 删除心情记录                                               |
-| `GET`      | `/achievements/`              | ✅   | 列出已解锁成就                                             |
-| `POST`     | `/achievements/`              | ✅   | 解锁成就（幂等）                                           |
-| `DELETE`   | `/achievements/{id}`          | ✅   | 移除成就                                                   |
-| `GET`      | `/training/`                  | ✅   | 列出训练计划                                               |
+| 方法     | 路径                 | 鉴权 | 描述                                         |
+| -------- | -------------------- | ---- | -------------------------------------------- |
+| `GET`    | `/health`            | —    | 健康探针                                     |
+| `POST`   | `/auth/register`     | —    | 注册（`email` / `username` / `password`）    |
+| `POST`   | `/auth/login`        | —    | OAuth2 密码流登录 → JWT                      |
+| `POST`   | `/auth/guest`        | —    | 申请游客账号                                 |
+| `GET`    | `/auth/me`           | ✅   | 当前用户                                     |
+| `PATCH`  | `/auth/me`           | ✅   | 更新 `username` / `email` / `avatar_url`     |
+| `POST`   | `/auth/logout`       | ✅   | 注销会话                                     |
+| `DELETE` | `/auth/account`      | ✅   | 删除账号                                     |
+| `GET`    | `/assessments/`      | —    | 列出内置测评定义                             |
+| `GET`    | `/results/`          | ✅   | 列出当前用户的结果（`?assessment_id=` 过滤） |
+| `POST`   | `/results/`          | ✅   | 提交预计算结果（前端本地评分）               |
+| `GET`    | `/results/{id}`      | ✅   | 取单条结果                                   |
+| `DELETE` | `/results/{id}`      | ✅   | 删除单条结果                                 |
+| `GET`    | `/mood/`             | ✅   | 列出心情记录                                 |
+| `POST`   | `/mood/`             | ✅   | 新建心情记录                                 |
+| `PATCH`  | `/mood/{id}`         | ✅   | 更新心情记录                                 |
+| `DELETE` | `/mood/{id}`         | ✅   | 删除心情记录                                 |
+| `GET`    | `/achievements/`     | ✅   | 列出已解锁成就                               |
+| `POST`   | `/achievements/`     | ✅   | 解锁成就（幂等）                             |
+| `DELETE` | `/achievements/{id}` | ✅   | 移除成就                                     |
+| `GET`    | `/training/`         | ✅   | 列出训练计划                                 |
 
 ---
 
 ## 🌐 部署选项
 
-| 目标                          | 方式                                       | 是否需要后端           |
-|-------------------------------|--------------------------------------------|------------------------|
-| **GitHub Pages**（展示）      | 推送 → Actions 自动构建部署                | 否 — localStorage 模式 |
-| **Vercel / Netlify**          | 链接仓库，build `npm run build:pages`      | 否 — localStorage 模式 |
-| **Cloudflare Pages**          | 同 Vercel                                  | 否 — localStorage 模式 |
-| **自己的 VPS**                | `docker compose up -d --build`             | 是 — 完整技术栈        |
-| **Kubernetes / Helm**         | 改写 compose 为 chart                      | 是                     |
+| 目标                     | 方式                                  | 是否需要后端           |
+| ------------------------ | ------------------------------------- | ---------------------- |
+| **GitHub Pages**（展示） | 推送 → Actions 自动构建部署           | 否 — localStorage 模式 |
+| **Vercel / Netlify**     | 链接仓库，build `npm run build:pages` | 否 — localStorage 模式 |
+| **Cloudflare Pages**     | 同 Vercel                             | 否 — localStorage 模式 |
+| **自己的 VPS**           | `docker compose up -d --build`        | 是 — 完整技术栈        |
+| **Kubernetes / Helm**    | 改写 compose 为 chart                 | 是                     |
 
 **展示模式不需要任何环境变量** —— 应用会自动检测后端不可用，并切换到本地模式。
 
@@ -387,11 +388,11 @@ git push origin feature/amazing-feature
 如果用在学术工作中，请引用底层量表（见 [CITATION.cff](CITATION.cff)）：
 
 - **GAD-7**: Spitzer, Kroenke, Williams, Löwe (2006).
-  *A brief measure for assessing generalized anxiety disorder.*
+  _A brief measure for assessing generalized anxiety disorder._
   Archives of Internal Medicine, 166(10), 1092–1097.
   [doi:10.1001/archinte.166.10.1092](https://doi.org/10.1001/archinte.166.10.1092)
 - **PSS-10**: Cohen, Kamarck & Mermelstein (1983).
-  *A global measure of perceived stress.*
+  _A global measure of perceived stress._
   Journal of Health and Social Behavior, 24(4), 385–396.
   [doi:10.2307/2136404](https://doi.org/10.2307/2136404)
 - **IPIP / 大五人格**: [ipip.ori.org](https://ipip.ori.org/)

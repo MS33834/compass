@@ -47,15 +47,15 @@ export interface UnifiedAssessmentResult {
   userId?: string;
 }
 
-export type AssessmentType = 
-  | 'personality'      // 人格类
-  | 'stress'           // 压力类
-  | 'anxiety'          // 焦虑类
-  | 'depression'       // 抑郁类
-  | 'emotional'        // 情绪类
-  | 'cognitive'        // 认知类
-  | 'social'           // 社交类
-  | 'other';           // 其他
+export type AssessmentType =
+  | 'personality' // 人格类
+  | 'stress' // 压力类
+  | 'anxiety' // 焦虑类
+  | 'depression' // 抑郁类
+  | 'emotional' // 情绪类
+  | 'cognitive' // 认知类
+  | 'social' // 社交类
+  | 'other'; // 其他
 
 export interface PersonalDataCenter {
   userId: string;
@@ -104,11 +104,14 @@ export interface PeriodicSummary {
 }
 
 export interface TrendAnalysis {
-  traits: Record<string, {
-    direction: 'up' | 'down' | 'stable';
-    change: number;
-    changePercent: number;
-  }>;
+  traits: Record<
+    string,
+    {
+      direction: 'up' | 'down' | 'stable';
+      change: number;
+      changePercent: number;
+    }
+  >;
   overall: {
     direction: 'up' | 'down' | 'stable';
     change: number;

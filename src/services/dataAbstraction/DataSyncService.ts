@@ -1,9 +1,5 @@
 import { storage } from '../../lib/utils';
-import { 
-  UnifiedAssessmentResult, 
-  DataSyncStatus, 
-  SyncConflict 
-} from '../../types/dataAbstraction';
+import { UnifiedAssessmentResult, DataSyncStatus, SyncConflict } from '../../types/dataAbstraction';
 
 const PERSONAL_CENTER_KEY = 'personalDataCenter';
 
@@ -12,7 +8,7 @@ class DataSyncService {
     lastSync: 0,
     status: 'idle',
     progress: 0,
-    conflicts: []
+    conflicts: [],
   };
 
   async syncAllAssessments(): Promise<void> {
@@ -27,7 +23,7 @@ class DataSyncService {
       const newResults = assessments.filter(a => !existingIds.has(a.id));
 
       this.syncStatus.progress = 50;
-      
+
       for (const result of newResults) {
         personalCenter.results.push(this.normalizeResult(result));
       }
@@ -36,13 +32,12 @@ class DataSyncService {
       personalCenter.lastUpdated = Date.now();
 
       this.syncStatus.progress = 90;
-      
+
       this.savePersonalDataCenter(personalCenter);
 
       this.syncStatus.progress = 100;
       this.syncStatus.status = 'success';
       this.syncStatus.lastSync = Date.now();
-
     } catch (error) {
       this.syncStatus.status = 'error';
       console.error('Data sync failed:', error);
@@ -56,7 +51,7 @@ class DataSyncService {
       if (!historyData) return [];
 
       const history = Array.isArray(historyData) ? historyData : [historyData];
-      
+
       return history.map(item => this.convertToUnifiedFormat(item)).filter(Boolean);
     } catch (error) {
       console.error('Failed to load assessments from history:', error);
@@ -82,8 +77,8 @@ class DataSyncService {
       metadata: {
         duration: result.metadata?.duration || result.duration || 0,
         completed: result.metadata?.completed ?? result.completed ?? true,
-        version: result.metadata?.version || '1.0.0'
-      }
+        version: result.metadata?.version || '1.0.0',
+      },
     };
   }
 
@@ -91,7 +86,7 @@ class DataSyncService {
     const typeMap: Record<string, UnifiedAssessmentResult['assessmentType']> = {
       'big-five': 'personality',
       'stress-test': 'stress',
-      'anxiety-gad7': 'anxiety'
+      'anxiety-gad7': 'anxiety',
     };
 
     return typeMap[assessmentId] || 'other';
@@ -106,7 +101,7 @@ class DataSyncService {
       tScore: trait.tScore,
       rawScore: trait.rawScore,
       maxScore: trait.maxScore,
-      level: this.calculateTraitLevel(trait.score, trait.maxScore)
+      level: this.calculateTraitLevel(trait.score, trait.maxScore),
     }));
   }
 
@@ -124,8 +119,8 @@ class DataSyncService {
       traits: this.normalizeTraits(result.traits),
       metadata: {
         ...result.metadata,
-        version: '1.0.0'
-      }
+        version: '1.0.0',
+      },
     };
   }
 
@@ -147,8 +142,8 @@ class DataSyncService {
           assessmentTypes: {},
           traitAverages: {},
           tagDistribution: {},
-          streakDays: 0
-        }
+          streakDays: 0,
+        },
       };
     } catch (error) {
       console.error('Failed to get personal data center:', error);
@@ -167,12 +162,11 @@ class DataSyncService {
   async resolveConflict(conflict: SyncConflict, resolution: 'local' | 'remote'): Promise<void> {
     const personalCenter = this.getPersonalDataCenter();
     const index = personalCenter.results.findIndex(r => r.id === conflict.recordId);
-    
+
     if (index !== -1) {
-      personalCenter.results[index] = resolution === 'local' 
-        ? conflict.localData 
-        : conflict.remoteData;
-      
+      personalCenter.results[index] =
+        resolution === 'local' ? conflict.localData : conflict.remoteData;
+
       this.savePersonalDataCenter(personalCenter);
     }
 
@@ -188,19 +182,18 @@ class DataSyncService {
 
   getResultsByDateRange(startDate: number, endDate: number): UnifiedAssessmentResult[] {
     const personalCenter = this.getPersonalDataCenter();
-    return personalCenter.results.filter(
-      r => r.timestamp >= startDate && r.timestamp <= endDate
-    );
+    return personalCenter.results.filter(r => r.timestamp >= startDate && r.timestamp <= endDate);
   }
 
   searchResults(query: string): UnifiedAssessmentResult[] {
     const personalCenter = this.getPersonalDataCenter();
     const lowerQuery = query.toLowerCase();
-    
-    return personalCenter.results.filter(r => 
-      r.title.toLowerCase().includes(lowerQuery) ||
-      r.assessmentId.toLowerCase().includes(lowerQuery) ||
-      r.tags.some(tag => tag.toLowerCase().includes(lowerQuery))
+
+    return personalCenter.results.filter(
+      r =>
+        r.title.toLowerCase().includes(lowerQuery) ||
+        r.assessmentId.toLowerCase().includes(lowerQuery) ||
+        r.tags.some(tag => tag.toLowerCase().includes(lowerQuery))
     );
   }
 }

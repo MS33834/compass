@@ -41,13 +41,13 @@ export function TagCloud() {
       </div>
 
       <div className="flex flex-wrap gap-3 justify-center">
-        {topTags.map((tag) => (
+        {topTags.map(tag => (
           <div
             key={tag.id}
             className={`inline-flex items-center space-x-2 px-4 py-2 rounded-full ${tag.color} transition-transform hover:scale-105 cursor-pointer`}
             style={{
               fontSize: getFontSize(tag.resultCount),
-              opacity: getOpacity(tag.resultCount)
+              opacity: getOpacity(tag.resultCount),
             }}
             title={`${tag.name}: ${tag.resultCount}次`}
           >
@@ -83,7 +83,7 @@ export function TagBadge({ tag, size = 'md', showCount = true, onRemove }: TagBa
   const sizeClasses = {
     sm: 'px-2 py-1 text-xs',
     md: 'px-3 py-1.5 text-sm',
-    lg: 'px-4 py-2 text-base'
+    lg: 'px-4 py-2 text-base',
   };
 
   return (
@@ -92,14 +92,9 @@ export function TagBadge({ tag, size = 'md', showCount = true, onRemove }: TagBa
     >
       {tag.icon && <span>{tag.icon}</span>}
       <span className="font-medium">{tag.name}</span>
-      {showCount && tag.resultCount > 0 && (
-        <span className="opacity-75">({tag.resultCount})</span>
-      )}
+      {showCount && tag.resultCount > 0 && <span className="opacity-75">({tag.resultCount})</span>}
       {onRemove && (
-        <button
-          onClick={onRemove}
-          className="ml-1 hover:bg-black/10 rounded-full p-0.5"
-        >
+        <button onClick={onRemove} className="ml-1 hover:bg-black/10 rounded-full p-0.5">
           ×
         </button>
       )}

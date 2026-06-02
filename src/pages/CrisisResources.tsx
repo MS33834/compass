@@ -32,7 +32,8 @@ const CRISIS_RESOURCES: CrisisResource[] = [
     nameEn: 'National Psychological Aid Hotline',
     phone: '010-82951332',
     descriptionZh: '24小时免费心理危机干预热线，由专业心理咨询师接听',
-    descriptionEn: '24/7 free psychological crisis intervention hotline answered by professional counselors',
+    descriptionEn:
+      '24/7 free psychological crisis intervention hotline answered by professional counselors',
     availableZh: '24小时',
     availableEn: '24/7',
     type: 'hotline',
@@ -43,7 +44,8 @@ const CRISIS_RESOURCES: CrisisResource[] = [
     nameEn: 'Beijing Crisis Intervention Center',
     phone: '010-82951332',
     descriptionZh: '提供专业的心理危机干预服务，包括电话咨询和面询',
-    descriptionEn: 'Professional psychological crisis intervention services including phone and in-person counseling',
+    descriptionEn:
+      'Professional psychological crisis intervention services including phone and in-person counseling',
     availableZh: '24小时',
     availableEn: '24/7',
     type: 'hotline',
@@ -123,8 +125,20 @@ const SELF_HELP_RESOURCES: SelfHelpResource[] = [
     titleEn: 'Breathing Relaxation',
     descriptionZh: '通过控制呼吸节奏来缓解紧张和焦虑',
     descriptionEn: 'Relieve tension and anxiety by controlling breathing rhythm',
-    stepsZh: ['找一个舒适的坐姿，闭上眼睛', '慢慢吸气4秒，感受腹部膨胀', '屏住呼吸7秒', '缓慢呼气8秒，感受身体放松', '重复4-8次'],
-    stepsEn: ['Sit comfortably and close your eyes', 'Inhale slowly for 4 seconds, feel your belly expand', 'Hold your breath for 7 seconds', 'Exhale slowly for 8 seconds, feel your body relax', 'Repeat 4-8 times'],
+    stepsZh: [
+      '找一个舒适的坐姿，闭上眼睛',
+      '慢慢吸气4秒，感受腹部膨胀',
+      '屏住呼吸7秒',
+      '缓慢呼气8秒，感受身体放松',
+      '重复4-8次',
+    ],
+    stepsEn: [
+      'Sit comfortably and close your eyes',
+      'Inhale slowly for 4 seconds, feel your belly expand',
+      'Hold your breath for 7 seconds',
+      'Exhale slowly for 8 seconds, feel your body relax',
+      'Repeat 4-8 times',
+    ],
   },
   {
     icon: '🧊',
@@ -132,8 +146,20 @@ const SELF_HELP_RESOURCES: SelfHelpResource[] = [
     titleEn: '5-4-3-2-1 Grounding Technique',
     descriptionZh: '帮助你在焦虑或恐慌时回到当下',
     descriptionEn: 'Help you return to the present during anxiety or panic',
-    stepsZh: ['看周围5样东西，说出它们的名字', '触摸4样东西，感受它们的质地', '听3种声音，辨别它们的来源', '闻2种气味，描述它们的特点', '尝1种味道，专注感受'],
-    stepsEn: ['Look at 5 things around you and name them', 'Touch 4 things and feel their texture', 'Listen to 3 sounds and identify their source', 'Smell 2 scents and describe them', 'Taste 1 thing and focus on the sensation'],
+    stepsZh: [
+      '看周围5样东西，说出它们的名字',
+      '触摸4样东西，感受它们的质地',
+      '听3种声音，辨别它们的来源',
+      '闻2种气味，描述它们的特点',
+      '尝1种味道，专注感受',
+    ],
+    stepsEn: [
+      'Look at 5 things around you and name them',
+      'Touch 4 things and feel their texture',
+      'Listen to 3 sounds and identify their source',
+      'Smell 2 scents and describe them',
+      'Taste 1 thing and focus on the sensation',
+    ],
   },
   {
     icon: '🚶',
@@ -141,8 +167,20 @@ const SELF_HELP_RESOURCES: SelfHelpResource[] = [
     titleEn: 'Safe Space Visualization',
     descriptionZh: '在脑海中构建一个安全、平静的空间',
     descriptionEn: 'Build a safe, peaceful space in your mind',
-    stepsZh: ['闭上眼睛，深呼吸3次', '想象一个让你感到安全的地方', '注意这个地方的颜色、声音、气味', '感受这个地方的温度和触感', '在这里停留几分钟，享受平静'],
-    stepsEn: ['Close your eyes and take 3 deep breaths', 'Imagine a place where you feel safe', 'Notice the colors, sounds, and scents', 'Feel the temperature and textures', 'Stay here for a few minutes, enjoy the peace'],
+    stepsZh: [
+      '闭上眼睛，深呼吸3次',
+      '想象一个让你感到安全的地方',
+      '注意这个地方的颜色、声音、气味',
+      '感受这个地方的温度和触感',
+      '在这里停留几分钟，享受平静',
+    ],
+    stepsEn: [
+      'Close your eyes and take 3 deep breaths',
+      'Imagine a place where you feel safe',
+      'Notice the colors, sounds, and scents',
+      'Feel the temperature and textures',
+      'Stay here for a few minutes, enjoy the peace',
+    ],
   },
 ];
 
@@ -159,25 +197,56 @@ export function CrisisResources() {
     { key: 'warning' as const, label: t.warningSigns, icon: '⚠️' },
   ];
 
-  const warningSigns = locale === 'zh' ? [
-    { icon: '😔', title: '持续情绪低落', desc: '超过两周的持续悲伤、空虚或绝望感' },
-    { icon: '😴', title: '睡眠障碍', desc: '严重失眠或过度嗜睡，影响日常生活' },
-    { icon: '🍽️', title: '食欲显著变化', desc: '食欲明显增加或减少，体重显著变化' },
-    { icon: '⚡', title: '精力严重不足', desc: '即使简单的事情也感到极度疲惫' },
-    { icon: '🚫', title: '丧失兴趣', desc: '对以前喜欢的活动完全失去兴趣' },
-    { icon: '💭', title: '反复消极想法', desc: '反复出现无价值感、自责或死亡念头' },
-    { icon: '😰', title: '严重焦虑', desc: '无法控制的担忧、恐慌发作' },
-    { icon: '🤝', title: '社交退缩', desc: '完全回避社交，与亲友断绝联系' },
-  ] : [
-    { icon: '😔', title: 'Persistent Low Mood', desc: 'Sadness, emptiness, or hopelessness lasting more than 2 weeks' },
-    { icon: '😴', title: 'Sleep Disturbance', desc: 'Severe insomnia or oversleeping affecting daily life' },
-    { icon: '🍽️', title: 'Significant Appetite Changes', desc: 'Marked increase or decrease in appetite with weight changes' },
-    { icon: '⚡', title: 'Severe Fatigue', desc: 'Feeling extremely exhausted even with simple tasks' },
-    { icon: '🚫', title: 'Loss of Interest', desc: 'Complete loss of interest in previously enjoyed activities' },
-    { icon: '💭', title: 'Recurring Negative Thoughts', desc: 'Repeated feelings of worthlessness, self-blame, or thoughts of death' },
-    { icon: '😰', title: 'Severe Anxiety', desc: 'Uncontrollable worry or panic attacks' },
-    { icon: '🤝', title: 'Social Withdrawal', desc: 'Completely avoiding social contact, cutting off from friends and family' },
-  ];
+  const warningSigns =
+    locale === 'zh'
+      ? [
+          { icon: '😔', title: '持续情绪低落', desc: '超过两周的持续悲伤、空虚或绝望感' },
+          { icon: '😴', title: '睡眠障碍', desc: '严重失眠或过度嗜睡，影响日常生活' },
+          { icon: '🍽️', title: '食欲显著变化', desc: '食欲明显增加或减少，体重显著变化' },
+          { icon: '⚡', title: '精力严重不足', desc: '即使简单的事情也感到极度疲惫' },
+          { icon: '🚫', title: '丧失兴趣', desc: '对以前喜欢的活动完全失去兴趣' },
+          { icon: '💭', title: '反复消极想法', desc: '反复出现无价值感、自责或死亡念头' },
+          { icon: '😰', title: '严重焦虑', desc: '无法控制的担忧、恐慌发作' },
+          { icon: '🤝', title: '社交退缩', desc: '完全回避社交，与亲友断绝联系' },
+        ]
+      : [
+          {
+            icon: '😔',
+            title: 'Persistent Low Mood',
+            desc: 'Sadness, emptiness, or hopelessness lasting more than 2 weeks',
+          },
+          {
+            icon: '😴',
+            title: 'Sleep Disturbance',
+            desc: 'Severe insomnia or oversleeping affecting daily life',
+          },
+          {
+            icon: '🍽️',
+            title: 'Significant Appetite Changes',
+            desc: 'Marked increase or decrease in appetite with weight changes',
+          },
+          {
+            icon: '⚡',
+            title: 'Severe Fatigue',
+            desc: 'Feeling extremely exhausted even with simple tasks',
+          },
+          {
+            icon: '🚫',
+            title: 'Loss of Interest',
+            desc: 'Complete loss of interest in previously enjoyed activities',
+          },
+          {
+            icon: '💭',
+            title: 'Recurring Negative Thoughts',
+            desc: 'Repeated feelings of worthlessness, self-blame, or thoughts of death',
+          },
+          { icon: '😰', title: 'Severe Anxiety', desc: 'Uncontrollable worry or panic attacks' },
+          {
+            icon: '🤝',
+            title: 'Social Withdrawal',
+            desc: 'Completely avoiding social contact, cutting off from friends and family',
+          },
+        ];
 
   return (
     <div className="space-y-6">
@@ -195,10 +264,16 @@ export function CrisisResources() {
             <h3 className="font-semibold text-red-800">{t.emergencyTitle}</h3>
             <p className="text-sm text-red-700 mt-1">{t.emergencyDesc}</p>
             <div className="mt-3 flex flex-wrap gap-2">
-              <a href="tel:010-82951332" className="inline-flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-xl font-medium hover:bg-red-700 transition-colors">
+              <a
+                href="tel:010-82951332"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-xl font-medium hover:bg-red-700 transition-colors"
+              >
                 📞 010-82951332
               </a>
-              <a href="tel:4001619995" className="inline-flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-xl font-medium hover:bg-red-700 transition-colors">
+              <a
+                href="tel:4001619995"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-xl font-medium hover:bg-red-700 transition-colors"
+              >
                 📞 400-161-9995
               </a>
             </div>
@@ -230,7 +305,10 @@ export function CrisisResources() {
             const isExpanded = expandedResource === `r-${idx}`;
             const availText = locale === 'zh' ? resource.availableZh : resource.availableEn;
             return (
-              <div key={idx} className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+              <div
+                key={idx}
+                className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden"
+              >
                 <button
                   onClick={() => setExpandedResource(isExpanded ? null : `r-${idx}`)}
                   className="w-full p-5 flex items-center gap-4 text-left"
@@ -244,12 +322,16 @@ export function CrisisResources() {
                     </h3>
                     <p className="text-sm text-blue-600 font-mono mt-0.5">{resource.phone}</p>
                   </div>
-                  <span className={cn(
-                    'text-xs px-2 py-1 rounded-full font-medium',
-                    resource.type === 'hotline' ? 'bg-red-50 text-red-600' :
-                    resource.type === 'online' ? 'bg-blue-50 text-blue-600' :
-                    'bg-green-50 text-green-600'
-                  )}>
+                  <span
+                    className={cn(
+                      'text-xs px-2 py-1 rounded-full font-medium',
+                      resource.type === 'hotline'
+                        ? 'bg-red-50 text-red-600'
+                        : resource.type === 'online'
+                          ? 'bg-blue-50 text-blue-600'
+                          : 'bg-green-50 text-green-600'
+                    )}
+                  >
                     {availText}
                   </span>
                 </button>
@@ -279,7 +361,10 @@ export function CrisisResources() {
           {SELF_HELP_RESOURCES.map((resource, idx) => {
             const isExpanded = expandedResource === `sh-${idx}`;
             return (
-              <div key={idx} className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+              <div
+                key={idx}
+                className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden"
+              >
                 <button
                   onClick={() => setExpandedResource(isExpanded ? null : `sh-${idx}`)}
                   className="w-full p-5 flex items-center gap-4 text-left"
@@ -327,7 +412,10 @@ export function CrisisResources() {
             </p>
           </div>
           {warningSigns.map((sign, idx) => (
-            <div key={idx} className="bg-white rounded-xl p-4 border border-slate-200 flex items-start gap-3">
+            <div
+              key={idx}
+              className="bg-white rounded-xl p-4 border border-slate-200 flex items-start gap-3"
+            >
               <span className="text-xl">{sign.icon}</span>
               <div>
                 <h4 className="font-medium text-slate-800">{sign.title}</h4>

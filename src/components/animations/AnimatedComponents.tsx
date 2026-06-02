@@ -1,4 +1,12 @@
-import { motion, type Variants, type HTMLMotionProps, AnimatePresence, useSpring, useMotionValue, useTransform } from 'framer-motion';
+import {
+  motion,
+  type Variants,
+  type HTMLMotionProps,
+  AnimatePresence,
+  useSpring,
+  useMotionValue,
+  useTransform,
+} from 'framer-motion';
 import type { ReactNode } from 'react';
 import { useEffect } from 'react';
 
@@ -152,7 +160,13 @@ export function ScaleIn({ children, className, delay = 0 }: AnimProps) {
   );
 }
 
-export function StaggerContainer({ children, className }: { children: ReactNode; className?: string }) {
+export function StaggerContainer({
+  children,
+  className,
+}: {
+  children: ReactNode;
+  className?: string;
+}) {
   return (
     <motion.div
       initial="hidden"
@@ -176,7 +190,11 @@ export function StaggerItem({
   const MotionTr = motion.tr as typeof motion.tr;
   const MotionComp = Comp === 'li' ? MotionLi : Comp === 'tr' ? MotionTr : MotionDiv;
   return (
-    <MotionComp variants={staggerItem} className={className} {...(props as Record<string, unknown>)}>
+    <MotionComp
+      variants={staggerItem}
+      className={className}
+      {...(props as Record<string, unknown>)}
+    >
       {children}
     </MotionComp>
   );
@@ -274,7 +292,7 @@ export function AnimatedCounter({
   className?: string;
 }) {
   const count = useMotionValue(0);
-  const rounded = useTransform(count, (latest) => Math.round(latest));
+  const rounded = useTransform(count, latest => Math.round(latest));
   const spring = useSpring(count, { duration: duration * 1000, bounce: 0 });
 
   useEffect(() => {
@@ -282,11 +300,7 @@ export function AnimatedCounter({
   }, [spring, to]);
 
   return (
-    <motion.span
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      className={className}
-    >
+    <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} className={className}>
       <motion.span>{rounded}</motion.span>
     </motion.span>
   );
@@ -316,9 +330,17 @@ export function AnimatedNumber({
   );
 }
 
-function CountUp({ target, duration, decimals }: { target: number; duration: number; decimals: number }) {
+function CountUp({
+  target,
+  duration,
+  decimals,
+}: {
+  target: number;
+  duration: number;
+  decimals: number;
+}) {
   const count = useMotionValue(0);
-  const rounded = useTransform(count, (latest) => latest.toFixed(decimals));
+  const rounded = useTransform(count, latest => latest.toFixed(decimals));
   const spring = useSpring(count, { duration: duration * 1000, bounce: 0 });
 
   useEffect(() => {
@@ -328,7 +350,13 @@ function CountUp({ target, duration, decimals }: { target: number; duration: num
   return <motion.span>{rounded}</motion.span>;
 }
 
-export function LoadingSpinner({ size = 'md', className = '' }: { size?: 'sm' | 'md' | 'lg'; className?: string }) {
+export function LoadingSpinner({
+  size = 'md',
+  className = '',
+}: {
+  size?: 'sm' | 'md' | 'lg';
+  className?: string;
+}) {
   const sizeMap = { sm: 'w-4 h-4', md: 'w-8 h-8', lg: 'w-12 h-12' };
   const borderMap = { sm: 'border-2', md: 'border-3', lg: 'border-4' };
   return (
@@ -350,7 +378,13 @@ export function ShimmerBlock({ className }: { className?: string }) {
   );
 }
 
-export function PulseDot({ color = 'bg-emerald-500', className = '' }: { color?: string; className?: string }) {
+export function PulseDot({
+  color = 'bg-emerald-500',
+  className = '',
+}: {
+  color?: string;
+  className?: string;
+}) {
   return (
     <span className={`relative flex h-2.5 w-2.5 ${className}`}>
       <motion.span

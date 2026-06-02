@@ -9,7 +9,7 @@ export function PersonalDashboard() {
   const [statistics, setStatistics] = useState<DataStatistics | null>(null);
   const [recentResults, setRecentResults] = useState<UnifiedAssessmentResult[]>([]);
   const [insights, setInsights] = useState<string[]>([]);
-  const locale = useAppStore((state) => state.locale);
+  const locale = useAppStore(state => state.locale);
   const i18n = getTranslation(locale);
 
   useEffect(() => {
@@ -105,10 +105,10 @@ export function PersonalDashboard() {
             {i18n.dashboard.refresh}
           </button>
         </div>
-        
+
         {recentResults.length > 0 ? (
           <div className="space-y-4">
-            {recentResults.slice(0, 5).map((result) => (
+            {recentResults.slice(0, 5).map(result => (
               <ResultCard key={result.id} result={result} locale={locale} />
             ))}
           </div>
@@ -120,7 +120,17 @@ export function PersonalDashboard() {
   );
 }
 
-function StatCard({ title, value, icon, color }: { title: string; value: number; icon: string; color: string }) {
+function StatCard({
+  title,
+  value,
+  icon,
+  color,
+}: {
+  title: string;
+  value: number;
+  icon: string;
+  color: string;
+}) {
   return (
     <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow">
       <div className="flex items-center justify-between mb-4">
@@ -138,13 +148,13 @@ function ResultCard({ result, locale }: { result: UnifiedAssessmentResult; local
   const typeNames: Record<string, string> = {
     personality: i18n.dashboard.personality,
     stress: i18n.dashboard.stress,
-    anxiety: i18n.dashboard.anxiety
+    anxiety: i18n.dashboard.anxiety,
   };
 
   const typeColors: Record<string, string> = {
     personality: 'bg-purple-100 text-purple-800',
     stress: 'bg-green-100 text-green-800',
-    anxiety: 'bg-blue-100 text-blue-800'
+    anxiety: 'bg-blue-100 text-blue-800',
   };
 
   return (
@@ -156,18 +166,20 @@ function ResultCard({ result, locale }: { result: UnifiedAssessmentResult; local
             {new Date(result.timestamp).toLocaleDateString(locale === 'zh' ? 'zh-CN' : 'en-US')}
           </p>
         </div>
-        <span className={`px-3 py-1 rounded-full text-sm font-medium ${typeColors[result.assessmentType]}`}>
+        <span
+          className={`px-3 py-1 rounded-full text-sm font-medium ${typeColors[result.assessmentType]}`}
+        >
           {typeNames[result.assessmentType]}
         </span>
       </div>
-      
+
       <div className="mb-3">
         <div className="flex items-center justify-between mb-1">
           <span className="text-sm text-slate-600">总分</span>
           <span className="text-lg font-bold text-blue-600">{result.totalScore}</span>
         </div>
         <div className="w-full bg-slate-200 rounded-full h-2">
-          <div 
+          <div
             className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all"
             style={{ width: `${Math.min((result.totalScore / 100) * 100, 100)}%` }}
           ></div>

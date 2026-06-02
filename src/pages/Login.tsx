@@ -9,12 +9,13 @@ import { ShakeOnError } from '../components/animations/AnimatedComponents';
 
 export const Login = () => {
   const navigate = useNavigate();
-  const { login, authLoading, authError, isAuthenticated, clearAuthError, locale, loginWithOAuth } = useAppStore();
+  const { login, authLoading, authError, isAuthenticated, clearAuthError, locale, loginWithOAuth } =
+    useAppStore();
   const i18n = getTranslation(locale);
 
   const [credentials, setCredentials] = useState<AuthCredentials>({
     email: '',
-    password: ''
+    password: '',
   });
 
   const [touched, setTouched] = useState<Partial<Record<keyof AuthCredentials, boolean>>>({});
@@ -29,7 +30,11 @@ export const Login = () => {
     const errors: Partial<AuthCredentials> = {};
     if (touched.email && !credentials.email) {
       errors.email = i18n.auth.emailRequired;
-    } else if (touched.email && credentials.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(credentials.email)) {
+    } else if (
+      touched.email &&
+      credentials.email &&
+      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(credentials.email)
+    ) {
       errors.email = i18n.auth.emailInvalid;
     }
     if (touched.password && !credentials.password) {
@@ -58,7 +63,7 @@ export const Login = () => {
     e.preventDefault();
     setTouched({ email: true, password: true });
     setLocalError(null);
-    
+
     if (Object.keys(errors).length > 0) {
       return;
     }
@@ -86,15 +91,14 @@ export const Login = () => {
     }
   };
 
-  const handleChange = (field: keyof AuthCredentials) => (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setCredentials({ ...credentials, [field]: e.target.value });
-    setTouched({ ...touched, [field]: true });
-    if (localError) {
-      setLocalError(null);
-    }
-  };
+  const handleChange =
+    (field: keyof AuthCredentials) => (e: React.ChangeEvent<HTMLInputElement>) => {
+      setCredentials({ ...credentials, [field]: e.target.value });
+      setTouched({ ...touched, [field]: true });
+      if (localError) {
+        setLocalError(null);
+      }
+    };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 flex items-center justify-center px-4 py-12">
@@ -161,9 +165,7 @@ export const Login = () => {
               <h2 className="text-xl font-bold text-slate-800 mb-4">
                 {i18n.auth.forgotPasswordTitle}
               </h2>
-              <p className="text-slate-600 mb-6">
-                {i18n.auth.forgotPasswordDesc}
-              </p>
+              <p className="text-slate-600 mb-6">{i18n.auth.forgotPasswordDesc}</p>
 
               {forgotSent ? (
                 <div className="text-center py-8">
@@ -175,9 +177,7 @@ export const Login = () => {
                   >
                     📧
                   </motion.div>
-                  <p className="text-green-700 font-medium">
-                    {i18n.auth.resetLinkSent}
-                  </p>
+                  <p className="text-green-700 font-medium">{i18n.auth.resetLinkSent}</p>
                   <button
                     onClick={() => {
                       setShowForgotPassword(false);
@@ -192,14 +192,17 @@ export const Login = () => {
               ) : (
                 <form onSubmit={handleForgotPassword} className="space-y-4">
                   <div>
-                    <label htmlFor="forgotEmail" className="block text-sm font-medium text-slate-700 mb-2">
+                    <label
+                      htmlFor="forgotEmail"
+                      className="block text-sm font-medium text-slate-700 mb-2"
+                    >
                       {i18n.auth.email}
                     </label>
                     <input
                       id="forgotEmail"
                       type="email"
                       value={forgotEmail}
-                      onChange={(e) => setForgotEmail(e.target.value)}
+                      onChange={e => setForgotEmail(e.target.value)}
                       className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
                       placeholder="name@example.com"
                     />
@@ -267,7 +270,10 @@ export const Login = () => {
                   </AnimatePresence>
 
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-2">
+                    <label
+                      htmlFor="email"
+                      className="block text-sm font-medium text-slate-700 mb-2"
+                    >
                       {i18n.auth.email}
                     </label>
                     <motion.input
@@ -277,7 +283,9 @@ export const Login = () => {
                       onChange={handleChange('email')}
                       onBlur={() => setTouched({ ...touched, email: true })}
                       className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors ${
-                        errors.email ? 'border-red-500 bg-red-50' : 'border-slate-300 hover:border-slate-400'
+                        errors.email
+                          ? 'border-red-500 bg-red-50'
+                          : 'border-slate-300 hover:border-slate-400'
                       }`}
                       placeholder="name@example.com"
                       autoComplete="email"
@@ -298,7 +306,10 @@ export const Login = () => {
                   </div>
 
                   <div>
-                    <label htmlFor="password" className="block text-sm font-medium text-slate-700 mb-2">
+                    <label
+                      htmlFor="password"
+                      className="block text-sm font-medium text-slate-700 mb-2"
+                    >
                       {i18n.auth.password}
                     </label>
                     <motion.input
@@ -308,7 +319,9 @@ export const Login = () => {
                       onChange={handleChange('password')}
                       onBlur={() => setTouched({ ...touched, password: true })}
                       className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors ${
-                        errors.password ? 'border-red-500 bg-red-50' : 'border-slate-300 hover:border-slate-400'
+                        errors.password
+                          ? 'border-red-500 bg-red-50'
+                          : 'border-slate-300 hover:border-slate-400'
                       }`}
                       placeholder="••••••••"
                       autoComplete="current-password"
@@ -348,8 +361,20 @@ export const Login = () => {
                     {authLoading ? (
                       <>
                         <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                          <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                            fill="none"
+                          />
+                          <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                          />
                         </svg>
                         {i18n.auth.loggingIn}
                       </>
@@ -399,10 +424,7 @@ export const Login = () => {
               <div className="mt-6 text-center">
                 <p className="text-slate-600">
                   {i18n.auth.noAccount}{' '}
-                  <Link
-                    to="/register"
-                    className="text-blue-600 hover:text-blue-700 font-semibold"
-                  >
+                  <Link to="/register" className="text-blue-600 hover:text-blue-700 font-semibold">
                     {i18n.auth.signUpHere}
                   </Link>
                 </p>
@@ -412,10 +434,7 @@ export const Login = () => {
         </AnimatePresence>
 
         <div className="mt-6 text-center">
-          <Link
-            to="/"
-            className="text-slate-600 hover:text-slate-700 text-sm font-medium"
-          >
+          <Link to="/" className="text-slate-600 hover:text-slate-700 text-sm font-medium">
             ← {i18n.common.back} {i18n.nav.home}
           </Link>
         </div>

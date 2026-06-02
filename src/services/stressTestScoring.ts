@@ -1,17 +1,17 @@
 import { Question, TraitResult } from '../types';
-import { 
+import {
   STRESS_LEVELS,
   COPING_STRATEGIES,
   STRESS_STAGES,
   PERFORMANCE_CURVE,
   HEALTHY_HABITS,
   PROFESSIONAL_RESOURCES,
-  STRESS_DIMENSIONS
+  STRESS_DIMENSIONS,
 } from '../data/stressTestData';
 
 /**
  * 压力测试评分算法 - 优化版
- * 
+ *
  * 改进：
  * 1. 添加 DIMENSION_WEIGHTS，基于临床重要性加权各维度
  * 2. 将4级系统扩展为8级子级别系统
@@ -21,7 +21,7 @@ import {
 
 /**
  * 维度临床权重
- * 
+ *
  * 基于临床研究和压力评估文献：
  * - perceivedStress: 1.5 (核心指标，知觉压力是整体压力最直接的反映)
  * - coping: 1.2 (反向 - 高应对能力降低整体压力)
@@ -40,12 +40,12 @@ export const DIMENSION_WEIGHTS: Record<string, number> = {
   healthStress: 1.1,
   financeStress: 0.9,
   physiological: 1.3,
-  emotional: 1.2
+  emotional: 1.2,
 };
 
 /**
  * 8级压力子级别系统
- * 
+ *
  * 基于加权总分（0-120范围，但加权后可能超出，归一化到0-120）：
  * - low-1: 极低压力 (0-8)
  * - low-2: 低压力 (9-18)
@@ -56,7 +56,15 @@ export const DIMENSION_WEIGHTS: Record<string, number> = {
  * - high-2: 高压力 (76-90)
  * - extreme: 极高压力 (91-120)
  */
-type StressSubLevel = 'low-1' | 'low-2' | 'medium-1' | 'medium-2' | 'medium-3' | 'high-1' | 'high-2' | 'extreme';
+type StressSubLevel =
+  | 'low-1'
+  | 'low-2'
+  | 'medium-1'
+  | 'medium-2'
+  | 'medium-3'
+  | 'high-1'
+  | 'high-2'
+  | 'extreme';
 
 interface StressSubLevelInfo {
   subLevel: StressSubLevel;
@@ -70,51 +78,58 @@ const SUB_LEVEL_DEFINITIONS: Record<StressSubLevel, Omit<StressSubLevelInfo, 'su
   'low-1': {
     label: '极低压力',
     color: 'green',
-    description: '你目前几乎没有感受到压力，身心状态极佳。这是理想的状态，保持现有的健康生活方式即可。',
-    urgency: 0
+    description:
+      '你目前几乎没有感受到压力，身心状态极佳。这是理想的状态，保持现有的健康生活方式即可。',
+    urgency: 0,
   },
   'low-2': {
     label: '低压力',
     color: 'green',
-    description: '你目前压力水平很低，能够轻松应对生活中的各种挑战。偶尔的小压力反而有助于保持警觉和动力。',
-    urgency: 0
+    description:
+      '你目前压力水平很低，能够轻松应对生活中的各种挑战。偶尔的小压力反而有助于保持警觉和动力。',
+    urgency: 0,
   },
   'medium-1': {
     label: '中低压力',
     color: 'lime',
-    description: '你感受到一些轻微的压力，但整体可控。这个水平的压力可能有助于保持动力，注意适当放松即可。',
-    urgency: 1
+    description:
+      '你感受到一些轻微的压力，但整体可控。这个水平的压力可能有助于保持动力，注意适当放松即可。',
+    urgency: 1,
   },
   'medium-2': {
     label: '中等压力',
     color: 'yellow',
-    description: '你正经历中等程度的压力，可能开始感到一些负担。建议开始采取主动的压力管理措施，调整生活节奏。',
-    urgency: 2
+    description:
+      '你正经历中等程度的压力，可能开始感到一些负担。建议开始采取主动的压力管理措施，调整生活节奏。',
+    urgency: 2,
   },
   'medium-3': {
     label: '中高压力',
     color: 'amber',
-    description: '压力水平偏高，你可能经常感到紧张或疲惫。需要认真对待压力管理，考虑调整工作负荷或寻求支持。',
-    urgency: 3
+    description:
+      '压力水平偏高，你可能经常感到紧张或疲惫。需要认真对待压力管理，考虑调整工作负荷或寻求支持。',
+    urgency: 3,
   },
   'high-1': {
     label: '偏高压力',
     color: 'orange',
-    description: '你目前承受着较大的压力，身心健康可能已受到影响。建议积极采取减压措施，必要时寻求专业帮助。',
-    urgency: 4
+    description:
+      '你目前承受着较大的压力，身心健康可能已受到影响。建议积极采取减压措施，必要时寻求专业帮助。',
+    urgency: 4,
   },
   'high-2': {
     label: '高压力',
     color: 'deep-orange',
     description: '你正经历严重的压力，身心健康明显受到影响。强烈建议寻求专业支持，不要独自承受。',
-    urgency: 5
+    urgency: 5,
   },
-  'extreme': {
+  extreme: {
     label: '极高压力',
     color: 'red',
-    description: '你目前处于压力危机状态，身心健康严重受损。请立即寻求专业帮助，这是非常紧急的情况。',
-    urgency: 6
-  }
+    description:
+      '你目前处于压力危机状态，身心健康严重受损。请立即寻求专业帮助，这是非常紧急的情况。',
+    urgency: 6,
+  },
 };
 
 function getStressSubLevel(weightedScore: number): StressSubLevel {
@@ -153,10 +168,7 @@ function getDimensionQuestionCounts(questions: Question[]): Record<string, numbe
   return counts;
 }
 
-export function calculateStressTestScore(
-  answers: Record<string, number>,
-  questions: Question[]
-) {
+export function calculateStressTestScore(answers: Record<string, number>, questions: Question[]) {
   const dimensionRawScores: Record<string, number> = {};
   const dimensionCounts: Record<string, number> = {};
   const questionDetails: Array<{
@@ -179,21 +191,21 @@ export function calculateStressTestScore(
     const response = answers[question.id];
     if (response !== undefined) {
       const score = calculateQuestionScore(response, !!question.reverse);
-      const dimWeight = question.trait ? (DIMENSION_WEIGHTS[question.trait] || 1.0) : 1.0;
+      const dimWeight = question.trait ? DIMENSION_WEIGHTS[question.trait] || 1.0 : 1.0;
       const weightedScore = score * dimWeight;
-      
+
       if (question.trait) {
         dimensionRawScores[question.trait] = (dimensionRawScores[question.trait] || 0) + score;
         dimensionCounts[question.trait] = (dimensionCounts[question.trait] || 0) + 1;
       }
-      
+
       questionDetails.push({
         id: question.id,
         text: question.text,
         trait: question.trait,
         response,
         score,
-        weightedScore
+        weightedScore,
       });
     }
   }
@@ -221,7 +233,7 @@ export function calculateStressTestScore(
     const weight = DIMENSION_WEIGHTS[dim] || 1.0;
     maxWeightedTotal += count * maxScorePerQuestion * weight;
   }
-  
+
   const normalizedTotalScore = Math.round((weightedTotalScore / maxWeightedTotal) * 120);
 
   // 计算各维度百分比（加权）
@@ -230,7 +242,7 @@ export function calculateStressTestScore(
     const count = dimensionCounts[dim] || 1;
     const maxDimScore = count * maxScorePerQuestion;
     const weight = DIMENSION_WEIGHTS[dim] || 1.0;
-    const weightedPercentage = Math.round((rawScore * weight / (maxDimScore * weight)) * 100);
+    const weightedPercentage = Math.round(((rawScore * weight) / (maxDimScore * weight)) * 100);
     dimensionPercentages[dim] = Math.min(100, weightedPercentage);
   }
 
@@ -275,18 +287,18 @@ export function calculateStressTestScore(
   const recommendedStrategies = {
     problemFocused: COPING_STRATEGIES.problemFocused.slice(0, 3),
     emotionFocused: COPING_STRATEGIES.emotionFocused.slice(0, 3),
-    avoidance: COPING_STRATEGIES.avoidance.slice(0, 2)
+    avoidance: COPING_STRATEGIES.avoidance.slice(0, 2),
   };
 
   // 分析最突出的压力维度（使用加权得分排序）
   const sortedDimensions = Object.entries(dimensionWeightedScores)
-    .map(([key, score]) => ({ 
-      dimension: key, 
+    .map(([key, score]) => ({
+      dimension: key,
       score,
       rawScore: dimensionRawScores[key] || 0,
       percentage: dimensionPercentages[key] || 0,
       weight: DIMENSION_WEIGHTS[key] || 1.0,
-      info: STRESS_DIMENSIONS[key as keyof typeof STRESS_DIMENSIONS] 
+      info: STRESS_DIMENSIONS[key as keyof typeof STRESS_DIMENSIONS],
     }))
     .sort((a, b) => b.score - a.score);
 
@@ -307,13 +319,14 @@ export function calculateStressTestScore(
       dimensionScores: dimensionRawScores,
       dimensionWeightedScores,
       dimensionPercentages,
-      questionDetails
+      questionDetails,
     },
     recommendations: {
       strategies: recommendedStrategies,
       healthyHabits: HEALTHY_HABITS,
-      professionalResources: (level === 'high' || level === 'extreme') ? PROFESSIONAL_RESOURCES : null
-    }
+      professionalResources:
+        level === 'high' || level === 'extreme' ? PROFESSIONAL_RESOURCES : null,
+    },
   };
 }
 
@@ -322,13 +335,13 @@ export function calculateStressTestTraits(
   questions: Question[]
 ): TraitResult[] {
   const result = calculateStressTestScore(answers, questions);
-  
+
   const traits: TraitResult[] = [
     {
       name: '总体压力水平',
       score: result.totalScore,
-      description: `${result.subLevel.label} - ${result.subLevel.description}`
-    }
+      description: `${result.subLevel.label} - ${result.subLevel.description}`,
+    },
   ];
 
   for (const [key, percentage] of Object.entries(result.dimensionPercentages)) {
@@ -339,11 +352,11 @@ export function calculateStressTestTraits(
       traits.push({
         name: dimensionInfo.name,
         score: percentage,
-        description: `${dimensionInfo.description}${weightLabel}`
+        description: `${dimensionInfo.description}${weightLabel}`,
       });
     }
   }
-  
+
   return traits;
 }
 
@@ -374,20 +387,23 @@ export function generateDetailedStressReport(
   questions: Question[]
 ) {
   const result = calculateStressTestScore(answers, questions);
-  
-  const dimensionRecommendations = result.topDimensions.map(({ dimension, info, weight, percentage }) => ({
-    dimension,
-    name: info?.name || dimension,
-    score: percentage,
-    weight,
-    tips: info?.tips || []
-  }));
-  
-  const urgencyPrefix = result.subLevel.urgency >= 4 
-    ? '⚠️ 紧急建议：' 
-    : result.subLevel.urgency >= 2 
-      ? '💡 建议关注：' 
-      : '✅ 继续保持：';
+
+  const dimensionRecommendations = result.topDimensions.map(
+    ({ dimension, info, weight, percentage }) => ({
+      dimension,
+      name: info?.name || dimension,
+      score: percentage,
+      weight,
+      tips: info?.tips || [],
+    })
+  );
+
+  const urgencyPrefix =
+    result.subLevel.urgency >= 4
+      ? '⚠️ 紧急建议：'
+      : result.subLevel.urgency >= 2
+        ? '💡 建议关注：'
+        : '✅ 继续保持：';
 
   return {
     summary: {
@@ -397,7 +413,7 @@ export function generateDetailedStressReport(
       description: result.levelInfo.description,
       color: result.subLevel.color,
       subLevel: result.subLevel,
-      urgencyPrefix
+      urgencyPrefix,
     },
     detailedAnalysis: {
       signs: result.levelInfo.detailed,
@@ -405,13 +421,13 @@ export function generateDetailedStressReport(
       performance: result.performancePoint,
       topDimensions: result.topDimensions,
       dimensionPercentages: result.dimensionPercentages,
-      weightedScores: result.dimensionWeightedScores
+      weightedScores: result.dimensionWeightedScores,
     },
     recommendations: {
       dimensionTips: dimensionRecommendations,
       strategies: result.recommendations.strategies,
       healthyHabits: result.recommendations.healthyHabits,
-      professional: result.recommendations.professionalResources
-    }
+      professional: result.recommendations.professionalResources,
+    },
   };
 }

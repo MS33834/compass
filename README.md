@@ -7,7 +7,7 @@
 
 **Open-Source · Self-Hosted · Privacy-First Psychological Assessment Platform**
 
-> *Discover yourself. Grow every day.*
+> _Discover yourself. Grow every day._
 
 ---
 
@@ -16,6 +16,7 @@
 ---
 
 <!-- Badges -->
+
 [![License: MIT](https://img.shields.io/badge/license-MIT-6DD58C?style=for-the-badge)](LICENSE)
 [![Stars](https://img.shields.io/github/stars/badhope/MindMirror?style=for-the-badge&color=FF6B6B)](https://github.com/badhope/MindMirror/stargazers)
 [![Forks](https://img.shields.io/github/forks/badhope/MindMirror?style=for-the-badge&color=4ECDC4)](https://github.com/badhope/MindMirror/network/members)
@@ -41,7 +42,7 @@
 
 ## ✨ Why MindMirror?
 
-- **🔒 Privacy first** — your data lives in *your* database, never in a third-party cloud.
+- **🔒 Privacy first** — your data lives in _your_ database, never in a third-party cloud.
 - **🧪 Scientifically validated scales** — Big Five (IPIP / NEO-PI-R), PSS-10, GAD-7, with proper citations.
 - **🌐 Fully bilingual** — English & 简体中文 with a built-in language switcher.
 - **📦 Two modes** — full FastAPI + PostgreSQL backend, **or** a zero-backend offline demo (`localStorage`) that runs on any static host (including GitHub Pages).
@@ -76,12 +77,12 @@
 
 > Visit the **[live demo](https://badhope.github.io/MindMirror/)** for the real interactive UI — the same code powers self-hosted deployments.
 
-| Home | Assessment Hub |
-|:---:|:---:|
+|       Home       |         Assessment Hub         |
+| :--------------: | :----------------------------: |
 | Hero, hero, hero | Catalog of all built-in scales |
 
-| Big Five Result | Mood Tracker |
-|:---:|:---:|
+|         Big Five Result         |        Mood Tracker        |
+| :-----------------------------: | :------------------------: |
 | Radar chart, trait explanations | Daily log with trend chart |
 
 (Screenshots rendered from the live build — see `public/docs/` for the latest captures.)
@@ -127,11 +128,11 @@ docker compose up -d --build
 
 That spins up three containers behind a single port `80`:
 
-| Service      | Host port | Purpose                                                       |
-|--------------|-----------|---------------------------------------------------------------|
-| `frontend`   | **80**    | nginx → React SPA, reverse-proxies `/api/*` to the backend    |
-| `backend`    | —         | FastAPI on 8000 (internal Docker network only)                |
-| `postgres`   | —         | PostgreSQL 15 (internal Docker network only)                  |
+| Service    | Host port | Purpose                                                    |
+| ---------- | --------- | ---------------------------------------------------------- |
+| `frontend` | **80**    | nginx → React SPA, reverse-proxies `/api/*` to the backend |
+| `backend`  | —         | FastAPI on 8000 (internal Docker network only)             |
+| `postgres` | —         | PostgreSQL 15 (internal Docker network only)               |
 
 Verify:
 
@@ -192,19 +193,19 @@ browser's `localStorage`.
 
 ## 🛠️ Tech Stack
 
-| Layer             | Choice                                                       | Why                                            |
-|-------------------|--------------------------------------------------------------|------------------------------------------------|
-| **Frontend**      | React 18 + TypeScript 5.8 + Vite 6                           | Best DX, fast HMR, type safety                 |
-| **State**         | Zustand 5                                                    | Minimal, no boilerplate, persists nicely       |
-| **Styling**       | Tailwind 3 + Framer Motion 12                                | Utility-first + smooth animations              |
-| **Routing**       | React Router v7 (BrowserRouter with `basename`)              | Clean URLs under any sub-path                   |
-| **i18n**          | Hand-rolled EN / ZH dictionaries                             | Zero dependencies, full control                |
-| **Backend**       | Python 3.12 + FastAPI 0.115 + Pydantic v2                    | Async, fast, type-safe, auto Swagger docs      |
-| **ORM**           | SQLAlchemy 2                                                 | Cross-dialect (PG / SQLite) with `JSONB` shim  |
-| **Auth**          | JWT (HS256) via `python-jose` + `bcrypt`                     | Simple, no external IdP needed                 |
-| **DB**            | PostgreSQL 15 (Docker) / SQLite (dev fallback)               | Battle-tested, single-binary SQLite fallback    |
-| **Container**     | Docker + Compose, multi-stage builds                        | One command to deploy                          |
-| **CI / CD**       | GitHub Actions (typecheck + lint + Pages)                    | Free for OSS, zero config                      |
+| Layer         | Choice                                          | Why                                           |
+| ------------- | ----------------------------------------------- | --------------------------------------------- |
+| **Frontend**  | React 18 + TypeScript 5.8 + Vite 6              | Best DX, fast HMR, type safety                |
+| **State**     | Zustand 5                                       | Minimal, no boilerplate, persists nicely      |
+| **Styling**   | Tailwind 3 + Framer Motion 12                   | Utility-first + smooth animations             |
+| **Routing**   | React Router v7 (BrowserRouter with `basename`) | Clean URLs under any sub-path                 |
+| **i18n**      | Hand-rolled EN / ZH dictionaries                | Zero dependencies, full control               |
+| **Backend**   | Python 3.12 + FastAPI 0.115 + Pydantic v2       | Async, fast, type-safe, auto Swagger docs     |
+| **ORM**       | SQLAlchemy 2                                    | Cross-dialect (PG / SQLite) with `JSONB` shim |
+| **Auth**      | JWT (HS256) via `python-jose` + `bcrypt`        | Simple, no external IdP needed                |
+| **DB**        | PostgreSQL 15 (Docker) / SQLite (dev fallback)  | Battle-tested, single-binary SQLite fallback  |
+| **Container** | Docker + Compose, multi-stage builds            | One command to deploy                         |
+| **CI / CD**   | GitHub Actions (typecheck + lint + Pages)       | Free for OSS, zero config                     |
 
 ---
 
@@ -278,41 +279,41 @@ MindMirror/
 All endpoints are prefixed with `/api/v1`. Interactive Swagger docs at
 `/api/v1/docs`. `✅` = `Authorization: Bearer <jwt>` required.
 
-| Method   | Path                       | Auth | Description                                                |
-|----------|----------------------------|------|------------------------------------------------------------|
-| `GET`    | `/health`                  | —    | Liveness probe                                             |
-| `POST`   | `/auth/register`           | —    | Create account (`email`, `username`, `password`)           |
-| `POST`   | `/auth/login`              | —    | OAuth2 password flow → JWT                                 |
-| `POST`   | `/auth/guest`              | —    | Issue a guest account                                      |
-| `GET`    | `/auth/me`                 | ✅   | Current user                                               |
-| `PATCH`  | `/auth/me`                 | ✅   | Update `username` / `email` / `avatar_url`                 |
-| `POST`   | `/auth/logout`             | ✅   | Invalidate session                                         |
-| `DELETE` | `/auth/account`            | ✅   | Delete account                                             |
-| `GET`    | `/assessments/`            | —    | List built-in assessment definitions                       |
-| `GET`    | `/results/`                | ✅   | List user's results (`?assessment_id=` filter)             |
-| `POST`   | `/results/`                | ✅   | Save a pre-computed result (frontend scores locally)       |
-| `GET`    | `/results/{id}`            | ✅   | Fetch one result                                           |
-| `DELETE` | `/results/{id}`            | ✅   | Delete one result                                          |
-| `GET`    | `/mood/`                   | ✅   | List mood entries                                          |
-| `POST`   | `/mood/`                   | ✅   | Create a mood entry                                        |
-| `PATCH`  | `/mood/{id}`               | ✅   | Update a mood entry                                        |
-| `DELETE` | `/mood/{id}`               | ✅   | Delete a mood entry                                        |
-| `GET`    | `/achievements/`           | ✅   | List unlocked achievements                                 |
-| `POST`   | `/achievements/`           | ✅   | Unlock (idempotent)                                        |
-| `DELETE` | `/achievements/{id}`       | ✅   | Remove                                                     |
-| `GET`    | `/training/`               | ✅   | List training plans                                        |
+| Method   | Path                 | Auth | Description                                          |
+| -------- | -------------------- | ---- | ---------------------------------------------------- |
+| `GET`    | `/health`            | —    | Liveness probe                                       |
+| `POST`   | `/auth/register`     | —    | Create account (`email`, `username`, `password`)     |
+| `POST`   | `/auth/login`        | —    | OAuth2 password flow → JWT                           |
+| `POST`   | `/auth/guest`        | —    | Issue a guest account                                |
+| `GET`    | `/auth/me`           | ✅   | Current user                                         |
+| `PATCH`  | `/auth/me`           | ✅   | Update `username` / `email` / `avatar_url`           |
+| `POST`   | `/auth/logout`       | ✅   | Invalidate session                                   |
+| `DELETE` | `/auth/account`      | ✅   | Delete account                                       |
+| `GET`    | `/assessments/`      | —    | List built-in assessment definitions                 |
+| `GET`    | `/results/`          | ✅   | List user's results (`?assessment_id=` filter)       |
+| `POST`   | `/results/`          | ✅   | Save a pre-computed result (frontend scores locally) |
+| `GET`    | `/results/{id}`      | ✅   | Fetch one result                                     |
+| `DELETE` | `/results/{id}`      | ✅   | Delete one result                                    |
+| `GET`    | `/mood/`             | ✅   | List mood entries                                    |
+| `POST`   | `/mood/`             | ✅   | Create a mood entry                                  |
+| `PATCH`  | `/mood/{id}`         | ✅   | Update a mood entry                                  |
+| `DELETE` | `/mood/{id}`         | ✅   | Delete a mood entry                                  |
+| `GET`    | `/achievements/`     | ✅   | List unlocked achievements                           |
+| `POST`   | `/achievements/`     | ✅   | Unlock (idempotent)                                  |
+| `DELETE` | `/achievements/{id}` | ✅   | Remove                                               |
+| `GET`    | `/training/`         | ✅   | List training plans                                  |
 
 ---
 
 ## 🌐 Deployment Options
 
-| Where                          | How                                                        | Backend?               |
-|--------------------------------|------------------------------------------------------------|------------------------|
-| **GitHub Pages** (showcase)    | Push → Actions builds and deploys                           | No — localStorage mode |
-| **Vercel / Netlify**           | Connect repo, build with `npm run build:pages`             | No — localStorage mode |
-| **Cloudflare Pages**           | Same as Vercel                                             | No — localStorage mode |
-| **Your own VPS**               | `docker compose up -d --build`                             | Yes — full stack       |
-| **Kubernetes / Helm**          | Adapt the compose file                                     | Yes                    |
+| Where                       | How                                            | Backend?               |
+| --------------------------- | ---------------------------------------------- | ---------------------- |
+| **GitHub Pages** (showcase) | Push → Actions builds and deploys              | No — localStorage mode |
+| **Vercel / Netlify**        | Connect repo, build with `npm run build:pages` | No — localStorage mode |
+| **Cloudflare Pages**        | Same as Vercel                                 | No — localStorage mode |
+| **Your own VPS**            | `docker compose up -d --build`                 | Yes — full stack       |
+| **Kubernetes / Helm**       | Adapt the compose file                         | Yes                    |
 
 For the showcase-only mode, **no environment variables are required** — the
 app auto-detects the missing backend and switches to local-only storage.
@@ -399,11 +400,11 @@ If you use MindMirror in academic work, please cite the underlying scales
 (see [CITATION.cff](CITATION.cff)):
 
 - **GAD-7**: Spitzer, Kroenke, Williams, Löwe (2006).
-  *A brief measure for assessing generalized anxiety disorder.*
+  _A brief measure for assessing generalized anxiety disorder._
   Archives of Internal Medicine, 166(10), 1092–1097.
   [doi:10.1001/archinte.166.10.1092](https://doi.org/10.1001/archinte.166.10.1092)
 - **PSS-10**: Cohen, Kamarck & Mermelstein (1983).
-  *A global measure of perceived stress.*
+  _A global measure of perceived stress._
   Journal of Health and Social Behavior, 24(4), 385–396.
   [doi:10.2307/2136404](https://doi.org/10.2307/2136404)
 - **IPIP / Big Five**: [ipip.ori.org](https://ipip.ori.org/)

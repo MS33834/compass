@@ -3,12 +3,17 @@ import { Link } from 'react-router-dom';
 import { useAppStore } from '../store';
 import { getTranslation } from '../i18n';
 import { trainingService } from '../services/training';
-import { Training as TrainingType, TrainingRecommendation, TRAINING_CATEGORIES, TrainingCategory } from '../types/training';
+import {
+  Training as TrainingType,
+  TrainingRecommendation,
+  TRAINING_CATEGORIES,
+  TrainingCategory,
+} from '../types/training';
 
 const DIFFICULTY_COLORS = {
   beginner: 'bg-green-100 text-green-700',
   intermediate: 'bg-yellow-100 text-yellow-700',
-  advanced: 'bg-red-100 text-red-700'
+  advanced: 'bg-red-100 text-red-700',
 };
 
 export function Training() {
@@ -27,9 +32,8 @@ export function Training() {
     setStats(trainingService.getStatistics());
   }, []);
 
-  const filteredTrainings = selectedCategory === 'all'
-    ? trainings
-    : trainings.filter(t => t.category === selectedCategory);
+  const filteredTrainings =
+    selectedCategory === 'all' ? trainings : trainings.filter(t => t.category === selectedCategory);
 
   const recommendedTrainings = recommendations
     .map(rec => trainings.find(t => t.id === rec.trainingId))
@@ -69,7 +73,7 @@ export function Training() {
         <div>
           <h2 className="text-xl font-semibold text-slate-800 mb-4">{i18n.training.recommended}</h2>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {recommendedTrainings.map((training) => {
+            {recommendedTrainings.map(training => {
               const categoryInfo = TRAINING_CATEGORIES.find(c => c.category === training.category);
               return (
                 <Link
@@ -79,7 +83,9 @@ export function Training() {
                 >
                   <div className="flex items-start justify-between mb-3">
                     <span className="text-4xl">{categoryInfo?.icon || '🧘'}</span>
-                    <span className={`px-3 py-1 rounded-full text-xs font-medium ${DIFFICULTY_COLORS[training.difficulty]}`}>
+                    <span
+                      className={`px-3 py-1 rounded-full text-xs font-medium ${DIFFICULTY_COLORS[training.difficulty]}`}
+                    >
                       {i18n.training[training.difficulty]}
                     </span>
                   </div>
@@ -111,7 +117,7 @@ export function Training() {
           >
             {i18n.training.all}
           </button>
-          {TRAINING_CATEGORIES.map((category) => (
+          {TRAINING_CATEGORIES.map(category => (
             <button
               key={category.category}
               onClick={() => setSelectedCategory(category.category)}
@@ -127,7 +133,7 @@ export function Training() {
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {filteredTrainings.map((training) => {
+          {filteredTrainings.map(training => {
             const categoryInfo = TRAINING_CATEGORIES.find(c => c.category === training.category);
             return (
               <Link
@@ -137,7 +143,9 @@ export function Training() {
               >
                 <div className="flex items-start justify-between mb-3">
                   <span className="text-4xl">{categoryInfo?.icon || '🧘'}</span>
-                  <span className={`px-3 py-1 rounded-full text-xs font-medium ${DIFFICULTY_COLORS[training.difficulty]}`}>
+                  <span
+                    className={`px-3 py-1 rounded-full text-xs font-medium ${DIFFICULTY_COLORS[training.difficulty]}`}
+                  >
                     {i18n.training[training.difficulty]}
                   </span>
                 </div>
@@ -147,7 +155,10 @@ export function Training() {
                 <p className="text-sm text-slate-600 mb-3 line-clamp-2">{training.description}</p>
                 <div className="flex flex-wrap gap-1 mb-3">
                   {training.benefits.slice(0, 2).map((benefit, idx) => (
-                    <span key={idx} className="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded-full">
+                    <span
+                      key={idx}
+                      className="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded-full"
+                    >
                       {benefit}
                     </span>
                   ))}

@@ -6,8 +6,16 @@ import { useAppStore } from '../store';
 import { getTranslation } from '../i18n';
 import { cn } from '../lib/utils';
 
-const CATEGORY_KEYS = ['all', 'personality', 'health', 'emotion', 'social', 'career', 'life'] as const;
-type CategoryKey = typeof CATEGORY_KEYS[number];
+const CATEGORY_KEYS = [
+  'all',
+  'personality',
+  'health',
+  'emotion',
+  'social',
+  'career',
+  'life',
+] as const;
+type CategoryKey = (typeof CATEGORY_KEYS)[number];
 
 export const Assessments = () => {
   const { setAssessments, assessments, locale } = useAppStore();
@@ -36,7 +44,7 @@ export const Assessments = () => {
   const filteredAssessments = useMemo(() => {
     if (selectedCategory === 'all') return assessments;
     const label = getCategoryLabel(selectedCategory);
-    return assessments.filter((a) => a.category === label);
+    return assessments.filter(a => a.category === label);
   }, [assessments, selectedCategory, locale]);
 
   return (
@@ -45,21 +53,19 @@ export const Assessments = () => {
         <h1 className="text-3xl sm:text-5xl font-bold text-slate-800 mb-2 sm:mb-4">
           {i18n.assessments.title}
         </h1>
-        <p className="text-base sm:text-xl text-slate-600">
-          {i18n.assessments.subtitle}
-        </p>
+        <p className="text-base sm:text-xl text-slate-600">{i18n.assessments.subtitle}</p>
       </div>
 
       <div className="flex items-center justify-center gap-2 sm:gap-3 flex-wrap">
-        {CATEGORY_KEYS.map((key) => (
+        {CATEGORY_KEYS.map(key => (
           <button
             key={key}
             onClick={() => setSelectedCategory(key)}
             className={cn(
-              "px-4 sm:px-6 py-2 sm:py-2.5 rounded-xl font-medium transition-all text-sm",
+              'px-4 sm:px-6 py-2 sm:py-2.5 rounded-xl font-medium transition-all text-sm',
               selectedCategory === key
-                ? "bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg transform scale-105"
-                : "bg-white text-slate-700 hover:bg-slate-50 border border-slate-200 hover:border-slate-300"
+                ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg transform scale-105'
+                : 'bg-white text-slate-700 hover:bg-slate-50 border border-slate-200 hover:border-slate-300'
             )}
           >
             {getCategoryLabel(key)}
@@ -76,12 +82,14 @@ export const Assessments = () => {
       {filteredAssessments.length === 0 ? (
         <div className="text-center py-16">
           <div className="text-6xl mb-4">🔍</div>
-          <h3 className="text-xl font-semibold text-slate-800 mb-2">{i18n.assessments.noAssessment}</h3>
+          <h3 className="text-xl font-semibold text-slate-800 mb-2">
+            {i18n.assessments.noAssessment}
+          </h3>
           <p className="text-slate-500">{i18n.assessments.noAssessmentDesc}</p>
         </div>
       ) : (
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-          {filteredAssessments.map((assessment) => (
+          {filteredAssessments.map(assessment => (
             <AssessmentCard key={assessment.id} assessment={assessment} i18n={i18n} />
           ))}
         </div>

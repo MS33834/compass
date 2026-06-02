@@ -2,10 +2,7 @@ import { create } from 'zustand';
 import { Assessment, Question, AssessmentResult } from '../types';
 import type { User, AuthCredentials, RegisterData } from '../types/auth';
 import { storage } from '../lib/utils';
-import {
-  calculateBigFiveScores,
-  calculateOverallScore
-} from '../services/bigFiveScoring';
+import { calculateBigFiveScores, calculateOverallScore } from '../services/bigFiveScoring';
 import { calculateStressTestTraits } from '../services/stressTestScoring';
 import { calculateGAD7Traits } from '../services/anxietyGad7Scoring';
 import { authService } from '../services/auth';
@@ -210,7 +207,7 @@ export const useAppStore = create<AppState>((set, get) => {
       }
     },
 
-    loginWithOAuth: async (provider) => {
+    loginWithOAuth: async provider => {
       set({ authLoading: true, authError: null });
       try {
         const response = await authService.loginWithOAuth(provider);
@@ -248,24 +245,24 @@ export const useAppStore = create<AppState>((set, get) => {
       set({ authError: null });
     },
 
-    setAssessments: (assessments) => set({ assessments }),
+    setAssessments: assessments => set({ assessments }),
 
-    setCurrentAssessment: (assessment) => set({ currentAssessment: assessment }),
+    setCurrentAssessment: assessment => set({ currentAssessment: assessment }),
 
-    setQuestions: (questions) => set({ questions }),
+    setQuestions: questions => set({ questions }),
 
-    setCurrentQuestionIndex: (index) => set({ currentQuestionIndex: index }),
+    setCurrentQuestionIndex: index => set({ currentQuestionIndex: index }),
 
     setAnswer: (questionId, score) =>
-      set((state) => ({
-        answers: { ...state.answers, [questionId]: score }
+      set(state => ({
+        answers: { ...state.answers, [questionId]: score },
       })),
 
-    setCurrentStep: (step) => set({ currentStep: step }),
+    setCurrentStep: step => set({ currentStep: step }),
 
-    setResult: (result) => set({ result }),
+    setResult: result => set({ result }),
 
-    setLocale: (locale) => {
+    setLocale: locale => {
       storage.set(STORAGE_KEY_LOCALE, locale);
       set({ locale });
     },
@@ -275,7 +272,7 @@ export const useAppStore = create<AppState>((set, get) => {
         currentQuestionIndex: 0,
         answers: {},
         result: null,
-        currentStep: 'intro'
+        currentStep: 'intro',
       }),
 
     calculateResult: (assessmentId, assessmentTitle) => {
@@ -301,7 +298,7 @@ export const useAppStore = create<AppState>((set, get) => {
         traits,
         completedAt: new Date(),
         assessmentId,
-        assessmentTitle
+        assessmentTitle,
       };
 
       set({ result, currentStep: 'result' });
@@ -313,8 +310,8 @@ export const useAppStore = create<AppState>((set, get) => {
       set({ assessmentHistory: history });
     },
 
-    addToHistory: (result) =>
-      set((state) => {
+    addToHistory: result =>
+      set(state => {
         const newHistory = [result, ...state.assessmentHistory];
         storage.set(STORAGE_KEY_HISTORY, newHistory);
         return { assessmentHistory: newHistory };
@@ -326,17 +323,15 @@ export const useAppStore = create<AppState>((set, get) => {
         return { assessmentHistory: [] };
       }),
 
-    deleteHistoryItem: (id) =>
-      set((state) => {
+    deleteHistoryItem: id =>
+      set(state => {
         const newHistory = state.assessmentHistory.filter(item => item.id !== id);
         storage.set(STORAGE_KEY_HISTORY, newHistory);
         return { assessmentHistory: newHistory };
       }),
 
-    toggleSidebar: () =>
-      set((state) => ({ isSidebarOpen: !state.isSidebarOpen })),
+    toggleSidebar: () => set(state => ({ isSidebarOpen: !state.isSidebarOpen })),
 
-    setSidebarOpen: (open) =>
-      set({ isSidebarOpen: open }),
+    setSidebarOpen: open => set({ isSidebarOpen: open }),
   };
 });

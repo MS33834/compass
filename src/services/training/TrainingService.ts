@@ -4,7 +4,7 @@ import {
   TrainingProgress,
   TrainingRecommendation,
   TrainingSchedule,
-  DEFAULT_TRAININGS
+  DEFAULT_TRAININGS,
 } from '../../types/training';
 import { storage } from '../../lib/utils';
 
@@ -29,7 +29,7 @@ export class TrainingService {
 
   getRecommendedTrainings(_assessmentResults?: any[]): TrainingRecommendation[] {
     const recommendations: TrainingRecommendation[] = [];
-    
+
     this.trainings.forEach(training => {
       let score = 0;
       const reasons: string[] = [];
@@ -38,27 +38,27 @@ export class TrainingService {
         score += 10;
         reasons.push('适合入门');
       }
-      
+
       if (training.category === 'breathing' || training.category === 'relaxation') {
         score += 15;
         reasons.push('普遍适用');
       }
-      
+
       if (training.duration <= 10) {
         score += 10;
         reasons.push('短时间完成');
       }
-      
+
       if (score > 0) {
         recommendations.push({
           trainingId: training.id,
           reason: reasons.join(', '),
           score,
-          source: 'popular'
+          source: 'popular',
         });
       }
     });
-    
+
     return recommendations.sort((a, b) => b.score - a.score);
   }
 
@@ -68,9 +68,9 @@ export class TrainingService {
       trainingId,
       userId,
       startedAt: Date.now(),
-      stepsCompleted: []
+      stepsCompleted: [],
     };
-    
+
     this.saveSession(session);
     return session;
   }
@@ -78,7 +78,7 @@ export class TrainingService {
   updateSession(session: Partial<TrainingSession>): void {
     const history = this.getSessionHistory();
     const index = history.findIndex(s => s.id === session.id);
-    
+
     if (index !== -1) {
       history[index] = { ...history[index], ...session };
       this.saveHistory(history);
@@ -88,14 +88,14 @@ export class TrainingService {
   completeSession(sessionId: string, rating?: number, feedback?: string): void {
     const history = this.getSessionHistory();
     const index = history.findIndex(s => s.id === sessionId);
-    
+
     if (index !== -1) {
       const session = history[index];
       session.completedAt = Date.now();
       session.duration = Date.now() - session.startedAt;
       if (rating !== undefined) session.rating = rating;
       if (feedback) session.feedback = feedback;
-      
+
       this.saveHistory(history);
       this.updateProgress(session.trainingId, session.userId);
     }
@@ -124,13 +124,13 @@ export class TrainingService {
   saveSchedule(schedule: TrainingSchedule): void {
     const schedules = storage.get<TrainingSchedule[]>(TRAINING_SCHEDULES_KEY, []);
     const index = schedules.findIndex(s => s.id === schedule.id);
-    
+
     if (index !== -1) {
       schedules[index] = schedule;
     } else {
       schedules.push(schedule);
     }
-    
+
     storage.set(TRAINING_SCHEDULES_KEY, schedules);
   }
 
@@ -148,12 +148,14 @@ export class TrainingService {
     const totalSessions = sessions.length;
     const completedSessions = sessions.filter(s => s.completedAt).length;
     const totalTime = sessions.reduce((sum, s) => sum + (s.duration || 0), 0);
-    const averageRating = sessions.filter(s => s.rating).length > 0
-      ? sessions.filter(s => s.rating).reduce((sum, s) => sum + (s.rating || 0), 0) / sessions.filter(s => s.rating).length
-      : 0;
-    
+    const averageRating =
+      sessions.filter(s => s.rating).length > 0
+        ? sessions.filter(s => s.rating).reduce((sum, s) => sum + (s.rating || 0), 0) /
+          sessions.filter(s => s.rating).length
+        : 0;
+
     const streak = this.calculateStreak(sessions);
-    
+
     return {
       totalSessions,
       completedSessions,
@@ -161,7 +163,7 @@ export class TrainingService {
       totalTime,
       averageRating: Math.round(averageRating * 10) / 10,
       streak,
-      favoriteCategory: this.getFavoriteCategory(sessions)
+      favoriteCategory: this.getFavoriteCategory(sessions),
     };
   }
 
@@ -174,7 +176,7 @@ export class TrainingService {
       currentStreak: 0,
       longestStreak: 0,
       totalTime: 0,
-      milestones: []
+      milestones: [],
     };
   }
 
@@ -182,21 +184,23 @@ export class TrainingService {
     const allProgress = storage.get<Record<string, TrainingProgress>>(TRAINING_PROGRESS_KEY, {});
     const key = `${userId}_${trainingId}`;
     const progress = allProgress[key] || this.createEmptyProgress(trainingId, userId);
-    
-    const sessions = this.getSessionHistory(userId).filter(s => s.trainingId === trainingId && s.completedAt);
-    
+
+    const sessions = this.getSessionHistory(userId).filter(
+      s => s.trainingId === trainingId && s.completedAt
+    );
+
     progress.totalSessions = sessions.length;
     progress.completedSessions = sessions.length;
     progress.totalTime = sessions.reduce((sum, s) => sum + (s.duration || 0), 0);
     progress.lastPracticedAt = Math.max(...sessions.map(s => s.completedAt || 0));
-    
+
     if (sessions.length > 0) {
       const ratings = sessions.filter(s => s.rating).map(s => s.rating || 0);
       if (ratings.length > 0) {
         progress.averageRating = ratings.reduce((a, b) => a + b, 0) / ratings.length;
       }
     }
-    
+
     allProgress[key] = progress;
     storage.set(TRAINING_PROGRESS_KEY, allProgress);
   }
@@ -205,38 +209,38 @@ export class TrainingService {
     const completedDates = sessions
       .filter(s => s.completedAt)
       .map(s => new Date(s.completedAt).toDateString());
-    
+
     const uniqueDates = [...new Set(completedDates)].sort().reverse();
-    
+
     let streak = 0;
     const today = new Date().toDateString();
     const yesterday = new Date(Date.now() - 86400000).toDateString();
-    
+
     if (uniqueDates.includes(today) || uniqueDates.includes(yesterday)) {
       const checkDate = new Date();
       if (!uniqueDates.includes(today)) {
         checkDate.setDate(checkDate.getDate() - 1);
       }
-      
+
       while (uniqueDates.includes(checkDate.toDateString())) {
         streak++;
         checkDate.setDate(checkDate.getDate() - 1);
       }
     }
-    
+
     return streak;
   }
 
   private getFavoriteCategory(sessions: TrainingSession[]): string {
     const categoryCount: Record<string, number> = {};
-    
+
     sessions.forEach(session => {
       const training = this.getTrainingById(session.trainingId);
       if (training) {
         categoryCount[training.category] = (categoryCount[training.category] || 0) + 1;
       }
     });
-    
+
     return Object.entries(categoryCount).sort((a, b) => b[1] - a[1])[0]?.[0] || '无';
   }
 
@@ -244,7 +248,7 @@ export class TrainingService {
     const history = this.getSessionHistory(session.userId);
     const allHistory = storage.get<TrainingSession[]>(TRAINING_HISTORY_KEY, []);
     const otherSessions = allHistory.filter(s => s.userId !== session.userId);
-    
+
     storage.set(TRAINING_HISTORY_KEY, [...otherSessions, ...history, session]);
   }
 
@@ -252,7 +256,7 @@ export class TrainingService {
     const userId = history[0]?.userId || 'default';
     const allHistory = storage.get<TrainingSession[]>(TRAINING_HISTORY_KEY, []);
     const otherSessions = allHistory.filter(s => s.userId !== userId);
-    
+
     storage.set(TRAINING_HISTORY_KEY, [...otherSessions, ...history]);
   }
 }

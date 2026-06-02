@@ -8,7 +8,7 @@ import { getTranslation, t } from '../i18n';
 const DIFFICULTY_COLORS = {
   beginner: 'bg-green-100 text-green-700',
   intermediate: 'bg-yellow-100 text-yellow-700',
-  advanced: 'bg-red-100 text-red-700'
+  advanced: 'bg-red-100 text-red-700',
 };
 
 const STEP_TYPE_ICONS = {
@@ -17,13 +17,13 @@ const STEP_TYPE_ICONS = {
   meditation: '🧘',
   reflection: '💭',
   cognitive: '🧠',
-  mindfulness: '🌸'
+  mindfulness: '🌸',
 };
 
 export default function TrainingDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const locale = useAppStore((state) => state.locale);
+  const locale = useAppStore(state => state.locale);
   const i18n = getTranslation(locale);
   const [training, setTraining] = useState<TrainingType | null>(null);
   const [currentStep, setCurrentStep] = useState(0);
@@ -111,13 +111,15 @@ export default function TrainingDetail() {
       <div className="max-w-2xl mx-auto">
         <div className="bg-white rounded-3xl p-8 shadow-lg border border-slate-200 text-center">
           <div className="text-6xl mb-4">🎉</div>
-          <h1 className="text-2xl font-bold text-slate-800 mb-2">{i18n.results.trainingComplete}</h1>
+          <h1 className="text-2xl font-bold text-slate-800 mb-2">
+            {i18n.results.trainingComplete}
+          </h1>
           <p className="text-slate-600 mb-6">{i18n.results.greatJob}</p>
-          
+
           <div className="mb-6">
             <p className="text-sm text-slate-600 mb-2">{i18n.results.rateTraining}</p>
             <div className="flex justify-center gap-2">
-              {[1, 2, 3, 4, 5].map((star) => (
+              {[1, 2, 3, 4, 5].map(star => (
                 <button
                   key={star}
                   onClick={() => setRating(star)}
@@ -134,7 +136,7 @@ export default function TrainingDetail() {
           <div className="mb-6">
             <textarea
               value={feedback}
-              onChange={(e) => setFeedback(e.target.value)}
+              onChange={e => setFeedback(e.target.value)}
               placeholder={i18n.results.feedback}
               className="w-full p-4 border border-slate-200 rounded-xl resize-none h-24 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
@@ -156,7 +158,12 @@ export default function TrainingDetail() {
       <div className="max-w-2xl mx-auto">
         <div className="mb-6">
           <div className="flex justify-between text-sm text-slate-600 mb-2">
-            <span>{t(locale, 'results.step', { current: currentStep + 1, total: training.steps.length })}</span>
+            <span>
+              {t(locale, 'results.step', {
+                current: currentStep + 1,
+                total: training.steps.length,
+              })}
+            </span>
             <span>{Math.round(progress)}%</span>
           </div>
           <div className="h-2 bg-slate-200 rounded-full overflow-hidden">
@@ -173,7 +180,7 @@ export default function TrainingDetail() {
           </div>
           <h2 className="text-2xl font-bold text-slate-800 mb-3">{currentStepData.title}</h2>
           <p className="text-slate-600 text-lg mb-6">{currentStepData.description}</p>
-          
+
           {currentStepData.duration && (
             <div className="text-5xl font-mono font-bold text-blue-600 mb-6">
               {Math.floor(timer / 60)}:{(timer % 60).toString().padStart(2, '0')}
@@ -188,7 +195,7 @@ export default function TrainingDetail() {
             >
               {i18n.quiz.previous}
             </button>
-            
+
             <button
               onClick={() => setIsPlaying(!isPlaying)}
               className={`px-8 py-3 rounded-xl font-semibold transition-all ${
@@ -218,8 +225,8 @@ export default function TrainingDetail() {
                 idx === currentStep
                   ? 'bg-blue-50 border-blue-300'
                   : idx < currentStep
-                  ? 'bg-green-50 border-green-200'
-                  : 'bg-white border-slate-200'
+                    ? 'bg-green-50 border-green-200'
+                    : 'bg-white border-slate-200'
               }`}
             >
               <div className="flex items-center gap-3">
@@ -227,12 +234,12 @@ export default function TrainingDetail() {
                   {idx < currentStep ? '✅' : idx === currentStep ? '🎯' : '⏳'}
                 </span>
                 <div>
-                  <div className={`font-medium ${idx === currentStep ? 'text-blue-700' : 'text-slate-700'}`}>
+                  <div
+                    className={`font-medium ${idx === currentStep ? 'text-blue-700' : 'text-slate-700'}`}
+                  >
                     {step.title}
                   </div>
-                  {step.duration && (
-                    <div className="text-xs text-slate-500">{step.duration}s</div>
-                  )}
+                  {step.duration && <div className="text-xs text-slate-500">{step.duration}s</div>}
                 </div>
               </div>
             </div>
@@ -260,7 +267,9 @@ export default function TrainingDetail() {
               <p className="text-slate-600">{categoryInfo?.name}</p>
             </div>
           </div>
-          <span className={`px-4 py-2 rounded-full text-sm font-medium ${DIFFICULTY_COLORS[training.difficulty]}`}>
+          <span
+            className={`px-4 py-2 rounded-full text-sm font-medium ${DIFFICULTY_COLORS[training.difficulty]}`}
+          >
             {i18n.training[training.difficulty as 'beginner' | 'intermediate' | 'advanced']}
           </span>
         </div>
@@ -279,7 +288,9 @@ export default function TrainingDetail() {
           <div className="text-center p-4 bg-slate-50 rounded-xl">
             <div className="text-2xl font-bold text-green-600">⭐</div>
             <div className="text-sm text-slate-600">
-              {training.effectivenessScore ? `${training.effectivenessScore}${i18n.training.effectiveness}` : i18n.training.completed}
+              {training.effectivenessScore
+                ? `${training.effectivenessScore}${i18n.training.effectiveness}`
+                : i18n.training.completed}
             </div>
           </div>
         </div>
@@ -308,7 +319,9 @@ export default function TrainingDetail() {
         <h2 className="text-lg font-semibold text-yellow-800 mb-4">💡 {i18n.training.tips}</h2>
         <div className="space-y-2">
           {training.tips.map((tip, idx) => (
-            <p key={idx} className="text-yellow-700">• {tip}</p>
+            <p key={idx} className="text-yellow-700">
+              • {tip}
+            </p>
           ))}
         </div>
       </div>
