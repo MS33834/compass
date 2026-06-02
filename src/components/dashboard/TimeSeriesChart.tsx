@@ -1,4 +1,4 @@
-import { AssessmentTrend, TrendDataPoint } from '../../types/dataAbstraction';
+import { AssessmentTrend } from '../../types/dataAbstraction';
 
 interface TimeSeriesChartProps {
   trend: AssessmentTrend;

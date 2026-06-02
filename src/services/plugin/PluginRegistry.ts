@@ -1,11 +1,9 @@
 import {
   Plugin,
-  PluginConfig,
   PluginRegistry,
   PluginManifest,
   PluginEvent,
   PluginError,
-  PluginAPI
 } from '../../types/plugin';
 import { storage } from '../../lib/utils';
 
@@ -35,7 +33,7 @@ export class PluginRegistryManager {
           activePlugins: new Set(saved.activePlugins || [])
         };
       }
-    } catch (e) {
+    } catch (_e) {
       console.warn('Failed to load plugin registry, using default');
     }
 

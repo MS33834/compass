@@ -7,10 +7,9 @@ import {
 import { dataAggregationService } from '../dataAbstraction/DataAggregationService';
 import { dataSyncService } from '../dataAbstraction/DataSyncService';
 import { tagService } from './TagService';
-import { reportGenerator } from './ReportGenerator';
 
 class DashboardService {
-  async initializeDashboard(userId: string): Promise<any> {
+  async initializeDashboard(_userId: string): Promise<any> {
     await dataSyncService.syncAllAssessments();
     
     const personalCenter = dataSyncService.getPersonalDataCenter();
@@ -52,6 +51,7 @@ class DashboardService {
     const personalityResults = results.filter(r => r.assessmentType === 'personality');
     const stressResults = results.filter(r => r.assessmentType === 'stress');
     const anxietyResults = results.filter(r => r.assessmentType === 'anxiety');
+    void personalityResults; void stressResults; void anxietyResults;
 
     const keyTraits = ['开放性', '尽责性', '外向性', '宜人性', '情绪稳定性', '压力水平', '焦虑水平'];
 
@@ -131,13 +131,40 @@ class DashboardService {
 
   async generateComprehensiveReport(period: 'weekly' | 'monthly' | 'quarterly' | 'yearly'): Promise<string> {
     const summary = dataAggregationService.generatePeriodicSummary(period);
-    
+
     if (!summary) {
       return '暂无足够的测评数据来生成报告';
     }
 
-    const report = await reportGenerator.generatePeriodicReport(summary);
-    return report;
+    return this.formatSummaryAsMarkdown(summary);
+  }
+
+  private formatSummaryAsMarkdown(summary: PeriodicSummary): string {
+    const lines: string[] = [];
+    const periodLabel: Record<string, string> = {
+      weekly: '周',
+      monthly: '月',
+      quarterly: '季度',
+      yearly: '年',
+    };
+    lines.push(`# ${periodLabel[summary.period] ?? summary.period}度综合报告`);
+    lines.push('');
+    lines.push(`- 统计周期: ${summary.startDate} 至 ${summary.endDate}`);
+    lines.push(`- 测评次数: ${summary.assessments.length}`);
+    if (summary.overallScore !== undefined) {
+      lines.push(`- 平均得分: ${summary.overallScore.toFixed(1)}`);
+    }
+    if (summary.insights.length > 0) {
+      lines.push('');
+      lines.push('## 关键洞察');
+      for (const i of summary.insights) lines.push(`- ${i}`);
+    }
+    if (summary.recommendations.length > 0) {
+      lines.push('');
+      lines.push('## 行动建议');
+      summary.recommendations.forEach((r, i) => lines.push(`${i + 1}. ${r}`));
+    }
+    return lines.join('\n');
   }
 
   getInsights(): string[] {

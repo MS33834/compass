@@ -25,7 +25,7 @@ export const Settings = () => {
 
   const handleResetApp = () => {
     if (window.confirm(i18n.settings.data.resetAppDesc)) {
-      const keysToKeep = ['locale', 'auth_token', 'auth_user', 'moodTracker_entries'];
+      const keysToKeep = ['locale', 'mindmirror_token', 'mindmirror_user', 'moodTracker_entries'];
       const preserved: Record<string, string | null> = {};
       keysToKeep.forEach((key) => {
         const val = localStorage.getItem(key);
@@ -35,8 +35,9 @@ export const Settings = () => {
       Object.entries(preserved).forEach(([key, val]) => {
         if (val) localStorage.setItem(key, val);
       });
+      setTimeout(() => window.location.reload(), 600);
       addToast(
-        locale === 'zh' ? '应用已重置，刷新页面生效' : 'App reset complete. Refresh to take effect.',
+        locale === 'zh' ? '应用已重置，正在刷新…' : 'App reset, refreshing…',
         'success'
       );
     }

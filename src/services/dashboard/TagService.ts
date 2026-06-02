@@ -260,9 +260,10 @@ class TagService {
         return value < (target as number);
       case 'eq':
         return value === (target as number);
-      case 'between':
+      case 'between': {
         const [min, max] = target as [number, number];
         return value >= min && value <= max;
+      }
       default:
         return false;
     }

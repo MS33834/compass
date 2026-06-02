@@ -17,7 +17,8 @@ export default {
     mood: "Mood Tracker",
     achievements: "Achievements",
     compare: "Compare",
-    crisis: "Crisis Resources"
+    crisis: "Crisis Resources",
+    openMenu: "Open navigation menu"
   },
   home: {
     badge: "Professional psychological assessment, scientific self-exploration",
@@ -80,6 +81,7 @@ export default {
     next: "Next Question",
     previous: "Previous Question",
     finish: "Finish Assessment",
+    start: "Start Assessment",
     loading: "Analyzing your responses...",
     intro: {
       questions: "Questions",
@@ -168,7 +170,10 @@ export default {
     pdfFormat: "PDF Format",
     markdownFormat: "Markdown Format",
     textFormat: "Plain Text",
-    jsonFormat: "JSON Format"
+    jsonFormat: "JSON Format",
+    aboutTScoreTitle: "About T-Scores",
+    aboutTScoreDesc: "T-score is a standardized score with a mean of 50 and standard deviation of 10. Scores between 40-60 are in the normal range; below 40 or above 60 indicate low or high tendencies respectively. Higher scores mean the trait is more pronounced.",
+    points: "pts"
   },
   training: {
     title: "Mental Training",
@@ -325,8 +330,8 @@ export default {
     loggingIn: "Logging in...",
     registering: "Creating account...",
     success: "Success!",
-    loginSuccess: "Welcome back!",
-    registerSuccess: "Account created successfully!",
+    loginSuccess: "Login successful!",
+    registerSuccess: "Registration successful! Welcome!",
     logoutSuccess: "Logged out successfully",
     invalidCredentials: "Invalid email or password",
     emailRequired: "Email is required",
@@ -349,7 +354,11 @@ export default {
       veryStrong: "Very Strong"
     },
     usernameHint: "3-20 characters, letters, numbers, and underscores only",
-    passwordHint: "At least 6 characters"
+    passwordHint: "At least 6 characters",
+    loginFailed: "Login Failed",
+    completingLogin: "Completing Login",
+    pleaseWait: "Please wait while we finish authenticating...",
+    redirectingToLogin: "Redirecting to login page..."
   },
   profile: {
     title: "My Profile",
@@ -368,6 +377,12 @@ export default {
   common: {
     loading: "Loading...",
     error: "Something went wrong",
+    errorTitle: "Something Went Wrong",
+    errorDesc: "An unexpected error occurred. Please try refreshing the page.",
+    reload: "Reload Page",
+    notFoundTitle: "Page Not Found",
+    notFoundDesc: "The page you are looking for does not exist or has been moved.",
+    goHome: "Go Home",
     save: "Save",
     cancel: "Cancel",
     confirm: "Confirm",
@@ -378,7 +393,8 @@ export default {
     yes: "Yes",
     no: "No",
     return: "Return",
-    close: "Close"
+    close: "Close",
+    points: "{score} pts"
   },
   plugins: {
     title: "Plugin Manager",

@@ -2,8 +2,8 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="color-scheme" content="light" />
 
     <title>MindMirror - Psychological Assessment & Training Platform</title>
     <meta name="description" content="MindMirror is an open-source professional psychological assessment platform featuring Big Five personality test, stress evaluation (PSS-10), anxiety screening (GAD-7), mood tracking, and personalized mental training programs." />
@@ -17,6 +17,9 @@
     <meta property="og:title" content="MindMirror - Psychological Assessment & Training Platform" />
     <meta property="og:description" content="Open-source professional psychological assessment platform. Big Five personality, stress, anxiety tests with mood tracking and mental training." />
     <meta property="og:image" content="https://mindmirror.app/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="MindMirror - Psychological Assessment Platform" />
     <meta property="og:locale" content="en_US" />
     <meta property="og:locale:alternate" content="zh_CN" />
     <meta property="og:site_name" content="MindMirror" />
@@ -26,11 +29,27 @@
     <meta name="twitter:description" content="Open-source professional psychological assessment platform. Big Five personality, stress, anxiety tests with mood tracking." />
     <meta name="twitter:image" content="https://mindmirror.app/og-image.png" />
 
-    <meta name="theme-color" content="#4F46E5" />
+    <meta name="theme-color" content="#4F46E5" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1e1b4b" media="(prefers-color-scheme: dark)" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="MindMirror" />
+    <meta name="application-name" content="MindMirror" />
+    <meta name="format-detection" content="telephone=no" />
 
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.json" />
+
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=(), payment=(), usb=()" />
+
     <link rel="alternate" hreflang="en" href="https://mindmirror.app/en/" />
     <link rel="alternate" hreflang="zh" href="https://mindmirror.app/zh/" />
     <link rel="alternate" hreflang="x-default" href="https://mindmirror.app/" />

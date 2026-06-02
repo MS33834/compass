@@ -227,19 +227,22 @@ export function Sidebar() {
 
 // 汉堡菜单按钮组件
 export function MenuButton() {
-  const { toggleSidebar } = useAppStore();
-  
+  const { toggleSidebar, locale } = useAppStore();
+  const i18n = getTranslation(locale);
+
   return (
     <button
+      type="button"
       onClick={toggleSidebar}
-      className="p-2 text-slate-700 hover:text-blue-600 hover:bg-slate-100 rounded-lg transition-colors md:hidden"
-      aria-label="Toggle menu"
+      className="p-2 text-slate-700 hover:text-blue-600 hover:bg-slate-100 rounded-lg transition-colors md:hidden focus:outline-none focus:ring-2 focus:ring-blue-500"
+      aria-label={i18n.nav.openMenu}
     >
       <svg
         className="w-6 h-6"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
+        aria-hidden="true"
       >
         <path
           strokeLinecap="round"

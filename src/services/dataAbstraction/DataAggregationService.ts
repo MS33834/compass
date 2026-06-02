@@ -8,7 +8,6 @@ import {
   PeriodicSummary,
   TrendAnalysis
 } from '../../types/dataAbstraction';
-import { dataSyncService } from './DataSyncService';
 
 const PERSONAL_CENTER_KEY = 'personalDataCenter';
 
@@ -84,7 +83,7 @@ class DataAggregationService {
     today.setHours(0, 0, 0, 0);
 
     let streak = 0;
-    let currentDate = new Date(today);
+    const currentDate = new Date(today);
 
     for (let i = 0; i < 365; i++) {
       const dayStart = currentDate.getTime();
@@ -220,7 +219,7 @@ class DataAggregationService {
 
   private generateComparisonInsights(
     traits: AssessmentComparison['traits'],
-    results: UnifiedAssessmentResult[]
+    _results: UnifiedAssessmentResult[]
   ): string[] {
     const insights: string[] = [];
 

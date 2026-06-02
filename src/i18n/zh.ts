@@ -17,7 +17,8 @@ export default {
     mood: "心情追踪",
     achievements: "成就徽章",
     compare: "测评对比",
-    crisis: "危机资源"
+    crisis: "危机资源",
+    openMenu: "打开导航菜单"
   },
   home: {
     badge: "专业心理测评，科学自我探索",
@@ -80,6 +81,7 @@ export default {
     next: "下一题 →",
     previous: "← 上一题",
     finish: "完成测评 ✓",
+    start: "开始测评 →",
     loading: "正在分析您的回答...",
     intro: {
       questions: "道题目",
@@ -168,7 +170,10 @@ export default {
     pdfFormat: "PDF 格式",
     markdownFormat: "Markdown 格式",
     textFormat: "纯文本格式",
-    jsonFormat: "JSON 格式"
+    jsonFormat: "JSON 格式",
+    aboutTScoreTitle: "关于 T 分数",
+    aboutTScoreDesc: "T 分数是一种标准分，均值 50、标准差 10。40-60 分属于正常范围，低于 40 或高于 60 分别表示该特质偏低或偏高。分数越高代表该特质越明显。",
+    points: "分"
   },
   training: {
     title: "心理训练",
@@ -346,10 +351,14 @@ export default {
       weak: "弱",
       medium: "中",
       strong: "强",
-      veryStrong: "极强"
+      veryStrong: "非常强"
     },
-    usernameHint: "3-20个字符，只能包含字母、数字和下划线",
-    passwordHint: "至少6个字符"
+    usernameHint: "3-20字符，仅限字母、数字和下划线",
+    passwordHint: "至少 6 个字符",
+    loginFailed: "登录失败",
+    completingLogin: "正在完成登录",
+    pleaseWait: "请稍候，正在完成身份验证...",
+    redirectingToLogin: "正在跳转到登录页面..."
   },
   profile: {
     title: "我的资料",
@@ -368,6 +377,12 @@ export default {
   common: {
     loading: "加载中...",
     error: "出错了",
+    errorTitle: "出了点问题",
+    errorDesc: "发生了意外错误，请尝试刷新页面。",
+    reload: "刷新页面",
+    notFoundTitle: "页面未找到",
+    notFoundDesc: "您访问的页面不存在或已被移动。",
+    goHome: "返回首页",
     save: "保存",
     cancel: "取消",
     confirm: "确认",
@@ -378,7 +393,8 @@ export default {
     yes: "是",
     no: "否",
     return: "返回",
-    close: "关闭"
+    close: "关闭",
+    points: "{score} 分"
   },
   plugins: {
     title: "插件管理中心",

@@ -1,14 +1,16 @@
+import QRCode from 'qrcode';
 import { storage } from '../../lib/utils';
 
 const SHARED_RESULTS_KEY = 'shared_assessment_results';
 
-export type ExportFormat = 'pdf' | 'markdown' | 'text' | 'json';
+export type ExportFormat = 'pdf' | 'markdown' | 'text' | 'json' | 'html';
 
 export interface ExportOptions {
   includeRawData?: boolean;
   includeCharts?: boolean;
   includeTrace?: boolean;
   watermark?: string;
+  language?: 'en' | 'zh';
 }
 
 export interface ShareOptions {
@@ -16,6 +18,7 @@ export interface ShareOptions {
   viewLimit?: number;
   password?: string;
   includeFullReport?: boolean;
+  language?: 'en' | 'zh';
 }
 
 export interface SharedResult {
@@ -27,26 +30,134 @@ export interface SharedResult {
   views: number;
   maxViews?: number;
   passwordHash?: string;
+  hash?: string;
+}
+
+const LABELS = {
+  zh: {
+    title: '心理测评报告',
+    type: '测评类型',
+    time: '测评时间',
+    totalScore: '总分',
+    traits: '特质得分',
+    summary: '详细报告',
+    raw: '原始数据',
+    unknown: '未知',
+    question: '题',
+  },
+  en: {
+    title: 'Assessment Report',
+    type: 'Assessment',
+    time: 'Completed at',
+    totalScore: 'Total Score',
+    traits: 'Trait Scores',
+    summary: 'Detailed Report',
+    raw: 'Raw Data',
+    unknown: 'Unknown',
+    question: 'Q',
+  },
+};
+
+function escapeHtml(str: string): string {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+async function sha256Hex(input: string): Promise<string> {
+  if (typeof crypto !== 'undefined' && crypto.subtle) {
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(input));
+    return Array.from(new Uint8Array(buf))
+      .map((b) => b.toString(16).padStart(2, '0'))
+      .join('');
+  }
+  let h = 0;
+  for (let i = 0; i < input.length; i++) {
+    h = ((h << 5) - h) + input.charCodeAt(i);
+    h |= 0;
+  }
+  return 'sha256_' + Math.abs(h).toString(16).padStart(16, '0');
+}
+
+function buildReportHtml(result: any, lang: 'en' | 'zh' = 'zh'): string {
+  const t = LABELS[lang];
+  const title = result.title || t.title;
+  const assessmentId = result.assessmentId || t.unknown;
+  const time = new Date(result.timestamp || Date.now()).toLocaleString(lang === 'zh' ? 'zh-CN' : 'en-US');
+  const totalScore = result.totalScore ?? 0;
+  const traitsHtml = (result.traits || [])
+    .map(
+      (trait: { name: string; score: number; description?: string }) => `
+      <tr>
+        <td style="padding:10px 12px;border-bottom:1px solid #e5e7eb;font-weight:600;">${escapeHtml(trait.name)}</td>
+        <td style="padding:10px 12px;border-bottom:1px solid #e5e7eb;text-align:right;">${trait.score}</td>
+        <td style="padding:10px 12px;border-bottom:1px solid #e5e7eb;color:#475569;">${escapeHtml(trait.description || '')}</td>
+      </tr>`,
+    )
+    .join('');
+
+  const summary = result.report?.summary || result.report?.analysis || '';
+  const html = `<!DOCTYPE html>
+<html lang="${lang === 'zh' ? 'zh-CN' : 'en'}">
+<head>
+<meta charset="UTF-8" />
+<title>${escapeHtml(title)}</title>
+<style>
+  body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 24px; color: #1e293b; line-height: 1.6; }
+  h1 { font-size: 28px; border-bottom: 2px solid #4f46e5; padding-bottom: 8px; }
+  .meta { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px 24px; margin: 16px 0 24px; }
+  .meta div { padding: 8px 12px; background: #f8fafc; border-radius: 8px; }
+  .meta-label { font-size: 12px; color: #64748b; }
+  .meta-value { font-weight: 600; }
+  table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+  thead { background: #eef2ff; }
+  th { padding: 10px 12px; text-align: left; }
+  .summary { background: #f0f9ff; border-left: 4px solid #0ea5e9; padding: 16px; border-radius: 8px; margin: 24px 0; white-space: pre-wrap; }
+  .footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid #e5e7eb; font-size: 12px; color: #94a3b8; text-align: center; }
+  @media print { body { margin: 0; } }
+</style>
+</head>
+<body>
+  <h1>📊 ${escapeHtml(title)}</h1>
+  <div class="meta">
+    <div><div class="meta-label">${t.type}</div><div class="meta-value">${escapeHtml(assessmentId)}</div></div>
+    <div><div class="meta-label">${t.time}</div><div class="meta-value">${escapeHtml(time)}</div></div>
+    <div><div class="meta-label">${t.totalScore}</div><div class="meta-value">${totalScore}</div></div>
+  </div>
+  ${traitsHtml ? `<table>
+    <thead><tr><th>${t.traits}</th><th style="text-align:right;">${t.totalScore}</th><th>${t.summary}</th></tr></thead>
+    <tbody>${traitsHtml}</tbody>
+  </table>` : ''}
+  ${summary ? `<div class="summary">${escapeHtml(summary)}</div>` : ''}
+  <div class="footer">MindMirror · mindmirror.app</div>
+</body>
+</html>`;
+  return html;
 }
 
 export class ExportService {
   async exportToText(result: any, options: ExportOptions = {}): Promise<string> {
+    const lang = options.language || 'zh';
+    const t = LABELS[lang];
     const lines = [
-      `# ${result.title || '测评报告'}`,
+      `# ${result.title || t.title}`,
       '',
-      `测评类型: ${result.assessmentId || '未知'}`,
-      `测评时间: ${new Date(result.timestamp || Date.now()).toLocaleString('zh-CN')}`,
-      `总分: ${result.totalScore || 0}`,
+      `${t.type}: ${result.assessmentId || t.unknown}`,
+      `${t.time}: ${new Date(result.timestamp || Date.now()).toLocaleString(lang === 'zh' ? 'zh-CN' : 'en-US')}`,
+      `${t.totalScore}: ${result.totalScore || 0}`,
       '',
       '---',
       '',
-      '## 特质得分',
-      ''
+      `## ${t.traits}`,
+      '',
     ];
 
     if (result.traits) {
       for (const trait of result.traits) {
-        lines.push(`- ${trait.name}: ${trait.score}分`);
+        lines.push(`- ${trait.name}: ${trait.score}`);
         if (trait.description) {
           lines.push(`  ${trait.description}`);
         }
@@ -55,19 +166,15 @@ export class ExportService {
     }
 
     if (result.report) {
-      lines.push('## 详细报告');
+      lines.push(`## ${t.summary}`);
       lines.push('');
-      if (result.report.summary) {
-        lines.push(result.report.summary);
-      }
-      if (result.report.analysis) {
-        lines.push(result.report.analysis);
-      }
+      if (result.report.summary) lines.push(result.report.summary);
+      if (result.report.analysis) lines.push(result.report.analysis);
     }
 
     if (options.includeRawData && result.rawAnswers) {
       lines.push('');
-      lines.push('## 原始数据');
+      lines.push(`## ${t.raw}`);
       lines.push(JSON.stringify(result.rawAnswers, null, 2));
     }
 
@@ -86,61 +193,24 @@ export class ExportService {
       timestamp: result.timestamp,
       totalScore: result.totalScore,
       traits: result.traits,
-      generatedAt: new Date().toISOString()
+      generatedAt: new Date().toISOString(),
     };
 
     if (options.includeRawData) {
       data.rawAnswers = result.rawAnswers;
     }
 
-    if (options.includeTrace) {
-      data.trace = 'Trace data would be included here';
-    }
-
     return JSON.stringify(data, null, 2);
   }
 
-  async exportToPDF(result: any, options: ExportOptions = {}): Promise<Blob> {
-    const text = await this.exportToText(result, options);
-    
-    const pdfContent = `%PDF-1.4
-1 0 obj
-<< /Type /Catalog /Pages 2 0 R >>
-endobj
-2 0 obj
-<< /Type /Pages /Kids [3 0 R] /Count 1 >>
-endobj
-3 0 obj
-<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>
-endobj
-4 0 obj
-<< /Length 55 >>
-stream
-BT
-/F1 24 Tf
-100 700 Td
-(Assessment Report) Tj
-ET
-endstream
-endobj
-5 0 obj
-<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
-endobj
-xref
-0 6
-0000000000 65535 f 
-0000000009 00000 n 
-0000000058 00000 n 
-0000000107 00000 n 
-0000000244 00000 n 
-0000000345 00000 n 
-trailer
-<< /Size 6 /Root 1 0 R >>
-startxref
-406
-%%EOF`;
+  async exportToHTML(result: any, options: ExportOptions = {}): Promise<string> {
+    return buildReportHtml(result, options.language || 'zh');
+  }
 
-    return new Blob([pdfContent], { type: 'application/pdf' });
+  async exportToPDF(result: any, options: ExportOptions = {}): Promise<Blob> {
+    const html = buildReportHtml(result, options.language || 'zh');
+    const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+    return blob;
   }
 
   async download(result: any, format: ExportFormat, options: ExportOptions = {}): Promise<void> {
@@ -152,22 +222,27 @@ startxref
       case 'text':
         content = await this.exportToText(result, options);
         filename = `assessment_${result.id}.txt`;
-        mimeType = 'text/plain';
+        mimeType = 'text/plain;charset=utf-8';
         break;
       case 'markdown':
         content = await this.exportToMarkdown(result, options);
         filename = `assessment_${result.id}.md`;
-        mimeType = 'text/markdown';
+        mimeType = 'text/markdown;charset=utf-8';
         break;
       case 'json':
         content = await this.exportToJSON(result, options);
         filename = `assessment_${result.id}.json`;
         mimeType = 'application/json';
         break;
+      case 'html':
+        content = await this.exportToHTML(result, options);
+        filename = `assessment_${result.id}.html`;
+        mimeType = 'text/html;charset=utf-8';
+        break;
       case 'pdf':
         content = await this.exportToPDF(result, options);
-        filename = `assessment_${result.id}.pdf`;
-        mimeType = 'application/pdf';
+        filename = `assessment_${result.id}.html`;
+        mimeType = 'text/html;charset=utf-8';
         break;
     }
 
@@ -189,14 +264,18 @@ startxref
 
 export class ShareService {
   async createShareLink(result: any, options: ShareOptions = {}): Promise<string> {
-    const shareId = `share_${Date.now()}_${Math.random()}`;
-    
+    const shareId = `share_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+
+    const data = this.prepareShareData(result, options);
+    const hash = await sha256Hex(JSON.stringify(data));
+
     const sharedResult: SharedResult = {
       id: shareId,
       resultId: result.id,
-      data: this.prepareShareData(result, options),
+      data,
       createdAt: Date.now(),
-      views: 0
+      views: 0,
+      hash,
     };
 
     if (options.expirationHours) {
@@ -207,6 +286,10 @@ export class ShareService {
       sharedResult.maxViews = options.viewLimit;
     }
 
+    if (options.password) {
+      sharedResult.passwordHash = await sha256Hex(options.password);
+    }
+
     const sharedResults = this.loadSharedResults();
     sharedResults[shareId] = sharedResult;
     this.saveSharedResults(sharedResults);
@@ -215,59 +298,53 @@ export class ShareService {
   }
 
   async generateQRCode(shareUrl: string, size: number = 256): Promise<string> {
-    return `data:image/svg+xml,${encodeURIComponent(
-      `<svg width="${size}" height="${size}" xmlns="http://www.w3.org/2000/svg">
-        <rect width="${size}" height="${size}" fill="white"/>
-        <text x="${size/2}" y="${size/2}" font-size="20" text-anchor="middle" fill="black">Scan to View</text>
-      </svg>`
-    )}`;
+    try {
+      const dataUrl = await QRCode.toDataURL(shareUrl, {
+        width: size,
+        margin: 2,
+        errorCorrectionLevel: 'M',
+        color: { dark: '#1e293b', light: '#ffffff' },
+      });
+      return dataUrl;
+    } catch (err) {
+      console.error('QR generation failed:', err);
+      return '';
+    }
   }
 
-  async getSharedResult(shareId: string): Promise<SharedResult | null> {
+  async getSharedResult(shareId: string, password?: string): Promise<SharedResult | null> {
     const sharedResults = this.loadSharedResults();
     const result = sharedResults[shareId];
-    
-    if (!result) {
-      return null;
-    }
 
-    if (result.expiresAt && Date.now() > result.expiresAt) {
-      return null;
-    }
-
-    if (result.maxViews && result.views >= result.maxViews) {
-      return null;
+    if (!result) return null;
+    if (result.expiresAt && Date.now() > result.expiresAt) return null;
+    if (result.maxViews && result.views >= result.maxViews) return null;
+    if (result.passwordHash) {
+      if (!password) return null;
+      const inputHash = await sha256Hex(password);
+      if (inputHash !== result.passwordHash) return null;
     }
 
     result.views++;
     this.saveSharedResults(sharedResults);
-
     return result;
   }
 
   verifyShare(shareId: string): boolean {
     const sharedResults = this.loadSharedResults();
     const result = sharedResults[shareId];
-    
+
     if (!result) return false;
     if (result.expiresAt && Date.now() > result.expiresAt) return false;
     if (result.maxViews && result.views >= result.maxViews) return false;
-    
     return true;
   }
 
   getShareStats(shareId: string): { views: number; createdAt: number } | null {
     const sharedResults = this.loadSharedResults();
     const result = sharedResults[shareId];
-    
-    if (!result) {
-      return null;
-    }
-
-    return {
-      views: result.views,
-      createdAt: result.createdAt
-    };
+    if (!result) return null;
+    return { views: result.views, createdAt: result.createdAt };
   }
 
   deleteShare(shareId: string): boolean {
@@ -280,11 +357,11 @@ export class ShareService {
     return false;
   }
 
-  generateVerificationHash(data: any): string {
-    return btoa(JSON.stringify(data));
+  async generateVerificationHash(data: any): Promise<string> {
+    return sha256Hex(JSON.stringify(data));
   }
 
-  private prepareShareData(result: any, options: ShareOptions): any {
+  private prepareShareData(result: any, _options: ShareOptions): any {
     return {
       id: result.id,
       title: result.title,
@@ -292,7 +369,7 @@ export class ShareService {
       totalScore: result.totalScore,
       traits: result.traits,
       summary: result.report?.summary,
-      sharedAt: Date.now()
+      sharedAt: Date.now(),
     };
   }
 

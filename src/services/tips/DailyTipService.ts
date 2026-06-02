@@ -192,7 +192,7 @@ class DailyTipService {
     return selected;
   }
 
-  getTipById(id: string, locale: 'zh' | 'en'): DailyTip | undefined {
+  getTipById(id: string, _locale: 'zh' | 'en'): DailyTip | undefined {
     return TIPS_DATABASE.find(t => t.id === id);
   }
 

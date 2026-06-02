@@ -8,22 +8,25 @@ import { getTranslation } from '../i18n';
 function formatDateTime(date: Date | string, i18n: ReturnType<typeof getTranslation>): string {
   const d = new Date(date);
   const now = new Date();
-  const diff = now.getTime() - d.getTime();
-  
-  if (diff < 24 * 60 * 60 * 1000 && d.getDate() === now.getDate()) {
+  const isSameDay = (a: Date, b: Date) =>
+    a.getFullYear() === b.getFullYear() &&
+    a.getMonth() === b.getMonth() &&
+    a.getDate() === b.getDate();
+
+  if (isSameDay(d, now)) {
     return `${i18n.history.today} ${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}`;
   }
-  
+
   const yesterday = new Date(now);
   yesterday.setDate(yesterday.getDate() - 1);
-  if (d.getDate() === yesterday.getDate() && d.getMonth() === yesterday.getMonth()) {
+  if (isSameDay(d, yesterday)) {
     return `${i18n.history.yesterday} ${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}`;
   }
-  
+
   return `${d.getFullYear()}-${(d.getMonth() + 1).toString().padStart(2, '0')}-${d.getDate().toString().padStart(2, '0')} ${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}`;
 }
 
-function HistoryCard({ result, onDelete, i18n, locale }: { result: AssessmentResult; onDelete: (id: string) => void; i18n: ReturnType<typeof getTranslation>; locale: 'en' | 'zh' }) {
+function HistoryCard({ result, onDelete, i18n }: { result: AssessmentResult; onDelete: (id: string) => void; i18n: ReturnType<typeof getTranslation> }) {
   const { 
     setCurrentAssessment, 
     setQuestions, 
@@ -76,11 +79,11 @@ function HistoryCard({ result, onDelete, i18n, locale }: { result: AssessmentRes
 
       <div className="flex flex-wrap gap-2 mb-4 sm:mb-6">
         {result.traits.slice(0, 3).map((trait, idx) => (
-          <span 
-            key={idx} 
+          <span
+            key={idx}
             className="px-3 py-1.5 bg-slate-100 text-slate-700 rounded-full text-sm"
           >
-            {trait.name} {trait.score}{locale === 'zh' ? '分' : ''}
+            {trait.name} {i18n.common.points.replace('{score}', String(trait.score))}
           </span>
         ))}
       </div>
@@ -155,12 +158,11 @@ export const History = () => {
       ) : (
         <div className="grid gap-6">
           {assessmentHistory.map((result) => (
-            <HistoryCard 
-              key={result.id} 
-              result={result} 
+            <HistoryCard
+              key={result.id}
+              result={result}
               onDelete={deleteHistoryItem}
               i18n={i18n}
-              locale={locale}
             />
           ))}
         </div>

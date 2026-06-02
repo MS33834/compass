@@ -206,7 +206,8 @@ export function calculateStressTestScore(
   for (const [dim, rawScore] of Object.entries(dimensionRawScores)) {
     const weight = DIMENSION_WEIGHTS[dim] || 1.0;
     const count = dimensionCounts[dim] || 1;
-    
+    void count;
+
     const weightedDimScore = rawScore * weight;
     dimensionWeightedScores[dim] = weightedDimScore;
     weightedTotalScore += weightedDimScore;

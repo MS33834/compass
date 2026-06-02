@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useAppStore } from '../store';
 import { getTranslation } from '../i18n';
-import { dailyTipService, type PersonalizedTip } from '../services/tips/DailyTipService';
+import { dailyTipService } from '../services/tips/DailyTipService';
 
 export function DailyTips() {
   const { locale, assessmentHistory } = useAppStore();

@@ -28,13 +28,17 @@ const CompareResults = lazy(() => import('./pages/CompareResults').then(m => ({ 
 const PersonalDashboard = lazy(() => import('./components/dashboard/PersonalDashboard').then(m => ({ default: m.PersonalDashboard })));
 const PluginManager = lazy(() => import('./components/plugin/PluginManager').then(m => ({ default: m.PluginManager })));
 const AuthCallback = lazy(() => import('./pages/AuthCallback').then(m => ({ default: m.AuthCallback })));
+const NotFound = lazy(() => import('./pages/NotFound').then(m => ({ default: m.NotFound })));
+const SharedView = lazy(() => import('./pages/SharedView').then(m => ({ default: m.SharedView })));
 
 function PageLoader() {
+  const { locale } = useAppStore();
+  const i18n = getTranslation(locale);
   return (
-    <div className="flex items-center justify-center py-20">
+    <div className="flex items-center justify-center py-20" role="status" aria-live="polite">
       <div className="flex flex-col items-center gap-4">
         <div className="w-10 h-10 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin" />
-        <p className="text-sm text-slate-500">Loading...</p>
+        <p className="text-sm text-slate-500">{i18n.common.loading}</p>
       </div>
     </div>
   );
@@ -68,6 +72,8 @@ function AnimatedRoutes() {
         <Route path="/settings" element={<PageTransition direction="up"><LazyRoute><Settings /></LazyRoute></PageTransition>} />
         <Route path="/about" element={<PageTransition direction="up"><LazyRoute><About /></LazyRoute></PageTransition>} />
         <Route path="/auth/callback" element={<PageTransition direction="fade"><LazyRoute><AuthCallback /></LazyRoute></PageTransition>} />
+        <Route path="/shared/:id" element={<PageTransition direction="fade"><LazyRoute><SharedView /></LazyRoute></PageTransition>} />
+        <Route path="*" element={<PageTransition direction="fade"><LazyRoute><NotFound /></LazyRoute></PageTransition>} />
       </Routes>
     </AnimatePresence>
   );
@@ -90,6 +96,10 @@ function AppContent() {
     initializeAuth();
     initializePlugins();
   }, [initializeAuth, initializePlugins]);
+
+  useEffect(() => {
+    document.documentElement.lang = locale === 'zh' ? 'zh-CN' : 'en';
+  }, [locale]);
 
   return (
     <ErrorBoundary>
@@ -145,9 +155,7 @@ function AppContent() {
         <Sidebar />
 
         <main className="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
-          <ErrorBoundary>
-            <AnimatedRoutes />
-          </ErrorBoundary>
+          <AnimatedRoutes />
         </main>
 
         <footer className="mt-auto border-t border-slate-200 py-6 sm:py-10 bg-white/50">

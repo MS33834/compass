@@ -50,8 +50,7 @@ export function RadarChart({ results, width = 500, height = 500 }: RadarChartPro
   const dataPath = dataPoints.map((point, index) => {
     return `${index === 0 ? 'M' : 'L'} ${point.x} ${point.y}`;
   }).join(' ') + ' Z';
-
-  const fillPath = `${dataPath} Z`;
+  void dataPath;
 
   return (
     <div className="bg-white rounded-xl p-6 shadow-md">

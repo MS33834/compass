@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { dashboardService } from '../../services/dashboard/DashboardService';
-import { dataSyncService } from '../../services/dataAbstraction/DataSyncService';
 import { UnifiedAssessmentResult, DataStatistics } from '../../types/dataAbstraction';
 import { useAppStore } from '../../store';
 import { getTranslation } from '../../i18n';
@@ -10,7 +9,6 @@ export function PersonalDashboard() {
   const [statistics, setStatistics] = useState<DataStatistics | null>(null);
   const [recentResults, setRecentResults] = useState<UnifiedAssessmentResult[]>([]);
   const [insights, setInsights] = useState<string[]>([]);
-  const [selectedPeriod, setSelectedPeriod] = useState<'week' | 'month' | 'quarter'>('month');
   const locale = useAppStore((state) => state.locale);
   const i18n = getTranslation(locale);
 

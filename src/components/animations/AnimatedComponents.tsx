@@ -171,9 +171,12 @@ export function StaggerItem({
   as: Comp = 'div',
   ...props
 }: { children: ReactNode; className?: string; as?: 'div' | 'li' | 'tr' } & HTMLMotionProps<'div'>) {
-  const MotionComp = motion[Comp as keyof typeof motion] as typeof motion.div;
+  const MotionDiv = motion.div as typeof motion.div;
+  const MotionLi = motion.li as typeof motion.li;
+  const MotionTr = motion.tr as typeof motion.tr;
+  const MotionComp = Comp === 'li' ? MotionLi : Comp === 'tr' ? MotionTr : MotionDiv;
   return (
-    <MotionComp variants={staggerItem} className={className} {...props}>
+    <MotionComp variants={staggerItem} className={className} {...(props as Record<string, unknown>)}>
       {children}
     </MotionComp>
   );

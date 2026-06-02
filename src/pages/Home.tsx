@@ -171,7 +171,7 @@ export const Home = () => {
             { to: '/achievements', icon: '🏆', label: i18n.home.quickLinks.achievements, border: 'hover:border-purple-200' },
             { to: '/compare', icon: '📊', label: i18n.home.quickLinks.compare, border: 'hover:border-teal-200' },
             { to: '/crisis', icon: '🆘', label: i18n.home.quickLinks.crisis, border: 'hover:border-red-200' },
-          ].map((item, idx) => (
+          ].map((item) => (
             <StaggerItem key={item.to}>
               <Link
                 to={item.to}

@@ -185,7 +185,7 @@ export class PluginLoader {
     return plugin;
   }
 
-  private registerPluginHooks(config: PluginConfig, api: PluginAPI): void {
+  private registerPluginHooks(config: PluginConfig, _api: PluginAPI): void {
     const pid = config.id;
     switch (pid) {
       case 'big-five-personality':
@@ -284,7 +284,7 @@ export class PluginLoader {
     }
   }
 
-  private createTrainingExports(config: PluginConfig): Record<string, any> {
+  private createTrainingExports(_config: PluginConfig): Record<string, any> {
     return {
       courses: ['4-7-8-breathing', 'body-scan', 'stress-management', 'gratitude-journal', 'muscle-relaxation', 'anxiety-coping'],
       categories: ['breathing', 'meditation', 'stress', 'gratitude', 'relaxation', 'anxiety'],
@@ -292,7 +292,7 @@ export class PluginLoader {
     };
   }
 
-  private createUIExports(config: PluginConfig): Record<string, any> {
+  private createUIExports(_config: PluginConfig): Record<string, any> {
     return {
       themes: ['light', 'dark', 'auto'],
       customizable: true,
@@ -362,7 +362,7 @@ export class PluginLoader {
             api.log('Analyzing trends');
             return { trendCount: history.length, analyzed: true };
           },
-          generateInsights: (data: any) => {
+          generateInsights: (_data: any) => {
             api.log('Generating insights');
             return { insights: [], generated: true };
           }
@@ -469,7 +469,7 @@ export class PluginLoader {
       if (cached && typeof cached === 'object') {
         this.pluginCache = new Map(Object.entries(cached));
       }
-    } catch (e) {
+    } catch (_e) {
       console.warn('Failed to load plugin cache');
     }
   }
@@ -478,7 +478,7 @@ export class PluginLoader {
     try {
       const toSave = Object.fromEntries(this.pluginCache.entries());
       storage.set(PLUGIN_CACHE_KEY, toSave);
-    } catch (e) {
+    } catch (_e) {
       console.error('Failed to save plugin cache');
     }
   }

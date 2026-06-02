@@ -27,13 +27,13 @@ export class TrainingService {
     return this.trainings.filter(t => t.category === category);
   }
 
-  getRecommendedTrainings(assessmentResults?: any[]): TrainingRecommendation[] {
+  getRecommendedTrainings(_assessmentResults?: any[]): TrainingRecommendation[] {
     const recommendations: TrainingRecommendation[] = [];
     
     this.trainings.forEach(training => {
       let score = 0;
-      let reasons: string[] = [];
-      
+      const reasons: string[] = [];
+
       if (training.difficulty === 'beginner') {
         score += 10;
         reasons.push('适合入门');
@@ -143,7 +143,8 @@ export class TrainingService {
   getStatistics(userId: string = 'default') {
     const sessions = this.getSessionHistory(userId);
     const progress = this.getAllProgress(userId);
-    
+    void progress;
+
     const totalSessions = sessions.length;
     const completedSessions = sessions.filter(s => s.completedAt).length;
     const totalTime = sessions.reduce((sum, s) => sum + (s.duration || 0), 0);
@@ -212,7 +213,7 @@ export class TrainingService {
     const yesterday = new Date(Date.now() - 86400000).toDateString();
     
     if (uniqueDates.includes(today) || uniqueDates.includes(yesterday)) {
-      let checkDate = new Date();
+      const checkDate = new Date();
       if (!uniqueDates.includes(today)) {
         checkDate.setDate(checkDate.getDate() - 1);
       }

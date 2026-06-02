@@ -163,7 +163,7 @@ export function calculateWeightedGAD7Score(
 export function calculateGAD7Traits(answers: Record<string, number>, questions: Question[]): TraitResult[] {
   const totalScore = calculateGAD7Score(answers);
   const { normalizedTotal } = calculateWeightedGAD7Score(answers, questions);
-  const maxPossibleScore = questions.length * 3;
+  void totalScore; void normalizedTotal;
   
   const dimensionScores: Record<string, number> = {};
   const dimensionCounts: Record<string, number> = {};
@@ -308,6 +308,7 @@ export function generateDetailedGAD7Report(
   const { weightedTotal, normalizedTotal } = calculateWeightedGAD7Score(answers, questions);
   const anxietyLevel = getAnxietyLevelInfo(totalScore);
   const extendedLevel = getExtendedAnxietyLevel(totalScore);
+  void anxietyLevel; void extendedLevel;
   const subLevel = getAnxietySubLevel(normalizedTotal);
   const subLevelInfo = getAnxietySubLevelInfo(subLevel);
   

@@ -1,5 +1,3 @@
-import { Question } from '../types';
-
 export interface TraitScore {
   name: string;
   score: number;

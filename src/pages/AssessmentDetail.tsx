@@ -5,19 +5,20 @@ import { getTranslation } from '../i18n';
 import { mockAssessments, getQuestionsForAssessment } from '../data/mockData';
 import { RESPONSE_OPTIONS, BIG_FIVE_TRAITS } from '../data/bigFiveData';
 import { Question } from '../types';
-import { 
-  STRESS_RESPONSE_OPTIONS, 
+import {
+  STRESS_RESPONSE_OPTIONS,
   STRESS_LEVELS
 } from '../data/stressTestData';
-import { 
-  GAD7_RESPONSE_OPTIONS, 
-  ANXIETY_LEVELS 
+import {
+  GAD7_RESPONSE_OPTIONS,
+  ANXIETY_LEVELS
 } from '../data/anxietyGad7Data';
 import { calculateProgress, generateBigFiveReport } from '../services/bigFiveScoring';
 import { getStressLevelInfo, generateDetailedStressReport } from '../services/stressTestScoring';
 import { getAnxietyLevelInfo, generateDetailedGAD7Report } from '../services/anxietyGad7Scoring';
 import { exportService, shareService } from '../services/share/ExportShareService';
 import { TracePanel } from '../components/TracePanel';
+import { useToasts } from '../store/toastStore';
 import { cn } from '../lib/utils';
 
 // 介绍页面组件
@@ -110,10 +111,11 @@ function IntroPage({ onStart }: { onStart: () => void }) {
         </div>
         
         <button
+          type="button"
           onClick={onStart}
-          className="px-8 sm:px-12 py-3 sm:py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-base sm:text-xl font-semibold rounded-2xl hover:from-blue-600 hover:to-indigo-700 transition-all shadow-lg hover:shadow-xl transform hover:scale-105"
+          className="px-8 sm:px-12 py-3 sm:py-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-base sm:text-xl font-semibold rounded-2xl hover:from-blue-600 hover:to-indigo-700 transition-all shadow-lg hover:shadow-xl transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
         >
-          {i18n.quiz.finish}
+          {i18n.quiz.start}
         </button>
       </div>
     </div>
@@ -355,13 +357,11 @@ function BigFiveResultDetail({
       {/* T分数解释 */}
       <div className="bg-blue-50 rounded-xl sm:rounded-2xl p-3 sm:p-5 border border-blue-100 max-w-4xl mx-auto">
         <div className="flex items-start gap-2 sm:gap-3">
-          <span className="text-blue-600 text-lg sm:text-xl mt-0.5">📊</span>
+          <span className="text-blue-600 text-lg sm:text-xl mt-0.5" aria-hidden="true">📊</span>
           <div>
-            <h4 className="font-semibold text-blue-800 mb-1 text-sm sm:text-base">{locale === 'zh' ? '关于T分数' : 'About T-Scores'}</h4>
+            <h4 className="font-semibold text-blue-800 mb-1 text-sm sm:text-base">{i18n.results.aboutTScoreTitle}</h4>
             <p className="text-xs sm:text-sm text-blue-700 leading-relaxed">
-              {locale === 'zh' 
-                ? 'T分数是一种标准分，均值50、标准差10。40-60分属于正常范围，低于40或高于60分别表示该特质偏低或偏高。分数越高代表该特质越明显。'
-                : 'T-score is a standardized score with a mean of 50 and standard deviation of 10. Scores between 40-60 are in the normal range; below 40 or above 60 indicate low or high tendencies respectively. Higher scores mean the trait is more pronounced.'}
+              {i18n.results.aboutTScoreDesc}
             </p>
           </div>
         </div>
@@ -674,7 +674,9 @@ function StressTestResultDetail({
               <div key={i} className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-3 sm:p-5 border-l-4 border-blue-500">
                 <div className="flex items-center justify-between mb-2 sm:mb-3">
                   <h4 className="font-bold text-base sm:text-lg text-blue-800">{dim.info?.name || dim.dimension}</h4>
-                  <span className="px-2 sm:px-3 py-1 bg-blue-200 text-blue-800 rounded-full text-xs sm:text-sm font-semibold">{dim.score} 分</span>
+                  <span className="px-2 sm:px-3 py-1 bg-blue-200 text-blue-800 rounded-full text-xs sm:text-sm font-semibold">
+                    {dim.score} {i18n.results.points}
+                  </span>
                 </div>
                 {dim.info?.description && (
                   <p className="text-slate-700 mb-3 text-sm">{dim.info.description}</p>
@@ -971,20 +973,22 @@ function ResultPage() {
   const { result, resetAssessment, currentAssessment, questions, answers } = useAppStore();
   const { locale } = useAppStore();
   const i18n = getTranslation(locale);
-  
+  const addToast = useToasts((s) => s.addToast);
+
   const [showTracePanel, setShowTracePanel] = useState(false);
   const [shareUrl, setShareUrl] = useState<string | null>(null);
   const [showExportMenu, setShowExportMenu] = useState(false);
-  
+  const [qrCode, setQrCode] = useState<string | null>(null);
+
   if (!result) return null;
-  
+
   const isStressTest = currentAssessment?.id === 'stress-test' || currentAssessment?.id === '2';
   const isGAD7 = currentAssessment?.id === 'anxiety-gad7' || currentAssessment?.id === '3';
-  
+
   // 类型断言
-  const displayResult = result as { 
+  const displayResult = result as {
     id: string;
-    totalScore: number; 
+    totalScore: number;
     traits: Array<{ name: string; score: number; description: string }>;
     title?: string;
     assessmentId?: string;
@@ -994,28 +998,39 @@ function ResultPage() {
   };
   const displayQuestions = questions as Question[];
 
-  const handleExport = async (format: 'pdf' | 'markdown' | 'text' | 'json') => {
+  const handleExport = async (format: 'pdf' | 'html' | 'markdown' | 'text' | 'json') => {
     try {
-      await exportService.download(displayResult, format);
+      await exportService.download(displayResult, format, { language: locale });
       setShowExportMenu(false);
+      const msg = format === 'pdf'
+        ? (locale === 'zh' ? '已导出 HTML 报告（可用浏览器"打印 → 另存为 PDF"）' : 'Exported HTML report (use browser "Print → Save as PDF")')
+        : (locale === 'zh' ? '报告已导出' : 'Report exported');
+      addToast(msg, 'success');
     } catch (error) {
       console.error('Export failed:', error);
+      addToast(locale === 'zh' ? '导出失败，请重试' : 'Export failed. Please try again.', 'error');
     }
   };
 
   const handleShare = async () => {
     try {
-      const url = await shareService.createShareLink(displayResult);
+      const url = await shareService.createShareLink(displayResult, { language: locale });
       setShareUrl(url);
+      const qr = await shareService.generateQRCode(url);
+      setQrCode(qr || null);
+      addToast(locale === 'zh' ? '分享链接已生成' : 'Share link generated', 'success');
     } catch (error) {
       console.error('Share failed:', error);
+      addToast(locale === 'zh' ? '生成分享链接失败' : 'Failed to generate share link', 'error');
     }
   };
 
   const copyShareUrl = () => {
     if (shareUrl) {
-      navigator.clipboard.writeText(shareUrl);
-      alert(i18n.results.linkCopied);
+      navigator.clipboard.writeText(shareUrl).then(
+        () => addToast(i18n.results.linkCopied, 'success'),
+        () => addToast(locale === 'zh' ? '复制失败' : 'Copy failed', 'error')
+      );
     }
   };
   
@@ -1049,6 +1064,12 @@ function ResultPage() {
                     className="w-full px-4 py-3 text-left hover:bg-slate-50 transition-colors flex items-center gap-2"
                   >
                     <span>📄</span> {i18n.results.pdfFormat}
+                  </button>
+                  <button
+                    onClick={() => handleExport('html')}
+                    className="w-full px-4 py-3 text-left hover:bg-slate-50 transition-colors flex items-center gap-2"
+                  >
+                    <span>🌐</span> {locale === 'zh' ? 'HTML 网页' : 'HTML Page'}
                   </button>
                   <button
                     onClick={() => handleExport('markdown')}
@@ -1100,21 +1121,38 @@ function ResultPage() {
           {/* 分享链接显示 */}
           {shareUrl && (
             <div className="mt-4 p-4 bg-green-50 rounded-xl border border-green-200">
-              <div className="flex items-center gap-3">
-                <span className="text-green-700 font-medium">{i18n.results.shareLink}</span>
+              <div className="flex items-center gap-3 mb-3">
+                <span className="text-green-700 font-medium whitespace-nowrap">{i18n.results.shareLink}</span>
                 <input
                   type="text"
                   value={shareUrl}
                   readOnly
-                  className="flex-1 px-3 py-2 bg-white border border-green-300 rounded-lg text-sm text-slate-700"
+                  className="flex-1 px-3 py-2 bg-white border border-green-300 rounded-lg text-sm text-slate-700 min-w-0"
+                  onFocus={(e) => e.currentTarget.select()}
                 />
                 <button
                   onClick={copyShareUrl}
-                  className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                  className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors whitespace-nowrap"
                 >
                   {i18n.results.copy}
                 </button>
               </div>
+              {qrCode && (
+                <div className="flex items-center gap-3 pt-3 border-t border-green-200">
+                  <img
+                    src={qrCode}
+                    alt="QR code"
+                    width={120}
+                    height={120}
+                    className="rounded-lg border border-green-200 bg-white"
+                  />
+                  <p className="text-xs text-green-700 flex-1">
+                    {locale === 'zh'
+                      ? '扫描二维码可在手机上打开此分享链接'
+                      : 'Scan the QR code to open this share link on your phone'}
+                  </p>
+                </div>
+              )}
             </div>
           )}
         </div>

@@ -254,7 +254,7 @@ export function CompareResults() {
                   : 'bg-white text-slate-600 hover:bg-slate-50 border border-slate-200'
               )}
             >
-              {locale === 'zh' ? '全部' : 'All'}
+              {i18n.assessments.all}
             </button>
             {Object.keys(groupedHistory).map(id => (
               <button
