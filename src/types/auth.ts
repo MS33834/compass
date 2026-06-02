@@ -5,7 +5,7 @@ export interface User {
   avatar?: string;
   createdAt: Date;
   lastLoginAt?: Date;
-  provider?: 'email' | 'google' | 'github';
+  provider?: 'email' | 'google' | 'github' | 'guest';
   metadata?: Record<string, unknown>;
 }
 
@@ -26,6 +26,7 @@ export interface AuthResponse {
   user?: User;
   token?: string;
   error?: string;
+  mode?: 'online' | 'offline';
 }
 
 export interface AuthState {

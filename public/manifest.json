@@ -1,39 +1,40 @@
 {
-  "name": "MindMirror - Psychological Assessment & Training Platform",
+  "name": "MindMirror - Open-Source Psychological Assessment",
   "short_name": "MindMirror",
-  "description": "Open-source professional psychological assessment platform featuring Big Five personality, stress, and anxiety tests with mood tracking and mental training.",
-  "start_url": "/",
+  "description": "Free, open-source psychological assessment platform: Big Five, PSS-10 stress, GAD-7 anxiety, mood tracker, mental training. EN / 中文.",
+  "start_url": "/MindMirror/",
+  "scope": "/MindMirror/",
   "display": "standalone",
   "background_color": "#f8fafc",
   "theme_color": "#4F46E5",
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "/favicon.svg",
+      "src": "/MindMirror/favicon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any"
     },
     {
-      "src": "/favicon-192.png",
+      "src": "/MindMirror/favicon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/favicon-512.png",
+      "src": "/MindMirror/favicon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/apple-touch-icon.png",
+      "src": "/MindMirror/apple-touch-icon.png",
       "sizes": "180x180",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/favicon.svg",
+      "src": "/MindMirror/favicon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "maskable"

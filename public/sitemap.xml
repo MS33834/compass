@@ -2,45 +2,45 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://mindmirror.app/</loc>
+    <loc>https://badhope.github.io/MindMirror/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://mindmirror.app/en/"/>
-    <xhtml:link rel="alternate" hreflang="zh" href="https://mindmirror.app/zh/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://mindmirror.app/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://badhope.github.io/MindMirror/"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://badhope.github.io/MindMirror/?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://badhope.github.io/MindMirror/"/>
   </url>
   <url>
-    <loc>https://mindmirror.app/assessments</loc>
+    <loc>https://badhope.github.io/MindMirror/#/assessments</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://mindmirror.app/training</loc>
+    <loc>https://badhope.github.io/MindMirror/#/training</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mindmirror.app/dashboard</loc>
+    <loc>https://badhope.github.io/MindMirror/#/dashboard</loc>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://mindmirror.app/mood</loc>
+    <loc>https://badhope.github.io/MindMirror/#/mood</loc>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://mindmirror.app/achievements</loc>
+    <loc>https://badhope.github.io/MindMirror/#/achievements</loc>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mindmirror.app/about</loc>
+    <loc>https://badhope.github.io/MindMirror/#/about</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mindmirror.app/crisis</loc>
+    <loc>https://badhope.github.io/MindMirror/#/crisis</loc>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>

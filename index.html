@@ -3,34 +3,36 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="color-scheme" content="light" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#4F46E5" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1e1b4b" media="(prefers-color-scheme: dark)" />
 
-    <title>MindMirror - Psychological Assessment & Training Platform</title>
-    <meta name="description" content="MindMirror is an open-source professional psychological assessment platform featuring Big Five personality test, stress evaluation (PSS-10), anxiety screening (GAD-7), mood tracking, and personalized mental training programs." />
-    <meta name="keywords" content="psychological assessment, personality test, Big Five, NEO-PI-R, stress test, anxiety screening, GAD-7, mood tracker, mental health, self-discovery, psychology, 心理测评, 大五人格" />
+    <title>MindMirror - Open-Source Psychological Assessment Platform</title>
+    <meta name="description" content="MindMirror is a free, open-source psychological assessment platform: Big Five personality test (NEO-PI-R), PSS-10 stress scale, GAD-7 anxiety screening, mood tracking, and personalized mental training. EN / 简体中文." />
+    <meta name="keywords" content="psychological assessment, Big Five, personality test, NEO-PI-R, PSS-10, GAD-7, mood tracker, mental health, open source, self-discovery, 心理测评, 大五人格, 心理健康" />
     <meta name="author" content="badhope" />
     <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://mindmirror.app" />
 
+    <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://mindmirror.app" />
-    <meta property="og:title" content="MindMirror - Psychological Assessment & Training Platform" />
-    <meta property="og:description" content="Open-source professional psychological assessment platform. Big Five personality, stress, anxiety tests with mood tracking and mental training." />
-    <meta property="og:image" content="https://mindmirror.app/og-image.png" />
+    <meta property="og:url" content="https://badhope.github.io/MindMirror/" />
+    <meta property="og:title" content="MindMirror - Open-Source Psychological Assessment Platform" />
+    <meta property="og:description" content="Big Five personality, stress, anxiety, mood tracker and mental training. Free, private, fully open source. EN / 简体中文." />
+    <meta property="og:image" content="https://badhope.github.io/MindMirror/og-image.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="MindMirror - Psychological Assessment Platform" />
+    <meta property="og:image:alt" content="MindMirror psychological assessment platform" />
     <meta property="og:locale" content="en_US" />
     <meta property="og:locale:alternate" content="zh_CN" />
     <meta property="og:site_name" content="MindMirror" />
 
+    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="MindMirror - Psychological Assessment & Training Platform" />
-    <meta name="twitter:description" content="Open-source professional psychological assessment platform. Big Five personality, stress, anxiety tests with mood tracking." />
-    <meta name="twitter:image" content="https://mindmirror.app/og-image.png" />
+    <meta name="twitter:title" content="MindMirror - Open-Source Psychological Assessment Platform" />
+    <meta name="twitter:description" content="Big Five, stress, anxiety, mood tracking and mental training. Free, private, open source." />
+    <meta name="twitter:image" content="https://badhope.github.io/MindMirror/og-image.jpg" />
 
-    <meta name="theme-color" content="#4F46E5" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#1e1b4b" media="(prefers-color-scheme: dark)" />
+    <!-- PWA / mobile -->
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
@@ -38,21 +40,24 @@
     <meta name="application-name" content="MindMirror" />
     <meta name="format-detection" content="telephone=no" />
 
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
-    <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <link rel="manifest" href="/manifest.json" />
+    <!-- Favicon / icons (Vite injects base) -->
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="icon" type="image/png" sizes="192x192" href="./favicon-192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="./favicon-512.png" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png" />
+    <link rel="manifest" href="./manifest.json" />
 
+    <!-- Security -->
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=(), payment=(), usb=()" />
 
-    <link rel="alternate" hreflang="en" href="https://mindmirror.app/en/" />
-    <link rel="alternate" hreflang="zh" href="https://mindmirror.app/zh/" />
-    <link rel="alternate" hreflang="x-default" href="https://mindmirror.app/" />
+    <!-- Hreflang -->
+    <link rel="alternate" hreflang="en" href="https://badhope.github.io/MindMirror/" />
+    <link rel="alternate" hreflang="zh" href="https://badhope.github.io/MindMirror/?lang=zh" />
+    <link rel="alternate" hreflang="x-default" href="https://badhope.github.io/MindMirror/" />
 
     <script type="module">
       if (import.meta.hot?.on) {
@@ -68,6 +73,15 @@
   </head>
   <body>
     <div id="root"></div>
+    <noscript>
+      <div style="max-width:640px;margin:80px auto;font-family:system-ui,sans-serif;text-align:center;padding:0 20px;color:#1e293b">
+        <h1 style="margin:0 0 12px">MindMirror requires JavaScript</h1>
+        <p style="margin:0;line-height:1.6;color:#475569">
+          MindMirror is a client-side React application. Please enable JavaScript in your browser
+          to take the assessments, track your mood, and explore your personality.
+        </p>
+      </div>
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
