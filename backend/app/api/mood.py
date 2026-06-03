@@ -1,6 +1,6 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Query
 from sqlalchemy.orm import Session
-from typing import List
+from typing import List, Optional
 from uuid import UUID
 from datetime import date
 from app.database import get_db
@@ -15,10 +15,10 @@ router = APIRouter()
 
 @router.get("/", response_model=MoodEntryListResponse)
 async def list_mood_entries(
-    skip: int = 0,
-    limit: int = 100,
-    start_date: date = None,
-    end_date: date = None,
+    skip: int = Query(0, ge=0, description="Number of items to skip"),
+    limit: int = Query(100, ge=1, le=200, description="Max items to return (1-200)"),
+    start_date: Optional[date] = None,
+    end_date: Optional[date] = None,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):

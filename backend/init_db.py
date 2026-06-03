@@ -30,21 +30,22 @@ def create_tables():
 
 
 def seed_demo(db):
-    existing = db.query(User).filter(User.email == "demo@example.com").first()
+    demo_email = "demo@mindmirror.app"
+    existing = db.query(User).filter(User.email == demo_email).first()
     if existing:
         print("Demo user already exists, skipping seed.")
         return
 
     demo = User(
         id=str(uuid.uuid4()),
-        email="demo@example.com",
+        email=demo_email,
         username="demo",
         hashed_password=get_password_hash("demo123"),
         avatar_url="https://ui-avatars.com/api/?name=Demo&background=4F46E5&color=fff",
     )
     db.add(demo)
     db.commit()
-    print("✅ Demo user: demo@example.com / demo123")
+    print(f"✅ Demo user: {demo_email} / demo123")
 
 
 def main():

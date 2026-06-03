@@ -19,8 +19,8 @@ router = APIRouter()
 
 @router.get("/", response_model=AssessmentResultListResponse)
 async def list_results(
-    skip: int = 0,
-    limit: int = 100,
+    skip: int = Query(0, ge=0, description="Number of items to skip"),
+    limit: int = Query(100, ge=1, le=200, description="Max items to return (1-200)"),
     assessment_id: Optional[str] = None,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)

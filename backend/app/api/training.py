@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Query
 from sqlalchemy.orm import Session, joinedload
 from typing import List
 from uuid import UUID
@@ -19,8 +19,8 @@ router = APIRouter()
 @router.get("/", response_model=TrainingPlanListResponse)
 async def get_training_plans(
     is_active: bool = True,
-    skip: int = 0,
-    limit: int = 50,
+    skip: int = Query(0, ge=0, description="Number of items to skip"),
+    limit: int = Query(50, ge=1, le=100, description="Max items to return (1-100)"),
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):

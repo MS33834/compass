@@ -1,8 +1,10 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Body, Depends, HTTPException, status, Request
 from fastapi.security import OAuth2PasswordRequestForm
+from pydantic import BaseModel
 from sqlalchemy.orm import Session
 from datetime import timedelta
 from uuid import UUID
+from typing import Optional
 from app.database import get_db
 from app.models.user import User
 from app.schemas.user import UserCreate, UserResponse, Token, UserUpdate
@@ -10,13 +12,20 @@ from app.core.security import verify_password, get_password_hash, create_access_
 from app.core.utils import generate_uuid
 from app.config import settings
 from app.dependencies import get_current_user
+from app.core.ratelimit import limiter, AUTH_LIMIT
 
 
 router = APIRouter()
 
 
+class AccountDeleteRequest(BaseModel):
+    password: Optional[str] = None
+
+
 @router.post("/register", response_model=Token, status_code=status.HTTP_201_CREATED)
+@limiter.limit(AUTH_LIMIT)
 async def register(
+    request: Request,
     user_data: UserCreate,
     db: Session = Depends(get_db)
 ):
@@ -54,7 +63,9 @@ async def register(
 
 
 @router.post("/login", response_model=Token)
+@limiter.limit(AUTH_LIMIT)
 async def login(
+    request: Request,
     form_data: OAuth2PasswordRequestForm = Depends(),
     db: Session = Depends(get_db)
 ):
@@ -83,9 +94,15 @@ async def login(
 
 
 @router.post("/guest", response_model=Token)
-async def guest_login(db: Session = Depends(get_db)):
+@limiter.limit(AUTH_LIMIT)
+async def guest_login(
+    request: Request,
+    db: Session = Depends(get_db)
+):
     guest_id = generate_uuid()
-    guest_email = f"guest_{guest_id}@mindmirror.local"
+    # The .example TLD is reserved by RFC 2606 and Pydantic's EmailStr
+    # validator accepts it; .local is rejected as a special-use name.
+    guest_email = f"guest_{guest_id}@guest.mindmirror.example"
 
     guest_user = User(
         email=guest_email,
@@ -145,11 +162,24 @@ async def logout(
 
 
 @router.delete("/account", status_code=status.HTTP_204_NO_CONTENT)
+@limiter.limit(AUTH_LIMIT)
 async def delete_account(
+    request: Request,
+    payload: AccountDeleteRequest = Body(default_factory=AccountDeleteRequest),
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
-    if current_user.is_guest:
-        db.delete(current_user)
-        db.commit()
+    if not current_user.is_guest:
+        if not payload.password:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Password confirmation required to delete account"
+            )
+        if not verify_password(payload.password, current_user.hashed_password):
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Incorrect password"
+            )
+    db.delete(current_user)
+    db.commit()
     return None

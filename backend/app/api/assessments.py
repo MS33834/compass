@@ -1,6 +1,6 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Query
 from sqlalchemy.orm import Session, joinedload
-from typing import List
+from typing import List, Optional
 from uuid import UUID
 from app.database import get_db
 from app.models.assessment import Assessment, Question, Option
@@ -14,9 +14,9 @@ router = APIRouter()
 
 @router.get("/", response_model=AssessmentListResponse)
 async def get_assessments(
-    category: str = None,
-    skip: int = 0,
-    limit: int = 100,
+    category: Optional[str] = None,
+    skip: int = Query(0, ge=0, description="Number of items to skip"),
+    limit: int = Query(100, ge=1, le=200, description="Max items to return (1-200)"),
     db: Session = Depends(get_db)
 ):
     query = db.query(Assessment).filter(Assessment.is_active == True)

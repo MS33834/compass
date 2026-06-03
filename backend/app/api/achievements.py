@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Query
 from sqlalchemy.orm import Session
 from uuid import UUID
 from app.database import get_db
@@ -13,8 +13,8 @@ router = APIRouter()
 
 @router.get("/", response_model=AchievementListResponse)
 async def list_achievements(
-    skip: int = 0,
-    limit: int = 100,
+    skip: int = Query(0, ge=0, description="Number of items to skip"),
+    limit: int = Query(100, ge=1, le=200, description="Max items to return (1-200)"),
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
