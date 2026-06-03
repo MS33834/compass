@@ -71,7 +71,9 @@ That's it. The frontend is on http://localhost:5173, the API on
 http://localhost:8000/docs, and Postgres stores your data.
 
 For a step-by-step dev setup (without Docker), see
-[CONTRIBUTING.md](CONTRIBUTING.md).
+[CONTRIBUTING.md](CONTRIBUTING.md). For a server-side deploy
+(VPS, HTTPS, backups, monitoring), see
+[PRODUCTION_CHECKLIST.md](PRODUCTION_CHECKLIST.md).
 
 ## How your data is handled
 

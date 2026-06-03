@@ -53,7 +53,7 @@ cd MindMirror
 docker compose up -d
 ```
 
-打开 `http://localhost` 就用上了。详细说明见 [CONTRIBUTING.md](CONTRIBUTING.md)。
+打开 `http://localhost` 就用上了。详细说明见 [CONTRIBUTING.md](CONTRIBUTING.md)。如果要部署到自己的服务器(VPS、HTTPS、备份、监控),请看 [PRODUCTION_CHECKLIST.md](PRODUCTION_CHECKLIST.md)。
 
 ### 想参与贡献?
 
