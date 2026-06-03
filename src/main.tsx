@@ -6,7 +6,6 @@ import './index.css';
 // Global error handler — if React fails to mount, surface the error visibly
 // instead of leaving the user staring at a blank page.
 function showFatalError(err: unknown) {
-  // eslint-disable-next-line no-console
   console.error('[MindMirror] fatal boot error:', err);
   const boot = document.getElementById('__app_boot__');
   const root = document.getElementById('root');
