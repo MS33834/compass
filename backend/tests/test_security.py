@@ -38,6 +38,31 @@ def test_token_decode_roundtrip():
     assert verify_token(tok)["sub"] == "user-123"
 
 
+def test_token_includes_iat_and_jti():
+    """Every freshly issued token must carry `iat` (issued-at) and `jti`
+    (a unique id). `jti` is what a token-revocation list would key on
+    if we ever need to invalidate sessions before `exp`."""
+    tok = create_access_token({"sub": "user-123"})
+    payload = verify_token(tok)
+    assert "iat" in payload
+    assert "jti" in payload
+    assert isinstance(payload["jti"], str) and len(payload["jti"]) >= 16
+
+
+def test_two_tokens_get_distinct_jtis():
+    """The point of `jti` is uniqueness — two calls must not collide."""
+    a = create_access_token({"sub": "u"})
+    b = create_access_token({"sub": "u"})
+    assert verify_token(a)["jti"] != verify_token(b)["jti"]
+
+
+def test_caller_jti_is_preserved():
+    """If a caller has already minted a `jti` (e.g. for a future
+    revocation list keyed on it), the helper should not overwrite it."""
+    tok = create_access_token({"sub": "u", "jti": "caller-supplied-id"})
+    assert verify_token(tok)["jti"] == "caller-supplied-id"
+
+
 def _b64url(data: dict) -> str:
     return base64.urlsafe_b64encode(json.dumps(data).encode()).rstrip(b"=").decode()
 

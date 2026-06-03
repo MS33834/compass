@@ -128,7 +128,7 @@ async def update_task(
     if task_update.is_completed is not None:
         task.is_completed = task_update.is_completed
         if task_update.is_completed:
-            task.completed_at = datetime.utcnow()
+            task.completed_at = datetime.now(timezone.utc)
         else:
             task.completed_at = None
     

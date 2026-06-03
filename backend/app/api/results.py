@@ -47,7 +47,7 @@ async def create_result(
         traits=payload.traits or [],
         dimension_scores=payload.dimension_scores,
         raw_answers=payload.raw_answers,
-        completed_at=payload.completed_at or datetime.utcnow()
+        completed_at=payload.completed_at or datetime.now(timezone.utc)
     )
     db.add(result)
     db.commit()

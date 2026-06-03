@@ -56,8 +56,11 @@ def test_username_uniqueness(client):
         "/api/v1/auth/register",
         json={"email": "two@x.com", "username": "samename", "password": "hunter22"},
     )
+    # Anti-enumeration: we deliberately return the same generic message for
+    # both "email taken" and "username taken" so attackers cannot use the
+    # register endpoint to discover which accounts exist.
     assert b.status_code == 400
-    assert "taken" in b.json()["detail"].lower()
+    assert b.json()["detail"] == "Could not create account with the provided details"
 
 
 def test_email_uniqueness(client):
@@ -70,6 +73,50 @@ def test_email_uniqueness(client):
         json={"email": "dup@x.com", "username": "second", "password": "hunter22"},
     )
     assert r.status_code == 400
+    assert r.json()["detail"] == "Could not create account with the provided details"
+
+
+def test_username_and_email_uniqueness_use_identical_error(client):
+    # The two failure modes (email vs username) must return byte-identical
+    # detail strings, otherwise the response leaks which field is the
+    # duplicate — which is exactly what the generic message is meant to hide.
+    a = client.post(
+        "/api/v1/auth/register",
+        json={"email": "first@x.com", "username": "shared-name", "password": "hunter22"},
+    )
+    assert a.status_code == 201
+    b = client.post(
+        "/api/v1/auth/register",
+        json={"email": "second@x.com", "username": "shared-name", "password": "hunter22"},
+    )
+    c = client.post(
+        "/api/v1/auth/register",
+        json={"email": "first@x.com", "username": "other-name", "password": "hunter22"},
+    )
+    assert b.json()["detail"] == c.json()["detail"]
+
+
+def test_login_inactive_user_returns_generic_error(client, db_session):
+    from app.models.user import User
+    from app.core.security import get_password_hash
+
+    u = User(
+        email="ghost@x.com",
+        username="ghost",
+        hashed_password=get_password_hash("hunter22"),
+        is_active=False,
+    )
+    db_session.add(u)
+    db_session.commit()
+
+    r = client.post(
+        "/api/v1/auth/login",
+        data={"username": "ghost@x.com", "password": "hunter22"},
+    )
+    # Same shape as a wrong password, so the response cannot be used to
+    # distinguish "exists but disabled" from "no such user".
+    assert r.status_code == 401
+    assert r.json()["detail"] == "Incorrect email or password"
 
 
 def test_login_wrong_password(client, registered_user):

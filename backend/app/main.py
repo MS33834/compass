@@ -34,11 +34,12 @@ app = FastAPI(
 app.state.limiter = limiter
 
 
-# Middleware runs in reverse registration order, so this wraps the CORS
-# response with the request-id header.
-install_cors(app)
-app.add_middleware(RequestContextMiddleware)
+# Middleware execution order in Starlette is "last added, first executed".
+# CORS must sit on the outside so OPTIONS preflight short-circuits before
+# rate-limiting or request-id stamping has a chance to reject the call.
 app.add_middleware(SlowAPIMiddleware)
+app.add_middleware(RequestContextMiddleware)
+install_cors(app)
 
 
 @app.exception_handler(RateLimitExceeded)

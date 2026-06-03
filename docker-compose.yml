@@ -4,16 +4,19 @@ services:
     container_name: mindmirror_postgres
     restart: unless-stopped
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-mental_user}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-mental_password}
-      POSTGRES_DB: ${POSTGRES_DB:-mental_health_db}
+      # Same fail-fast policy as SECRET_KEY: refuse to start with a
+      # default/empty password. Postgres will create the database the
+      # first time, so the password only has to be set on first boot.
+      POSTGRES_USER: ${POSTGRES_USER:?POSTGRES_USER is required}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}
+      POSTGRES_DB: ${POSTGRES_DB:?POSTGRES_DB is required}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
       test:
         [
           'CMD-SHELL',
-          'pg_isready -U ${POSTGRES_USER:-mental_user} -d ${POSTGRES_DB:-mental_health_db}',
+          'pg_isready -U ${POSTGRES_USER:?POSTGRES_USER is required} -d ${POSTGRES_DB:?POSTGRES_DB is required}',
         ]
       interval: 10s
       timeout: 5s
@@ -29,7 +32,7 @@ services:
     container_name: mindmirror_backend
     restart: unless-stopped
     environment:
-      DATABASE_URL: postgresql://${POSTGRES_USER:-mental_user}:${POSTGRES_PASSWORD:-mental_password}@postgres:5432/${POSTGRES_DB:-mental_health_db}
+      DATABASE_URL: postgresql://${POSTGRES_USER:?POSTGRES_USER is required}:${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}@postgres:5432/${POSTGRES_DB:?POSTGRES_DB is required}
       SECRET_KEY: ${SECRET_KEY:?SECRET_KEY is required}
       ALGORITHM: ${ALGORITHM:-HS256}
       ACCESS_TOKEN_EXPIRE_MINUTES: ${ACCESS_TOKEN_EXPIRE_MINUTES:-10080}

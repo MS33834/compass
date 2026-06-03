@@ -11,11 +11,11 @@ PGP key: request one in your first email and we'll send it back.
 
 ## Supported versions
 
-| Version  | Status               |
-| -------- | -------------------- |
-| `main`   | Active development   |
-| `v1.x`   | Bug & security fixes |
-| older    | End of life          |
+| Version | Status               |
+| ------- | -------------------- |
+| `main`  | Active development   |
+| `v1.x`  | Bug & security fixes |
+| older   | End of life          |
 
 ## Threat model (in scope)
 

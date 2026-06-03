@@ -29,18 +29,23 @@ async def register(
     user_data: UserCreate,
     db: Session = Depends(get_db)
 ):
-    existing_user = db.query(User).filter(User.email == user_data.email).first()
-    if existing_user:
+    # We deliberately do NOT distinguish between "email already registered"
+    # and "username already taken" in the response. The same generic detail
+    # is returned in both cases so that an attacker cannot use the register
+    # endpoint to enumerate which emails / usernames already have accounts.
+    # The frontend does its own pre-flight uniqueness checks against the
+    # /auth/check-* helpers (when available) for user experience, but those
+    # are not security boundaries.
+    email_taken = (
+        db.query(User).filter(User.email == user_data.email).first() is not None
+    )
+    username_taken = (
+        db.query(User).filter(User.username == user_data.username).first() is not None
+    )
+    if email_taken or username_taken:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Email already registered"
-        )
-
-    existing_username = db.query(User).filter(User.username == user_data.username).first()
-    if existing_username:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Username already taken"
+            detail="Could not create account with the provided details",
         )
 
     new_user = User(
@@ -79,9 +84,11 @@ async def login(
         )
 
     if not user.is_active:
+        # Generic message: do not leak that the account exists but is disabled.
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Inactive user"
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect email or password",
+            headers={"WWW-Authenticate": "Bearer"},
         )
 
     access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
@@ -136,15 +143,21 @@ async def update_profile(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
+    # Same anti-enumeration policy as /register: when updating profile
+    # fields to a value that is taken, the response is intentionally generic.
     if payload.username and payload.username != current_user.username:
-        existing = db.query(User).filter(User.username == payload.username).first()
-        if existing:
-            raise HTTPException(status_code=400, detail="Username already taken")
+        if db.query(User).filter(User.username == payload.username).first() is not None:
+            raise HTTPException(
+                status_code=400,
+                detail="Could not update profile with the provided details",
+            )
         current_user.username = payload.username
     if payload.email and payload.email != current_user.email:
-        existing = db.query(User).filter(User.email == payload.email).first()
-        if existing:
-            raise HTTPException(status_code=400, detail="Email already taken")
+        if db.query(User).filter(User.email == payload.email).first() is not None:
+            raise HTTPException(
+                status_code=400,
+                detail="Could not update profile with the provided details",
+            )
         current_user.email = payload.email
     if payload.avatar_url is not None:
         current_user.avatar_url = payload.avatar_url
