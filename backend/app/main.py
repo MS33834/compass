@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request
+from fastapi import APIRouter, FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
@@ -9,7 +9,7 @@ from slowapi.middleware import SlowAPIMiddleware
 import logging as _logging
 
 from app.config import settings
-from app.api import auth, assessments, results, training, mood, achievements
+from app.api import auth, assessments, results, training, mood, achievements, oauth
 from app.database import Base, engine
 from app.core.cors import install_cors
 from app.core.logging import configure_logging
@@ -122,6 +122,7 @@ async def _unhandled_exception_handler(request: Request, exc: Exception):
     )
 
 app.include_router(auth.router, prefix=f"{settings.API_V1_STR}/auth", tags=["认证"])
+app.include_router(oauth.router, prefix=f"{settings.API_V1_STR}/auth", tags=["认证"])
 app.include_router(assessments.router, prefix=f"{settings.API_V1_STR}/assessments", tags=["测评"])
 app.include_router(results.router, prefix=f"{settings.API_V1_STR}/results", tags=["结果"])
 app.include_router(training.router, prefix=f"{settings.API_V1_STR}/training", tags=["训练计划"])
@@ -141,3 +142,16 @@ async def root():
 @app.get("/health")
 async def health_check():
     return {"status": "ok", "service": settings.PROJECT_NAME}
+
+
+# Same health endpoint under the /api/v1 prefix so the SPA can
+# probe the backend using its configured API_BASE_URL directly.
+_health_router = APIRouter(tags=["健康"])
+
+
+@_health_router.get("/health")
+async def _v1_health():
+    return {"status": "ok", "service": settings.PROJECT_NAME}
+
+
+app.include_router(_health_router, prefix=settings.API_V1_STR)

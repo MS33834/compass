@@ -1,14 +1,24 @@
 import { useEffect, useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useAppStore } from '../store';
 import { authService } from '../services/auth';
 import { getTranslation } from '../i18n';
 
+/**
+ * SPA-side OAuth callback page.
+ *
+ * GitHub (or the dev-mode shim) redirects the browser here with
+ *   ?provider=github&code=<one-shot-code>&state=<csrf-token>
+ * and we POST that pair to the backend's /auth/oauth/{provider}/callback
+ * in exchange for a JWT + user record. From there the rest of the app
+ * behaves exactly as if the user had signed in with email/password.
+ */
 export const AuthCallback = () => {
   const navigate = useNavigate();
-  const { isAuthenticated, locale } = useAppStore();
+  const { isAuthenticated, locale, completeOAuthSession } = useAppStore();
   const i18n = getTranslation(locale);
   const [error, setError] = useState<string | null>(null);
+  const [searchParams] = useSearchParams();
   const processed = useRef(false);
 
   useEffect(() => {
@@ -16,9 +26,30 @@ export const AuthCallback = () => {
     processed.current = true;
 
     const handleCallback = async () => {
+      const provider = searchParams.get('provider') || undefined;
+      const code = searchParams.get('code') || undefined;
+      const state = searchParams.get('state') || undefined;
+      // `?error=access_denied` is what GitHub redirects with when the
+      // user clicks Cancel on the real consent screen.
+      const oauthError = searchParams.get('error');
+
+      if (oauthError) {
+        setError(
+          locale === 'zh'
+            ? `授权被取消:${oauthError}`
+            : `Authorization cancelled: ${oauthError}`
+        );
+        setTimeout(() => navigate('/login', { replace: true }), 3000);
+        return;
+      }
+
       try {
-        const response = await authService.handleOAuthCallback();
-        if (response.success && response.user) {
+        const response = await authService.handleOAuthCallback({ provider, code, state });
+        if (response.success && response.user && response.token) {
+          // authService already wrote token + user to localStorage; here
+          // we just mirror them into the zustand store so the navbar /
+          // protected-route guards pick it up on the very next render.
+          completeOAuthSession(response.user, response.token);
           navigate('/', { replace: true });
         } else {
           setError(response.error || (locale === 'zh' ? '第三方登录失败' : 'OAuth login failed'));
@@ -31,7 +62,7 @@ export const AuthCallback = () => {
     };
 
     handleCallback();
-  }, [navigate, locale]);
+  }, [navigate, locale, searchParams, completeOAuthSession]);
 
   useEffect(() => {
     if (isAuthenticated) {

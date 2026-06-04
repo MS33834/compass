@@ -13,6 +13,10 @@ os.environ.setdefault("SECRET_KEY", "test-secret-not-used-in-prod-12345678")
 os.environ.setdefault("CORS_ORIGIN", "http://localhost:5173")
 os.environ.setdefault("DATABASE_URL", "sqlite:///:memory:")
 os.environ.setdefault("ENVIRONMENT", "development")
+# Enable the dev OAuth shim for tests by default. The OAuth-specific
+# test file re-imports settings so this is picked up there; for the
+# rest of the suite it just sits as an unused env var.
+os.environ.setdefault("MINDMIRROR_DEV_OAUTH", "true")
 
 import pytest
 from fastapi.testclient import TestClient

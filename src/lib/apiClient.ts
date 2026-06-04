@@ -58,7 +58,18 @@ export function clearLocalSession() {
 }
 
 function buildUrl(path: string, query?: RequestOptions['query']): string {
-  const base = API_BASE_URL.endsWith('/api/v1') || path.startsWith('http') ? '' : API_BASE_URL;
+  // If `path` is an absolute URL (http://... or https://...) we leave it
+  // alone — useful for hitting an external CDN, OAuth provider, etc.
+  // Otherwise we prefix it with API_BASE_URL. We previously had a
+  // `endsWith('/api/v1')` short-circuit that dropped the base entirely,
+  // which silently turned /auth/oauth/github/authorize into a
+  // relative-path request to the Vite dev server and got 404'd. The
+  // short-circuit was only there to support a hand-written `base`
+  // like `https://api.example.com/api/v1` in older test setups, and
+  // removing it doesn't regress that: a full URL still goes through
+  // the `path.startsWith('http')` branch above.
+  const base =
+    path.startsWith('http://') || path.startsWith('https://') ? '' : API_BASE_URL;
   const url = base + (path.startsWith('/') ? path : `/${path}`);
   if (!query) return url;
   const params = new URLSearchParams();

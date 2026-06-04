@@ -456,14 +456,80 @@ export class AuthService {
   }
 
   async loginWithOAuth(provider: 'google' | 'github'): Promise<AuthResponse> {
-    return {
-      success: false,
-      error: `${provider} login is not configured on this deployment. Please use email/password.`,
-    };
+    ensureConfigured();
+    // Ask the backend for the URL the browser should be redirected to.
+    // The backend mints a short-lived signed `state` token for CSRF
+    // protection and returns the right URL (real GitHub, or the local
+    // dev-mode shim if MINDMIRROR_DEV_OAUTH is on). The SPA just
+    // bounces the browser; everything sensitive happens server-side.
+    const useBackend = await pingBackend();
+    if (!useBackend) {
+      return {
+        success: false,
+        error: 'Backend is unreachable; OAuth login requires the server.',
+      };
+    }
+    try {
+      const res = await apiRequest<{ provider: string; authorization_url: string; state: string }>(
+        `/auth/oauth/${provider}/authorize`,
+        { method: 'GET', skipAuth: true }
+      );
+      // Stash the state in sessionStorage so the /auth/callback page
+      // can re-verify it after the round trip (belt + suspenders: the
+      // backend re-verifies anyway, this is just for the SPA to be
+      // sure it bounced to the *expected* provider).
+      sessionStorage.setItem('mindmirror_oauth_state', res.state);
+      sessionStorage.setItem('mindmirror_oauth_provider', res.provider);
+      // Hard-redirect the whole window. We can't use react-router
+      // <Link> because the user is leaving the SPA.
+      window.location.assign(res.authorization_url);
+      // The page is about to navigate; return a pending-ish result so
+      // callers that awaited us don't try to render a "success" toast.
+      return { success: true, mode: 'redirect' };
+    } catch (err) {
+      return { success: false, error: this.toMessage(err, 'OAuth login failed') };
+    }
   }
 
-  async handleOAuthCallback(): Promise<AuthResponse> {
-    return { success: false, error: 'OAuth callback is not supported in this build.' };
+  async handleOAuthCallback(params: {
+    provider?: string;
+    code?: string;
+    state?: string;
+  }): Promise<AuthResponse> {
+    ensureConfigured();
+    const provider = params.provider || sessionStorage.getItem('mindmirror_oauth_provider') || '';
+    const expectedState = sessionStorage.getItem('mindmirror_oauth_state');
+    if (!provider || !params.code || !params.state) {
+      return { success: false, error: 'OAuth callback is missing parameters' };
+    }
+    if (expectedState && expectedState !== params.state) {
+      // Don't even bother the backend — we know the state doesn't match
+      // what /authorize gave us, which is a CSRF / replay signal.
+      return { success: false, error: 'OAuth state mismatch' };
+    }
+    const useBackend = await pingBackend();
+    if (!useBackend) {
+      return { success: false, error: 'Backend is unreachable' };
+    }
+    try {
+      const res = await apiRequest<ApiTokenResponse>(
+        `/auth/oauth/${provider}/callback`,
+        {
+          method: 'POST',
+          body: { code: params.code, state: params.state },
+          skipAuth: true,
+        }
+      );
+      const user = mapApiUser(res.user);
+      persistSession(res.access_token, user);
+      sessionStorage.removeItem('mindmirror_oauth_state');
+      sessionStorage.removeItem('mindmirror_oauth_provider');
+      return { success: true, user, token: res.access_token };
+    } catch (err) {
+      sessionStorage.removeItem('mindmirror_oauth_state');
+      sessionStorage.removeItem('mindmirror_oauth_provider');
+      return { success: false, error: this.toMessage(err, 'OAuth login failed') };
+    }
   }
 
   async logout(): Promise<void> {
