@@ -24,7 +24,7 @@ class Settings(BaseSettings):
     VERSION: str = "1.0.0"
     API_V1_STR: str = "/api/v1"
 
-    DATABASE_URL: str = "postgresql://mental_user:mental_password@postgres:5432/mental_health_db"
+    DATABASE_URL: str = ""  # REQUIRED: set via env var or .env (see .env.example)
 
     SECRET_KEY: str = _INSECURE_DEV_SECRET
     ALGORITHM: str = "HS256"
