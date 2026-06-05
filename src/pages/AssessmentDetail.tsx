@@ -8,16 +8,19 @@ import { RESPONSE_OPTIONS, BIG_FIVE_TRAITS } from '../data/bigFiveData';
 import { Question } from '../types';
 import { STRESS_RESPONSE_OPTIONS, STRESS_LEVELS } from '../data/stressTestData';
 import { GAD7_RESPONSE_OPTIONS, ANXIETY_LEVELS } from '../data/anxietyGad7Data';
-import { SSRS_RESPONSE_OPTIONS, SSRS_SEVERITY, SSRS_LEVELS } from '../data/ssrsData';
+import {
+  SSRS_RESPONSE_OPTIONS,
+  SSRS_SOURCES_OPTIONS,
+  SSRS_LEVELS,
+  SSRS_DIMENSIONS,
+} from '../data/ssrsData';
 import {
   MBI_RESPONSE_OPTIONS,
-  MBI_SEVERITY,
   MBI_LEVELS,
 } from '../data/mbiData';
-import { SWLS_RESPONSE_OPTIONS, SWLS_SEVERITY, SWLS_LEVELS } from '../data/swlsData';
+import { SWLS_RESPONSE_OPTIONS, SWLS_LEVELS } from '../data/swlsData';
 import {
   RESILIENCE_RESPONSE_OPTIONS,
-  RESILIENCE_SEVERITY,
   RESILIENCE_LEVELS,
 } from '../data/resilienceData';
 import { calculateProgress, generateBigFiveReport } from '../services/bigFiveScoring';
@@ -434,9 +437,14 @@ function QuizPage() {
   const isFirstQuestion = currentQuestionIndex === 0;
   const isLastQuestion = currentQuestionIndex === questions.length - 1;
 
-  // 根据测评类型选择选项
-  const options =
-    currentAssessment?.id === 'stress-test' || currentAssessment?.id === '2'
+  // 根据测评类型选择选项 (SSRS items 6/7 改用来源数 0-9 选项)
+  const isSSRSSourceQuestion =
+    (currentAssessment?.id === 'social-support' || currentAssessment?.id === '4') &&
+    (currentQuestion?.id === 'ssrs6' || currentQuestion?.id === 'ssrs7');
+
+  const options = isSSRSSourceQuestion
+    ? SSRS_SOURCES_OPTIONS
+    : currentAssessment?.id === 'stress-test' || currentAssessment?.id === '2'
       ? STRESS_RESPONSE_OPTIONS
       : currentAssessment?.id === 'anxiety-gad7' || currentAssessment?.id === '3'
         ? GAD7_RESPONSE_OPTIONS
@@ -1903,6 +1911,41 @@ function SSRSResultDetail({
         </div>
       </Section>
 
+      <Section title="最强与最弱维度" subtitle="你最擅长和最需要加强的支持面">
+        <div className="grid sm:grid-cols-2 gap-4">
+          <div className="rounded-2xl bg-emerald-50 border border-emerald-200 p-4 sm:p-5">
+            <div className="text-xs font-medium text-emerald-700 mb-1">💪 你的强项</div>
+            <div className="text-lg font-bold text-emerald-800 mb-1">
+              {report.strongest.name} · {report.strongest.score} 分
+            </div>
+            <p className="text-sm text-emerald-700">
+              {SSRS_DIMENSIONS[
+                report.strongest.name === '客观支持'
+                  ? 'objective'
+                  : report.strongest.name === '主观支持'
+                    ? 'subjective'
+                    : 'utilization'
+              ].highTip}
+            </p>
+          </div>
+          <div className="rounded-2xl bg-amber-50 border border-amber-200 p-4 sm:p-5">
+            <div className="text-xs font-medium text-amber-700 mb-1">🔍 提升空间</div>
+            <div className="text-lg font-bold text-amber-800 mb-1">
+              {report.weakest.name} · {report.weakest.score} 分
+            </div>
+            <p className="text-sm text-amber-700">
+              {SSRS_DIMENSIONS[
+                report.weakest.name === '客观支持'
+                  ? 'objective'
+                  : report.weakest.name === '主观支持'
+                    ? 'subjective'
+                    : 'utilization'
+              ].lowTip}
+            </p>
+          </div>
+        </div>
+      </Section>
+
       <Section title="建议与提示" subtitle="基于你的结果,以下是几点可行的方向">
         <div className="bg-white rounded-2xl border border-slate-200 p-5 sm:p-6">
           <ul className="space-y-2.5">
@@ -1913,6 +1956,33 @@ function SSRSResultDetail({
               </li>
             ))}
           </ul>
+        </div>
+      </Section>
+
+      <Section title="专业资源" subtitle="什么时候以及如何寻求专业帮助">
+        <div className="grid sm:grid-cols-2 gap-4">
+          <div className="rounded-2xl bg-rose-50 border border-rose-200 p-4 sm:p-5">
+            <div className="text-sm font-semibold text-rose-800 mb-3">📞 何时寻求专业帮助</div>
+            <ul className="space-y-2 text-sm text-rose-700">
+              {report.resources.whenToSeekHelp.map((t, i) => (
+                <li key={i} className="flex items-start gap-2">
+                  <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-rose-500 shrink-0" />
+                  <span>{t}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="rounded-2xl bg-sky-50 border border-sky-200 p-4 sm:p-5">
+            <div className="text-sm font-semibold text-sky-800 mb-3">🌐 支持渠道</div>
+            <ul className="space-y-2 text-sm text-sky-700">
+              {report.resources.channels.map((t, i) => (
+                <li key={i} className="flex items-start gap-2">
+                  <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-sky-500 shrink-0" />
+                  <span>{t}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </Section>
     </div>
@@ -1980,20 +2050,91 @@ function MBIResultDetail({
 
       <Section title="三维倦怠分" subtitle="情感耗竭、犬儒主义、职业效能 (反向)">
         <div className="grid sm:grid-cols-3 gap-4">
-          {report.dimensions.map(d => (
-            <div
-              key={d.name}
-              className="rounded-2xl bg-white border border-slate-200 p-4 sm:p-5"
-            >
-              <div className="text-sm text-slate-500 mb-1">{d.name}</div>
-              <div className="text-2xl font-extrabold text-orange-700">{d.raw}</div>
-              <div className="mt-1 inline-block text-xs px-2 py-0.5 rounded-full bg-orange-50 text-orange-700">
-                {d.level.label}
+          {report.dimensions.map(d => {
+            const colorMap: Record<string, { bg: string; border: string; text: string; badge: string }> = {
+              green: { bg: 'bg-emerald-50', border: 'border-emerald-200', text: 'text-emerald-800', badge: 'bg-emerald-100 text-emerald-700' },
+              yellow: { bg: 'bg-amber-50', border: 'border-amber-200', text: 'text-amber-800', badge: 'bg-amber-100 text-amber-700' },
+              orange: { bg: 'bg-orange-50', border: 'border-orange-200', text: 'text-orange-800', badge: 'bg-orange-100 text-orange-700' },
+              red: { bg: 'bg-rose-50', border: 'border-rose-200', text: 'text-rose-800', badge: 'bg-rose-100 text-rose-700' },
+            };
+            const cm = colorMap[d.level.color] || colorMap.green;
+            // PE (职业效能) 是反向: 高分=健康 (用 highTip), 低分=问题 (用 lowTip)
+            // EX / CY: 高分=倦怠 (用 highTip), 低分=健康 (用 lowTip)
+            // 规则: green/yellow 是相对好的一端, orange/red 是相对差的一端
+            // 对 PE 来说 "好的一端" = highTip, "差的一端" = lowTip
+            // 对 EX/CY 来说 "好的一端" = lowTip, "差的一端" = highTip
+            const isPE = d.name.includes('PE') || d.name.includes('职业效能');
+            const isHealthy = d.level.color === 'green' || d.level.color === 'yellow';
+            const tip = isPE
+              ? (isHealthy ? d.highTip : d.lowTip)
+              : (isHealthy ? d.lowTip : d.highTip);
+            return (
+              <div
+                key={d.name}
+                className={`rounded-2xl ${cm.bg} border ${cm.border} p-4 sm:p-5`}
+              >
+                <div className="text-sm text-slate-600 mb-1">{d.name}</div>
+                <div className={`text-2xl font-extrabold ${cm.text}`}>{d.raw}</div>
+                <div className={`mt-1 inline-block text-xs px-2 py-0.5 rounded-full ${cm.badge}`}>
+                  {d.level.label}
+                </div>
+                <p className="mt-2 text-sm text-slate-700">{d.description}</p>
+                <p className="mt-2 text-sm text-slate-600 italic border-t border-slate-200 pt-2">
+                  💡 {tip}
+                </p>
               </div>
-              <p className="mt-2 text-sm text-slate-600">{d.description}</p>
-            </div>
-          ))}
+            );
+          })}
         </div>
+      </Section>
+
+      <Section title="最需要关注的维度" subtitle="优先从最严重的方向入手">
+        {(() => {
+          const worst = [...report.dimensions].sort((a, b) => {
+            const order: Record<string, number> = { green: 0, yellow: 1, orange: 2, red: 3 };
+            return (order[b.level.color] || 0) - (order[a.level.color] || 0);
+          })[0];
+          if (!worst || worst.level.color === 'green') {
+            return (
+              <div className="rounded-2xl bg-emerald-50 border border-emerald-200 p-4 sm:p-5">
+                <div className="text-sm text-emerald-700">✅ 三维都在健康范围,继续保持</div>
+              </div>
+            );
+          }
+          const isCon = worst.level.color === 'red' || worst.level.color === 'orange';
+          // PE 反向: 红/橙 = 低 PE = 应显示 lowTip
+          // EX/CY: 红/橙 = 高倦怠 = 应显示 highTip
+          const isWorstPE =
+            worst.name.includes('PE') || worst.name.includes('职业效能');
+          const worstTip = isWorstPE
+            ? isCon
+              ? worst.lowTip
+              : worst.highTip
+            : isCon
+              ? worst.highTip
+              : worst.lowTip;
+          return (
+            <div className={`rounded-2xl p-4 sm:p-5 ${
+              worst.level.color === 'red' ? 'bg-rose-50 border border-rose-200' : 'bg-orange-50 border border-orange-200'
+            }`}>
+              <div className={`text-xs font-medium mb-1 ${
+                worst.level.color === 'red' ? 'text-rose-700' : 'text-orange-700'
+              }`}>
+                {isCon ? '⚠️ 优先关注' : '📌 持续留意'}
+              </div>
+              <div className={`text-lg font-bold mb-1 ${
+                worst.level.color === 'red' ? 'text-rose-800' : 'text-orange-800'
+              }`}>
+                {worst.name} · {worst.raw} 分 · {worst.level.label}
+              </div>
+              <p className={`text-sm ${
+                worst.level.color === 'red' ? 'text-rose-700' : 'text-orange-700'
+              }`}>
+                {worstTip}
+              </p>
+            </div>
+          );
+        })()}
       </Section>
 
       <Section title="应对策略" subtitle="从立即行动到长期调整">
@@ -2087,6 +2228,58 @@ function SWLSResultDetail({
           </p>
         </div>
       </motion.section>
+
+      <Section title="详细解读" subtitle="基于你的分数区间">
+        <div className="rounded-2xl bg-emerald-50 border border-emerald-200 p-4 sm:p-5">
+          <h4 className="text-base font-semibold text-emerald-800 mb-2">
+            {level.label}
+          </h4>
+          <p className="text-sm text-emerald-700 mb-3">
+            {level.description}
+          </p>
+          {report.interpretation.strengths?.length > 0 && (
+            <div className="mb-3">
+              <div className="text-xs font-medium text-emerald-800 mb-1">💪 你的优势</div>
+              <ul className="space-y-1.5 text-sm text-emerald-700">
+                {report.interpretation.strengths.map((s, i) => (
+                  <li key={i} className="flex items-start gap-2">
+                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
+                    <span>{s}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {(report.interpretation as any).challenges?.length > 0 && (
+            <div>
+              <div className="text-xs font-medium text-amber-800 mb-1">🔍 值得关注</div>
+              <ul className="space-y-1.5 text-sm text-amber-700">
+                {(report.interpretation as any).challenges.map((c: string, i: number) => (
+                  <li key={i} className="flex items-start gap-2">
+                    <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0" />
+                    <span>{c}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      </Section>
+
+      {report.advice && report.advice.length > 0 && (
+        <Section title="针对性建议" subtitle="基于你当前分数区间的行动指引">
+          <div className="rounded-2xl bg-white border border-slate-200 p-4 sm:p-5">
+            <ul className="space-y-2 text-sm text-slate-700">
+              {report.advice.map((tip: string, i: number) => (
+                <li key={i} className="flex items-start gap-2">
+                  <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
+                  <span>{tip}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Section>
+      )}
 
       <Section title="提升策略" subtitle="关系、心流、意义、健康四个方向">
         <div className="grid sm:grid-cols-2 gap-4">
@@ -2197,6 +2390,29 @@ function ResilienceResultDetail({
               </div>
             </div>
           ))}
+        </div>
+      </Section>
+
+      <Section title="最强与最弱维度" subtitle="你最擅长和最需要加强的韧性面">
+        <div className="grid sm:grid-cols-2 gap-4">
+          <div className="rounded-2xl bg-emerald-50 border border-emerald-200 p-4 sm:p-5">
+            <div className="text-xs font-medium text-emerald-700 mb-1">💪 你的强项</div>
+            <div className="text-lg font-bold text-emerald-800 mb-1">
+              {report.strongest.name} · {report.strongest.score} 分
+            </div>
+            <p className="text-sm text-emerald-700">
+              {report.dimensions.find(d => d.name === report.strongest.name)?.highTip}
+            </p>
+          </div>
+          <div className="rounded-2xl bg-amber-50 border border-amber-200 p-4 sm:p-5">
+            <div className="text-xs font-medium text-amber-700 mb-1">🔍 提升空间</div>
+            <div className="text-lg font-bold text-amber-800 mb-1">
+              {report.weakest.name} · {report.weakest.score} 分
+            </div>
+            <p className="text-sm text-amber-700">
+              {report.dimensions.find(d => d.name === report.weakest.name)?.lowTip}
+            </p>
+          </div>
         </div>
       </Section>
 

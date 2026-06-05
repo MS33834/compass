@@ -72,7 +72,9 @@ export function generateDetailedSWLSReport(
   const traits = calculateSWLSTraits(answers, questions);
   const total = traits[0].score;
   const level = getSWLSLevel(total);
-  const isHigh = total >= 25;
+  // 与原 6 档严重度对齐: high (25-29 "较满意") 和 veryHigh (30-35 "高度满意") 共用 strengths;
+  // veryLow / low / slightlyLow / average 共用 challenges 视角
+  const isHigh = level.level === 'high' || level.level === 'veryHigh';
 
   return {
     summary: {

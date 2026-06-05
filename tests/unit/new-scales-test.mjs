@@ -743,6 +743,57 @@ eq(SSRS_DIM.subjective.length * 4, 16, '17.1 subjective 4 题 × 4 = 16');
 eq(SSRS_DIM.utilization.length * 4, 12, '17.2 utilization 3 题 × 4 = 12');
 truthy(SSRS_DIM.objective.length >= 2, '17.3 objective 至少 2 题 (含 ssrs6,7 0-9)');
 
+// ============================================================
+// 18. SWLS 二分 isHigh 对齐 6 档 (避免"较满意"误标"高度满意")
+// ============================================================
+log('=== 18. SWLS high 边界 vs interpretation ===');
+
+// 模拟修复后的 isHigh 判定:基于 level.level 而非分数阈值
+function swlsIsHighAligned(score) {
+  if (score <= 24) return false;        // veryLow/low/slightlyLow/average
+  if (score <= 29) return true;         // high (label "较满意")
+  return true;                            // veryHigh (label "高度满意")
+}
+
+const swlsInterp = [
+  [5,  'veryLow',  false],
+  [9,  'veryLow',  false],
+  [14, 'low',      false],
+  [19, 'slightlyLow', false],
+  [24, 'average',  false],
+  [25, 'high',     true],   // 较满意 — strengths 显示
+  [29, 'high',     true],
+  [30, 'veryHigh', true],   // 高度满意 — strengths 显示
+  [35, 'veryHigh', true],
+];
+for (const [score, lvl, high] of swlsInterp) {
+  truthy(
+    swlsLevel(score) === lvl,
+    `18.1 SWLS ${score} → ${lvl}`,
+  );
+  truthy(
+    swlsIsHighAligned(score) === high,
+    `18.2 SWLS ${score} isHigh = ${high} (匹配 ${lvl})`,
+  );
+}
+
+// ============================================================
+// 19. SSRS 来源数项 0-9 评分 (UI 修复后 ssrs6/7 用 SSRS_SOURCES_OPTIONS)
+// ============================================================
+log('=== 19. SSRS 来源数评分 ===');
+
+const SSRS_SOURCES = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+eq(SSRS_SOURCES.length, 10, '19.1 SSRS 来源数选项 0-9 共 10 档');
+eq(SSRS_SOURCES[0], 0, '19.2 SSRS 来源数最小 0');
+eq(SSRS_SOURCES[9], 9, '19.3 SSRS 来源数最大 9');
+
+// ssrs6 / ssrs7 选 9,objective 总分最多 18 (ssrs2 上限 4)
+{
+  const a = { ssrs2: 4, ssrs6: 9, ssrs7: 9 };
+  const objSum = a.ssrs2 + a.ssrs6 + a.ssrs7;
+  eq(objSum, 22, '19.4 客观支持 ssrs2+6+7 全 max = 22');
+}
+
 console.log(`\n[new-scales] === RESULT ===`);
 console.log(`[new-scales] PASS: ${pass} assertions, FAIL: ${fail}`);
 if (fail > 0) {

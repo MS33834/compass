@@ -177,10 +177,10 @@ export const SWLS_LEVELS = {
 };
 
 // 详细解读维度 (Diener 多维子分)
+// 注意: title/description 在 UI 中由当前 level 动态注入,这里只保留
+// strengths/challenges 列表,避免与 SWLS_SEVERITY 中 6 档 label 冲突
 export const SWLS_INTERPRETATION = {
   high: {
-    title: '高度满意',
-    description: '你的生活现状高度符合内心期望,主观幸福感高。',
     strengths: [
       '内在标准与现实高度匹配',
       '对生活有清晰的目标感和意义感',
@@ -188,8 +188,6 @@ export const SWLS_INTERPRETATION = {
     ],
   },
   low: {
-    title: '较低满意',
-    description: '你的生活现状低于内心期望,值得探索具体的不满足来源。',
     strengths: [
       '对自己诚实的态度本身就是改变的开始',
       '认知觉察能力较好,识别出问题',
