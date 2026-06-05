@@ -58,6 +58,29 @@ const LABELS = {
   },
 };
 
+// 测评 ID → 友好显示名 (zh / en)
+// 用于 HTML 报告中显示测评的正式名称,而不是冷冰冰的 id 字符串
+const ASSESSMENT_LABELS: Record<'zh' | 'en', Record<string, string>> = {
+  zh: {
+    'big-five': '大五人格',
+    'stress-test': '压力测试',
+    'anxiety-gad7': '焦虑测评 (GAD-7)',
+    'social-support': '社会支持 (SSRS)',
+    'mbi-burnout': '职业倦怠 (MBI-GS)',
+    'life-satisfaction': '生活满意度 (SWLS)',
+    'resilience-cdrisc': '心理韧性 (CD-RISC-10)',
+  },
+  en: {
+    'big-five': 'Big Five Personality',
+    'stress-test': 'Stress Test',
+    'anxiety-gad7': 'Anxiety (GAD-7)',
+    'social-support': 'Social Support (SSRS)',
+    'mbi-burnout': 'Burnout (MBI-GS)',
+    'life-satisfaction': 'Life Satisfaction (SWLS)',
+    'resilience-cdrisc': 'Resilience (CD-RISC-10)',
+  },
+};
+
 function escapeHtml(str: string): string {
   return String(str)
     .replace(/&/g, '&amp;')
@@ -84,6 +107,7 @@ function buildReportHtml(result: any, lang: 'en' | 'zh' = 'zh'): string {
   const t = LABELS[lang];
   const title = result.title || t.title;
   const assessmentId = result.assessmentId || t.unknown;
+  const assessmentLabel = ASSESSMENT_LABELS[lang][assessmentId] || assessmentId;
   const time = new Date(result.timestamp || Date.now()).toLocaleString(
     lang === 'zh' ? 'zh-CN' : 'en-US'
   );
@@ -123,7 +147,7 @@ function buildReportHtml(result: any, lang: 'en' | 'zh' = 'zh'): string {
 <body>
   <h1>📊 ${escapeHtml(title)}</h1>
   <div class="meta">
-    <div><div class="meta-label">${t.type}</div><div class="meta-value">${escapeHtml(assessmentId)}</div></div>
+    <div><div class="meta-label">${t.type}</div><div class="meta-value">${escapeHtml(assessmentLabel)}</div></div>
     <div><div class="meta-label">${t.time}</div><div class="meta-value">${escapeHtml(time)}</div></div>
     <div><div class="meta-label">${t.totalScore}</div><div class="meta-value">${totalScore}</div></div>
   </div>

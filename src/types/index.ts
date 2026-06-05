@@ -21,6 +21,7 @@ export interface TraitResult {
   name: string;
   score: number;
   description: string;
+  maxScore?: number;
 }
 
 export interface AssessmentResult {

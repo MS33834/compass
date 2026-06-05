@@ -54,27 +54,28 @@ export function calculateMBITraits(
   const exMax = 30;
   const cyMax = 24;
   const peMax = 36;
-  const totalMax = 30;
 
   const traits: TraitResult[] = [
     {
       name: '综合倦怠分',
       score: Math.round(total * 10) / 10,
-      description: `${getMBITotalLevel(total).label} (${total.toFixed(1)}/${totalMax})`,
+      maxScore: 30,
+      description: `${getMBITotalLevel(total).label} (${total.toFixed(1)}/30)`,
     },
     {
       name: '情感耗竭',
       score: Math.round((exScore / exMax) * 100),
-      description: `${MBI_DIMENSIONS.exhaustion.description} (${exScore}/${exMax})`,
+      description: `${MBI_DIMENSIONS.exhaustion.description} (${exScore}/${exMax},高分=倦怠)`,
     },
     {
       name: '犬儒主义 / 去人格化',
       score: Math.round((cyScore / cyMax) * 100),
-      description: `${MBI_DIMENSIONS.cynicism.description} (${cyScore}/${cyMax})`,
+      description: `${MBI_DIMENSIONS.cynicism.description} (${cyScore}/${cyMax},高分=倦怠)`,
     },
     {
-      name: '职业效能感(反向)',
+      name: '职业效能感',
       score: Math.round((peRaw / peMax) * 100),
+      maxScore: peMax,
       description: `${MBI_DIMENSIONS.efficacy.description} (${peRaw}/${peMax},高分=健康)`,
     },
   ];
@@ -87,6 +88,11 @@ export function getMBITotalLevel(score: number) {
   if (score <= 17) return MBI_SEVERITY.moderate;
   if (score <= 22) return MBI_SEVERITY.high;
   return MBI_SEVERITY.severe;
+}
+
+/** 与其它 3 个量表的 getXxxLevelInfo 保持 API 一致性 */
+export function getMBILevelInfo(score: number) {
+  return getMBITotalLevel(score);
 }
 
 export function getMBIExLevel(score: number) {

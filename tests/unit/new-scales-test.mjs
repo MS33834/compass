@@ -475,6 +475,113 @@ eq(['low', 'mediumLow', 'medium', 'high'].length, 4, '5.7 SSRS 4 档');
 eq(['low', 'moderate', 'high', 'severe'].length, 4, '5.7 MBI 4 档');
 eq(['veryLow', 'low', 'moderate', 'high', 'veryHigh'].length, 5, '5.7 CD-RISC-10 5 档');
 
+// ============================================================
+// 6. SSRS 严重度范围 (修复 8, 22 边界)
+// ============================================================
+log('=== 6. SSRS 严重度边界 ===');
+
+// 最小值 8 (ssrs1-5,8-10 各 1 + ssrs2=1 + ssrs6,7=0) — 验证下限
+eq(ssrsLevel(8), 'low', '6.1 理论最小 8 → low');
+eq(ssrsLevel(9), 'low', '6.1 9 → low');
+eq(ssrsLevel(22), 'low', '6.1 22 → low');
+eq(ssrsLevel(23), 'mediumLow', '6.1 23 → mediumLow (上界+1)');
+eq(ssrsLevel(29), 'mediumLow', '6.1 29 → mediumLow');
+eq(ssrsLevel(30), 'medium', '6.1 30 → medium');
+eq(ssrsLevel(44), 'medium', '6.1 44 → medium');
+eq(ssrsLevel(45), 'high', '6.1 45 → high');
+
+// 4 档连续无断点
+{
+  const transitions = [
+    [8, 22, 'low'],
+    [23, 29, 'mediumLow'],
+    [30, 44, 'medium'],
+    [45, 50, 'high'],
+  ];
+  for (const [lo, hi, name] of transitions) {
+    truthy(ssrsLevel(lo) === name, `6.2 ${lo} → ${name}`);
+    truthy(ssrsLevel(hi) === name, `6.2 ${hi} → ${name}`);
+  }
+}
+
+// ============================================================
+// 7. MBI 短版 (15 题) 标注断言
+// ============================================================
+log('=== 7. MBI-GS(s) 短版 ===');
+
+eq(MBI_DIM.exhaustion.length + MBI_DIM.cynicism.length + MBI_DIM.efficacy.length, 15, '7.1 MBI-GS(s) 15 题');
+// CY 短版 = 4 题 (完整版是 5 题)
+eq(MBI_DIM.cynicism.length, 4, '7.1 CY 短版 4 题 (vs 完整版 5)');
+// PE 6 题反向
+eq(MBI_DIM.efficacy.length, 6, '7.1 PE 6 题反向');
+
+// 综合 = (EX + CY + (36-PE)) / 3
+{
+  // PE=0 → 反向后 36 → 综合 = (0+0+36)/3 = 12
+  const a = {};
+  for (const k of MBI_DIM.exhaustion) a[k] = 0;
+  for (const k of MBI_DIM.cynicism) a[k] = 0;
+  for (const k of MBI_DIM.efficacy) a[k] = 0;
+  eq(mbiSubScores(a).total, 12, '7.2 PE=0 反向后综合 = 12');
+  // PE=36 (满) → 反向后 0 → 综合 = (0+0+0)/3 = 0
+  for (const k of MBI_DIM.efficacy) a[k] = 6;
+  eq(mbiSubScores(a).total, 0, '7.2 PE=36 (满) 反向后综合 = 0');
+}
+
+// ============================================================
+// 8. SWLS 6 档严重度覆盖完整范围
+// ============================================================
+log('=== 8. SWLS 6 档 ===');
+
+const swls6Ranges = [
+  [5, 9, 'veryLow'],
+  [10, 14, 'low'],
+  [15, 19, 'slightlyLow'],
+  [20, 24, 'average'],
+  [25, 29, 'high'],
+  [30, 35, 'veryHigh'],
+];
+for (const [lo, hi, name] of swls6Ranges) {
+  truthy(swlsLevel(lo) === name, `8.1 ${lo} → ${name}`);
+  truthy(swlsLevel(hi) === name, `8.1 ${hi} → ${name}`);
+}
+
+// ============================================================
+// 9. CD-RISC-10 5 档严重度
+// ============================================================
+log('=== 9. CD-RISC-10 5 档 ===');
+
+const cdr5Ranges = [
+  [0, 19, 'veryLow'],
+  [20, 23, 'low'],
+  [24, 28, 'moderate'],
+  [29, 32, 'high'],
+  [33, 40, 'veryHigh'],
+];
+for (const [lo, hi, name] of cdr5Ranges) {
+  truthy(cdrLevel(lo) === name, `9.1 ${lo} → ${name}`);
+  truthy(cdrLevel(hi) === name, `9.1 ${hi} → ${name}`);
+}
+
+// ============================================================
+// 10. ID 命名空间互不冲突
+// ============================================================
+log('=== 10. ID 命名空间 ===');
+
+const expectedPrefixes = ['ssrs', 'mbi', 'swls', 'cdr'];
+for (const prefix of expectedPrefixes) {
+  const all = allIds();
+  truthy(all.some(id => id.startsWith(prefix + '1')), `10.1 ${prefix}* ID 存在`);
+}
+
+// ============================================================
+// 11. SWLS 单维度 (无反向) - 重新验证
+// ============================================================
+log('=== 11. SWLS 单维度无反向 ===');
+
+eq(SWLS_QUESTIONS.length, 5, '11.1 SWLS 5 题');
+truthy(SWLS_QUESTIONS.includes('swls1') && SWLS_QUESTIONS.includes('swls5'), '11.1 SWLS 题号 1-5');
+
 console.log(`\n[new-scales] === RESULT ===`);
 console.log(`[new-scales] PASS: ${pass} assertions, FAIL: ${fail}`);
 if (fail > 0) {

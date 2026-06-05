@@ -1,12 +1,14 @@
 import { Assessment, Question } from '../types';
 
 /**
- * MBI-GS — Maslach Burnout Inventory General Survey
+ * MBI-GS(s) — Maslach Burnout Inventory General Survey, Short Form
  *
  * 理论基础 (Theoretical basis)
  * ─────────────────────────────
  * 由 Christina Maslach 与 Susan E. Jackson (1981) 编制,经多轮修订形成
  * MBI-GS (1996) 通用版,适用于所有职业人群,而不仅限于助人行业。
+ *
+ * 本量表采用 MBI-GS(s) 短版 (Schaufeli et al. 1996, 15 题):
  *
  * 三维度结构 (Three-factor model):
  *
@@ -19,22 +21,22 @@ import { Assessment, Question } from '../types';
  *
  * 量表结构
  * ─────────
- * 15 题 + 1 题缓冲 (16 题),0-6 频率量表 (0=从未, 6=每天)。
- *   - EX: 5 题 (1-5)
- *   - CY: 4 题 (6-9)
- *   - PE: 6 题 (10-15), 反向计分 — 高分 = 低倦怠
+ * 15 题,0-6 频率量表 (0=从未, 6=每天)。
+ *   - EX: 5 题 (1-5)        → 原始 0-30
+ *   - CY: 4 题 (6-9)        → 原始 0-24  (MBI-GS 完整版是 5 题 0-30)
+ *   - PE: 6 题 (10-15),反向 → 原始 0-36
  *
- * 分数计算 (按 Maslach 1996 标准):
+ * 分数计算 (按 Schaufeli et al. 1996 + Maslach 1996 标准):
  *   - EX 原始分: 0-30
  *   - CY 原始分: 0-24
  *   - PE 原始分: 0-36
  *   - 综合倦怠分 (MBI Total): (EX + CY + (36-PE)) / 3, 范围 0-30
  *
- * 严重度:
+ * 严重度 (按 Schaufeli 1996 cutoff):
  *   EX 高倦怠: ≥ 15 (中 ≥11, 低 ≥6)
  *   CY 高倦怠: ≥ 8  (中 ≥5, 低 ≥3)
  *   PE 低效能: ≤ 24 (中 ≤29, 高 ≥30)
- *   综合 MBI ≥ 12: 中重度倦怠
+ *   综合 MBI: < 12 轻度, 12-17 中度, 18-22 高度, ≥ 23 重度
  */
 
 export const MBI_ASSESSMENT: Assessment = {
@@ -200,6 +202,14 @@ export const MBI_SEVERITY = {
     description:
       '你目前处于严重职业倦怠,可能伴随身心健康风险,强烈建议尽快采取系统性干预,必要时寻求专业帮助。',
   },
+};
+
+// 与 IntroPage 一致的严重度列表(供 IntroPage 渲染)
+export const MBI_LEVELS = {
+  low: MBI_SEVERITY.low,
+  moderate: MBI_SEVERITY.moderate,
+  high: MBI_SEVERITY.high,
+  severe: MBI_SEVERITY.severe,
 };
 
 // 单维度严重度 (per-dimension)

@@ -166,6 +166,16 @@ export const SWLS_SEVERITY = {
   },
 };
 
+// 与 IntroPage 一致的严重度列表(供 IntroPage 渲染)
+export const SWLS_LEVELS = {
+  veryLow: SWLS_SEVERITY.veryLow,
+  low: SWLS_SEVERITY.low,
+  slightlyLow: SWLS_SEVERITY.slightlyLow,
+  average: SWLS_SEVERITY.average,
+  high: SWLS_SEVERITY.high,
+  veryHigh: SWLS_SEVERITY.veryHigh,
+};
+
 // 详细解读维度 (Diener 多维子分)
 export const SWLS_INTERPRETATION = {
   high: {

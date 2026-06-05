@@ -8,12 +8,17 @@ import { RESPONSE_OPTIONS, BIG_FIVE_TRAITS } from '../data/bigFiveData';
 import { Question } from '../types';
 import { STRESS_RESPONSE_OPTIONS, STRESS_LEVELS } from '../data/stressTestData';
 import { GAD7_RESPONSE_OPTIONS, ANXIETY_LEVELS } from '../data/anxietyGad7Data';
-import { SSRS_RESPONSE_OPTIONS, SSRS_SEVERITY } from '../data/ssrsData';
-import { MBI_RESPONSE_OPTIONS, MBI_SEVERITY } from '../data/mbiData';
-import { SWLS_RESPONSE_OPTIONS, SWLS_SEVERITY } from '../data/swlsData';
+import { SSRS_RESPONSE_OPTIONS, SSRS_SEVERITY, SSRS_LEVELS } from '../data/ssrsData';
+import {
+  MBI_RESPONSE_OPTIONS,
+  MBI_SEVERITY,
+  MBI_LEVELS,
+} from '../data/mbiData';
+import { SWLS_RESPONSE_OPTIONS, SWLS_SEVERITY, SWLS_LEVELS } from '../data/swlsData';
 import {
   RESILIENCE_RESPONSE_OPTIONS,
   RESILIENCE_SEVERITY,
+  RESILIENCE_LEVELS,
 } from '../data/resilienceData';
 import { calculateProgress, generateBigFiveReport } from '../services/bigFiveScoring';
 import { getStressLevelInfo, generateDetailedStressReport } from '../services/stressTestScoring';
@@ -332,14 +337,12 @@ function IntroPage({ onStart }: { onStart: () => void }) {
             <p className="text-cyan-700 text-sm leading-relaxed">
               {i18n.results.ssrsIntro}
             </p>
-            <div className="mt-4 grid sm:grid-cols-3 gap-2">
-              {Object.values(SSRS_SEVERITY)
-                .filter(v => v && v.label)
-                .map(level => (
-                  <div key={level.label} className="bg-white rounded-lg p-2 text-center">
-                    <div className="font-medium text-cyan-700 text-sm">{level.label}</div>
-                  </div>
-                ))}
+            <div className="mt-4 grid sm:grid-cols-4 gap-2">
+              {Object.values(SSRS_LEVELS).map(level => (
+                <div key={level.label} className="bg-white rounded-lg p-2 text-center">
+                  <div className="font-medium text-cyan-700 text-sm">{level.label}</div>
+                </div>
+              ))}
             </div>
           </div>
         )}
@@ -349,13 +352,11 @@ function IntroPage({ onStart }: { onStart: () => void }) {
             <h3 className="font-semibold text-orange-800 mb-3">{i18n.assessments.title}</h3>
             <p className="text-orange-700 text-sm leading-relaxed">{i18n.results.mbiIntro}</p>
             <div className="mt-4 grid sm:grid-cols-4 gap-2">
-              {Object.values(MBI_SEVERITY)
-                .filter(v => v && v.label)
-                .map(level => (
-                  <div key={level.label} className="bg-white rounded-lg p-2 text-center">
-                    <div className="font-medium text-orange-700 text-sm">{level.label}</div>
-                  </div>
-                ))}
+              {Object.values(MBI_LEVELS).map(level => (
+                <div key={level.label} className="bg-white rounded-lg p-2 text-center">
+                  <div className="font-medium text-orange-700 text-sm">{level.label}</div>
+                </div>
+              ))}
             </div>
           </div>
         )}
@@ -367,13 +368,11 @@ function IntroPage({ onStart }: { onStart: () => void }) {
               {i18n.results.swlsIntro}
             </p>
             <div className="mt-4 grid sm:grid-cols-3 gap-2">
-              {Object.values(SWLS_SEVERITY)
-                .filter(v => v && v.label)
-                .map(level => (
-                  <div key={level.label} className="bg-white rounded-lg p-2 text-center">
-                    <div className="font-medium text-emerald-700 text-sm">{level.label}</div>
-                  </div>
-                ))}
+              {Object.values(SWLS_LEVELS).map(level => (
+                <div key={level.label} className="bg-white rounded-lg p-2 text-center">
+                  <div className="font-medium text-emerald-700 text-sm">{level.label}</div>
+                </div>
+              ))}
             </div>
           </div>
         )}
@@ -385,13 +384,11 @@ function IntroPage({ onStart }: { onStart: () => void }) {
               {i18n.results.resilienceIntro}
             </p>
             <div className="mt-4 grid sm:grid-cols-3 gap-2">
-              {Object.values(RESILIENCE_SEVERITY)
-                .filter(v => v && v.label)
-                .map(level => (
-                  <div key={level.label} className="bg-white rounded-lg p-2 text-center">
-                    <div className="font-medium text-lime-700 text-sm">{level.label}</div>
-                  </div>
-                ))}
+              {Object.values(RESILIENCE_LEVELS).map(level => (
+                <div key={level.label} className="bg-white rounded-lg p-2 text-center">
+                  <div className="font-medium text-lime-700 text-sm">{level.label}</div>
+                </div>
+              ))}
             </div>
           </div>
         )}

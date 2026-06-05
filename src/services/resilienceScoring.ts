@@ -50,6 +50,7 @@ export function calculateResilienceTraits(
     {
       name: '心理韧性总分',
       score: total,
+      maxScore: 40,
       description: getResilienceTotalDescription(total),
     },
   ];

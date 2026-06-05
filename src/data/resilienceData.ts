@@ -143,7 +143,7 @@ export const RESILIENCE_DIMENSION_ITEMS: Record<
   optimism: ['cdr3', 'cdr6', 'cdr7'],
 };
 
-// 严重度
+// 严重度 (按 Connor & Davidson 2003 + 中国常模)
 export const RESILIENCE_SEVERITY = {
   veryLow: {
     level: 'veryLow',
@@ -212,6 +212,15 @@ export const RESILIENCE_SEVERITY = {
       '保持谦逊 — 韧性不是免疫,只是更好的恢复能力',
     ],
   },
+};
+
+// 与 IntroPage 一致的严重度列表(供 IntroPage 渲染)
+export const RESILIENCE_LEVELS = {
+  veryLow: RESILIENCE_SEVERITY.veryLow,
+  low: RESILIENCE_SEVERITY.low,
+  moderate: RESILIENCE_SEVERITY.moderate,
+  high: RESILIENCE_SEVERITY.high,
+  veryHigh: RESILIENCE_SEVERITY.veryHigh,
 };
 
 // 维度说明

@@ -39,6 +39,7 @@ export function calculateSWLSTraits(
     {
       name: '生活满意度',
       score: total,
+      maxScore: 35,
       description: getSWLSTotalDescription(total),
     },
   ];

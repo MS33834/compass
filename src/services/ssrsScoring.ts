@@ -12,13 +12,13 @@ import {
  *   客观支持: items 2, 6, 7    (3 题, 范围 1-22)
  *   主观支持: items 1, 3, 4, 5 (4 题, 范围 4-16)
  *   利用度:   items 8, 9, 10   (3 题, 范围 3-12)
- *   总分: 12-50
+ *   总分: 8-50 (理论最小: 1+0+0+4×1+3×1 = 8)
  *
- * 严重度:
- *   ≤ 22: 低
- *   23-29: 中等偏低
- *   30-44: 中等
- *   ≥ 45: 高
+ * 严重度 (肖水源 1990 + 王征宇 1987):
+ *   8  - 22 : 低
+ *   23 - 29 : 中等偏低
+ *   30 - 44 : 中等
+ *   45 - 50 : 高
  */
 
 export function calculateSSRSTraits(
@@ -49,11 +49,13 @@ export function calculateSSRSTraits(
   const objectiveMax = 4 + 9 + 9; // item2=4 + item6=9 + item7=9
   const subjectiveMax = 4 * 4; // 4 题各最大 4
   const utilizationMax = 3 * 4; // 3 题各最大 4
+  const totalMax = 50;
 
   const traits: TraitResult[] = [
     {
       name: '社会支持总分',
       score: totalScore,
+      maxScore: totalMax,
       description: getSSRSTotalDescription(totalScore),
     },
     {
@@ -83,6 +85,7 @@ export function getSSRSLevel(score: number) {
   return SSRS_SEVERITY.high;
 }
 
+/** 与其它 3 个量表的 getXxxLevelInfo 保持 API 一致性 */
 export function getSSRSLevelInfo(score: number) {
   return getSSRSLevel(score);
 }

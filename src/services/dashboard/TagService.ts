@@ -99,6 +99,78 @@ const AUTO_TAGS: Array<{
       operator: 'and',
     },
   },
+  {
+    // 社交支持总分 ≤ 22 → 触发
+    id: 'low_social_support',
+    name: '社交支持薄弱',
+    color: 'bg-cyan-100 text-cyan-800',
+    icon: '🫂',
+    criteria: {
+      type: 'automatic',
+      conditions: [{ assessmentType: 'social', operator: 'lt', value: 23 }],
+      operator: 'and',
+    },
+  },
+  {
+    // 职业倦怠综合 ≥ 18 → 触发
+    id: 'high_burnout',
+    name: '职业倦怠',
+    color: 'bg-orange-100 text-orange-800',
+    icon: '🔥',
+    criteria: {
+      type: 'automatic',
+      conditions: [{ assessmentType: 'burnout', operator: 'gt', value: 17 }],
+      operator: 'and',
+    },
+  },
+  {
+    // SWLS 总分 ≤ 14 → 触发
+    id: 'low_life_satisfaction',
+    name: '生活满意度偏低',
+    color: 'bg-emerald-100 text-emerald-800',
+    icon: '🌧️',
+    criteria: {
+      type: 'automatic',
+      conditions: [{ assessmentType: 'life', operator: 'lt', value: 15 }],
+      operator: 'and',
+    },
+  },
+  {
+    // CD-RISC-10 ≤ 23 → 触发
+    id: 'low_resilience',
+    name: '韧性偏低',
+    color: 'bg-lime-100 text-lime-800',
+    icon: '🌱',
+    criteria: {
+      type: 'automatic',
+      conditions: [{ assessmentType: 'resilience', operator: 'lt', value: 24 }],
+      operator: 'and',
+    },
+  },
+  {
+    // SWLS ≥ 25 → 触发
+    id: 'high_life_satisfaction',
+    name: '生活满意度高',
+    color: 'bg-green-100 text-green-800',
+    icon: '🌅',
+    criteria: {
+      type: 'automatic',
+      conditions: [{ assessmentType: 'life', operator: 'gt', value: 24 }],
+      operator: 'and',
+    },
+  },
+  {
+    // 韧性 ≥ 33 → 触发
+    id: 'high_resilience',
+    name: '韧性强大',
+    color: 'bg-emerald-100 text-emerald-800',
+    icon: '🌳',
+    criteria: {
+      type: 'automatic',
+      conditions: [{ assessmentType: 'resilience', operator: 'gt', value: 32 }],
+      operator: 'and',
+    },
+  },
 ];
 
 class TagService {

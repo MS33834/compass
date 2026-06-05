@@ -28,12 +28,13 @@ import { Assessment, Question } from '../types';
  *
  * 总分范围 12 ~ 50 (合并维度后),分值越高社会支持越好。
  *
- * 严重度 (Severity) — 参考肖水源 1990 制定的分界点:
+ * 严重度 (Severity) — 参考肖水源 1990 制定的分界点
+ * (总分理论范围 8-50,按 4 级/来源数计分可得):
  *
- *   ≤ 22  : 低社会支持
- *   23 ~ 29: 中等偏低
- *   30 ~ 44: 中等
- *   ≥ 45  : 高社会支持
+ *   8  - 22 : 低社会支持
+ *   23 - 29 : 中等偏低
+ *   30 - 44 : 中等
+ *   45 - 50 : 高社会支持
  */
 
 export const SSRS_ASSESSMENT: Assessment = {
@@ -158,8 +159,8 @@ export const SSRS_DIMENSION_ITEMS: Record<'objective' | 'subjective' | 'utilizat
 export const SSRS_SEVERITY = {
   low: {
     level: 'low',
-    label: '社会支持较低',
-    range: [12, 22] as [number, number],
+    label: '低社会支持',
+    range: [8, 22] as [number, number],
     color: 'red',
     description:
       '你当前感知到的社会支持较少,可能缺乏能依靠的人或难以获得实际帮助。这种状态长期持续会影响心理韧性和应对压力的能力,建议主动建立和扩展支持网络。',
@@ -200,7 +201,7 @@ export const SSRS_SEVERITY = {
   },
   high: {
     level: 'high',
-    label: '社会支持较好',
+    label: '高社会支持',
     range: [45, 50] as [number, number],
     color: 'green',
     description:
@@ -212,6 +213,14 @@ export const SSRS_SEVERITY = {
       '当状态变差时,记得自己曾经被支持过,可以相信这一次也有人会陪你度过',
     ],
   },
+};
+
+// 与 IntroPage 一致的严重度列表(供 IntroPage 渲染)
+export const SSRS_LEVELS = {
+  low: SSRS_SEVERITY.low,
+  mediumLow: SSRS_SEVERITY.mediumLow,
+  medium: SSRS_SEVERITY.medium,
+  high: SSRS_SEVERITY.high,
 };
 
 // 维度解释
