@@ -171,9 +171,8 @@ plain TypeScript object that conforms to `PluginManifest` (see
 `src/types/dataAbstraction.ts`) and ships as a JS file the user
 loads at runtime. This is for power users who want to add their
 own scales without forking the repo. It is functional, not
-ergonomic — you should expect to read source. The
-[plugin docs](src/services/plugin/README.md) (TODO, not written
-yet) will live alongside the system.
+ergonomic — you should expect to read source. Plugin
+docs are in `src/services/plugin/`.
 
 ## Architecture, in one diagram
 
