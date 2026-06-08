@@ -402,15 +402,15 @@ export default {
         },
         {
           q: '我的数据存哪里?',
-          a: '在线模式:存在你自己的服务器数据库里;离线模式:只存在你这台浏览器的 localStorage 里。我们看不到。',
+          a: '只存在你这台浏览器的 localStorage 里,绝不外传。',
         },
         {
           q: '可以匿名用吗?',
           a: '可以。点"游客模式"即可,不收集邮箱,不清空也能随时开始。',
         },
         {
-          q: '我能在自己公司部署吗?',
-          a: '可以。MIT 协议,商用、自部署都行。Docker 一行命令,或者直接装在我们的 Cloud 版本上。',
+          q: '我能在自己单位/学校内部署吗?',
+          a: '非商用(学校、公益、个人项目)可以,PolyForm Noncommercial 协议覆盖。商用需要单独授权,在 GitHub 上开 issue 联系我们。',
         },
         {
           q: '结果会一直准确吗?',
@@ -420,13 +420,13 @@ export default {
     },
     privacy: {
       title: '关于隐私',
-      body: '我们不卖数据,不接广告,不接入第三方追踪。你可以选择完全离线使用(只存本机),也可以自部署到自己的服务器。',
+      body: '我们不卖数据,不接广告,不接入第三方追踪。你的数据只存在你本地,绝不外传。',
     },
     contact: {
       title: '有问题或建议?',
-      description: '写信给我们,通常 1-3 个工作日内回复。',
-      email: '在 github.com/badhope/mindmirror/issues 提 issue',
-      emailNote: '把 # 换成 @ 发送邮件',
+      description: '在 GitHub 上开 issue,通常 1-3 个工作日内回复。',
+      email: 'github.com/badhope/mindmirror/issues',
+      emailNote: '',
     },
     readMore: '想看更详细的使用说明?',
     guide: '用户指南',

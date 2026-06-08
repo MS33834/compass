@@ -68,7 +68,7 @@ the same repo and follow the README there.
   it to begin with.
 
 If you have a specific concern that this page doesn't answer,
-email **an issue on github.com/badhope/mindmirror/issues** (replace `#` with `@`).
+open an issue on [github.com/badhope/mindmirror/issues](https://github.com/badhope/mindmirror/issues).
 
 ## 5. FAQ
 
@@ -113,7 +113,7 @@ view:
   [GitHub](https://github.com/badhope/MindMirror/issues).
 - **Privacy or security question?** See [SECURITY.md](SECURITY.md).
 - **Want to suggest a feature?** Open an issue and tag it "feature".
-- **Email?** Open an issue on
+- **Private question?** Open an issue on
   [github.com/badhope/mindmirror/issues](https://github.com/badhope/mindmirror/issues)
   and mark it as private if you don't want the question public.
 

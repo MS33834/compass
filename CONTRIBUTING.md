@@ -96,8 +96,7 @@ mindmirror/
 │   ├── workflows/               # CI + Pages deploy
 │   ├── ISSUE_TEMPLATE/          # Bug / feature / assessment templates
 │   ├── PULL_REQUEST_TEMPLATE.md
-│   ├── CODEOWNERS
-│   └── dependabot.yml
+│   └── CODEOWNERS
 └── package.json
 ```
 
@@ -174,19 +173,16 @@ overhead, runs the actual TypeScript modules). 887 assertions across
 ID uniqueness, trait distribution, and end-to-end user flows.
 
 ```bash
-# Frontend (all unit tests)
+# All unit tests
 for f in tests/unit/*.mjs; do node --import tsx "$f"; done
 # or run them individually
 node --import tsx tests/unit/40q-bank-test.mjs
 node --import tsx tests/unit/deep-validation-test.mjs
 # … see tests/unit/ for the full list
-
-# Backend (pytest, 84 tests)
-cd backend && python -m pytest -v
 ```
 
 The CI workflow (`.github/workflows/ci.yml`) runs all of the above
-on every push and PR. Both jobs must pass before a PR can be merged.
+on every push and PR.
 
 When writing a new assessment scoring algorithm, please:
 
@@ -204,11 +200,11 @@ When writing a new assessment scoring algorithm, please:
 
 ## 📋 Pull Request Process
 
-1. **Fork & branch** off `master`:
+1. **Fork & branch** off `main`:
 
    ```bash
-   git checkout master
-   git pull upstream master
+   git checkout main
+   git pull upstream main
    git checkout -b feature/your-feature-name
    # or
    git checkout -b fix/bug-description
@@ -299,8 +295,8 @@ When writing a new assessment scoring algorithm, please:
   external fonts.
 - **Accessibility** — follow [WCAG 2.1 AA](https://www.w3.org/WAI/WCAG21/quickref/)
   where feasible. Test with keyboard navigation and a screen reader.
-- **Dependencies** — Dependabot opens weekly PRs; review them but don't
-  blindly merge major-version bumps.
+- **Dependencies** — Review and bump dependencies manually when needed.
+  Dependabot is disabled; we manage our own dependency updates.
 
 ---
 

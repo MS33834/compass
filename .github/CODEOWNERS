@@ -16,13 +16,6 @@
 /tsconfig*.json                 @badhope
 /.prettierrc                    @badhope
 
-# Backend (FastAPI / Python)
-/backend/                       @badhope
-/Dockerfile                     @badhope
-/Dockerfile.frontend            @badhope
-/docker-compose.yml             @badhope
-/nginx.conf                     @badhope
-
 # CI / CD
 /.github/                       @badhope
 

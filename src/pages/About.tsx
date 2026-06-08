@@ -18,13 +18,11 @@ export const About = () => {
   const t = getTranslation(locale);
   const [openIdx, setOpenIdx] = useState<number | null>(0);
 
-  const supportEmail = t.about.contact.email.replace('#', '@');
-  // GitHub renders .md automatically, so the user guide is best viewed there
-  // rather than served as a raw file by GitHub Pages.
   const repoBase = (
     import.meta.env.VITE_REPO_URL || 'https://github.com/badhope/MindMirror'
   ).replace(/\/$/, '');
   const guideHref = `${repoBase}/blob/main/${locale === 'zh' ? 'USER_GUIDE.zh-CN.md' : 'USER_GUIDE.md'}`;
+  const issuesHref = `${repoBase}/issues`;
 
   return (
     <div className="max-w-3xl mx-auto space-y-14 sm:space-y-20">
@@ -135,12 +133,13 @@ export const About = () => {
         <h2 className="text-xl sm:text-2xl font-semibold mb-2">{t.about.contact.title}</h2>
         <p className="text-slate-300 mb-4">{t.about.contact.description}</p>
         <a
-          href={`mailto:${supportEmail}`}
+          href={issuesHref}
+          target="_blank"
+          rel="noreferrer"
           className="inline-block px-6 py-3 bg-white text-slate-800 font-medium rounded-xl hover:bg-slate-100 transition-colors"
         >
-          {supportEmail}
+          {t.about.contact.email}
         </a>
-        <p className="text-xs text-slate-400 mt-3">{t.about.contact.emailNote}</p>
       </section>
 
       <section className="text-center">

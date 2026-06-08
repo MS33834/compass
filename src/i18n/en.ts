@@ -404,15 +404,15 @@ export default {
         },
         {
           q: 'Where is my data?',
-          a: 'Online mode: in your own Postgres database. Offline mode: in your browser’s localStorage. We never see it either way.',
+          a: 'On your device, in your browser\'s localStorage. Nothing leaves your machine — we never see it.',
         },
         {
           q: 'Can I use it anonymously?',
           a: 'Yes. Click "Continue as guest" — no email, no phone, no name required.',
         },
         {
-          q: 'Can I deploy it for my own company?',
-          a: 'Yes. MIT-licensed, free for commercial and self-hosted use. `docker compose up` and you’re running. A managed Cloud version is also available.',
+          q: 'Can I deploy it for my own organisation?',
+          a: 'For non-commercial use (schools, charities, personal projects), yes — the PolyForm Noncommercial licence covers you. For anything commercial, you need a separate agreement; open an issue on GitHub to start that conversation.',
         },
         {
           q: 'How long are the results valid for?',
@@ -422,13 +422,13 @@ export default {
     },
     privacy: {
       title: 'A note on privacy',
-      body: 'We don’t sell data, don’t run ads, and don’t ship third-party trackers. You can use MindMirror completely offline, or self-host it on infrastructure you control.',
+      body: 'We don\'t sell data, don\'t run ads, and don\'t ship third-party trackers. Your data stays on your device — nothing leaves your browser.',
     },
     contact: {
       title: 'Questions or feedback?',
-      description: 'Drop us a line — we usually reply within 1–3 working days.',
-      email: 'open an issue on github.com/badhope/mindmirror/issues',
-      emailNote: 'Replace # with @ to send',
+      description: 'Open an issue on GitHub — we usually reply within 1–3 working days.',
+      email: 'github.com/badhope/mindmirror/issues',
+      emailNote: '',
     },
     readMore: 'Want the full walkthrough?',
     guide: 'Read the user guide',
