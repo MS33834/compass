@@ -1,21 +1,49 @@
-MIT License
+PolyForm Noncommercial License 1.0.0
 
 Copyright (c) 2024-2026 badhope
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+The licensor grants the licensee a non-exclusive, royalty-free, worldwide
+license to use, copy, modify, merge, publish, translate, and distribute
+the Work, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+Noncommercial Use Only. The Work may be used, copied, modified, merged,
+published, translated, sublicensed, and/or distributed only for
+non-commercial purposes. "Non-commercial" means not primarily intended
+for or directed toward commercial advantage or monetary compensation.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+For purposes of this license, "commercial" includes any use of the
+Work, in whole or in part, by a for-profit organization, by a
+commercial entity, or to provide a product or service that is sold,
+licensed, or monetized in any way, including but not limited to:
+
+  - hosting the Work (or a derivative work) as a paid or
+    advertisement-supported service;
+  - bundling the Work into a commercial product or SaaS offering;
+  - using the Work to provide paid psychological assessment,
+    consultation, or coaching services;
+  - using the Work inside an organization to assess employees,
+    clients, or customers for paid purposes.
+
+Personal study, self-hosted non-commercial use, academic research,
+open-source contributions back to this repository, and use by
+non-profit / community organizations are permitted.
+
+Attribution. The above copyright notice and this license must be
+included in all copies or substantial portions of the Work.
+
+No Trademark License. This license does not grant the licensee any
+rights to use the licensor's name, logo, or trademarks.
+
+No Warranty. THE WORK IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY
+KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE WORK OR THE USE OR OTHER DEALINGS IN THE WORK.
+
+Commercial licensing. If you want to use this Work for any
+commercial purpose, you must obtain a separate commercial license
+from the copyright holder. Contact: open an issue on
+https://github.com/badhope/mindmirror/issues or see the repository
+README for the current contact method.
