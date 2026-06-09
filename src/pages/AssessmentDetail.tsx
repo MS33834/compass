@@ -34,7 +34,6 @@ import {
   generateDetailedResilienceReport,
 } from '../services/resilienceScoring';
 import { exportService, shareService } from '../services/share/ExportShareService';
-import { TracePanel } from '../components/TracePanel';
 import { useToasts } from '../store/toastStore';
 import { cn } from '../lib/utils';
 import { Skeleton, SkeletonText } from '../components/Loading';
@@ -2560,7 +2559,6 @@ function ResultPage() {
   const i18n = getTranslation(locale);
   const addToast = useToasts(s => s.addToast);
 
-  const [showTracePanel, setShowTracePanel] = useState(false);
   const [shareUrl, setShareUrl] = useState<string | null>(null);
   const [showExportMenu, setShowExportMenu] = useState(false);
   const [qrCode, setQrCode] = useState<string | null>(null);
@@ -2718,14 +2716,6 @@ function ResultPage() {
               🔗 {i18n.results.share}
             </button>
 
-            {/* 溯源按钮 */}
-            <button
-              onClick={() => setShowTracePanel(true)}
-              className="w-full py-2.5 sm:py-3 bg-purple-100 text-purple-700 rounded-xl font-semibold hover:bg-purple-200 transition-colors flex items-center justify-center gap-1.5 sm:gap-2 text-sm"
-            >
-              🔍 {i18n.results.trace}
-            </button>
-
             {/* 训练推荐 */}
             <Link
               to="/training"
@@ -2794,13 +2784,6 @@ function ResultPage() {
         </Link>
       </div>
 
-      {/* 溯源面板 */}
-      {showTracePanel && (
-        <TracePanel
-          assessmentId={displayResult.id || currentAssessment?.id || 'unknown'}
-          onClose={() => setShowTracePanel(false)}
-        />
-      )}
     </div>
   );
 }

@@ -16,7 +16,6 @@ import { achievementService } from '../services/achievement/AchievementService';
 import { tagService } from '../services/dashboard/TagService';
 import { moodTrackerService } from '../services/mood/MoodTrackerService';
 import { trainingService } from '../services/training/TrainingService';
-import { pluginLoader } from '../services/plugin/PluginLoader';
 import type { Locale } from '../i18n';
 
 /**
@@ -94,7 +93,7 @@ function refreshTagCountsFromHistory(history: AssessmentResult[]): void {
         }
       }
     }
-    // Persist back to storage so PluginManager / TagCloud / Dashboard
+    // Persist back to storage so Dashboard
     // see the right counts on the next read.  We don't try to mutate
     // the in-memory `autoTags` array on the service; the persistence
     // is via userTags which holds the same `resultCount` field.
@@ -154,16 +153,12 @@ interface AppState {
 
   assessmentHistory: AssessmentResult[];
 
-  pluginInitialized: boolean;
-
   initializeAuth: () => Promise<void>;
   login: (credentials: AuthCredentials) => Promise<boolean>;
   register: (data: RegisterData) => Promise<boolean>;
   loginAsGuest: () => Promise<boolean>;
   logout: () => Promise<void>;
   clearAuthError: () => void;
-
-  initializePlugins: () => Promise<void>;
 
   setAssessments: (assessments: Assessment[]) => void;
   setCurrentAssessment: (assessment: Assessment | null) => void;
@@ -208,9 +203,8 @@ export const useAppStore = create<AppState>((set, get) => {
     isSidebarOpen: false,
     locale: initialLocale,
     assessmentHistory: initialHistory,
-    pluginInitialized: false,
 
-    initializeAuth: async () => {
+  initializeAuth: async () => {
       set({ authLoading: true });
       try {
         // No server to round-trip to in the static build — just read
@@ -229,17 +223,6 @@ export const useAppStore = create<AppState>((set, get) => {
           isAuthenticated: !!user,
           authLoading: false,
         });
-      }
-    },
-
-    initializePlugins: async () => {
-      if (get().pluginInitialized) return;
-      try {
-        await pluginLoader.initialize();
-        set({ pluginInitialized: true });
-      } catch (error) {
-        console.error('Failed to initialize plugins:', error);
-        set({ pluginInitialized: true });
       }
     },
 

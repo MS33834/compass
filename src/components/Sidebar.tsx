@@ -27,7 +27,6 @@ export function Sidebar() {
     { id: 'compare', label: i18n.nav.compare, href: '/compare', icon: '📊' },
     { id: 'crisis', label: i18n.nav.crisis, href: '/crisis', icon: '🆘' },
     { id: 'history', label: i18n.nav.history, href: '/history', icon: '📚' },
-    { id: 'plugins', label: i18n.nav.plugins, href: '/plugins', icon: '🧩' },
     { id: 'settings', label: i18n.nav.settings, href: '/settings', icon: '⚙️' },
     { id: 'about', label: i18n.nav.about, href: '/about', icon: 'ℹ️' },
   ];

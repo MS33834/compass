@@ -39,9 +39,6 @@ const CompareResults = lazy(() =>
 const PersonalDashboard = lazy(() =>
   import('./components/dashboard/PersonalDashboard').then(m => ({ default: m.PersonalDashboard }))
 );
-const PluginManager = lazy(() =>
-  import('./components/plugin/PluginManager').then(m => ({ default: m.PluginManager }))
-);
 const NotFound = lazy(() => import('./pages/NotFound').then(m => ({ default: m.NotFound })));
 const SharedView = lazy(() => import('./pages/SharedView').then(m => ({ default: m.SharedView })));
 
@@ -166,16 +163,6 @@ function AnimatedRoutes() {
           }
         />
         <Route
-          path="/plugins"
-          element={
-            <PageTransition direction="up">
-              <LazyRoute>
-                <PluginManager />
-              </LazyRoute>
-            </PageTransition>
-          }
-        />
-        <Route
           path="/mood"
           element={
             <PageTransition direction="up">
@@ -279,14 +266,13 @@ export default function App() {
 }
 
 function AppContent() {
-  const { locale, initializeAuth, initializePlugins } = useAppStore();
+  const { locale, initializeAuth } = useAppStore();
   const i18n = getTranslation(locale);
   const location = useLocation();
 
   useEffect(() => {
     initializeAuth();
-    initializePlugins();
-  }, [initializeAuth, initializePlugins]);
+  }, [initializeAuth]);
 
   useEffect(() => {
     document.documentElement.lang = locale === 'zh' ? 'zh-CN' : 'en';
