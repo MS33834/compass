@@ -48,17 +48,17 @@ export interface UnifiedAssessmentResult {
 }
 
 export type AssessmentType =
-  | 'personality' // 人格类
-  | 'stress' // 压力类
-  | 'anxiety' // 焦虑类
-  | 'depression' // 抑郁类
-  | 'emotional' // 情绪类
-  | 'cognitive' // 认知类
-  | 'social' // 社交类
-  | 'burnout' // 职业倦怠
-  | 'life' // 生活满意度
-  | 'resilience' // 心理韧性
-  | 'other'; // 其他
+  | 'personality'
+  | 'stress'
+  | 'anxiety'
+  | 'depression'
+  | 'emotional'
+  | 'cognitive'
+  | 'social'
+  | 'burnout'
+  | 'life'
+  | 'resilience'
+  | 'other';
 
 export interface PersonalDataCenter {
   userId: string;
@@ -130,72 +130,6 @@ export interface DataStatistics {
   tagDistribution: Record<string, number>;
   streakDays: number;
   lastAssessmentDate?: number;
-}
-
-export interface DataAggregation {
-  assessmentId: string;
-  aggregationType: 'sum' | 'average' | 'weighted_average' | 'percentile';
-  values: {
-    trait: string;
-    value: number;
-    weight: number;
-  }[];
-  finalValue: number;
-}
-
-export interface DataValidation {
-  valid: boolean;
-  errors: ValidationError[];
-  warnings: ValidationWarning[];
-  metadata: {
-    checkedAt: number;
-    checkedFields: string[];
-  };
-}
-
-export interface ValidationError {
-  field: string;
-  message: string;
-  code: string;
-  severity: 'error' | 'warning';
-}
-
-export interface ValidationWarning {
-  field: string;
-  message: string;
-  suggestion?: string;
-}
-
-export interface DataMigration {
-  fromVersion: string;
-  toVersion: string;
-  status: 'pending' | 'in_progress' | 'completed' | 'failed';
-  records: MigrationRecord[];
-  errors: MigrationError[];
-  startedAt?: number;
-  completedAt?: number;
-}
-
-export interface MigrationRecord {
-  recordId: string;
-  status: 'pending' | 'success' | 'failed';
-  originalData?: any;
-  migratedData?: any;
-  error?: string;
-}
-
-export interface MigrationError {
-  recordId: string;
-  error: string;
-  stack?: string;
-  recoverable: boolean;
-}
-
-export interface DataSyncOptions {
-  autoSync: boolean;
-  syncInterval: number;
-  conflictResolution: 'local' | 'remote' | 'newest' | 'manual';
-  backupBeforeSync: boolean;
 }
 
 export interface DataSyncStatus {
