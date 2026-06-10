@@ -1,26 +1,64 @@
 version: 2
 
-updates:
-  - package-ecosystem: npm
-    directory: /
-    schedule:
-      interval: monthly
-    open-pull-requests-limit: 5
-    labels:
-      - dependencies
-    commit-message:
-      prefix: chore
-      include: scope
-    reviewers:
-      - badhope
+# Dependabot configuration
+# - Single weekly schedule
+# - Auto-rebase to keep PRs current
+# - Production/development groups for clean batched PRs
 
-  - package-ecosystem: github-actions
-    directory: /
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
     schedule:
-      interval: monthly
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 10
     labels:
-      - dependencies
-      - ci
+      - "dependencies"
+      - "javascript"
     commit-message:
-      prefix: ci
-      include: scope
+      prefix: "chore(deps)"
+      include: "scope"
+    rebase-strategy: "auto"
+    groups:
+      production-dependencies:
+        dependency-type: "production"
+      development-dependencies:
+        dependency-type: "development"
+
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 10
+    labels:
+      - "dependencies"
+      - "python"
+    commit-message:
+      prefix: "chore(deps)"
+      include: "scope"
+    rebase-strategy: "auto"
+    groups:
+      production-dependencies:
+        dependency-type: "production"
+      development-dependencies:
+        dependency-type: "development"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 10
+    labels:
+      - "dependencies"
+      - "ci"
+    commit-message:
+      prefix: "ci"
+      include: "scope"
+    rebase-strategy: "auto"
+    groups:
+      production-dependencies:
+        dependency-type: "production"
+      development-dependencies:
+        dependency-type: "development"
