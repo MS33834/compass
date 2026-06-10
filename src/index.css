@@ -1,139 +1,329 @@
-@import 'tailwindcss';
+/* ── 镜心 · 主题 ── 典雅国风手绘风 ── */
 
 :root {
-  font-family:
-    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif,
-    'Apple Color Emoji', 'Segoe UI Emoji';
-  line-height: 1.6;
-  font-weight: 400;
+  /* ── 色 ── */
+  --ink: #1a1a1a;
+  --ink-soft: #2c2c2c;
+  --ink-faint: #5a5a5a;
+  --rice: #f5efe0;
+  --rice-warm: #ebe3cf;
+  --rice-deep: #e0d6bd;
+  --cinnabar: #a8322e;
+  --cinnabar-soft: #c8543e;
+  --jade: #4a6b54;
+  --gold-dim: #b8954a;
+  --ash: #999;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  /* ── 字 ── */
+  --font-display: '霞鹜文楷', 'LXGW WenKai', 'STKaiti', 'KaiTi', '楷体', serif;
+  --font-body: '思源宋体', 'Source Han Serif SC', 'Songti SC', 'STSong', '宋体', serif;
+
+  /* ── 节奏 ── */
+  --t-fast: 200ms;
+  --t-base: 400ms;
+  --t-slow: 1200ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* ── 间距 ── */
+  --sp-1: 0.25rem;
+  --sp-2: 0.5rem;
+  --sp-3: 0.75rem;
+  --sp-4: 1rem;
+  --sp-6: 1.5rem;
+  --sp-8: 2rem;
+  --sp-12: 3rem;
+  --sp-16: 4rem;
 }
 
 * {
-  -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
 }
 
-html {
-  font-size: 16px;
-  scroll-behavior: smooth;
-}
-
-@media (max-width: 640px) {
-  html {
-    font-size: 15px;
-  }
-}
-
-@media (max-width: 480px) {
-  html {
-    font-size: 14px;
-  }
+html,
+body,
+#root {
+  height: 100%;
 }
 
 body {
-  touch-action: manipulation;
-  -webkit-overflow-scrolling: touch;
+  margin: 0;
+  background: var(--rice);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
 }
 
-@keyframes slide-in {
-  from {
-    opacity: 0;
-    transform: translateX(100%);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-.animate-slide-in {
-  animation: slide-in 0.3s ease-out;
-}
-
-/* Skeleton shimmer — a brighter band sweeps from left to right across
-   the gray placeholder. Mirrors the iOS / Material / WeChat loading
-   pattern. Linear infinite, so the motion never "snaps". */
-@keyframes skeleton-shimmer {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(100%);
-  }
-}
-
-.skeleton-shimmer::before {
+/* 宣纸纹理 */
+body::before {
   content: '';
-  position: absolute;
+  position: fixed;
   inset: 0;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.55) 40%,
-    rgba(255, 255, 255, 0.75) 50%,
-    rgba(255, 255, 255, 0.55) 60%,
-    transparent 100%
-  );
-  animation: skeleton-shimmer 2.2s linear infinite;
-  will-change: transform;
+  background-image: url('/patterns/rice-paper.svg');
+  background-size: 240px 240px;
+  background-repeat: repeat;
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: 0;
 }
 
-.dark .skeleton-shimmer::before {
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.06) 40%,
-    rgba(255, 255, 255, 0.1) 50%,
-    rgba(255, 255, 255, 0.06) 60%,
-    transparent 100%
-  );
+#root {
+  position: relative;
+  z-index: 1;
 }
 
-/* Touch / focus polish: make interactive surfaces feel a touch more
-   responsive on touch devices. */
-button,
-a {
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+}
+
+h1 {
+  font-size: 2.5rem;
+}
+h2 {
+  font-size: 1.75rem;
+}
+h3 {
+  font-size: 1.25rem;
+}
+
+p {
+  margin: 0 0 var(--sp-4) 0;
+}
+
+/* 笔触感按钮 */
+.jx-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  min-width: 8rem;
+  padding: var(--sp-3) var(--sp-8);
+  background: transparent;
+  border: 1.5px solid var(--ink);
+  border-radius: 2px;
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  letter-spacing: 0.18em;
+  cursor: pointer;
+  transition: all var(--t-base) var(--ease-out);
   user-select: none;
 }
 
-/* Smooth scroll-margin so anchor jumps land below the sticky header. */
-:target {
-  scroll-margin-top: 80px;
+.jx-btn:hover {
+  background: var(--cinnabar);
+  color: var(--rice);
+  border-color: var(--cinnabar);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(168, 50, 46, 0.2);
 }
 
-/* Subtle background drift on the main app container — gives the page
-   a sense of life without being distracting. Honours reduced motion. */
-@keyframes bg-drift {
-  0% {
-    background-position: 0% 0%;
+.jx-btn:active {
+  transform: translateY(0);
+}
+
+.jx-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.jx-btn-primary {
+  background: var(--ink);
+  color: var(--rice);
+}
+
+.jx-btn-primary:hover {
+  background: var(--cinnabar);
+  border-color: var(--cinnabar);
+  color: var(--rice);
+}
+
+.jx-btn-ghost {
+  border: none;
+  background: transparent;
+  color: var(--ink-faint);
+}
+
+.jx-btn-ghost:hover {
+  background: transparent;
+  color: var(--cinnabar);
+  transform: none;
+  box-shadow: none;
+}
+
+/* 印章 */
+.jx-seal {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  background: var(--cinnabar);
+  color: var(--rice);
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 3px;
+  box-shadow:
+    0 1px 2px rgba(168, 50, 46, 0.3),
+    inset 0 0 0 1px rgba(245, 239, 224, 0.2);
+  letter-spacing: 0;
+}
+
+/* 古文-白话 双行 */
+.jx-verse {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+  padding: var(--sp-2) 0;
+}
+
+.jx-verse .ancient {
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  color: var(--ink);
+  letter-spacing: 0.05em;
+}
+
+.jx-verse .gloss {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: var(--ink-faint);
+  line-height: 1.5;
+}
+
+/* 容器 */
+.jx-container {
+  max-width: 56rem;
+  margin: 0 auto;
+  padding: var(--sp-8) var(--sp-6);
+}
+
+.jx-container-narrow {
+  max-width: 36rem;
+  margin: 0 auto;
+  padding: var(--sp-8) var(--sp-6);
+}
+
+/* 页面切换 */
+.jx-fade-enter {
+  animation: jx-fade-in var(--t-slow) var(--ease-in-out) both;
+}
+
+@keyframes jx-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
   }
-  50% {
-    background-position: 100% 100%;
-  }
-  100% {
-    background-position: 0% 0%;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .bg-app-drift {
-    background-size: 200% 200%;
-    animation: bg-drift 30s ease-in-out infinite;
+/* 卷轴展开 */
+.jx-scroll-reveal {
+  animation: jx-scroll-open var(--t-slow) var(--ease-in-out) both;
+}
+
+@keyframes jx-scroll-open {
+  from {
+    opacity: 0;
+    clip-path: inset(0 50% 0 50%);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
   }
 }
 
-/* Mobile safe-area padding for the sticky nav (iOS notch / Android
-   gesture bar). */
-.safe-top {
-  padding-top: max(env(safe-area-inset-top), 0px);
+/* 进度条 */
+.jx-progress {
+  width: 100%;
+  height: 2px;
+  background: var(--rice-deep);
+  position: relative;
+  overflow: hidden;
 }
 
-.safe-bottom {
-  padding-bottom: max(env(safe-area-inset-bottom), 0px);
+.jx-progress-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: var(--jade);
+  transition: width var(--t-base) var(--ease-out);
+}
+
+/* 标签 chip */
+.jx-chip {
+  display: inline-block;
+  padding: var(--sp-1) var(--sp-3);
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  letter-spacing: 0.1em;
+  background: var(--rice-warm);
+  color: var(--ink-soft);
+  border-radius: 2px;
+}
+
+.jx-chip-cinnabar {
+  background: var(--cinnabar);
+  color: var(--rice);
+}
+
+.jx-chip-jade {
+  background: var(--jade);
+  color: var(--rice);
+}
+
+/* 雷达图动画 */
+@keyframes jx-radar-draw {
+  from {
+    stroke-dashoffset: 1000;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.jx-radar-user {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: jx-radar-draw 1500ms var(--ease-out) 200ms forwards;
+}
+
+@keyframes jx-radar-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.jx-radar-figure {
+  opacity: 0;
+  animation: jx-radar-fade 1000ms var(--ease-in-out) 800ms forwards;
+}
+
+/* 响应式 */
+@media (max-width: 640px) {
+  h1 {
+    font-size: 1.875rem;
+  }
+  h2 {
+    font-size: 1.375rem;
+  }
+  .jx-btn {
+    font-size: 1rem;
+    padding: var(--sp-3) var(--sp-6);
+  }
 }

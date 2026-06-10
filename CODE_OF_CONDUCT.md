@@ -1,10 +1,19 @@
-# Code of Conduct
+# 镜心 · 行止
 
-Be a grown-up. Disagreements are fine; disrespect isn't.
+## 约
 
-If someone's being awful, open a private security advisory on this repo
-and I'll handle it. If it's me being awful, you can email me via the
-address in `CITATION.cff` (or my profile page, if there isn't one).
+- 一以敬，二以诚。不以人废言，不以言废人。
+- 凡评论，评其行，论其艺，不攻其私。
+- 凡 PR，必以"动作为主"，标题 ≤ 60 字，正文详述"为何"与"如何验"。
 
-Adapted — and shortened — from the
-[Contributor Covenant, v2.1](https://www.contributor-covenant.org/version/2/1/code_of_conduct/).
+## 禁
+
+- 侮辱、威胁、骚扰。
+- 公开他人隐私。
+- 宣传与本项目无关之商业内容。
+- 灌水、复读机、空 PR。
+
+## 守
+
+维护者有删、关、封之权。
+争议提交，仲裁以本文为据。

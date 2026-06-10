@@ -1,35 +1,13 @@
-# Security
+# 镜心 · 安防
 
-Found a hole? **Don't file a public issue.** Open a private security
-advisory or email me (the address is in `CITATION.cff` if there's one;
-otherwise it's on my profile page). I prefer the advisory form because
-GitHub handles the disclosure timeline.
+## 原则
 
-What I'll do:
+- **无后端** = 无服务端处理流程。汝所答不越汝之浏览器。
+- **最小存储** = localStorage 中仅存答题索引（`jingxin-v1`）
+  与语言偏好（zh / en）。不含任何可识别信息。
+- **最小依赖** = `react` + `react-dom` + `zustand` 三件，无第三方追踪 SDK。
 
-- Reply within 3 business days.
-- Triage and try to reproduce within 10 business days.
-- Ship a fix, or at least a documented mitigation, as soon as I can.
-- Credit you in the advisory if you want it. Say "anonymous" if you don't.
+## 报告
 
-I follow responsible disclosure: please keep the report private until I
-publish a fix and (if needed) a CVE / advisory. I won't sue you for
-security research done in good faith, and I won't go after security
-researchers for things that are obviously bugs.
-
-## What I patch
-
-Only the latest commit on `main`. I don't backport. If you're on an
-older version, the right fix is to upgrade.
-
-## In scope
-
-- Code in this repository.
-- Official container images and release artifacts that came from this
-  repo (when they exist).
-
-## Out of scope
-
-- Third-party dependencies. Report upstream unless I pinned and shipped
-  a vulnerable version myself.
-- Scanners, social engineering, DoS, or "you used a default port".
+若发现可被利用之处，请以邮件（见 GitHub 个人页）私告，吾当速修。
+公开 Issue 亦可，唯请勿先公开 PoC。
