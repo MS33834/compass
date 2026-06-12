@@ -149,7 +149,7 @@ export function Reflection() {
       <section
         style={{
           display: 'grid',
-          gridTemplateColumns: 'minmax(0, 1fr) 2fr',
+          gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 2fr)',
           gap: '2rem',
           marginBottom: '3rem',
         }}
@@ -206,7 +206,7 @@ export function Reflection() {
           className="jx-alt-grid jx-stagger"
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(10rem, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(0, 10rem))',
             gap: '1rem',
           }}
         >
@@ -397,6 +397,8 @@ export function Reflection() {
             borderRadius: '2px',
             zIndex: 100,
             animation: 'jx-fade-stagger 200ms var(--ease-out) both',
+            maxWidth: '90vw',
+            wordBreak: 'break-word',
           }}
         >
           {toast}

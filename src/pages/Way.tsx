@@ -93,8 +93,10 @@ export function Way() {
             fontFamily: 'var(--font-display)',
             letterSpacing: '0.1em',
             display: 'flex',
-            justifyContent: 'space-between',
+            justifyContent: 'center',
             alignItems: 'center',
+            gap: '1rem',
+            flexWrap: 'wrap',
           }}
         >
           <span>{t.way.question(currentIndex + 1, total)}</span>
@@ -131,7 +133,7 @@ export function Way() {
         <div
           role="radiogroup"
           aria-label={t.way.optionsLabel}
-          style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}
+          style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', maxWidth: '100%' }}
         >
           {item.options.map((opt, i) => {
             const selected = current === i;
@@ -157,12 +159,14 @@ export function Way() {
                   display: 'flex',
                   alignItems: 'flex-start',
                   gap: '0',
+                  maxWidth: '100%',
+                  overflow: 'hidden',
                 }}
               >
                 <span className="jx-opt-letter" aria-hidden>
                   {letter}
                 </span>
-                <span style={{ flex: 1 }}>
+                <span style={{ flex: 1, overflow: 'hidden', wordBreak: 'break-word' }}>
                   <Verse text={opt.text} gloss={opt.gloss} />
                 </span>
               </button>
@@ -175,10 +179,11 @@ export function Way() {
         data-testid="way-nav"
         style={{
           display: 'flex',
-          justifyContent: 'space-between',
+          justifyContent: 'center',
           alignItems: 'center',
           marginTop: '3rem',
           gap: '1rem',
+          flexWrap: 'wrap',
         }}
       >
         <BrushButton

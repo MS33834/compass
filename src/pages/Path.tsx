@@ -52,7 +52,13 @@ export function Path() {
 
       <div
         role="tablist"
-        style={{ display: 'flex', justifyContent: 'center', gap: '1rem', marginBottom: '2rem' }}
+        style={{ 
+          display: 'flex', 
+          justifyContent: 'center', 
+          gap: '1rem', 
+          marginBottom: '2rem',
+          flexWrap: 'wrap'
+        }}
       >
         {(['east', 'west'] as Region[]).map(r => (
           <button
@@ -83,7 +89,7 @@ export function Path() {
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(14rem, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(0, 14rem))',
           gap: '1.5rem',
           marginBottom: '3rem',
         }}

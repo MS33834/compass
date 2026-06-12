@@ -54,7 +54,7 @@ export function TopBar() {
         <span>{t.ui.appName}</span>
       </button>
 
-      <nav style={{ display: 'flex', gap: '0.4rem', alignItems: 'center' }}>
+      <nav style={{ display: 'flex', gap: '0.4rem', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
         <span
           aria-label="当前阶段"
           data-testid="topbar-phase"
