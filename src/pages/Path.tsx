@@ -56,9 +56,9 @@ export function Path() {
             }}
             style={{
               padding: '0.5rem 1.5rem',
-              background: region === r ? 'var(--ink)' : 'transparent',
-              color: region === r ? 'var(--rice)' : 'var(--ink-soft)',
-              border: '1px solid var(--ink)',
+              background: region === r ? 'var(--ink)' : 'var(--rice-deep)',
+              color: region === r ? 'var(--rice)' : 'var(--ink)',
+              border: '1.5px solid var(--ink)',
               fontFamily: 'var(--font-display)',
               fontSize: '1.125rem',
               letterSpacing: '0.2em',
