@@ -51,20 +51,6 @@ vite.config.ts.timestamp-*.log
 # TypeScript
 *.tsbuildinfo
 
-# Python backend
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-.pytest_cache/
-.mypy_cache/
-*.db
-*.sqlite
-*.sqlite3
-backend/mental_health.db
-backend/.venv/
-backend/venv/
-backend/.env
+# Trae IDE 产物
 .trae/
-
-# Trae IDE workspace metadata
+!.trae/documents/

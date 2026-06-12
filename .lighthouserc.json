@@ -6,8 +6,8 @@
       "numberOfRuns": 1,
       "settings": {
         "preset": "desktop",
-        "skipAudits": ["is-on-https", "uses-http2", "redirects-http", "csp-xss", "has-hsts"],
-        "emulatedFormFactor": "mobile"
+        "emulatedFormFactor": "desktop",
+        "skipAudits": ["is-on-https", "uses-http2", "redirects-http", "csp-xss", "has-hsts"]
       }
     },
     "assert": {

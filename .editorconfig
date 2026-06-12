@@ -21,15 +21,15 @@ trim_trailing_whitespace = false
 [Makefile]
 indent_style = tab
 
-# Python source (backend)
-[*.py]
-indent_size = 4
-max_line_length = 100
-
-# YAML
-[*.{yml,yaml}]
+# TypeScript / TSX
+[*.{ts,tsx}]
 indent_size = 2
+quote_type = single
 
 # JSON: keep 2-space indent
 [*.json]
+indent_size = 2
+
+# YAML
+[*.{yml,yaml}]
 indent_size = 2
