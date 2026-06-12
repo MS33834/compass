@@ -1,10 +1,18 @@
-// 镜心 · 匹配算法 · 加权欧氏 + 余弦调和
+// 镜心 · 匹配算法 · 加权欧氏 + 余弦 + 方向一致性的三重调和
+//
+// 设计要点：
+// 1. weightedEuclid：距离空间 —— 直接衡量 12 维值的接近程度
+// 2. cosine：形态空间 —— 衡量整体倾向形态（高/低维的"形状"匹配）
+// 3. shapeAgreement：方向空间 —— 逐维与均值偏差的同向比例（看重"是否偏向同一侧"）
+// 4. 三信号加权组合，输出统一 [0, 1] 相似度
+// 5. topN 排序：主相似度差异 ≥ 0.01 直接排序，否则进入 tie-break
+//    tie-break 先看形态余弦，再看最大维度差异（避免某人"有一项特别悬殊"被并列第一）
 
 import { TRAITS } from '../traits/trait.dimensions';
 import type { TraitVector } from '../traits/trait.types';
 
 const SQRT_12 = Math.sqrt(12);
-const EPSILON = 1e-6; // 防止除零
+const EPSILON = 1e-6;
 
 function weightedEuclid(a: TraitVector, b: TraitVector): number {
   let sq = 0;
@@ -16,34 +24,48 @@ function weightedEuclid(a: TraitVector, b: TraitVector): number {
 }
 
 function cosine(a: TraitVector, b: TraitVector): number {
-  let dot = 0,
-    nA = 0,
-    nB = 0;
+  let dot = 0;
+  let nA = 0;
+  let nB = 0;
   for (let i = 0; i < 12; i++) {
     dot += a[i] * b[i];
     nA += a[i] * a[i];
     nB += b[i] * b[i];
   }
   const denom = Math.sqrt(nA) * Math.sqrt(nB);
-  // 更稳健的零向量处理
-  if (denom < EPSILON) return 0.5; // 返回中性值而非 0
-  return Math.max(-1, Math.min(1, dot / denom)); // 限制在 [-1, 1]
+  if (denom < EPSILON) return 0.5;
+  return Math.max(-1, Math.min(1, dot / denom));
 }
 
-/** 综合相似度 ∈ [0, 1] */
+/** 方向一致性：衡量逐维与各自均值偏离的同向比例 */
+function shapeAgreement(a: TraitVector, b: TraitVector): number {
+  const meanA = a.reduce((s, v) => s + v, 0) / 12;
+  const meanB = b.reduce((s, v) => s + v, 0) / 12;
+  let agree = 0;
+  for (let i = 0; i < 12; i++) {
+    // 同向（都高于均值 或 都低于均值）得 1 分，反向 0 分
+    const da = a[i] - meanA;
+    const db = b[i] - meanB;
+    if (da * db > 0) agree += 1;
+    else if (Math.abs(da) < 0.05 && Math.abs(db) < 0.05) agree += 0.5; // 都接近均值也算半分
+  }
+  return agree / 12;
+}
+
+/** 综合相似度 ∈ [0, 1]：距离 0.45 + 余弦 0.35 + 形态 0.2 */
 export function similarity(user: TraitVector, fig: TraitVector): number {
   const e = weightedEuclid(user, fig) / SQRT_12;
   const c = cosine(user, fig);
-  // 优化权重比例：0.55:0.45 更平衡
-  return 0.55 * (1 - e) + 0.45 * c;
+  const shape = shapeAgreement(user, fig);
+  return 0.45 * (1 - e) + 0.35 * c + 0.2 * shape;
 }
 
-/** 计算两个向量的维度差异（用于平局检测） */
+/** 计算两个向量的逐维差异绝对值 */
 export function dimensionDifferences(user: TraitVector, fig: TraitVector): number[] {
   return user.map((u, i) => Math.abs(u - fig[i]));
 }
 
-/** 平局检测：当相似度差异小于阈值时，用维度差异排序 */
+/** 平局检测：主相似度差异 < 阈值时，先看余弦形态、再看最大单维差异 */
 export function breakTie(
   user: TraitVector,
   fig1: TraitVector,
@@ -52,14 +74,29 @@ export function breakTie(
 ): number {
   const sim1 = similarity(user, fig1);
   const sim2 = similarity(user, fig2);
-  
+
   if (Math.abs(sim1 - sim2) > threshold) {
     return sim1 > sim2 ? -1 : 1;
   }
-  
-  // 相似度接近，用维度差异排序（差异越小越好）
-  const diff1 = dimensionDifferences(user, fig1).reduce((a, b) => a + b, 0);
-  const diff2 = dimensionDifferences(user, fig2).reduce((a, b) => a + b, 0);
-  
-  return diff1 - diff2;
+
+  // 第一层 tie-break：余弦相似度（形态匹配优先）
+  const c1 = cosine(user, fig1);
+  const c2 = cosine(user, fig2);
+  if (Math.abs(c1 - c2) > 0.005) {
+    return c1 > c2 ? -1 : 1;
+  }
+
+  // 第二层 tie-break：最大单维差异越小越好（避免"有一项特别离谱"）
+  const diffs1 = dimensionDifferences(user, fig1);
+  const diffs2 = dimensionDifferences(user, fig2);
+  const max1 = Math.max(...diffs1);
+  const max2 = Math.max(...diffs2);
+  if (Math.abs(max1 - max2) > 0.005) {
+    return max1 - max2;
+  }
+
+  // 最终 tie-break：平均差异
+  const avg1 = diffs1.reduce((a, b) => a + b, 0) / 12;
+  const avg2 = diffs2.reduce((a, b) => a + b, 0) / 12;
+  return avg1 - avg2;
 }

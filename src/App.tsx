@@ -9,12 +9,12 @@ import { Reflection } from './pages/Reflection';
 
 export function App() {
   const { phase } = useStore();
-  
+
   // 页面切换时滚动到顶部
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [phase]);
-  
+
   return (
     <>
       <a className="jx-skip-link" href="#main-content">

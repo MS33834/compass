@@ -34,7 +34,10 @@ console.log('【向量生成】');
   const answers = {};
   const vector = computeUserVector(answers, ITEMS_EAST_LITERATI);
   assert(vector.length === 12, '全未答题：向量长度为 12');
-  assert(vector.every(v => v >= 0.05 && v <= 0.95), '全未答题：所有值在 [0.05, 0.95] 范围内');
+  assert(
+    vector.every(v => v >= 0.05 && v <= 0.95),
+    '全未答题：所有值在 [0.05, 0.95] 范围内'
+  );
   // 全未答题时，所有维度应该接近全局均值（约 0.5 左右）
   const mean = vector.reduce((s, v) => s + v, 0) / 12;
   assert(mean >= 0.4 && mean <= 0.6, `全未答题：均值接近 0.5（实际 ${mean.toFixed(3)}）`);
@@ -45,11 +48,17 @@ console.log('【向量生成】');
   const answers = { 'el-001': 0 }; // 选择第 1 题的第 1 个选项
   const vector = computeUserVector(answers, ITEMS_EAST_LITERATI);
   assert(vector.length === 12, '部分答题：向量长度为 12');
-  assert(vector.every(v => v >= 0.05 && v <= 0.95), '部分答题：所有值在 [0.05, 0.95] 范围内');
+  assert(
+    vector.every(v => v >= 0.05 && v <= 0.95),
+    '部分答题：所有值在 [0.05, 0.95] 范围内'
+  );
   // 未答题维度应该使用中性值 0.5
   const unansweredDims = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]; // 除第 0 维外
   const unansweredMean = unansweredDims.reduce((s, i) => s + vector[i], 0) / unansweredDims.length;
-  assert(unansweredMean >= 0.45 && unansweredMean <= 0.55, `部分答题：未答题维度均值接近 0.5（实际 ${unansweredMean.toFixed(3)}）`);
+  assert(
+    unansweredMean >= 0.45 && unansweredMean <= 0.55,
+    `部分答题：未答题维度均值接近 0.5（实际 ${unansweredMean.toFixed(3)}）`
+  );
 }
 
 // 测试 3：极端答案（全选极端选项）
@@ -61,7 +70,10 @@ console.log('【向量生成】');
   });
   const vector = computeUserVector(answers, ITEMS_EAST_LITERATI);
   assert(vector.length === 12, '极端答案：向量长度为 12');
-  assert(vector.every(v => v >= 0.05 && v <= 0.95), '极端答案：所有值在 [0.05, 0.95] 范围内（边界处理生效）');
+  assert(
+    vector.every(v => v >= 0.05 && v <= 0.95),
+    '极端答案：所有值在 [0.05, 0.95] 范围内（边界处理生效）'
+  );
 }
 
 // 测试 4：自适应 sigmoid 系数
@@ -140,7 +152,10 @@ console.log('\n【置信度计算】');
     answers[item.id] = 0;
   });
   const conf = confidence(answers, ITEMS_EAST_LITERATI);
-  assert(conf >= 0 && conf <= 1, `部分答题（60%）：置信度在 [0, 1] 范围内（实际 ${conf.toFixed(6)}）`);
+  assert(
+    conf >= 0 && conf <= 1,
+    `部分答题（60%）：置信度在 [0, 1] 范围内（实际 ${conf.toFixed(6)}）`
+  );
   assert(conf >= 0.4 && conf <= 0.8, `部分答题（60%）：置信度中等（实际 ${conf.toFixed(6)}）`);
 }
 

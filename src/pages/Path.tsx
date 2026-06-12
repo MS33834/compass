@@ -52,12 +52,12 @@ export function Path() {
 
       <div
         role="tablist"
-        style={{ 
-          display: 'flex', 
-          justifyContent: 'center', 
-          gap: '1rem', 
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          gap: '1rem',
           marginBottom: '2rem',
-          flexWrap: 'wrap'
+          flexWrap: 'wrap',
         }}
       >
         {(['east', 'west'] as Region[]).map(r => (

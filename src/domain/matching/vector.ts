@@ -1,16 +1,27 @@
-// 镜心 · 答题 → 12 维向量
+// 镜心 · 答题 → 12 维特征向量
+//
+// 算法说明（三层加权）：
+// 1. 主维度 delta 直接累积（权重 1.0）
+// 2. 副维度 delta 累积（权重 0.35，用于"旁敲侧击"的微弱牵引）
+// 3. 未覆盖维度用"已答题均值 + 全局中性 0.5"的加权混合（覆盖率越低越倾向 0.5）
+// 4. 最终通过自适应 sigmoid 映射到 [0.08, 0.92]
+//    ——覆盖度高 → K 大 → 分布更展开；覆盖度低 → K 小 → 收敛到中性
 
 import type { TraitVector } from '../traits/trait.types';
 import type { Item } from '../items/item.types';
 
-/** 把答题记录压成 12 维特征向量 */
+const PRIMARY_WEIGHT = 1.0;
+const SECONDARY_WEIGHT = 0.35;
+
 export function computeUserVector(
   answers: Record<string, number>,
   pool: readonly Item[]
 ): TraitVector {
   const raw = new Array(12).fill(0);
   const coverage = new Array(12).fill(0);
+  const secondaryCoverage = new Array(12).fill(0);
   const answeredCount = Object.keys(answers).length;
+  const totalItems = pool.length;
 
   // 第一遍：收集所有已答题项的原始分数
   for (const item of pool) {
@@ -19,29 +30,56 @@ export function computeUserVector(
     const opt = item.options[optIdx];
     if (!opt) continue;
 
-    raw[opt.primary.traitId - 1] += opt.primary.delta;
+    raw[opt.primary.traitId - 1] += opt.primary.delta * PRIMARY_WEIGHT;
     coverage[opt.primary.traitId - 1] += 1;
     for (const s of opt.secondary ?? []) {
-      raw[s.traitId - 1] += s.delta;
+      raw[s.traitId - 1] += s.delta * SECONDARY_WEIGHT;
+      secondaryCoverage[s.traitId - 1] += 1;
     }
   }
 
-  // 第二遍：归一化到 [0, 1]
-  return raw.map((s, i) => {
-    if (coverage[i] === 0) {
-      // 未答题项：使用中性值 0.5
-      return 0.5;
+  // 计算全局均值：用于未覆盖维度的"合理猜测"
+  let globalMean = 0;
+  let globalCovered = 0;
+  for (let i = 0; i < 12; i++) {
+    if (coverage[i] > 0) {
+      globalMean += raw[i] / coverage[i];
+      globalCovered += 1;
     }
-    
-    const mean = s / coverage[i];
-    
-    // 自适应 sigmoid 系数：根据覆盖度动态调整
-    // 覆盖度越高，系数越大（区分度越高）
-    const adaptiveK = 2.5 + (coverage[i] / Math.max(1, answeredCount)) * 1.5;
-    
-    const normalized = 1 / (1 + Math.exp(-mean * adaptiveK));
-    
-    // 边界处理：确保不会过于极端
-    return Math.max(0.05, Math.min(0.95, normalized));
+  }
+  globalMean = globalCovered > 0 ? globalMean / globalCovered : 0;
+
+  // 整体答题比例：越低越收敛到中性
+  const answerRatio = totalItems > 0 ? answeredCount / totalItems : 0;
+
+  // 第二遍：逐维归一化
+  return raw.map((s, i) => {
+    const cov = coverage[i];
+
+    if (cov === 0) {
+      // 本维未被主维度覆盖 → 用副维度信号 + 全局均值混合
+      const secondarySignal = secondaryCoverage[i] > 0 ? s / secondaryCoverage[i] : globalMean;
+      const blended = secondarySignal * 0.5 + globalMean * 0.5;
+      // 整体覆盖越低越倾向 0.5（中性）—— 未答题不应过度自信
+      const pullToNeutral = Math.max(0.5, 1 - answerRatio);
+      return 0.5 + (1 / (1 + Math.exp(-blended * 1.5)) - 0.5) * (1 - pullToNeutral);
+    }
+
+    const mean = s / cov;
+
+    // 自适应 sigmoid 系数：
+    // - 本维覆盖度越高，K 越大（区分度越高）
+    // - 整体答题比例越高，基础 K 越大（越相信用户的倾向）
+    const baseK = 1.5 + answerRatio * 1.5;
+    const perTraitBoost = Math.min(2.0, (cov / Math.max(1, answeredCount)) * 3.0);
+    const adaptiveK = baseK + perTraitBoost;
+
+    const sigmoid = 1 / (1 + Math.exp(-mean * adaptiveK));
+
+    // 边界处理：确保不会过于极端，保留"余量"以体现不确定性
+    const floor = 0.08 + (1 - answerRatio) * 0.15;
+    const ceil = 0.92 - (1 - answerRatio) * 0.15;
+
+    return Math.max(floor, Math.min(ceil, sigmoid));
   }) as TraitVector;
 }

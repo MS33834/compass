@@ -361,11 +361,11 @@ p {
     --sp-6: 1.25rem;
     --sp-8: 1.5rem;
   }
-  
+
   body {
     font-size: 16px;
   }
-  
+
   h1 {
     font-size: 2rem;
   }
@@ -375,25 +375,25 @@ p {
   h3 {
     font-size: 1.25rem;
   }
-  
+
   p {
     font-size: 1rem;
   }
-  
+
   .jx-btn {
     font-size: 1rem;
     padding: var(--sp-3) var(--sp-6);
     min-width: 8rem;
     letter-spacing: 0.15em;
   }
-  
+
   .jx-container,
   .jx-container-narrow {
     padding: var(--sp-6) var(--sp-4);
     max-width: 100%;
     overflow-x: hidden;
   }
-  
+
   header button {
     font-size: 0.875rem !important;
     padding: 0.25rem 0.375rem !important;
@@ -406,7 +406,7 @@ p {
     font-size: 0.75rem !important;
     padding: 0 0.25rem !important;
   }
-  
+
   /* 映照十二维：窄屏改为单列 */
   .jx-ref-grid {
     grid-template-columns: minmax(0, 1fr) !important;
@@ -427,7 +427,7 @@ p {
   .jx-primary-grid .jx-portrait {
     margin: 0 auto;
   }
-  
+
   /* 防止文字溢出 */
   .jx-verse .ancient {
     font-size: 1.125rem;
@@ -437,7 +437,7 @@ p {
     font-size: 0.9rem;
     word-break: break-word;
   }
-  
+
   /* 防止所有元素溢出 */
   * {
     max-width: 100%;
@@ -452,12 +452,12 @@ p {
   h2 {
     font-size: 1.5rem;
   }
-  
+
   .jx-btn {
     font-size: 1rem;
     padding: var(--sp-3) var(--sp-6);
   }
-  
+
   .jx-container {
     padding: var(--sp-6) var(--sp-4);
   }
@@ -475,7 +475,7 @@ p {
   body {
     font-size: 15px;
   }
-  
+
   h1 {
     font-size: 1.75rem;
   }
@@ -485,24 +485,24 @@ p {
   h3 {
     font-size: 1.125rem;
   }
-  
+
   p {
     font-size: 0.95rem;
   }
-  
+
   .jx-btn {
     font-size: 0.95rem;
     padding: var(--sp-2) var(--sp-4);
     min-width: 7rem;
   }
-  
+
   .jx-container,
   .jx-container-narrow {
     padding: var(--sp-4) var(--sp-3);
     max-width: 100%;
     overflow-x: hidden;
   }
-  
+
   /* 强制防止溢出 */
   * {
     max-width: 100%;
@@ -943,7 +943,8 @@ main:focus {
 }
 
 @keyframes jx-pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0.8;
   }
   50% {
@@ -992,7 +993,7 @@ a:focus-visible {
     min-height: 44px;
     min-width: 44px;
   }
-  
+
   [data-role='option'] {
     min-height: 56px;
   }
@@ -1003,19 +1004,19 @@ a:focus-visible {
   body::before {
     display: none;
   }
-  
+
   .jx-btn,
   .jx-skip-link,
   .jx-keyboard-hint {
     display: none;
   }
-  
+
   .jx-container,
   .jx-container-narrow {
     max-width: 100%;
     padding: 0;
   }
-  
+
   * {
     color: #000 !important;
     background: #fff !important;

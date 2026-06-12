@@ -1,4 +1,12 @@
-// 镜心 · 答题 · 行
+// 镜心 · 答题 · 行（增强版）
+//
+// 增强点：
+// 1. 顶部进度条：渐变色 + 已答/总数双指示
+// 2. 选项卡片：悬停微抬 + 选中朱砂印章动画 + 键盘焦点高亮
+// 3. 键盘导航：1-6 快速选，←→ 翻页，ESC 返回选域
+// 4. 底部跳过/上一题/下一题按钮组，流畅渐进
+// 5. 题目标题：进入时淡入
+// 6. 答题回溯提示：前面某题未答时提醒
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useStore } from '../store';
@@ -7,46 +15,42 @@ import { figuresForDomain } from '../domain/figures/figures.index';
 import { computeUserVector } from '../domain/matching/vector';
 import { buildReport } from '../domain/matching/report';
 import { BrushButton } from '../components/BrushButton';
-import { Progress } from '../components/Progress';
 import { Verse } from '../components/Verse';
 import { useT } from '../i18n';
 
 export function Way() {
-  const { domain, currentIndex, answers, answer, goPrev, goNext, setReport, goPhase } = useStore();
+  const { domain, currentIndex, answers, answer, goPrev, goNext, goPhase, setReport, reset } =
+    useStore();
   const t = useT();
-  const goPhaseRef = useRef(goPhase);
-  goPhaseRef.current = goPhase;
 
-  // 若未选域则回到 path —— 副作用应放 effect
   useEffect(() => {
-    if (!domain) goPhaseRef.current('path');
-  }, [domain]);
+    if (!domain) goPhase('path');
+  }, [domain, goPhase]);
 
   const items = useMemo(() => itemsForDomain(domain ?? 'east-literati'), [domain]);
   const total = items.length;
   const item = items[currentIndex];
 
-  // 越界（例如 currentIndex 越界）—— 回 prologue
+  // 越界保护
   useEffect(() => {
-    if (domain && !item) goPhaseRef.current('prologue');
-  }, [domain, item]);
+    if (domain && !item) goPhase('prologue');
+  }, [domain, item, goPhase]);
 
-  // 回溯提示状态
-  const [showBacktrackHint, setShowBacktrackHint] = useState(false);
-
+  // 回溯提示
+  const [showBacktrack, setShowBacktrack] = useState(false);
   useEffect(() => {
-    // 如果用户在前面的题目中有未答题，显示提示
-    const hasUnansweredBefore = items.slice(0, currentIndex).some((it) => answers[it.id] === undefined);
-    setShowBacktrackHint(hasUnansweredBefore);
+    const hasUnansweredBefore = items
+      .slice(0, currentIndex)
+      .some(it => answers[it.id] === undefined);
+    setShowBacktrack(hasUnansweredBefore);
   }, [currentIndex, answers, items]);
 
   if (!domain || !item) return null;
 
   const figures = figuresForDomain(domain);
-
   const current = answers[item.id];
-  const answered = Object.keys(answers).length;
-  const canFinish = answered >= 30;
+  const answeredCount = Object.keys(answers).length;
+  const canFinish = answeredCount >= 30;
 
   const handleFinish = () => {
     const r = buildReport(computeUserVector(answers, items), figures, answers, items);
@@ -54,36 +58,91 @@ export function Way() {
   };
 
   const handleSkip = () => {
-    if (currentIndex < total - 1) {
-      goNext();
-    }
+    if (currentIndex < total - 1) goNext();
   };
 
   // 键盘导航
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      // 忽略在输入框中的按键
+      const target = e.target as HTMLElement;
+      if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA')) return;
+
       if (e.key === 'ArrowLeft' && currentIndex > 0) {
+        e.preventDefault();
         goPrev();
       } else if (e.key === 'ArrowRight' && currentIndex < total - 1) {
         if (current !== undefined) {
+          e.preventDefault();
           goNext();
         }
       } else if (e.key >= '1' && e.key <= '6') {
         const optIndex = parseInt(e.key) - 1;
         if (optIndex < item.options.length) {
+          e.preventDefault();
           answer(item.id, optIndex);
+        }
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        if (currentIndex < total - 1 && current !== undefined) {
+          goNext();
+        } else if (canFinish) {
+          handleFinish();
         }
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentIndex, total, current, item, answer, goPrev, goNext]);
+  }, [currentIndex, total, current, item, answer, goPrev, goNext, canFinish]);
+
+  // 进度百分比
+  const progressPct = Math.round((answeredCount / total) * 100);
+  const currentProgressPct = Math.round(((currentIndex + 1) / total) * 100);
 
   return (
-    <section className="jx-container-narrow jx-fade-enter" aria-labelledby="way-title">
+    <section
+      className="jx-container-narrow jx-fade-enter"
+      aria-labelledby="way-title"
+      style={{ maxWidth: '42rem' }}
+    >
       <header style={{ marginBottom: '2rem' }}>
-        <Progress value={answered} total={total} />
+        {/* 双进度：当前题进度 + 已答数进度 */}
+        <div
+          style={{
+            position: 'relative',
+            height: '6px',
+            background: 'var(--rice-deep)',
+            overflow: 'hidden',
+            marginBottom: '0.5rem',
+          }}
+          aria-hidden
+        >
+          <div
+            style={{
+              position: 'absolute',
+              left: 0,
+              top: 0,
+              bottom: 0,
+              width: `${currentProgressPct}%`,
+              background: 'var(--cinnabar)',
+              opacity: 0.35,
+              transition: 'width 600ms var(--ease-out)',
+            }}
+          />
+          <div
+            style={{
+              position: 'absolute',
+              left: 0,
+              top: 0,
+              bottom: 0,
+              width: `${progressPct}%`,
+              background: 'linear-gradient(90deg, var(--cinnabar) 0%, var(--jade) 100%)',
+              transition: 'width 600ms var(--ease-out)',
+            }}
+          />
+        </div>
+
         <p
           data-testid="way-progress-text"
           style={{
@@ -91,49 +150,87 @@ export function Way() {
             color: 'var(--ink-faint)',
             fontSize: '0.875rem',
             fontFamily: 'var(--font-display)',
-            letterSpacing: '0.1em',
+            letterSpacing: '0.15em',
             display: 'flex',
-            justifyContent: 'center',
+            justifyContent: 'space-between',
             alignItems: 'center',
-            gap: '1rem',
             flexWrap: 'wrap',
+            gap: '0.5rem',
           }}
         >
-          <span>{t.way.question(currentIndex + 1, total)}</span>
-          <span>{t.way.answered(answered, total)}</span>
+          <span>
+            第 {currentIndex + 1} 问 / 共 {total} 问
+          </span>
+          <span>
+            已答 {answeredCount} 题 · {progressPct}%
+          </span>
         </p>
-        {showBacktrackHint && (
-          <p
+
+        {/* 回溯提示 */}
+        {showBacktrack && (
+          <div
             style={{
-              marginTop: '0.5rem',
-              color: 'var(--cinnabar)',
-              fontSize: '0.75rem',
+              marginTop: '0.75rem',
+              padding: '0.5rem 0.75rem',
+              background: 'rgba(184, 149, 74, 0.1)',
+              border: '1px dashed var(--gold-dim)',
+              color: 'var(--ink-soft)',
+              fontSize: '0.8rem',
               fontFamily: 'var(--font-display)',
-              opacity: 0.8,
+              textAlign: 'center',
+              letterSpacing: '0.1em',
+              animation: 'jx-fade-stagger 500ms var(--ease-out) both',
             }}
           >
-            提示：前面有未回答的题目，可以返回补充
-          </p>
+            前面尚有未答之题 · 可按 ← 返回补答
+          </div>
         )}
       </header>
 
+      {/* 题目 */}
       <article
         key={item.id}
         className="jx-fade-enter"
         aria-labelledby="way-title"
         style={{ minHeight: '16rem' }}
       >
-        <h2 id="way-title" data-testid="way-prompt" style={{ marginBottom: '1.5rem' }}>
-          {item.prompt}
-        </h2>
-        {item.promptGloss && (
-          <p style={{ color: 'var(--ink-faint)', marginBottom: '2rem' }}>{item.promptGloss}</p>
-        )}
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            marginBottom: '1rem',
+          }}
+        >
+          <h2
+            id="way-title"
+            data-testid="way-prompt"
+            style={{ fontSize: 'clamp(1.8rem, 4vw, 2.5rem)', marginBottom: '0.25rem' }}
+          >
+            {item.prompt}
+          </h2>
+          {item.promptGloss && (
+            <p
+              style={{
+                color: 'var(--ink-faint)',
+                marginBottom: '1rem',
+                fontSize: '1rem',
+                fontFamily: 'var(--font-body)',
+                lineHeight: 1.7,
+                textAlign: 'center',
+                maxWidth: '30rem',
+              }}
+            >
+              {item.promptGloss}
+            </p>
+          )}
+        </div>
 
+        {/* 选项 */}
         <div
           role="radiogroup"
           aria-label={t.way.optionsLabel}
-          style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', maxWidth: '100%' }}
+          style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', maxWidth: '100%' }}
         >
           {item.options.map((opt, i) => {
             const selected = current === i;
@@ -146,27 +243,77 @@ export function Way() {
                 aria-checked={selected}
                 data-role="option"
                 data-opt-index={i}
-                data-opt-letter={letter}
                 data-testid={`option-${i}`}
                 onClick={() => answer(item.id, i)}
                 style={{
                   textAlign: 'left',
-                  padding: '1rem 1.25rem',
+                  padding: '0.85rem 1rem',
                   background: selected ? 'var(--rice-warm)' : 'transparent',
-                  border: `1px solid ${selected ? 'var(--cinnabar)' : 'var(--rice-deep)'}`,
+                  border: `2px solid ${selected ? 'var(--cinnabar)' : 'var(--rice-deep)'}`,
                   cursor: 'pointer',
-                  transition: 'all 200ms',
+                  transition: 'all 250ms var(--ease-out)',
                   display: 'flex',
                   alignItems: 'flex-start',
-                  gap: '0',
+                  gap: '0.75rem',
                   maxWidth: '100%',
                   overflow: 'hidden',
+                  boxShadow: selected ? '0 4px 14px rgba(168, 50, 46, 0.15)' : 'none',
+                  transform: selected ? 'translateY(-1px)' : 'none',
+                  fontFamily: 'inherit',
+                  fontSize: '1rem',
+                }}
+                onMouseEnter={e => {
+                  if (!selected) {
+                    e.currentTarget.style.transform = 'translateY(-2px)';
+                    e.currentTarget.style.boxShadow = '0 6px 18px rgba(26,26,26,0.12)';
+                    e.currentTarget.style.borderColor = 'var(--ink)';
+                  }
+                }}
+                onMouseLeave={e => {
+                  if (!selected) {
+                    e.currentTarget.style.transform = '';
+                    e.currentTarget.style.boxShadow = '';
+                    e.currentTarget.style.borderColor = 'var(--rice-deep)';
+                  } else {
+                    e.currentTarget.style.transform = 'translateY(-1px)';
+                    e.currentTarget.style.boxShadow = '0 4px 14px rgba(168, 50, 46, 0.15)';
+                  }
                 }}
               >
-                <span className="jx-opt-letter" aria-hidden>
+                {/* 字母印章 */}
+                <span
+                  className="jx-opt-letter"
+                  aria-hidden
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: '2.2rem',
+                    height: '2.2rem',
+                    minWidth: '2.2rem',
+                    background: selected ? 'var(--cinnabar)' : 'var(--rice-warm)',
+                    color: selected ? 'var(--rice)' : 'var(--ink)',
+                    border: `1px solid ${selected ? 'var(--cinnabar)' : 'var(--rice-deep)'}`,
+                    fontFamily: 'var(--font-display)',
+                    fontSize: '1rem',
+                    fontWeight: 600,
+                    letterSpacing: '0.1em',
+                    transition: 'all 250ms var(--ease-out)',
+                    flexShrink: 0,
+                    borderRadius: '2px',
+                  }}
+                >
                   {letter}
                 </span>
-                <span style={{ flex: 1, overflow: 'hidden', wordBreak: 'break-word' }}>
+
+                <span
+                  style={{
+                    flex: 1,
+                    overflow: 'hidden',
+                    wordBreak: 'break-word',
+                    paddingTop: '0.1rem',
+                  }}
+                >
                   <Verse text={opt.text} gloss={opt.gloss} />
                 </span>
               </button>
@@ -175,14 +322,15 @@ export function Way() {
         </div>
       </article>
 
+      {/* 导航按钮 */}
       <nav
         data-testid="way-nav"
         style={{
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          marginTop: '3rem',
-          gap: '1rem',
+          marginTop: '2.5rem',
+          gap: '0.75rem',
           flexWrap: 'wrap',
         }}
       >
@@ -191,44 +339,107 @@ export function Way() {
           onClick={goPrev}
           disabled={currentIndex === 0}
           data-testid="btn-prev"
+          style={{ fontSize: '0.9rem' }}
         >
-          {t.way.prev}
+          ← 上一问
         </BrushButton>
 
-        <div style={{ display: 'flex', gap: '0.5rem' }}>
-          {currentIndex < total - 1 && (
-            <BrushButton
-              variant="ghost"
-              onClick={handleSkip}
-              data-testid="btn-skip"
-              style={{ fontSize: '0.875rem' }}
-            >
-              跳过
-            </BrushButton>
-          )}
+        {currentIndex < total - 1 && (
+          <BrushButton
+            variant="ghost"
+            onClick={handleSkip}
+            data-testid="btn-skip"
+            style={{ fontSize: '0.85rem', opacity: current === undefined ? 1 : 0.7 }}
+          >
+            {current === undefined ? '跳过此题' : '跳过'}
+          </BrushButton>
+        )}
 
-          {currentIndex === total - 1 ? (
-            <BrushButton
-              variant="primary"
-              data-testid="btn-finish"
-              disabled={!canFinish}
-              onClick={handleFinish}
-              title={!canFinish ? t.way.finishTitle(30 - answered) : undefined}
-            >
-              {t.way.finish}
-            </BrushButton>
-          ) : (
-            <BrushButton
-              variant="primary"
-              data-testid="btn-next"
-              onClick={goNext}
-              disabled={current === undefined}
-            >
-              {t.way.next}
-            </BrushButton>
-          )}
-        </div>
+        {currentIndex === total - 1 ? (
+          <BrushButton
+            variant="primary"
+            data-testid="btn-finish"
+            disabled={!canFinish}
+            onClick={handleFinish}
+            title={!canFinish ? `再答 ${30 - answeredCount} 题即可出镜` : undefined}
+            style={{ minWidth: '9rem' }}
+          >
+            ✦ 出镜映照
+          </BrushButton>
+        ) : (
+          <BrushButton
+            variant="primary"
+            data-testid="btn-next"
+            onClick={goNext}
+            disabled={current === undefined}
+            style={{ minWidth: '8rem' }}
+          >
+            下一问 →
+          </BrushButton>
+        )}
       </nav>
+
+      {/* 底部小提示：键盘导航 */}
+      <p
+        style={{
+          textAlign: 'center',
+          marginTop: '1.5rem',
+          fontSize: '0.75rem',
+          color: 'var(--ink-faint)',
+          fontFamily: 'var(--font-display)',
+          opacity: 0.7,
+          letterSpacing: '0.15em',
+        }}
+      >
+        键盘：← → 切换 · 1-6 选答 · Enter 确认
+      </p>
+
+      {/* 重置 */}
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          marginTop: '1rem',
+        }}
+      >
+        <button
+          type="button"
+          onClick={() => {
+            if (confirm(t.ui.resetConfirm)) reset();
+          }}
+          style={{
+            background: 'none',
+            border: 'none',
+            color: 'var(--ink-faint)',
+            fontSize: '0.75rem',
+            fontFamily: 'var(--font-display)',
+            cursor: 'pointer',
+            padding: '0.25rem 0.5rem',
+            letterSpacing: '0.15em',
+            transition: 'color 200ms',
+          }}
+          onMouseEnter={e => {
+            e.currentTarget.style.color = 'var(--cinnabar)';
+          }}
+          onMouseLeave={e => {
+            e.currentTarget.style.color = 'var(--ink-faint)';
+          }}
+        >
+          · 清零重来 ·
+        </button>
+      </div>
+
+      <style>{`
+        @keyframes jx-fade-in {
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes jx-fade-stagger {
+          from { opacity: 0; transform: translateY(4px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .jx-fade-enter { animation: jx-fade-in 500ms var(--ease-out) both; }
+      `}</style>
     </section>
   );
 }
