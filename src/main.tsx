@@ -1,5 +1,4 @@
 // 镜心 · 入口
-import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { App } from './App';
 import { useStore } from './store';
@@ -67,11 +66,11 @@ window.addEventListener('unhandledrejection', (e) => {
 });
 
 try {
-  ReactDOM.createRoot(root).render(
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
-  );
+  // 注意：生产环境不开启 React.StrictMode
+  // - StrictMode 在 dev 下双渲染有助于发现问题，但生产中会浪费 CPU/内存
+  // - 微信内置浏览器等内存受限环境下，双渲染可能导致崩溃白屏
+  // - 我们已在 ErrorBoundary 中做了其他鲁棒性保障
+  ReactDOM.createRoot(root).render(<App />);
 } catch (e) {
   showFatal((e as Error)?.message || String(e));
   throw e;
