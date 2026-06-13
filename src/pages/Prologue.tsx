@@ -1,4 +1,5 @@
 // 镜心 · 入门 · 题
+import { useState } from 'react';
 import { useStore } from '../store';
 import { BrushButton } from '../components/BrushButton';
 import { Verse } from '../components/Verse';
@@ -7,7 +8,8 @@ import { useT } from '../i18n';
 export function Prologue() {
   const { goPhase } = useStore();
   const t = useT();
-  const pick = Math.floor(Math.random() * t.prologue.verses.length);
+  // 用 useState 惰性初始化，避免 React 18 严格模式下 render 期间副作用造成 hydration 不一致
+  const [pick] = useState(() => Math.floor(Math.random() * t.prologue.verses.length));
   const lines = t.prologue.verses[pick];
 
   return (
