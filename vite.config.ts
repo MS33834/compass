@@ -16,11 +16,16 @@ export default defineConfig(({ mode }) => {
       rollupOptions: {
         output: {
           manualChunks(id) {
-            if (id.includes('node_modules/react/') || id.includes('node_modules/react-dom/')) {
+            // 关键修复：把 zustand 与 react 合并到同一块，避免两个 React 实例
+            // 两个 React 实例会导致 "Invalid hook call" / "Minified React error #310"
+            if (
+              id.includes('node_modules/react/') ||
+              id.includes('node_modules/react-dom/') ||
+              id.includes('node_modules/zustand') ||
+              id.includes('node_modules/scheduler') ||
+              id.includes('node_modules/use-sync-external-store')
+            ) {
               return 'vendor-react';
-            }
-            if (id.includes('node_modules/zustand')) {
-              return 'vendor-state';
             }
           },
         },
