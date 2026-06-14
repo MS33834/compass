@@ -41,6 +41,21 @@
   box-sizing: border-box;
 }
 
+/* 流体排版：根字号随视口平滑缩放 */
+html {
+  /*
+    最小 17px（小屏手机）
+    中间：1vw + 11px（在 600px~1200px 间无缝过渡）
+    最大 23px（宽屏桌面）
+    - 320px 手机: 17px  (≈ 旧 16px)
+    - 480px 手机: 17px  (≈ 旧 16px)
+    - 768px 平板: 18.7px (≈ 旧 17-18px，平滑过渡)
+    - 1024px 平板: 21.2px (旧无此段→偏小)
+    - 1440px 桌面: 23px  (vs 旧 20px)
+  */
+  font-size: clamp(17px, 1vw + 11px, 23px);
+}
+
 /* 防止溢出 - 全局约束 */
 html,
 body {
@@ -64,7 +79,7 @@ body {
   background: var(--rice);
   color: var(--ink);
   font-family: var(--font-body);
-  font-size: 20px;
+  font-size: 1rem;
   font-weight: 500;
   line-height: 1.8;
   -webkit-font-smoothing: antialiased;
@@ -430,30 +445,12 @@ p {
   animation: jx-radar-fade 1000ms var(--ease-in-out) 800ms forwards;
 }
 
-/* 响应式 - 小程序/手机竖屏 (320px - 480px) */
+/* 响应式 - 手机竖屏 (320px - 480px) */
 @media (max-width: 480px) {
   :root {
     --sp-4: 0.875rem;
     --sp-6: 1.25rem;
     --sp-8: 1.5rem;
-  }
-
-  body {
-    font-size: 16px;
-  }
-
-  h1 {
-    font-size: 2rem;
-  }
-  h2 {
-    font-size: 1.5rem;
-  }
-  h3 {
-    font-size: 1.25rem;
-  }
-
-  p {
-    font-size: 1rem;
   }
 
   .jx-btn {
@@ -520,20 +517,8 @@ p {
   }
 }
 
-/* 响应式 - 手机横屏/小平板 (481px - 768px) */
+/* 响应式 - 手机横屏/平板 (481px - 768px) */
 @media (min-width: 481px) and (max-width: 768px) {
-  h1 {
-    font-size: 2rem;
-  }
-  h2 {
-    font-size: 1.5rem;
-  }
-
-  .jx-btn {
-    font-size: 1rem;
-    padding: var(--sp-3) var(--sp-6);
-  }
-
   .jx-container {
     padding: var(--sp-6) var(--sp-4);
   }
@@ -548,13 +533,6 @@ p {
 
 /* 响应式 - 超小屏 (320px 以下，如 iPhone SE 1代) */
 @media (max-width: 320px) {
-  body {
-    font-size: 15px;
-  }
-
-  h1 {
-    font-size: 1.75rem;
-  }
   h2 {
     font-size: 1.25rem;
   }
