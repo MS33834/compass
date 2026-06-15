@@ -8,7 +8,7 @@
 // 5. 题目标题：进入时淡入
 // 6. 答题回溯提示：前面某题未答时提醒
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useStore } from '../store';
 import { itemsForDomain } from '../domain/items/items.index';
 import { figuresForDomain } from '../domain/figures/figures.index';
@@ -61,9 +61,11 @@ export function Way() {
     if (currentIndex < total - 1) goNext();
   };
 
-  // 切换题目时回到顶部
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'instant' });
+  // 切换题目时强制回到顶部（useLayoutEffect 保证在浏览器绘制前执行）
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
   }, [currentIndex]);
 
   // 键盘导航
