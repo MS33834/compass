@@ -11,7 +11,7 @@ export const en: Dict = {
     returnHome: 'Home',
     returnHomeConfirm: 'Return to home will clear all answers. Continue?',
     resetConfirm: 'Starting over will clear all answers. Continue?',
-    toggleLang: '中',
+    toggleLang: '中文',
     phase: {
       prologue: 'Entry',
       path: 'Domain',

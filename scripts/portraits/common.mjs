@@ -5,7 +5,8 @@
 // ─── 朝代色板 ────────────────────────────────────────────────
 // 每一朝给主色 / 副色 / 底色 / 墨色 / 朱砂
 export const PALETTES = {
-  spring: { // 春秋战国
+  spring: {
+    // 春秋战国
     primary: '#7a5a2e',
     secondary: '#a47c4a',
     ground: '#f1e4c4',
@@ -14,7 +15,8 @@ export const PALETTES = {
     accent: '#c4a868',
     label: '春秋',
   },
-  warring: { // 战国
+  warring: {
+    // 战国
     primary: '#5e3a20',
     secondary: '#8a5a30',
     ground: '#ece1c0',
@@ -23,7 +25,8 @@ export const PALETTES = {
     accent: '#b88a4a',
     label: '战国',
   },
-  westernHan: { // 西汉
+  westernHan: {
+    // 西汉
     primary: '#6a5a45',
     secondary: '#8a7a5a',
     ground: '#ede4cf',
@@ -32,7 +35,8 @@ export const PALETTES = {
     accent: '#b0a080',
     label: '西汉',
   },
-  easternJin: { // 东晋
+  easternJin: {
+    // 东晋
     primary: '#4e6a4a',
     secondary: '#6a8a5e',
     ground: '#e6ecdc',
@@ -41,7 +45,8 @@ export const PALETTES = {
     accent: '#8aaa78',
     label: '东晋',
   },
-  tang: { // 唐
+  tang: {
+    // 唐
     primary: '#b8842a',
     secondary: '#d8a850',
     ground: '#faecc8',
@@ -50,7 +55,8 @@ export const PALETTES = {
     accent: '#e8c878',
     label: '盛唐',
   },
-  song: { // 宋
+  song: {
+    // 宋
     primary: '#3e6a68',
     secondary: '#5a8a88',
     ground: '#dde9e6',
@@ -59,7 +65,8 @@ export const PALETTES = {
     accent: '#7aaaa8',
     label: '宋',
   },
-  yuan: { // 元
+  yuan: {
+    // 元
     primary: '#686858',
     secondary: '#888878',
     ground: '#ececdf',
@@ -68,7 +75,8 @@ export const PALETTES = {
     accent: '#a8a898',
     label: '元',
   },
-  ming: { // 明
+  ming: {
+    // 明
     primary: '#8a2424',
     secondary: '#a83838',
     ground: '#f0d8d0',
@@ -77,7 +85,8 @@ export const PALETTES = {
     accent: '#c45a4a',
     label: '明',
   },
-  qing: { // 清
+  qing: {
+    // 清
     primary: '#5a3a68',
     secondary: '#7a5a88',
     ground: '#e6dcec',
@@ -87,7 +96,8 @@ export const PALETTES = {
     label: '清',
   },
   // ── 西方色板（v0.4 / v0.5）──
-  classical: { // 希腊罗马
+  classical: {
+    // 希腊罗马
     primary: '#5a6a82',
     secondary: '#7a8aa0',
     ground: '#ece4d4',
@@ -96,7 +106,8 @@ export const PALETTES = {
     accent: '#a8b0c0',
     label: '希腊',
   },
-  medieval: { // 中世纪 / 经院
+  medieval: {
+    // 中世纪 / 经院
     primary: '#6a4a28',
     secondary: '#8a6a48',
     ground: '#e8dec8',
@@ -105,7 +116,8 @@ export const PALETTES = {
     accent: '#a88860',
     label: '经院',
   },
-  modernEarly: { // 17-18 世纪启蒙
+  modernEarly: {
+    // 17-18 世纪启蒙
     primary: '#3e5a4a',
     secondary: '#5a7a6a',
     ground: '#dee8e0',
@@ -114,7 +126,8 @@ export const PALETTES = {
     accent: '#8aaa90',
     label: '启蒙',
   },
-  modernLate: { // 19-20 世纪近代
+  modernLate: {
+    // 19-20 世纪近代
     primary: '#3a3a5a',
     secondary: '#5a5a7a',
     ground: '#e2e2ec',
@@ -256,7 +269,7 @@ export function footer(palette, name, seal) {
     </g>
     <!-- 篆刻朱砂方印：右下角 -->
     <g transform="translate(360 530)">
-      <rect x="0" y="0" width="64" height="64" fill="${palette.seal}" filter="url(#ink-${Math.abs(name.length * 13) % 99 + 1})"/>
+      <rect x="0" y="0" width="64" height="64" fill="${palette.seal}" filter="url(#ink-${(Math.abs(name.length * 13) % 99) + 1})"/>
       <rect x="2" y="2" width="60" height="60" fill="none" stroke="${palette.ground}" stroke-width="0.8" opacity="0.6"/>
       ${sealInner}
     </g>
@@ -274,7 +287,7 @@ ${content}
 // ─── 简易 SVG 路径工具 ────────────────────────────────────────────────
 // 远山：折线 + 三角
 export const mountains = (p, y = 280, h = 60) => `
-  <g filter="url(#haze-${Math.abs(p.length * 7) % 99 + 1})" opacity="0.7">
+  <g filter="url(#haze-${(Math.abs(p.length * 7) % 99) + 1})" opacity="0.7">
     <path d="M 0 ${y} L 60 ${y - h * 0.6} L 130 ${y - h * 0.85} L 200 ${y - h * 0.5} L 280 ${y - h} L 360 ${y - h * 0.7} L 440 ${y - h * 0.4} L 480 ${y - h * 0.2} L 480 480 L 0 480 Z" fill="${p}" opacity="0.35"/>
     <path d="M 0 ${y + 24} L 80 ${y - h * 0.3 + 24} L 170 ${y - h * 0.55 + 24} L 260 ${y - h * 0.2 + 24} L 340 ${y - h * 0.6 + 24} L 420 ${y - h * 0.25 + 24} L 480 ${y - h * 0.05 + 24} L 480 480 L 0 480 Z" fill="${p}" opacity="0.55"/>
   </g>`;
@@ -398,9 +411,9 @@ export const chessboard = (x, y, w = 60, h = 60, color = '#3a2010') => `
   <g stroke="${color}" stroke-width="1" fill="none">
     <rect x="${x}" y="${y}" width="${w}" height="${h}"/>
     <line x1="${x + w / 3}" y1="${y}" x2="${x + w / 3}" y2="${y + h}"/>
-    <line x1="${x + 2 * w / 3}" y1="${y}" x2="${x + 2 * w / 3}" y2="${y + h}"/>
+    <line x1="${x + (2 * w) / 3}" y1="${y}" x2="${x + (2 * w) / 3}" y2="${y + h}"/>
     <line x1="${x}" y1="${y + h / 3}" x2="${x + w}" y2="${y + h / 3}"/>
-    <line x1="${x}" y1="${y + 2 * h / 3}" x2="${x + w}" y2="${y + 2 * h / 3}"/>
+    <line x1="${x}" y1="${y + (2 * h) / 3}" x2="${x + w}" y2="${y + (2 * h) / 3}"/>
     <circle cx="${x + 4}" cy="${y + 4}" r="1.6" fill="${color}"/>
     <circle cx="${x + w - 4}" cy="${y + 4}" r="1.6" fill="${color}"/>
     <circle cx="${x + 4}" cy="${y + h - 4}" r="1.6" fill="${color}"/>
@@ -457,7 +470,8 @@ export const lantern = (x, y, color = '#a82828') => `
   </g>`;
 
 // 墨点
-export const inkDot = (x, y, r = 1.5) => `<circle cx="${x}" cy="${y}" r="${r}" fill="#1a1a1a" opacity="0.6"/>`;
+export const inkDot = (x, y, r = 1.5) =>
+  `<circle cx="${x}" cy="${y}" r="${r}" fill="#1a1a1a" opacity="0.6"/>`;
 
 // 瀑布
 export const waterfall = (x, y, h = 80, color = '#7a9aaa') => `

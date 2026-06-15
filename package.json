@@ -2,7 +2,7 @@
   "name": "mindmirror",
   "version": "0.2.0",
   "private": true,
-  "description": "MindMirror (Jingxin / 镜心) — a static, privacy-first tool that maps your answers across a 12-dimensional trait space to a historical figure. 5 domains, 151 figures, 240 items. All math runs in the browser; nothing is sent to a server.",
+  "description": "Mirror · MindMirror — a glass for asking thyself. Answer 60 questions across a 12-dimensional trait space to find your historical counterpart across 5 domains, 151 figures, 240 items. Local-first, no server, no tracking.",
   "type": "module",
   "engines": {
     "node": ">=20.0.0",

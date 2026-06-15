@@ -1,8 +1,8 @@
 ---
 name: 添域 · Add a new domain
 about: 为镜心新增一域（30+ 人物 + 48 题）
-title: "[domain] "
-labels: ["enhancement", "domain"]
+title: '[domain] '
+labels: ['enhancement', 'domain']
 assignees: []
 ---
 
@@ -23,13 +23,13 @@ assignees: []
 按五区段：极端外 / 偏外 / 中段 / 偏内 / 极端内。
 每区段至少 N 人：
 
-| 区段 | 人数 |
-|---|---|
-| 极端外 |  |
-| 偏外 |  |
-| 中段 |  |
-| 偏内 |  |
-| 极端内 |  |
+| 区段   | 人数 |
+| ------ | ---- |
+| 极端外 |      |
+| 偏外   |      |
+| 中段   |      |
+| 偏内   |      |
+| 极端内 |      |
 
 ## 文件结构 · File layout
 

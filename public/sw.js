@@ -8,36 +8,43 @@ self.addEventListener('install', () => {
   self.skipWaiting();
 });
 
-self.addEventListener('activate', (e) => {
+self.addEventListener('activate', e => {
   e.waitUntil(
     Promise.all([
       // 清理所有旧缓存（v1/v2/v3/v4 全部清除）
-      caches.keys().then((keys) =>
-        Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k)))
-      ),
+      caches
+        .keys()
+        .then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))),
       self.clients.claim(),
     ])
   );
 });
 
-self.addEventListener('fetch', (e) => {
+self.addEventListener('fetch', e => {
   const url = new URL(e.request.url);
   if (url.origin !== location.origin) return;
   if (e.request.method !== 'GET') return;
 
   // JS/CSS/HTML：完全不拦截，让浏览器自己处理
   // 带 hash 的 JS/CSS 浏览器会永久缓存，不带 hash 的 HTML 每次请求最新
-  if (url.pathname.endsWith('.js') || url.pathname.endsWith('.css') || url.pathname.endsWith('.html')) {
+  if (
+    url.pathname.endsWith('.js') ||
+    url.pathname.endsWith('.css') ||
+    url.pathname.endsWith('.html')
+  ) {
     return;
   }
 
   // 其他资源（图片、字体、SVG 等）：网络优先，离线降级缓存
   e.respondWith(
     fetch(e.request)
-      .then((resp) => {
+      .then(resp => {
         if (resp.ok) {
           const clone = resp.clone();
-          caches.open(CACHE).then((c) => c.put(e.request, clone)).catch(() => {});
+          caches
+            .open(CACHE)
+            .then(c => c.put(e.request, clone))
+            .catch(() => {});
         }
         return resp;
       })

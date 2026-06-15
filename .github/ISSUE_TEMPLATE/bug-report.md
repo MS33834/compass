@@ -1,8 +1,8 @@
 ---
 name: 报 bug · Bug report
 about: 镜心 映照有误 / 运行出错 / 显示异常
-title: "[bug] "
-labels: ["bug"]
+title: '[bug] '
+labels: ['bug']
 assignees: []
 ---
 

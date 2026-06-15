@@ -3,9 +3,30 @@
 // 每位：朝代色板、著名场景意象、签名题词、篆刻内容、人物剪影指令
 
 import {
-  mountains, water, moon, branch, bamboo, pavilion, cottage, boat, bridge,
-  cloud, bird, plumBranch, orchid, chrysanthemum, chessboard, chessPiece,
-  inkstone, scroll, lotus, candle, lantern, inkDot, waterfall, pavilionFree,
+  mountains,
+  water,
+  moon,
+  branch,
+  bamboo,
+  pavilion,
+  cottage,
+  boat,
+  bridge,
+  cloud,
+  bird,
+  plumBranch,
+  orchid,
+  chrysanthemum,
+  chessboard,
+  chessPiece,
+  inkstone,
+  scroll,
+  lotus,
+  candle,
+  lantern,
+  inkDot,
+  waterfall,
+  pavilionFree,
 } from './common.mjs';
 
 // 每位人物提供 buildScene(ink, palette) -> 场景 SVG 字符串
@@ -300,8 +321,8 @@ export const FIGURES = [
         <line x1="240" y1="380" x2="320" y2="350" stroke="${p.primary}" stroke-width="1.2"/>
         <line x1="320" y1="350" x2="340" y2="370" stroke="${p.ink}" stroke-width="0.4"/>
         <!-- 飞雪 -->
-        ${Array.from({ length: 14 }, (_, i) => inkDot(40 + i * 32, 140 + (i * 17) % 80)).join('')}
-        ${Array.from({ length: 10 }, (_, i) => inkDot(60 + i * 38, 220 + (i * 23) % 60)).join('')}`;
+        ${Array.from({ length: 14 }, (_, i) => inkDot(40 + i * 32, 140 + ((i * 17) % 80))).join('')}
+        ${Array.from({ length: 10 }, (_, i) => inkDot(60 + i * 38, 220 + ((i * 23) % 60))).join('')}`;
     },
   },
 
@@ -413,7 +434,7 @@ export const FIGURES = [
         </g>
         <!-- 血梅飘零 -->
         <g>
-          ${Array.from({ length: 8 }, (_, i) => `<circle cx="${100 + i * 36}" cy="${200 + (i * 13) % 60}" r="2.5" fill="${p.seal}" opacity="0.7"/>`).join('')}
+          ${Array.from({ length: 8 }, (_, i) => `<circle cx="${100 + i * 36}" cy="${200 + ((i * 13) % 60)}" r="2.5" fill="${p.seal}" opacity="0.7"/>`).join('')}
         </g>`;
     },
   },
@@ -642,12 +663,15 @@ export const FIGURES = [
         <rect x="60" y="400" width="360" height="14" fill="${p.primary}" opacity="0.8"/>
         <rect x="60" y="414" width="360" height="4" fill="${p.ink}" opacity="0.5"/>
         <!-- 简册成山 -->
-        ${Array.from({ length: 5 }, (_, i) => `<g transform="translate(${100 + i * 56} 380)">
+        ${Array.from(
+          { length: 5 },
+          (_, i) => `<g transform="translate(${100 + i * 56} 380)">
           <rect x="0" y="0" width="48" height="6" fill="${p.ground}" stroke="${p.primary}" stroke-width="0.6"/>
           <rect x="0" y="8" width="48" height="6" fill="${p.ground}" stroke="${p.primary}" stroke-width="0.6"/>
           <line x1="2" y1="2" x2="46" y2="2" stroke="${p.primary}" stroke-width="0.3"/>
           <line x1="2" y1="10" x2="46" y2="10" stroke="${p.primary}" stroke-width="0.3"/>
-        </g>`).join('')}
+        </g>`
+        ).join('')}
         <!-- 坐者 -->
         <g transform="translate(240 310)" fill="${ink}" opacity="0.95">
           <ellipse cx="0" cy="0" rx="13" ry="16"/>
@@ -677,7 +701,7 @@ export const FIGURES = [
         ${cottage(240, 400, ink)}
         <!-- 飞舞茅草 -->
         <g>
-          ${Array.from({ length: 6 }, (_, i) => `<path d="M ${80 + i * 50} ${280 + (i * 7) % 30} l 12 -3 l -6 6 l -10 -2" fill="${p.secondary}" stroke="${p.ink}" stroke-width="0.5" opacity="0.7"/>`).join('')}
+          ${Array.from({ length: 6 }, (_, i) => `<path d="M ${80 + i * 50} ${280 + ((i * 7) % 30)} l 12 -3 l -6 6 l -10 -2" fill="${p.secondary}" stroke="${p.ink}" stroke-width="0.5" opacity="0.7"/>`).join('')}
         </g>
         <!-- 茅屋中人 -->
         <g transform="translate(240 350)" fill="${ink}" opacity="0.9">
@@ -687,7 +711,7 @@ export const FIGURES = [
         </g>
         <!-- 秋风扫叶 -->
         <g opacity="0.6">
-          ${Array.from({ length: 5 }, (_, i) => `<path d="M ${60 + i * 80} ${400 + (i * 13) % 40} q 4 -3 8 0" stroke="${p.primary}" stroke-width="0.6" fill="none"/>`).join('')}
+          ${Array.from({ length: 5 }, (_, i) => `<path d="M ${60 + i * 80} ${400 + ((i * 13) % 40)} q 4 -3 8 0" stroke="${p.primary}" stroke-width="0.6" fill="none"/>`).join('')}
         </g>`;
     },
   },
@@ -807,8 +831,8 @@ export const FIGURES = [
         ${water(p.primary, 440)}
         ${pavilion(240, 400, ink, p.primary)}
         <!-- 飞雪 -->
-        ${Array.from({ length: 28 }, (_, i) => inkDot(30 + (i * 17) % 440, 100 + (i * 13) % 200)).join('')}
-        ${Array.from({ length: 18 }, (_, i) => inkDot(40 + (i * 23) % 420, 240 + (i * 11) % 100)).join('')}
+        ${Array.from({ length: 28 }, (_, i) => inkDot(30 + ((i * 17) % 440), 100 + ((i * 13) % 200))).join('')}
+        ${Array.from({ length: 18 }, (_, i) => inkDot(40 + ((i * 23) % 420), 240 + ((i * 11) % 100))).join('')}
         <!-- 亭中二人对坐 -->
         <g transform="translate(220 380)" fill="${ink}" opacity="0.9">
           <ellipse cx="0" cy="0" rx="9" ry="12"/>
@@ -1010,9 +1034,9 @@ export const FIGURES = [
         <!-- 落红 -->
         <g>
           ${Array.from({ length: 14 }, (_, i) => {
-            const x = 60 + (i * 31) % 380;
-            const y = 200 + (i * 17) % 200;
-            return `<ellipse cx="${x}" cy="${y}" rx="3" ry="2" fill="${p.seal}" opacity="0.75" transform="rotate(${i * 23 % 90} ${x} ${y})"/>`;
+            const x = 60 + ((i * 31) % 380);
+            const y = 200 + ((i * 17) % 200);
+            return `<ellipse cx="${x}" cy="${y}" rx="3" ry="2" fill="${p.seal}" opacity="0.75" transform="rotate(${(i * 23) % 90} ${x} ${y})"/>`;
           }).join('')}
         </g>
         <!-- 立马者 -->

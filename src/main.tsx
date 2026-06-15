@@ -45,7 +45,8 @@ if (!root) throw new Error('root not found');
 function renderErrorUI(container: HTMLElement, title: string, message: string, stack?: string) {
   container.innerHTML = '';
   const wrap = document.createElement('div');
-  wrap.style.cssText = 'max-width:560px;margin:60px auto;padding:24px;text-align:center;font-family:system-ui,sans-serif;color:#333;background:#fff;border:2px solid #a8322e;border-radius:8px;';
+  wrap.style.cssText =
+    'max-width:560px;margin:60px auto;padding:24px;text-align:center;font-family:system-ui,sans-serif;color:#333;background:#fff;border:2px solid #a8322e;border-radius:8px;';
 
   const h2 = document.createElement('h2');
   h2.textContent = title;
@@ -60,24 +61,23 @@ function renderErrorUI(container: HTMLElement, title: string, message: string, s
   if (stack) {
     const pre = document.createElement('pre');
     pre.textContent = stack;
-    pre.style.cssText = 'text-align:left;background:#f5f5f5;padding:12px;border-radius:4px;font-size:0.75rem;overflow-x:auto;max-height:300px;overflow-y:auto;margin:12px 0;color:#333;';
+    pre.style.cssText =
+      'text-align:left;background:#f5f5f5;padding:12px;border-radius:4px;font-size:0.75rem;overflow-x:auto;max-height:300px;overflow-y:auto;margin:12px 0;color:#333;';
     wrap.appendChild(pre);
   }
 
   const btn = document.createElement('button');
   btn.textContent = '重新加载';
   btn.onclick = () => location.reload();
-  btn.style.cssText = 'padding:10px 24px;background:#a8322e;color:#fff;border:none;border-radius:4px;cursor:pointer;font-size:1rem;margin-top:8px;';
+  btn.style.cssText =
+    'padding:10px 24px;background:#a8322e;color:#fff;border:none;border-radius:4px;cursor:pointer;font-size:1rem;margin-top:8px;';
   wrap.appendChild(btn);
 
   container.appendChild(wrap);
 }
 
 // 全局错误边界
-class GlobalErrorBoundary extends Component<
-  { children: ReactNode },
-  { error: Error | null }
-> {
+class GlobalErrorBoundary extends Component<{ children: ReactNode }, { error: Error | null }> {
   state = { error: null as Error | null };
   static getDerivedStateFromError(error: Error) {
     return { error };
@@ -109,10 +109,15 @@ class GlobalErrorBoundary extends Component<
             borderRadius: '8px',
           }}
         >
-          <h2 style={{ margin: '0 0 16px', color: '#a8322e', fontSize: '1.4rem' }}>
-            加载异常
-          </h2>
-          <p style={{ margin: '0 0 8px', color: '#555', fontSize: '0.95rem', wordBreak: 'break-all' }}>
+          <h2 style={{ margin: '0 0 16px', color: '#a8322e', fontSize: '1.4rem' }}>加载异常</h2>
+          <p
+            style={{
+              margin: '0 0 8px',
+              color: '#555',
+              fontSize: '0.95rem',
+              wordBreak: 'break-all',
+            }}
+          >
             {e.message || '(无错误信息)'}
           </p>
           {e.stack && (
@@ -165,12 +170,7 @@ try {
 } catch (e) {
   const boot = document.getElementById('jx-boot');
   if (boot) boot.remove();
-  renderErrorUI(
-    root,
-    '加载失败',
-    (e as Error)?.message || String(e),
-    (e as Error)?.stack
-  );
+  renderErrorUI(root, '加载失败', (e as Error)?.message || String(e), (e as Error)?.stack);
   throw e;
 }
 

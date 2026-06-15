@@ -3,9 +3,30 @@
 // 复用 common.mjs 的元素和调色板
 
 import {
-  mountains, water, moon, branch, bamboo, pavilion, cottage, boat, bridge,
-  cloud, bird, plumBranch, orchid, chrysanthemum, chessboard, chessPiece,
-  inkstone, scroll, lotus, candle, lantern, inkDot, waterfall, pavilionFree,
+  mountains,
+  water,
+  moon,
+  branch,
+  bamboo,
+  pavilion,
+  cottage,
+  boat,
+  bridge,
+  cloud,
+  bird,
+  plumBranch,
+  orchid,
+  chrysanthemum,
+  chessboard,
+  chessPiece,
+  inkstone,
+  scroll,
+  lotus,
+  candle,
+  lantern,
+  inkDot,
+  waterfall,
+  pavilionFree,
 } from './common.mjs';
 
 export const FIGURES_EAST_STATEMAN = [
@@ -85,12 +106,15 @@ export const FIGURES_EAST_STATEMAN = [
         <rect x="60" y="414" width="360" height="4" fill="${p.ink}" opacity="0.5"/>
         ${inkstone(380, 432, p.ink)}
         <!-- 简册成山 -->
-        ${Array.from({ length: 4 }, (_, i) => `<g transform="translate(${100 + i * 60} 380)">
+        ${Array.from(
+          { length: 4 },
+          (_, i) => `<g transform="translate(${100 + i * 60} 380)">
           <rect x="0" y="0" width="50" height="6" fill="${p.ground}" stroke="${p.primary}" stroke-width="0.6"/>
           <rect x="0" y="8" width="50" height="6" fill="${p.ground}" stroke="${p.primary}" stroke-width="0.6"/>
           <line x1="2" y1="2" x2="48" y2="2" stroke="${p.primary}" stroke-width="0.3"/>
           <line x1="2" y1="10" x2="48" y2="10" stroke="${p.primary}" stroke-width="0.3"/>
-        </g>`).join('')}
+        </g>`
+        ).join('')}
         <!-- 执笔 -->
         <g transform="translate(220 320)" fill="${ink}" opacity="0.95">
           <ellipse cx="0" cy="0" rx="12" ry="15"/>
@@ -525,13 +549,16 @@ export const FIGURES_EAST_STATEMAN = [
         ${bamboo(420, 440, 100, p.ink)}
         <!-- 案 -->
         <rect x="60" y="400" width="360" height="14" fill="${p.primary}" opacity="0.85"/>
-        ${Array.from({ length: 4 }, (_, i) => `<g transform="translate(${100 + i * 60} 360)">
+        ${Array.from(
+          { length: 4 },
+          (_, i) => `<g transform="translate(${100 + i * 60} 360)">
           <rect x="0" y="0" width="50" height="40" fill="${p.ground}" stroke="${p.primary}" stroke-width="0.6"/>
           <line x1="2" y1="6" x2="48" y2="6" stroke-width="0.3"/>
           <line x1="2" y1="14" x2="48" y2="14" stroke-width="0.3"/>
           <line x1="2" y1="22" x2="48" y2="22" stroke-width="0.3"/>
           <line x1="2" y1="30" x2="48" y2="30" stroke-width="0.3"/>
-        </g>`).join('')}
+        </g>`
+        ).join('')}
         <!-- 坐者 -->
         <g transform="translate(220 320)" fill="${ink}" opacity="0.95">
           <ellipse cx="0" cy="0" rx="12" ry="15"/>
@@ -586,12 +613,15 @@ export const FIGURES_EAST_STATEMAN = [
         <!-- 案 -->
         <rect x="60" y="400" width="360" height="14" fill="${p.primary}" opacity="0.85"/>
         <!-- 案卷 -->
-        ${Array.from({ length: 5 }, (_, i) => `<g transform="translate(${90 + i * 56} 360)">
+        ${Array.from(
+          { length: 5 },
+          (_, i) => `<g transform="translate(${90 + i * 56} 360)">
           <rect x="0" y="0" width="44" height="40" fill="${p.ground}" stroke="${p.primary}" stroke-width="0.6"/>
           <line x1="2" y1="6" x2="42" y2="6" stroke-width="0.3"/>
           <line x1="2" y1="14" x2="42" y2="14" stroke-width="0.3"/>
           <line x1="2" y1="22" x2="42" y2="22" stroke-width="0.3"/>
-        </g>`).join('')}
+        </g>`
+        ).join('')}
         <!-- 惊堂木 -->
         <rect x="370" y="406" width="14" height="6" fill="${p.seal}"/>
         <!-- 坐者 -->

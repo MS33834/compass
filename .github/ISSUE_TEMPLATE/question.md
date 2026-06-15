@@ -1,8 +1,8 @@
 ---
 name: 提问 · Question
 about: 询问用法 / 算法 / 部署 / 贡献方式
-title: "[question] "
-labels: ["question"]
+title: '[question] '
+labels: ['question']
 assignees: []
 ---
 

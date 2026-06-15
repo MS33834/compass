@@ -3,16 +3,41 @@
 // 复用 common.mjs 的元素和调色板
 
 import {
-  mountains, water, moon, branch, bamboo, pavilion, cottage, boat, bridge,
-  cloud, bird, plumBranch, orchid, chrysanthemum, chessboard, chessPiece,
-  inkstone, scroll, lotus, candle, lantern, inkDot, waterfall, pavilionFree,
+  mountains,
+  water,
+  moon,
+  branch,
+  bamboo,
+  pavilion,
+  cottage,
+  boat,
+  bridge,
+  cloud,
+  bird,
+  plumBranch,
+  orchid,
+  chrysanthemum,
+  chessboard,
+  chessPiece,
+  inkstone,
+  scroll,
+  lotus,
+  candle,
+  lantern,
+  inkDot,
+  waterfall,
+  pavilionFree,
 } from './common.mjs';
 
 export const FIGURES_EAST_SCIENTIST = [
   // ── A 极端外：发现 / 发明 / 革新 ──
   {
-    id: 'cailun', name: '蔡伦', era: 'westernHan', seal: '蔡侯纸',
-    motto: ['蔡侯造纸', '衣被天下'], caption: '蔡侯造纸',
+    id: 'cailun',
+    name: '蔡伦',
+    era: 'westernHan',
+    seal: '蔡侯纸',
+    motto: ['蔡侯造纸', '衣被天下'],
+    caption: '蔡侯造纸',
     buildScene(p, ink) {
       return `
         ${mountains(p.secondary, 320, 50)}
@@ -38,8 +63,12 @@ export const FIGURES_EAST_SCIENTIST = [
     },
   },
   {
-    id: 'zhangheng', name: '张衡', era: 'westernHan', seal: '候风仪',
-    motto: ['浑天仪象', '候风地动'], caption: '候风地动',
+    id: 'zhangheng',
+    name: '张衡',
+    era: 'westernHan',
+    seal: '候风仪',
+    motto: ['浑天仪象', '候风地动'],
+    caption: '候风地动',
     buildScene(p, ink) {
       return `
         ${mountains(p.secondary, 300, 60)}
@@ -75,8 +104,12 @@ export const FIGURES_EAST_SCIENTIST = [
     },
   },
   {
-    id: 'zu', name: '祖冲之', era: 'tang', seal: '圆周率',
-    motto: ['三五四一五', '九二六五四'], caption: '圆率七位',
+    id: 'zu',
+    name: '祖冲之',
+    era: 'tang',
+    seal: '圆周率',
+    motto: ['三五四一五', '九二六五四'],
+    caption: '圆率七位',
     buildScene(p, ink) {
       return `
         ${mountains(p.secondary, 320, 50)}
@@ -102,8 +135,12 @@ export const FIGURES_EAST_SCIENTIST = [
     },
   },
   {
-    id: 'bi', name: '毕昇', era: 'song', seal: '泥活字',
-    motto: ['不以木活字', '胶泥为之'], caption: '泥活字术',
+    id: 'bi',
+    name: '毕昇',
+    era: 'song',
+    seal: '泥活字',
+    motto: ['不以木活字', '胶泥为之'],
+    caption: '泥活字术',
     buildScene(p, ink) {
       return `
         ${mountains(p.secondary, 320, 50)}
@@ -112,8 +149,13 @@ export const FIGURES_EAST_SCIENTIST = [
         <rect x="60" y="400" width="360" height="14" fill="${p.primary}" opacity="0.85"/>
         <!-- 活字板 -->
         <g transform="translate(240 360)" fill="${p.ground}" stroke="${ink}" stroke-width="0.6">
-          ${Array.from({ length: 5 }, (_, row) => Array.from({ length: 8 }, (_, col) =>
-            `<rect x="${-40 + col * 10}" y="${-15 + row * 10}" width="9" height="9" />`).join('')).join('')}
+          ${Array.from({ length: 5 }, (_, row) =>
+            Array.from(
+              { length: 8 },
+              (_, col) =>
+                `<rect x="${-40 + col * 10}" y="${-15 + row * 10}" width="9" height="9" />`
+            ).join('')
+          ).join('')}
         </g>
         <!-- 字模堆 -->
         <g transform="translate(380 380)" fill="${p.secondary}" stroke="${ink}" stroke-width="0.6">
@@ -128,8 +170,12 @@ export const FIGURES_EAST_SCIENTIST = [
     },
   },
   {
-    id: 'song', name: '宋应星', era: 'ming', seal: '天工开',
-    motto: ['天覆地载', '物穷其理'], caption: '天工开物',
+    id: 'song',
+    name: '宋应星',
+    era: 'ming',
+    seal: '天工开',
+    motto: ['天覆地载', '物穷其理'],
+    caption: '天工开物',
     buildScene(p, ink) {
       return `
         ${mountains(p.secondary, 320, 50)}
@@ -154,8 +200,12 @@ export const FIGURES_EAST_SCIENTIST = [
     },
   },
   {
-    id: 'xu', name: '徐光启', era: 'ming', seal: '几何原',
-    motto: ['欲求超胜', '必须会通'], caption: '农政全书',
+    id: 'xu',
+    name: '徐光启',
+    era: 'ming',
+    seal: '几何原',
+    motto: ['欲求超胜', '必须会通'],
+    caption: '农政全书',
     buildScene(p, ink) {
       return `
         ${mountains(p.secondary, 320, 50)}
@@ -187,8 +237,12 @@ export const FIGURES_EAST_SCIENTIST = [
 
   // ── B 偏外 ──
   {
-    id: 'shen', name: '沈括', era: 'song', seal: '梦溪笔',
-    motto: ['以不知为不知', '格物致知'], caption: '梦溪笔谈',
+    id: 'shen',
+    name: '沈括',
+    era: 'song',
+    seal: '梦溪笔',
+    motto: ['以不知为不知', '格物致知'],
+    caption: '梦溪笔谈',
     buildScene(p, ink) {
       return `
         ${mountains(p.secondary, 300, 70)}
@@ -209,8 +263,12 @@ export const FIGURES_EAST_SCIENTIST = [
     },
   },
   {
-    id: 'guo', name: '郭守敬', era: 'yuan', seal: '授时历',
-    motto: ['测验为本', '简仪高表'], caption: '简仪观天',
+    id: 'guo',
+    name: '郭守敬',
+    era: 'yuan',
+    seal: '授时历',
+    motto: ['测验为本', '简仪高表'],
+    caption: '简仪观天',
     buildScene(p, ink) {
       return `
         ${mountains(p.secondary, 280, 60)}
@@ -233,8 +291,12 @@ export const FIGURES_EAST_SCIENTIST = [
     },
   },
   {
-    id: 'huang', name: '黄道婆', era: 'yuan', seal: '衣被天',
-    motto: ['搅车去籽', '纺车织机'], caption: '衣被天下',
+    id: 'huang',
+    name: '黄道婆',
+    era: 'yuan',
+    seal: '衣被天',
+    motto: ['搅车去籽', '纺车织机'],
+    caption: '衣被天下',
     buildScene(p, ink) {
       return `
         ${mountains(p.secondary, 320, 50)}
@@ -257,8 +319,12 @@ export const FIGURES_EAST_SCIENTIST = [
     },
   },
   {
-    id: 'li', name: '李时珍', era: 'ming', seal: '本草纲',
-    motto: ['医者贵格物', '以身试药'], caption: '本草纲目',
+    id: 'li',
+    name: '李时珍',
+    era: 'ming',
+    seal: '本草纲',
+    motto: ['医者贵格物', '以身试药'],
+    caption: '本草纲目',
     buildScene(p, ink) {
       return `
         ${mountains(p.secondary, 320, 60)}
@@ -296,8 +362,12 @@ export const FIGURES_EAST_SCIENTIST = [
     },
   },
   {
-    id: 'jia', name: '贾思勰', era: 'tang', seal: '齐民要',
-    motto: ['顺天时', '量地利'], caption: '齐民要术',
+    id: 'jia',
+    name: '贾思勰',
+    era: 'tang',
+    seal: '齐民要',
+    motto: ['顺天时', '量地利'],
+    caption: '齐民要术',
     buildScene(p, ink) {
       return `
         ${mountains(p.secondary, 320, 50)}
@@ -308,11 +378,17 @@ export const FIGURES_EAST_SCIENTIST = [
           ${Array.from({ length: 8 }, (_, i) => `<line x1="${60 + i * 45}" y1="380" x2="${60 + i * 45}" y2="420"/>`).join('')}
         </g>
         <!-- 苗 -->
-        ${Array.from({ length: 16 }, (_, i) => `<g transform="translate(${80 + i * 22} 380)" stroke="${p.ink}" stroke-width="0.6" fill="none">
+        ${Array.from(
+          { length: 16 },
+          (
+            _,
+            i
+          ) => `<g transform="translate(${80 + i * 22} 380)" stroke="${p.ink}" stroke-width="0.6" fill="none">
           <line x1="0" y1="0" x2="0" y2="-10"/>
           <path d="M 0 -6 q -3 -2 -6 -2" />
           <path d="M 0 -8 q 3 -2 6 -2" />
-        </g>`).join('')}
+        </g>`
+        ).join('')}
         <!-- 农人 -->
         <g transform="translate(220 340)" fill="${ink}" opacity="0.95">
           <ellipse cx="0" cy="0" rx="11" ry="14"/>
@@ -322,8 +398,12 @@ export const FIGURES_EAST_SCIENTIST = [
     },
   },
   {
-    id: 'xuxiake', name: '徐霞客', era: 'ming', seal: '徐霞客',
-    motto: ['朝碧海暮苍梧', '以足代笔'], caption: '游历天下',
+    id: 'xuxiake',
+    name: '徐霞客',
+    era: 'ming',
+    seal: '徐霞客',
+    motto: ['朝碧海暮苍梧', '以足代笔'],
+    caption: '游历天下',
     buildScene(p, ink) {
       return `
         ${mountains(p.secondary, 240, 100)}
@@ -349,8 +429,12 @@ export const FIGURES_EAST_SCIENTIST = [
 
   // ── C 中段 ──
   {
-    id: 'zhang', name: '张仲景', era: 'westernHan', seal: '伤寒论',
-    motto: ['勤求古训', '博采众方'], caption: '伤寒论',
+    id: 'zhang',
+    name: '张仲景',
+    era: 'westernHan',
+    seal: '伤寒论',
+    motto: ['勤求古训', '博采众方'],
+    caption: '伤寒论',
     buildScene(p, ink) {
       return `
         ${mountains(p.secondary, 320, 50)}
@@ -372,8 +456,12 @@ export const FIGURES_EAST_SCIENTIST = [
     },
   },
   {
-    id: 'huatuo', name: '华佗', era: 'westernHan', seal: '麻沸散',
-    motto: ['医者意也', '麻沸开刀'], caption: '麻沸神术',
+    id: 'huatuo',
+    name: '华佗',
+    era: 'westernHan',
+    seal: '麻沸散',
+    motto: ['医者意也', '麻沸开刀'],
+    caption: '麻沸神术',
     buildScene(p, ink) {
       return `
         ${mountains(p.secondary, 320, 50)}
@@ -398,8 +486,12 @@ export const FIGURES_EAST_SCIENTIST = [
     },
   },
   {
-    id: 'sun', name: '孙思邈', era: 'tang', seal: '千金方',
-    motto: ['大医精诚', '普救含灵'], caption: '大医精诚',
+    id: 'sun',
+    name: '孙思邈',
+    era: 'tang',
+    seal: '千金方',
+    motto: ['大医精诚', '普救含灵'],
+    caption: '大医精诚',
     buildScene(p, ink) {
       return `
         ${mountains(p.secondary, 320, 50)}
@@ -425,8 +517,12 @@ export const FIGURES_EAST_SCIENTIST = [
     },
   },
   {
-    id: 'pei', name: '裴秀', era: 'westernHan', seal: '制图体',
-    motto: ['制图六体', '方寸万里'], caption: '制图六体',
+    id: 'pei',
+    name: '裴秀',
+    era: 'westernHan',
+    seal: '制图体',
+    motto: ['制图六体', '方寸万里'],
+    caption: '制图六体',
     buildScene(p, ink) {
       return `
         ${mountains(p.secondary, 320, 50)}
@@ -454,8 +550,12 @@ export const FIGURES_EAST_SCIENTIST = [
     },
   },
   {
-    id: 'su', name: '苏颂', era: 'song', seal: '水转仪',
-    motto: ['水转之器', '以水为动'], caption: '水转仪象',
+    id: 'su',
+    name: '苏颂',
+    era: 'song',
+    seal: '水转仪',
+    motto: ['水转之器', '以水为动'],
+    caption: '水转仪象',
     buildScene(p, ink) {
       return `
         ${mountains(p.secondary, 320, 50)}
@@ -484,8 +584,12 @@ export const FIGURES_EAST_SCIENTIST = [
     },
   },
   {
-    id: 'lijie', name: '李诫', era: 'song', seal: '营造式',
-    motto: ['经营造作', '有规有矩'], caption: '营造法式',
+    id: 'lijie',
+    name: '李诫',
+    era: 'song',
+    seal: '营造式',
+    motto: ['经营造作', '有规有矩'],
+    caption: '营造法式',
     buildScene(p, ink) {
       return `
         ${mountains(p.secondary, 320, 50)}
@@ -521,8 +625,12 @@ export const FIGURES_EAST_SCIENTIST = [
 
   // ── D 偏内 ──
   {
-    id: 'bianque', name: '扁鹊', era: 'spring', seal: '望闻切',
-    motto: ['望闻问切', '四诊合参'], caption: '望闻问切',
+    id: 'bianque',
+    name: '扁鹊',
+    era: 'spring',
+    seal: '望闻切',
+    motto: ['望闻问切', '四诊合参'],
+    caption: '望闻问切',
     buildScene(p, ink) {
       return `
         ${mountains(p.secondary, 320, 50)}
@@ -544,8 +652,12 @@ export const FIGURES_EAST_SCIENTIST = [
     },
   },
   {
-    id: 'ge', name: '葛洪', era: 'tang', seal: '抱朴子',
-    motto: ['神仙可学', '不死可致'], caption: '抱朴炼丹',
+    id: 'ge',
+    name: '葛洪',
+    era: 'tang',
+    seal: '抱朴子',
+    motto: ['神仙可学', '不死可致'],
+    caption: '抱朴炼丹',
     buildScene(p, ink) {
       return `
         ${mountains(p.secondary, 320, 50)}
@@ -580,8 +692,12 @@ export const FIGURES_EAST_SCIENTIST = [
     },
   },
   {
-    id: 'lidaoyu', name: '郦道元', era: 'tang', seal: '水经注',
-    motto: ['山水有灵', '通于经史'], caption: '水经注',
+    id: 'lidaoyu',
+    name: '郦道元',
+    era: 'tang',
+    seal: '水经注',
+    motto: ['山水有灵', '通于经史'],
+    caption: '水经注',
     buildScene(p, ink) {
       return `
         ${mountains(p.secondary, 240, 90)}
@@ -602,8 +718,12 @@ export const FIGURES_EAST_SCIENTIST = [
     },
   },
   {
-    id: 'yi', name: '一行', era: 'tang', seal: '大衍历',
-    motto: ['以天为镜', '测子午线'], caption: '大衍测天',
+    id: 'yi',
+    name: '一行',
+    era: 'tang',
+    seal: '大衍历',
+    motto: ['以天为镜', '测子午线'],
+    caption: '大衍测天',
     buildScene(p, ink) {
       return `
         ${mountains(p.secondary, 320, 50)}
@@ -628,8 +748,12 @@ export const FIGURES_EAST_SCIENTIST = [
     },
   },
   {
-    id: 'qin', name: '秦九韶', era: 'song', seal: '数书九',
-    motto: ['数术穷天地', '大衍求一'], caption: '数书九章',
+    id: 'qin',
+    name: '秦九韶',
+    era: 'song',
+    seal: '数书九',
+    motto: ['数术穷天地', '大衍求一'],
+    caption: '数书九章',
     buildScene(p, ink) {
       return `
         ${mountains(p.secondary, 320, 50)}
@@ -656,8 +780,12 @@ export const FIGURES_EAST_SCIENTIST = [
     },
   },
   {
-    id: 'luban', name: '鲁班', era: 'spring', seal: '公输般',
-    motto: ['工欲善其事', '必利其器'], caption: '工匠祖师',
+    id: 'luban',
+    name: '鲁班',
+    era: 'spring',
+    seal: '公输般',
+    motto: ['工欲善其事', '必利其器'],
+    caption: '工匠祖师',
     buildScene(p, ink) {
       return `
         ${mountains(p.secondary, 320, 50)}
@@ -687,8 +815,12 @@ export const FIGURES_EAST_SCIENTIST = [
 
   // ── E 极端内 ──
   {
-    id: 'ouye', name: '欧冶子', era: 'spring', seal: '湛卢剑',
-    motto: ['铸得三千剑', '一为知己鸣'], caption: '铸剑宗师',
+    id: 'ouye',
+    name: '欧冶子',
+    era: 'spring',
+    seal: '湛卢剑',
+    motto: ['铸得三千剑', '一为知己鸣'],
+    caption: '铸剑宗师',
     buildScene(p, ink) {
       return `
         ${mountains(p.secondary, 320, 50)}
@@ -722,8 +854,12 @@ export const FIGURES_EAST_SCIENTIST = [
     },
   },
   {
-    id: 'ganjiang', name: '干将', era: 'spring', seal: '干将莫',
-    motto: ['身既死兮神以灵', '魂魄毅为鬼雄'], caption: '以身殉剑',
+    id: 'ganjiang',
+    name: '干将',
+    era: 'spring',
+    seal: '干将莫',
+    motto: ['身既死兮神以灵', '魂魄毅为鬼雄'],
+    caption: '以身殉剑',
     buildScene(p, ink) {
       return `
         ${mountains(p.secondary, 320, 50)}
@@ -757,8 +893,12 @@ export const FIGURES_EAST_SCIENTIST = [
     },
   },
   {
-    id: 'ma', name: '马钧', era: 'tang', seal: '名巧也',
-    motto: ['天下名巧', '以机为用'], caption: '名巧马钧',
+    id: 'ma',
+    name: '马钧',
+    era: 'tang',
+    seal: '名巧也',
+    motto: ['天下名巧', '以机为用'],
+    caption: '名巧马钧',
     buildScene(p, ink) {
       return `
         ${mountains(p.secondary, 320, 50)}
@@ -788,8 +928,12 @@ export const FIGURES_EAST_SCIENTIST = [
     },
   },
   {
-    id: 'zhu', name: '竺可桢', era: 'qing', seal: '求是',
-    motto: ['求是', '以日记测天'], caption: '求是竺公',
+    id: 'zhu',
+    name: '竺可桢',
+    era: 'qing',
+    seal: '求是',
+    motto: ['求是', '以日记测天'],
+    caption: '求是竺公',
     buildScene(p, ink) {
       return `
         ${mountains(p.secondary, 320, 50)}
@@ -821,8 +965,12 @@ export const FIGURES_EAST_SCIENTIST = [
     },
   },
   {
-    id: 'mao', name: '茅以升', era: 'qing', seal: '钱塘桥',
-    motto: ['桥梁是造福人民', '炸桥保国'], caption: '钱塘江桥',
+    id: 'mao',
+    name: '茅以升',
+    era: 'qing',
+    seal: '钱塘桥',
+    motto: ['桥梁是造福人民', '炸桥保国'],
+    caption: '钱塘江桥',
     buildScene(p, ink) {
       return `
         ${mountains(p.secondary, 280, 70)}
@@ -846,8 +994,12 @@ export const FIGURES_EAST_SCIENTIST = [
     },
   },
   {
-    id: 'zhan', name: '詹天佑', era: 'qing', seal: '京张路',
-    motto: ['各出所学', '使国家富强'], caption: '京张铁路',
+    id: 'zhan',
+    name: '詹天佑',
+    era: 'qing',
+    seal: '京张路',
+    motto: ['各出所学', '使国家富强'],
+    caption: '京张铁路',
     buildScene(p, ink) {
       return `
         ${mountains(p.secondary, 240, 90)}

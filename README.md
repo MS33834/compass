@@ -1,97 +1,102 @@
-# 镜心 · Jingxin · MindMirror
+# Mirror · MindMirror
 
-> **一面问己之镜。**  
-> **A mirror for asking yourself — in the style of a Chinese literati.**
+> **A glass for asking thyself.**  
+> Three minutes, three millennia — find who might sit with thee among 151 figures across 5 domains.
 
-[🌐 **在线站点**](https://badhope.github.io/MindMirror/) ·
-[📦 **仓库**](https://github.com/badhope/MindMirror) ·
-[📜 **变更日志**](./CHANGELOG.md) ·
-[🛡 **许可 (PolyForm NC)**](./LICENSE)
+[🌐 **Live Site**](https://badhope.github.io/MindMirror/) ·
+[📦 **Repository**](https://github.com/badhope/MindMirror) ·
+[📜 **Changelog**](./CHANGELOG.md) ·
+[🛡 **License (PolyForm NC)**](./LICENSE)
 
-**镜心 (Jingxin · MindMirror)** 是一面**纯前端、纯本地**的问己之镜。
-汝以**六十问**答之，镜心以**十二维特征空间**度之，复以**加权欧氏 + 余弦**之合，**映汝于千古一人**。
+[中文](https://badhope.github.io/MindMirror/?lang=zh) · 镜心
 
-- 🪞 **第一域**：东方文人墨客 · 30 人
-- 🪞 **第二域**：东方治国名臣 · 30 人
-- 🪞 **第三域**：东方科技先驱 · 30 人
-- 🪞 **第四域**：西方哲学大家 · 30 人
-- 🪞 **第五域**：西方科学巨擘 · 30 人
+**Mirror** is a **local-first, privacy-first** tool for self-reflection through history.
 
-合 **5 域 · 151 人 · 240 题**。
-汝所答仅存汝之本地 (`localStorage`)。镜心不联网。
+Answer 60 questions across a 12-dimensional trait space. Mirror maps your responses to a historical counterpart — using a blend of weighted Euclidean and cosine similarity — and reveals your reflection among 151 figures from East and West.
 
----
+- 🪞 **East Literati** · 30 poets, lyricists, essayists, thinkers
+- 🪞 **East Statesmen** · 30 chancellors, generals, reformers
+- 🪞 **East Scientists** · 30 astronomers, mathematicians, engineers
+- 🪞 **West Philosophers** · 30 Greek, continental, and Anglo-American thinkers
+- 🪞 **West Scientists & Ideas** · 31 founders of modern science and thought
 
-## ✒ 理念
-
-- **问己而已** — 不评汝之高下，不为汝贴标签，不存汝一丝一毫于云端。
-- **以算法为骨** — 12 维特征空间为正交连续区间；匹配为加权欧氏 (0.6) + 余弦 (0.4)。
-- **以美为皮** — 宣纸为底，霞鹜文楷为字，朱砂为印；不与"AI 量产审美"为伍。
-- **以汝为度** — 答毕即得一位主镜与四位同道，余皆镜外之影。
+**5 domains · 151 figures · 240 items.**  
+Your answers never leave your device (`localStorage`). Mirror never talks to a server.
 
 ---
 
-## 🪞 玩法
+## ✒ Philosophy
 
-1. **入镜** — 三道随机启语之一
-2. **选域** — 五域任择其一
-3. **行** — 60 问（每域 48 题共享题库 + 域内 12 题）。每问六选一；汝可来去
-4. **映照** — 出镜。主镜一人 + 同道四人。12 维之差、古今之合皆列其下
+- **To thyself be true** — No labels, no scores, no cloud. Just reflection.
+- **Algorithm as backbone** — 12 orthogonal trait dimensions. Weighted Euclidean (0.6) + Cosine (0.4).
+- **Beauty as skin** — Rice paper canvas, ink-brush typography, cinnabar seals. No cookie-cutter AI aesthetics.
+- **Thou art the measure** — One primary reflection, four kindred spirits. The rest remain shadows outside the glass.
 
 ---
 
-## 🔢 算法
+## 🪞 How to Play
 
-- **12 维特征空间**：思辨 · 情感 · 行动 · 革新 · 群我 · 审美 ·
+1. **Enter** — One of three opening verses, chosen at random
+2. **Choose a Domain** — East or West, five paths await
+3. **Inquire** — 60 questions per domain (48 shared + 12 domain-specific). Six options each. Come and go as you please.
+4. **Reflect** — Meet your primary reflection and four kindred spirits. See the 12 dimensions laid bare, where thou and the ancients align — and where you diverge.
+
+---
+
+## 🔢 Algorithm
+
+- **12-Dimensional Trait Space**: 思辨 · 情感 · 行动 · 革新 · 群我 · 审美 ·
   意志 · 学识 · 处世 · 时间 · 风险 · 表达
-- **答题 → 向量** — 每题 6 选项；主维度贡献 + 副维度小幅加和；sigmoid 归一至 [0,1]
-- **匹配** — `0.6 × 加权欧氏相似 + 0.4 × 余弦相似`
-- **置信度** — `0.6 × 完成度 + 0.4 × 决断度`（向量方差越大，答案越分明）
-- **金样例** — [`tests/golden.spec.mjs`](./tests/golden.spec.mjs) 18 条样例
+  (Discernment · Emotion · Action · Innovation · Self-vs-Collective · Aesthetics ·
+  Will · Knowledge · Social · Temporality · Risk · Expression)
+- **Answer → Vector**: Each 6-option question has a primary dimension contribution + minor side-dimension bonuses. Sigmoid-normalized to [0,1].
+- **Matching**: `0.6 × Weighted Euclidean + 0.4 × Cosine Similarity`
+- **Confidence**: `0.6 × Completion + 0.4 × Decisiveness` (higher vector variance = clearer answers)
+- **Golden Tests**: [`tests/golden.spec.mjs`](./tests/golden.spec.mjs) — 18 golden cases
 
-详见 [`src/domain/traits/trait.dimensions.ts`](./src/domain/traits/trait.dimensions.ts) 与
-[`src/domain/matching/`](./src/domain/matching/)。
-
----
-
-## 🛠 技术栈
-
-| 类别 | 选型                                      |
-| ---- | ----------------------------------------- |
-| 框架 | React 18 + TypeScript 5.5                 |
-| 构建 | Vite 5                                    |
-| 状态 | Zustand 4                                 |
-| 路由 | 无（单页 + localStorage 状态机）          |
-| 样式 | 原生 CSS + 主题变量 (`src/index.css`)     |
-| 字体 | 霞鹜文楷 / 思源宋体（系统回落）           |
-| PWA  | 原生 Service Worker（无 Workbox）         |
-| 部署 | GitHub Pages (Actions)                    |
-| 许可 | [PolyForm Noncommercial 1.0.0](./LICENSE) |
-
-无第三方追踪 SDK。无埋点。无后端。
+See [`src/domain/traits/trait.dimensions.ts`](./src/domain/traits/trait.dimensions.ts) and
+[`src/domain/matching/`](./src/domain/matching/).
 
 ---
 
-## 🚀 部署 / 开发
+## 🛠 Tech Stack
+
+| Category  | Choice                                                |
+| --------- | ----------------------------------------------------- |
+| Framework | React 18 + TypeScript 5.5                             |
+| Build     | Vite 5                                                |
+| State     | Zustand 4                                             |
+| Router    | None (single-page + localStorage state machine)       |
+| Styling   | Vanilla CSS + CSS custom properties (`src/index.css`) |
+| Fonts     | Noto Serif SC / LXGW WenKai (system-fallback)         |
+| PWA       | Vanilla Service Worker (no Workbox)                   |
+| Deploy    | GitHub Pages (Actions)                                |
+| License   | [PolyForm Noncommercial 1.0.0](./LICENSE)             |
+
+No third-party tracking. No analytics. No backend.
+
+---
+
+## 🚀 Development / Deploy
 
 ```sh
-npm install           # 安装依赖
-npm run dev           # 本地开发 (http://localhost:5173)
-npm run build         # 产物在 dist/
-npm run build:pages   # GitHub Pages 专用构建（base = /MindMirror/）
+npm install           # Install dependencies
+npm run dev           # Dev server (http://localhost:5173)
+npm run build         # Production build to dist/
+npm run build:pages   # GitHub Pages build (base = /MindMirror/)
 npm run typecheck     # tsc --noEmit
-npm test              # 跑金样例 (golden.spec.mjs)
+npm test              # Golden cases + unit tests
 npm run format        # prettier --write
 ```
 
-**GitHub Pages 自动部署**：`.github/workflows/pages.yml` 在 `main` 推送时构建并通过
-`actions/deploy-pages@v5` 部署至 `https://badhope.github.io/MindMirror/`。
+**GitHub Pages auto-deploy**: `.github/workflows/pages.yml` builds on `main` push and deploys via
+`actions/deploy-pages@v5` to `https://badhope.github.io/MindMirror/`.
 
-**CI 流水线**：`.github/workflows/ci.yml` — `npm ci → typecheck → prettier → build → test`。
+**CI pipeline**: `.github/workflows/ci.yml` — `npm ci → typecheck → prettier → build → test`.
 
 ---
 
-## 🗂 目录结构
+## 🗂 Project Structure
 
 ```
 .
@@ -155,56 +160,60 @@ npm run format        # prettier --write
 
 ---
 
-## 🌍 国际化
+## 🌍 Internationalization
 
-- `zh-CN`（默认）— 古风文言
-- `en-US` — 英文白话
+- `en-US` (default) — Classical-modern hybrid English
+- `zh-CN` — Classical literary Chinese toggle
 
-UI 文案在 [`src/i18n/zh.ts`](./src/i18n/zh.ts) 与 [`src/i18n/en.ts`](./src/i18n/en.ts)。
+Toggle with the language button in the top bar. UI dicts at [`src/i18n/en.ts`](./src/i18n/en.ts) and [`src/i18n/zh.ts`](./src/i18n/zh.ts).
 
 ---
 
-## 🧪 质量保证
+## 🧪 Quality Assurance
 
-| 工具           | 范围                             | 配置                    |
+| Tool           | Scope                            | Config                  |
 | -------------- | -------------------------------- | ----------------------- |
-| `tsc --noEmit` | 类型                             | `tsconfig.json`         |
-| `prettier`     | 格式                             | `.prettierrc`           |
-| `npm test`     | 金样例 5/5                       | `tests/golden.spec.mjs` |
+| `tsc --noEmit` | Types                            | `tsconfig.json`         |
+| `prettier`     | Formatting                       | `.prettierrc`           |
+| `npm test`     | Golden cases + unit tests        | `tests/golden.spec.mjs` |
 | Lighthouse CI  | perf ≥ 85 / a11y ≥ 95 / seo ≥ 90 | `.lighthouserc.json`    |
 | axe-core       | a11y (WCAG AA)                   | `tests/axe.mjs`         |
-| Playwright E2E | 4 视口 (320/375/768/1280)        | `tests/e2e.mjs`         |
-| size-limit     | 体积预算 ≤ 280 KB gzip           | `.size-limit.json`      |
-| link-check     | 站内 .md 引用                    | `tests/link-check.mjs`  |
+| Playwright E2E | 4 viewports (320/375/768/1280)   | `tests/e2e.mjs`         |
+| size-limit     | Bundle budget ≤ 280 KB gzip      | `.size-limit.json`      |
+| link-check     | Internal .md references          | `tests/link-check.mjs`  |
 
 ---
 
-## 🤝 贡献
+## 🤝 Contributing
 
-请先阅读 [CONTRIBUTING.md](./CONTRIBUTING.md) 与 [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md)。
+Please read [CONTRIBUTING.md](./CONTRIBUTING.md) and [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md) first.
 
-**添域步骤**（详见 [CONTRIBUTING.md](./CONTRIBUTING.md)）：
+**Adding a domain** (see [CONTRIBUTING.md](./CONTRIBUTING.md) for full details):
 
-1. 在 `src/domain/figures/figures.<your-domain>.ts` 写 30+ 人
-2. 在 `src/domain/items/items.<your-domain>.ts` 写 48 题
-3. 在两个 `*.index.ts` 注册新域
-4. 在 `src/pages/Path.tsx` 把对应卡片 `ready: true`
-5. 在 `scripts/gen-portraits.mjs` 加占位肖像，再交设计师替换
+1. Add 30+ figures in `src/domain/figures/figures.<your-domain>.ts`
+2. Add 48 items in `src/domain/items/items.<your-domain>.ts`
+3. Register both in their respective `*.index.ts`
+4. Set the card `ready: true` in `src/pages/Path.tsx`
+5. Add placeholder portraits in `scripts/gen-portraits.mjs`
 
-**安全**：[SECURITY.md](./SECURITY.md) — 私密报告方式。
-
----
-
-## 📜 许可
-
-[PolyForm Noncommercial 1.0.0](./LICENSE) — 非商用自由使用，商用需另行授权。
-Copyright © 2024-2026 badhope（镜心 · Jingxin · MindMirror）。
+**Security**: [SECURITY.md](./SECURITY.md) — private disclosure process.
 
 ---
 
-## 🙏 致
+## 📜 License
 
-凡所问，凡所选，凡所行，皆汝之自由。镜心不立标准答案，
-不评分，不存档，唯映射耳。
+[PolyForm Noncommercial 1.0.0](./LICENSE) — Free for non-commercial use. Commercial use requires separate licensing.
+Copyright © 2024-2026 badhope (Mirror · MindMirror).
 
-愿汝入镜而得己。
+---
+
+## 🙏 Colophon
+
+Every question, every choice, every step is yours. Mirror sets no right answers,
+keeps no scores, stores nothing but thou hast asked it to. Only the glass.
+
+May you enter the mirror and find thyself.
+
+---
+
+_Made with rice paper, ink, and cinnabar. Zero AI-slop aesthetics guarantee._ 🖌️

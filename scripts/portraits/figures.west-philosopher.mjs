@@ -5,8 +5,18 @@
 //              compass / hourglass / gear / flask / crown）
 
 import {
-  laurelBranch, pillar, arch, telescope, quill, bookOpen,
-  compass, hourglass, gear, flask, crown, candle,
+  laurelBranch,
+  pillar,
+  arch,
+  telescope,
+  quill,
+  bookOpen,
+  compass,
+  hourglass,
+  gear,
+  flask,
+  crown,
+  candle,
 } from './common.mjs';
 
 export const FIGURES_WEST_PHILOSOPHER = [

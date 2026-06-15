@@ -1,8 +1,8 @@
 ---
 name: 安全报告 · Security report
 about: 私密报告镜心的安全漏洞
-title: "[security] "
-labels: ["security"]
+title: '[security] '
+labels: ['security']
 assignees: []
 ---
 

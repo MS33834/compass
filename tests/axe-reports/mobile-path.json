@@ -10,15 +10,7 @@
     {
       "id": "aria-prohibited-attr",
       "impact": "serious",
-      "tags": [
-        "cat.aria",
-        "wcag2a",
-        "wcag412",
-        "EN-301-549",
-        "EN-9.4.1.2",
-        "RGAAv4",
-        "RGAA-7.1.1"
-      ],
+      "tags": ["cat.aria", "wcag2a", "wcag412", "EN-301-549", "EN-9.4.1.2", "RGAAv4", "RGAA-7.1.1"],
       "description": "Ensure ARIA attributes are not prohibited for an element's role",
       "help": "Elements must only use permitted ARIA attributes",
       "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/aria-prohibited-attr?application=axeAPI",
@@ -33,9 +25,7 @@
                 "role": null,
                 "nodeName": "span",
                 "messageKey": "noRoleSingular",
-                "prohibited": [
-                  "aria-label"
-                ]
+                "prohibited": ["aria-label"]
               },
               "relatedNodes": [],
               "impact": "serious",
@@ -44,9 +34,7 @@
           ],
           "impact": "serious",
           "html": "<span aria-label=\"当前阶段\" data-testid=\"topbar-phase\" style=\"font-family: var(--font-display); color: var(--ink-faint); font-size: 0.875rem; letter-spacing: 0.1em; padding: 0px 0.5rem; white-space: nowrap;\">选域</span>",
-          "target": [
-            "span[aria-label=\"当前阶段\"]"
-          ],
+          "target": ["span[aria-label=\"当前阶段\"]"],
           "failureSummary": "Fix all of the following:\n  aria-label attribute is not well supported on a span with no valid role attribute."
         }
       ]
@@ -86,9 +74,7 @@
           "none": [],
           "impact": "serious",
           "html": "<button class=\"jx-btn jx-btn-ghost\" title=\"夜\" data-testid=\"btn-theme\" aria-label=\"switch to dark\" style=\"min-width: 2.5rem; padding: 0.25rem 0.6rem;\">☼</button>",
-          "target": [
-            "button[title=\"夜\"]"
-          ],
+          "target": ["button[title=\"夜\"]"],
           "failureSummary": "Fix any of the following:\n  Element content contains only non-text characters"
         },
         {
@@ -105,9 +91,7 @@
               "relatedNodes": [
                 {
                   "html": "<body>",
-                  "target": [
-                    "body"
-                  ]
+                  "target": ["body"]
                 }
               ],
               "impact": "serious",
@@ -118,9 +102,7 @@
           "none": [],
           "impact": "serious",
           "html": "<p style=\"margin-top: 0.75rem; font-family: var(--font-display); color: var(--jade); font-size: 0.875rem;\">30 人</p>",
-          "target": [
-            "button[data-domain=\"east-scientist\"] > p:nth-child(3)"
-          ],
+          "target": ["button[data-domain=\"east-scientist\"] > p:nth-child(3)"],
           "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
         }
       ]

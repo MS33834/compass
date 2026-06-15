@@ -74,7 +74,7 @@ export const useStore = create<State & Actions>()(
       domain: null,
       answers: {},
       currentIndex: 0,
-      locale: 'zh',
+      locale: 'en',
       theme: detectInitialTheme(),
       report: null,
       version: CURRENT_VERSION,

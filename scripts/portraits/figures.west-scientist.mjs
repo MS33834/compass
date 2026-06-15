@@ -6,16 +6,33 @@
 // 与通用工具（mountains / water / moon / cloud / candle）
 
 import {
-  laurelBranch, pillar, arch, telescope, quill, bookOpen,
-  compass, hourglass, gear, flask, crown, candle,
-  mountains, water, moon, cloud,
+  laurelBranch,
+  pillar,
+  arch,
+  telescope,
+  quill,
+  bookOpen,
+  compass,
+  hourglass,
+  gear,
+  flask,
+  crown,
+  candle,
+  mountains,
+  water,
+  moon,
+  cloud,
 } from './common.mjs';
 
 export const FIGURES_WEST_SCIENTIST = [
   // ── A 极端外 ──
   {
-    id: 'copernicus', name: '哥白尼', era: 'modernEarly', seal: '日心说',
-    motto: ['天体运行', '日心之论'], caption: '日心之论',
+    id: 'copernicus',
+    name: '哥白尼',
+    era: 'modernEarly',
+    seal: '日心说',
+    motto: ['天体运行', '日心之论'],
+    caption: '日心之论',
     buildScene(p, ink) {
       return `
         ${mountains(p.secondary, 320, 60)}
@@ -44,8 +61,12 @@ export const FIGURES_WEST_SCIENTIST = [
     },
   },
   {
-    id: 'galileo', name: '伽利略', era: 'modernEarly', seal: '斜塔实验',
-    motto: ['以实验为据', '然其所以然'], caption: '斜塔之验',
+    id: 'galileo',
+    name: '伽利略',
+    era: 'modernEarly',
+    seal: '斜塔实验',
+    motto: ['以实验为据', '然其所以然'],
+    caption: '斜塔之验',
     buildScene(p, ink) {
       return `
         ${mountains(p.secondary, 320, 60)}
@@ -74,8 +95,12 @@ export const FIGURES_WEST_SCIENTIST = [
     },
   },
   {
-    id: 'newton', name: '牛顿', era: 'modernEarly', seal: '万有引力',
-    motto: ['苹果落地', '万有之理'], caption: '万有之理',
+    id: 'newton',
+    name: '牛顿',
+    era: 'modernEarly',
+    seal: '万有引力',
+    motto: ['苹果落地', '万有之理'],
+    caption: '万有之理',
     buildScene(p, ink) {
       return `
         ${mountains(p.secondary, 320, 60)}
@@ -108,8 +133,12 @@ export const FIGURES_WEST_SCIENTIST = [
     },
   },
   {
-    id: 'einstein', name: '爱因斯坦', era: 'modernLate', seal: '相对论',
-    motto: ['E=mc²', '时空之曲'], caption: '时空之曲',
+    id: 'einstein',
+    name: '爱因斯坦',
+    era: 'modernLate',
+    seal: '相对论',
+    motto: ['E=mc²', '时空之曲'],
+    caption: '时空之曲',
     buildScene(p, ink) {
       return `
         <!-- 远山 -->
@@ -139,8 +168,12 @@ export const FIGURES_WEST_SCIENTIST = [
     },
   },
   {
-    id: 'curie', name: '居里夫人', era: 'modernLate', seal: '镭之光',
-    motto: ['镭光夜荧', '双诺之荣'], caption: '镭之微光',
+    id: 'curie',
+    name: '居里夫人',
+    era: 'modernLate',
+    seal: '镭之光',
+    motto: ['镭光夜荧', '双诺之荣'],
+    caption: '镭之微光',
     buildScene(p, ink) {
       return `
         ${mountains(p.secondary, 320, 60)}
@@ -162,8 +195,12 @@ export const FIGURES_WEST_SCIENTIST = [
     },
   },
   {
-    id: 'feynman', name: '费曼', era: 'modernLate', seal: '路径积分',
-    motto: ['路径求和', '邦戈鼓手'], caption: '路径之舞',
+    id: 'feynman',
+    name: '费曼',
+    era: 'modernLate',
+    seal: '路径积分',
+    motto: ['路径求和', '邦戈鼓手'],
+    caption: '路径之舞',
     buildScene(p, ink) {
       return `
         ${cloud(120, 140, 70, p.ground)}
@@ -195,8 +232,12 @@ export const FIGURES_WEST_SCIENTIST = [
 
   // ── B 偏外 ──
   {
-    id: 'kepler', name: '开普勒', era: 'modernEarly', seal: '和谐之律',
-    motto: ['三大定律', '宇宙之和'], caption: '天籁之和',
+    id: 'kepler',
+    name: '开普勒',
+    era: 'modernEarly',
+    seal: '和谐之律',
+    motto: ['三大定律', '宇宙之和'],
+    caption: '天籁之和',
     buildScene(p, ink) {
       return `
         ${mountains(p.secondary, 320, 60)}
@@ -221,8 +262,12 @@ export const FIGURES_WEST_SCIENTIST = [
     },
   },
   {
-    id: 'leibniz', name: '莱布尼茨', era: 'modernEarly', seal: '单子论',
-    motto: ['微积分之创', '最好世界'], caption: '最好世界',
+    id: 'leibniz',
+    name: '莱布尼茨',
+    era: 'modernEarly',
+    seal: '单子论',
+    motto: ['微积分之创', '最好世界'],
+    caption: '最好世界',
     buildScene(p, ink) {
       return `
         ${pillar(80, 460, 200, p.primary)}
@@ -245,8 +290,12 @@ export const FIGURES_WEST_SCIENTIST = [
     },
   },
   {
-    id: 'darwin', name: '达尔文', era: 'modernLate', seal: '物种起源',
-    motto: ['贝格尔之航', '最适者存'], caption: '物种之迁',
+    id: 'darwin',
+    name: '达尔文',
+    era: 'modernLate',
+    seal: '物种起源',
+    motto: ['贝格尔之航', '最适者存'],
+    caption: '物种之迁',
     buildScene(p, ink) {
       return `
         ${mountains(p.secondary, 320, 60)}
@@ -274,8 +323,12 @@ export const FIGURES_WEST_SCIENTIST = [
     },
   },
   {
-    id: 'faraday', name: '法拉第', era: 'modernLate', seal: '电磁感应',
-    motto: ['磁可生电', '圣诞讲座'], caption: '电磁之转',
+    id: 'faraday',
+    name: '法拉第',
+    era: 'modernLate',
+    seal: '电磁感应',
+    motto: ['磁可生电', '圣诞讲座'],
+    caption: '电磁之转',
     buildScene(p, ink) {
       return `
         ${mountains(p.secondary, 320, 60)}
@@ -300,8 +353,12 @@ export const FIGURES_WEST_SCIENTIST = [
     },
   },
   {
-    id: 'planck', name: '普朗克', era: 'modernLate', seal: '量子之始',
-    motto: ['能量量子', '以粒为度'], caption: '能量之粒',
+    id: 'planck',
+    name: '普朗克',
+    era: 'modernLate',
+    seal: '量子之始',
+    motto: ['能量量子', '以粒为度'],
+    caption: '能量之粒',
     buildScene(p, ink) {
       return `
         ${mountains(p.secondary, 320, 60)}
@@ -331,8 +388,12 @@ export const FIGURES_WEST_SCIENTIST = [
     },
   },
   {
-    id: 'heisenberg', name: '海森堡', era: 'modernLate', seal: '不确定性',
-    motto: ['愈精愈昧', '矩阵之始'], caption: '知之有涯',
+    id: 'heisenberg',
+    name: '海森堡',
+    era: 'modernLate',
+    seal: '不确定性',
+    motto: ['愈精愈昧', '矩阵之始'],
+    caption: '知之有涯',
     buildScene(p, ink) {
       return `
         ${mountains(p.secondary, 320, 60)}
@@ -361,8 +422,12 @@ export const FIGURES_WEST_SCIENTIST = [
 
   // ── C 中段 ──
   {
-    id: 'lavoisier', name: '拉瓦锡', era: 'modernEarly', seal: '氧化之理',
-    motto: ['物不生灭', '燃素之破'], caption: '物不生灭',
+    id: 'lavoisier',
+    name: '拉瓦锡',
+    era: 'modernEarly',
+    seal: '氧化之理',
+    motto: ['物不生灭', '燃素之破'],
+    caption: '物不生灭',
     buildScene(p, ink) {
       return `
         ${mountains(p.secondary, 320, 60)}
@@ -388,8 +453,12 @@ export const FIGURES_WEST_SCIENTIST = [
     },
   },
   {
-    id: 'maxwell', name: '麦克斯韦', era: 'modernLate', seal: '四方程',
-    motto: ['光电磁一', '四方程立'], caption: '电磁之统',
+    id: 'maxwell',
+    name: '麦克斯韦',
+    era: 'modernLate',
+    seal: '四方程',
+    motto: ['光电磁一', '四方程立'],
+    caption: '电磁之统',
     buildScene(p, ink) {
       return `
         ${mountains(p.secondary, 320, 60)}
@@ -414,8 +483,12 @@ export const FIGURES_WEST_SCIENTIST = [
     },
   },
   {
-    id: 'mendel', name: '孟德尔', era: 'modernLate', seal: '遗传之律',
-    motto: ['豌豆八年', '形色之因'], caption: '豌豆之因',
+    id: 'mendel',
+    name: '孟德尔',
+    era: 'modernLate',
+    seal: '遗传之律',
+    motto: ['豌豆八年', '形色之因'],
+    caption: '豌豆之因',
     buildScene(p, ink) {
       return `
         ${mountains(p.secondary, 320, 60)}
@@ -441,8 +514,12 @@ export const FIGURES_WEST_SCIENTIST = [
     },
   },
   {
-    id: 'hertz', name: '赫兹', era: 'modernLate', seal: '电磁波证',
-    motto: ['波之有验', '赫兹之频'], caption: '波之有验',
+    id: 'hertz',
+    name: '赫兹',
+    era: 'modernLate',
+    seal: '电磁波证',
+    motto: ['波之有验', '赫兹之频'],
+    caption: '波之有验',
     buildScene(p, ink) {
       return `
         ${mountains(p.secondary, 320, 60)}
@@ -473,8 +550,12 @@ export const FIGURES_WEST_SCIENTIST = [
     },
   },
   {
-    id: 'bohr', name: '玻尔', era: 'modernLate', seal: '原子之模',
-    motto: ['分阶之轨', '互补之理'], caption: '原子之阶',
+    id: 'bohr',
+    name: '玻尔',
+    era: 'modernLate',
+    seal: '原子之模',
+    motto: ['分阶之轨', '互补之理'],
+    caption: '原子之阶',
     buildScene(p, ink) {
       return `
         ${mountains(p.secondary, 320, 60)}
@@ -501,8 +582,12 @@ export const FIGURES_WEST_SCIENTIST = [
     },
   },
   {
-    id: 'wiener', name: '维纳', era: 'modernLate', seal: '控制论',
-    motto: ['反馈之环', '神童博士'], caption: '反馈之环',
+    id: 'wiener',
+    name: '维纳',
+    era: 'modernLate',
+    seal: '控制论',
+    motto: ['反馈之环', '神童博士'],
+    caption: '反馈之环',
     buildScene(p, ink) {
       return `
         ${mountains(p.secondary, 320, 60)}
@@ -528,8 +613,12 @@ export const FIGURES_WEST_SCIENTIST = [
 
   // ── D 偏内 ──
   {
-    id: 'franklin', name: '富兰克林', era: 'modernEarly', seal: '风筝引电',
-    motto: ['风筝引天电', '公共之人'], caption: '风筝引电',
+    id: 'franklin',
+    name: '富兰克林',
+    era: 'modernEarly',
+    seal: '风筝引电',
+    motto: ['风筝引天电', '公共之人'],
+    caption: '风筝引电',
     buildScene(p, ink) {
       return `
         ${mountains(p.secondary, 320, 60)}
@@ -561,8 +650,12 @@ export const FIGURES_WEST_SCIENTIST = [
     },
   },
   {
-    id: 'edison', name: '爱迪生', era: 'modernLate', seal: '一灯之微',
-    motto: ['千次试灯', '百分汗水'], caption: '一灯之微',
+    id: 'edison',
+    name: '爱迪生',
+    era: 'modernLate',
+    seal: '一灯之微',
+    motto: ['千次试灯', '百分汗水'],
+    caption: '一灯之微',
     buildScene(p, ink) {
       return `
         ${mountains(p.secondary, 320, 60)}
@@ -590,8 +683,12 @@ export const FIGURES_WEST_SCIENTIST = [
     },
   },
   {
-    id: 'nobel', name: '诺贝尔', era: 'modernLate', seal: '炸药之父',
-    motto: ['以炸为器', '诺奖之设'], caption: '爆裂之光',
+    id: 'nobel',
+    name: '诺贝尔',
+    era: 'modernLate',
+    seal: '炸药之父',
+    motto: ['以炸为器', '诺奖之设'],
+    caption: '爆裂之光',
     buildScene(p, ink) {
       return `
         ${mountains(p.secondary, 320, 60)}
@@ -623,8 +720,12 @@ export const FIGURES_WEST_SCIENTIST = [
     },
   },
   {
-    id: 'turing', name: '图灵', era: 'modernLate', seal: '图灵机',
-    motto: ['可计算者', '机以测人'], caption: '可计算者',
+    id: 'turing',
+    name: '图灵',
+    era: 'modernLate',
+    seal: '图灵机',
+    motto: ['可计算者', '机以测人'],
+    caption: '可计算者',
     buildScene(p, ink) {
       return `
         ${mountains(p.secondary, 320, 60)}
@@ -654,8 +755,12 @@ export const FIGURES_WEST_SCIENTIST = [
     },
   },
   {
-    id: 'shannon', name: '香农', era: 'modernLate', seal: '信息论',
-    motto: ['去芜存菁', '杂耍之癖'], caption: '信息之度',
+    id: 'shannon',
+    name: '香农',
+    era: 'modernLate',
+    seal: '信息论',
+    motto: ['去芜存菁', '杂耍之癖'],
+    caption: '信息之度',
     buildScene(p, ink) {
       return `
         ${mountains(p.secondary, 320, 60)}
@@ -687,8 +792,12 @@ export const FIGURES_WEST_SCIENTIST = [
     },
   },
   {
-    id: 'vonneumann', name: '冯·诺依曼', era: 'modernLate', seal: '计算机父',
-    motto: ['存算之合', '神童之智'], caption: '存算之合',
+    id: 'vonneumann',
+    name: '冯·诺依曼',
+    era: 'modernLate',
+    seal: '计算机父',
+    motto: ['存算之合', '神童之智'],
+    caption: '存算之合',
     buildScene(p, ink) {
       return `
         ${mountains(p.secondary, 320, 60)}
@@ -719,8 +828,12 @@ export const FIGURES_WEST_SCIENTIST = [
 
   // ── E 极端内 ──
   {
-    id: 'archimedes', name: '阿基米德', era: 'classical', seal: '尤里卡',
-    motto: ['浴缸悟理', '勿动吾圆'], caption: '尤里卡',
+    id: 'archimedes',
+    name: '阿基米德',
+    era: 'classical',
+    seal: '尤里卡',
+    motto: ['浴缸悟理', '勿动吾圆'],
+    caption: '尤里卡',
     buildScene(p, ink) {
       return `
         ${pillar(80, 460, 200, p.primary)}
@@ -748,8 +861,12 @@ export const FIGURES_WEST_SCIENTIST = [
     },
   },
   {
-    id: 'euler', name: '欧拉', era: 'modernEarly', seal: '最美公式',
-    motto: ['e的i派加一', '心算之强'], caption: '心算之强',
+    id: 'euler',
+    name: '欧拉',
+    era: 'modernEarly',
+    seal: '最美公式',
+    motto: ['e的i派加一', '心算之强'],
+    caption: '心算之强',
     buildScene(p, ink) {
       return `
         ${pillar(80, 460, 200, p.primary)}
@@ -773,8 +890,12 @@ export const FIGURES_WEST_SCIENTIST = [
     },
   },
   {
-    id: 'gauss', name: '高斯', era: 'modernLate', seal: '正十七边',
-    motto: ['少言多思', '十九岁之解'], caption: '正十七边',
+    id: 'gauss',
+    name: '高斯',
+    era: 'modernLate',
+    seal: '正十七边',
+    motto: ['少言多思', '十九岁之解'],
+    caption: '正十七边',
     buildScene(p, ink) {
       return `
         ${pillar(80, 460, 200, p.primary)}
@@ -806,8 +927,12 @@ export const FIGURES_WEST_SCIENTIST = [
     },
   },
   {
-    id: 'halley', name: '哈雷', era: 'modernEarly', seal: '彗星之期',
-    motto: ['彗星有期', '出版《原理》'], caption: '彗星之期',
+    id: 'halley',
+    name: '哈雷',
+    era: 'modernEarly',
+    seal: '彗星之期',
+    motto: ['彗星有期', '出版《原理》'],
+    caption: '彗星之期',
     buildScene(p, ink) {
       return `
         ${mountains(p.secondary, 320, 60)}
@@ -834,8 +959,12 @@ export const FIGURES_WEST_SCIENTIST = [
     },
   },
   {
-    id: 'cavendish', name: '卡文迪许', era: 'modernEarly', seal: '称量地球',
-    motto: ['扭秤测引', '地球之重'], caption: '称量地球',
+    id: 'cavendish',
+    name: '卡文迪许',
+    era: 'modernEarly',
+    seal: '称量地球',
+    motto: ['扭秤测引', '地球之重'],
+    caption: '称量地球',
     buildScene(p, ink) {
       return `
         ${mountains(p.secondary, 320, 60)}
@@ -868,8 +997,12 @@ export const FIGURES_WEST_SCIENTIST = [
     },
   },
   {
-    id: 'schrodinger', name: '薛定谔', era: 'modernLate', seal: '生死之猫',
-    motto: ['猫之生死', '波函数'], caption: '猫之生死',
+    id: 'schrodinger',
+    name: '薛定谔',
+    era: 'modernLate',
+    seal: '生死之猫',
+    motto: ['猫之生死', '波函数'],
+    caption: '猫之生死',
     buildScene(p, ink) {
       return `
         ${mountains(p.secondary, 320, 60)}

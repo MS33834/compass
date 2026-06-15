@@ -26,12 +26,7 @@ export function App() {
         跳至正文
       </a>
       <TopBar />
-      <main
-        id="main-content"
-        tabIndex={-1}
-        className="jx-page-enter"
-        key={currentPhase}
-      >
+      <main id="main-content" tabIndex={-1} className="jx-page-enter" key={currentPhase}>
         {currentPhase === 'prologue' && <Prologue key="prologue" />}
         {currentPhase === 'path' && <Path key="path" />}
         {currentPhase === 'way' && <Way key="way" />}

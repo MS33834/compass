@@ -10,8 +10,18 @@ const SRC = resolve(__dirname, '../public/portraits/east-literati');
 const OUT = resolve(__dirname, '../.trae/render');
 
 const SAMPLE = [
-  'laozi', 'kongzi', 'taoyuanming', 'sushi', 'quyuan', 'liushao',
-  'tansitong', 'wangwei', 'zhangdai', 'ouyangxiu', 'gongzizhen', 'lizhi',
+  'laozi',
+  'kongzi',
+  'taoyuanming',
+  'sushi',
+  'quyuan',
+  'liushao',
+  'tansitong',
+  'wangwei',
+  'zhangdai',
+  'ouyangxiu',
+  'gongzizhen',
+  'lizhi',
 ];
 
 await mkdir(OUT, { recursive: true });

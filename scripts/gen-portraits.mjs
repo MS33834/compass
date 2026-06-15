@@ -29,7 +29,7 @@ async function buildOne(fig) {
   if (!palette) {
     throw new Error(`Unknown era palette: ${fig.era} for ${fig.id}`);
   }
-  const seed = Math.abs(fig.id.length * 7 + fig.name.length * 11) % 997 + 3;
+  const seed = (Math.abs(fig.id.length * 7 + fig.name.length * 11) % 997) + 3;
   const scene = fig.buildScene(palette, palette.ink);
   const body = `
 ${paper(palette.ground, palette.ink, seed)}
@@ -61,7 +61,7 @@ async function main() {
   console.log(`\n完成：${total} 张精致肖像已写入 ${ROOT}`);
 }
 
-main().catch((e) => {
+main().catch(e => {
   console.error(e);
   process.exit(1);
 });
