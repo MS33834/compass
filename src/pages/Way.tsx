@@ -180,12 +180,8 @@ export function Way() {
             gap: '0.5rem',
           }}
         >
-          <span>
-            第 {currentIndex + 1} 问 / 共 {total} 问
-          </span>
-          <span>
-            已答 {answeredCount} 题 · {progressPct}%
-          </span>
+          <span>{t.way.question(currentIndex + 1, total)}</span>
+          <span>{t.way.answered(answeredCount, total)}</span>
         </p>
 
         {/* 回溯提示 */}
@@ -204,7 +200,7 @@ export function Way() {
               animation: 'jx-fade-stagger 500ms var(--ease-out) both',
             }}
           >
-            前面尚有未答之题 · 可按 ← 返回补答
+            {t.way.backtrackHint}
           </div>
         )}
       </header>
@@ -363,7 +359,7 @@ export function Way() {
           data-testid="btn-prev"
           style={{ fontSize: '0.9rem' }}
         >
-          ← 上一问
+          {t.way.prev}
         </BrushButton>
 
         {currentIndex < total - 1 && (
@@ -373,7 +369,7 @@ export function Way() {
             data-testid="btn-skip"
             style={{ fontSize: '0.85rem', opacity: current === undefined ? 1 : 0.7 }}
           >
-            {current === undefined ? '跳过此题' : '跳过'}
+            {current === undefined ? t.way.skipThis : t.way.skip}
           </BrushButton>
         )}
 
@@ -383,10 +379,10 @@ export function Way() {
             data-testid="btn-finish"
             disabled={!canFinish}
             onClick={handleFinish}
-            title={!canFinish ? `再答 ${30 - answeredCount} 题即可出镜` : undefined}
+            title={!canFinish ? t.way.finishTitle(30 - answeredCount) : undefined}
             style={{ minWidth: '9rem' }}
           >
-            ✦ 出镜映照
+            {t.way.finish}
           </BrushButton>
         ) : (
           <BrushButton
@@ -396,7 +392,7 @@ export function Way() {
             disabled={current === undefined}
             style={{ minWidth: '8rem' }}
           >
-            下一问 →
+            {t.way.next}
           </BrushButton>
         )}
       </nav>
@@ -413,7 +409,7 @@ export function Way() {
           letterSpacing: '0.15em',
         }}
       >
-        键盘：← → 切换 · 1-6 选答 · Enter 确认
+        {t.way.keyboardHint}
       </p>
 
       {/* 底部装饰 */}
@@ -462,7 +458,7 @@ export function Way() {
             e.currentTarget.style.color = 'var(--ink-faint)';
           }}
         >
-          · 清零重来 ·
+          {t.way.resetLabel}
         </button>
       </div>
 

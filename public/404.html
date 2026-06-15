@@ -1,11 +1,19 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="color-scheme" content="light" />
-    <meta name="theme-color" content="#f5efe0" />
-    <title>MindMirror · 镜心 · 一面问己之镜</title>
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#f5efe0" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)" />
+    <meta property="og:title" content="MindMirror · 镜心" />
+    <meta
+      property="og:description"
+      content="A mirror for asking thyself — maps your answers to historical figures across three thousand years."
+    />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <title>MindMirror · 镜心</title>
     <script>
       // SPA 路由兜底：将路径重定向到 index.html
       var l = window.location;
@@ -97,11 +105,29 @@
     <div id="jx-boot">
       <div>
         <div class="seal">镜</div>
-        <h1>镜心</h1>
-        <p>一面问己之镜。三分钟，三千年。</p>
-        <div class="spin"><span class="dot"></span> 入镜中…</div>
+        <h1 data-en="Mirror" data-zh="镜心">Mirror</h1>
+        <p data-en="A glass for asking thyself." data-zh="一面问己之镜。三分钟，三千年。">
+          A glass for asking thyself.
+        </p>
+        <div class="spin">
+          <span class="dot"></span> <span data-en="Loading…" data-zh="入镜中…">Loading…</span>
+        </div>
       </div>
     </div>
+    <script>
+      (function () {
+        // 检测浏览器语言偏好，显示对应的启动文案
+        var lang = (navigator.language || navigator.userLanguage || 'en').slice(0, 2);
+        if (lang === 'zh') {
+          var h1 = document.querySelector('#jx-boot h1');
+          var p = document.querySelector('#jx-boot p');
+          var spin = document.querySelector('#jx-boot .spin span');
+          if (h1) h1.textContent = h1.getAttribute('data-zh');
+          if (p) p.textContent = p.getAttribute('data-zh');
+          if (spin) spin.textContent = spin.getAttribute('data-zh');
+        }
+      })();
+    </script>
     <div id="root"></div>
     <noscript>
       <div
@@ -113,10 +139,17 @@
           font-family: serif;
         "
       >
-        <h1>镜心 需 JavaScript 方可入镜</h1>
-        <p>镜心 是一面纯前端的问己之镜。请开启 JavaScript，再来照一照。</p>
+        <h1 data-en="Mirror requires JavaScript" data-zh="镜心 需 JavaScript 方可入镜">
+          Mirror requires JavaScript
+        </h1>
+        <p
+          data-en="Mirror is a pure-frontend glass for asking thyself. Please enable JavaScript and look again."
+          data-zh="镜心 是一面纯前端的问己之镜。请开启 JavaScript，再来照一照。"
+        >
+          Mirror is a pure-frontend glass for asking thyself. Please enable JavaScript and look
+          again.
+        </p>
       </div>
     </noscript>
-    <!-- 404页面不需要加载JS，SPA重定向脚本会立即跳转到index.html -->
   </body>
 </html>

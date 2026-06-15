@@ -1,14 +1,14 @@
 {
   "name": "MindMirror · 镜心",
-  "short_name": "镜心",
-  "description": "一面问己之镜——以十二维特征空间将汝之答映射至千古人物。纯前端、纯本地、无后端。",
+  "short_name": "MindMirror",
+  "description": "A mirror for asking thyself — maps your answers to historical figures via a 12-dimension trait space. Pure frontend, all local, zero backend.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#f5efe0",
   "theme_color": "#a8322e",
-  "lang": "zh-CN",
+  "lang": "en",
   "dir": "ltr",
   "categories": ["lifestyle", "education", "books"],
   "icons": [
@@ -21,9 +21,9 @@
   ],
   "shortcuts": [
     {
-      "name": "入镜",
+      "name": "Enter Mirror",
       "url": "./?p=path",
-      "description": "开始一次问己之照"
+      "description": "Begin one inquiry"
     }
   ]
 }

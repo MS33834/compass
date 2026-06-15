@@ -53,10 +53,13 @@ function useAnimatedNumber(target: number, durationMs = 1600, startMs = 200) {
 }
 
 // ── 工具：逐维分类（同/近/异）
-function traitDiffLabel(diff: number): { text: string; kind: 'same' | 'close' | 'diverge' } {
-  if (diff < 0.08) return { text: '同', kind: 'same' };
-  if (diff < 0.22) return { text: '近', kind: 'close' };
-  return { text: '异', kind: 'diverge' };
+function traitDiffLabel(
+  diff: number,
+  labels: { same: string; close: string; diverge: string }
+): { text: string; kind: 'same' | 'close' | 'diverge' } {
+  if (diff < 0.08) return { text: labels.same, kind: 'same' };
+  if (diff < 0.22) return { text: labels.close, kind: 'close' };
+  return { text: labels.diverge, kind: 'diverge' };
 }
 
 export function Reflection() {
@@ -239,11 +242,7 @@ export function Reflection() {
           {primary.figure.name}
         </h1>
         <p style={{ color: 'var(--ink-faint)', fontSize: '1.05rem' }}>
-          {primary.figure.era} · 同道{' '}
-          <span style={{ color: 'var(--cinnabar)', fontWeight: 700 }}>
-            {Math.round(animatedPct)}
-          </span>
-          %
+          {primary.figure.era} · {t.reflection.score(Math.round(animatedPct))}
           <span style={{ opacity: 0, position: 'absolute' }} aria-hidden>
             ·
           </span>
@@ -299,7 +298,7 @@ export function Reflection() {
                 fontFamily: 'var(--font-display)',
               }}
             >
-              映照可信约 {Math.round(animatedConf)}% · 答题尚浅，镜影未全
+              {t.reflection.confidenceHint(Math.round(animatedConf))}
             </div>
           )}
 
@@ -381,7 +380,7 @@ export function Reflection() {
                         padding: '0.15rem 0.5rem',
                       }}
                     >
-                      最似
+                      {t.reflection.mostSimilar}
                     </span>
                   )}
                   <h3 style={{ marginBottom: '0.3rem', fontSize: '1.25rem' }}>{a.figure.name}</h3>
@@ -398,7 +397,7 @@ export function Reflection() {
                       letterSpacing: '0.1em',
                     }}
                   >
-                    同道 {Math.round(a.score * 100)}%
+                    {t.reflection.score(Math.round(a.score * 100))}
                   </p>
                 </article>
               );
@@ -423,6 +422,7 @@ export function Reflection() {
               user={report.traitBreakdown.map(b => b.user) as TraitVector}
               figure={primary.figure.vector}
               size={400}
+              ariaLabel={t.reflection.twelve}
             />
           </div>
 
@@ -441,7 +441,7 @@ export function Reflection() {
               const highlight = top3.includes(b.traitId);
               const divergent = bottom3.includes(b.traitId);
               const diff = Math.abs(b.user - b.figure);
-              const label = traitDiffLabel(diff);
+              const label = traitDiffLabel(diff, t.reflection.traitLabels);
 
               const userPct = Math.round(b.user * 100);
               const figPct = Math.round(b.figure * 100);
@@ -530,7 +530,9 @@ export function Reflection() {
                         fontSize: '0.7rem',
                       }}
                     >
-                      <span style={{ width: '1.2em', color: 'var(--ink)' }}>汝</span>
+                      <span style={{ width: '1.2em', color: 'var(--ink)' }}>
+                        {t.reflection.chartLabels.you}
+                      </span>
                       <div
                         style={{
                           flex: 1,
@@ -560,7 +562,9 @@ export function Reflection() {
                         fontSize: '0.7rem',
                       }}
                     >
-                      <span style={{ width: '1.2em', color: 'var(--cinnabar)' }}>古</span>
+                      <span style={{ width: '1.2em', color: 'var(--cinnabar)' }}>
+                        {t.reflection.chartLabels.ancient}
+                      </span>
                       <div
                         style={{
                           flex: 1,
@@ -610,10 +614,10 @@ export function Reflection() {
                     }}
                   >
                     {b.user - b.figure > 0.05
-                      ? '汝 过之'
+                      ? t.reflection.youExceed
                       : b.figure - b.user > 0.05
-                        ? '汝 不及'
-                        : '合'}
+                        ? t.reflection.youFallShort
+                        : t.reflection.youMatch}
                   </div>
                 </div>
               );

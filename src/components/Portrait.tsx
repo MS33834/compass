@@ -36,7 +36,7 @@ export function Portrait({ figure }: Props) {
     >
       <img
         src={portraitSrc}
-        alt={`${figure.name}（${figure.era}）`}
+        alt={`${figure.name} (${figure.era})`}
         loading="lazy"
         onError={() => setErr(true)}
         style={{

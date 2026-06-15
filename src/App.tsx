@@ -1,4 +1,5 @@
 // 镜心 · 入口
+import { useT } from './i18n';
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { useStore } from './store';
 import { TopBar } from './components/TopBar';
@@ -9,6 +10,7 @@ import { Reflection } from './pages/Reflection';
 
 export function App() {
   const { phase } = useStore();
+  const t = useT();
   const [currentPhase, setCurrentPhase] = useState(phase);
 
   // 阶段变化：先 600ms 翻页退出，再切换到新页面（带入场动画）
@@ -29,7 +31,7 @@ export function App() {
   return (
     <>
       <a className="jx-skip-link" href="#main-content">
-        跳至正文
+        {t.ui.skipToContent}
       </a>
       <TopBar />
       <main id="main-content" tabIndex={-1} className="jx-page-enter" key={currentPhase}>

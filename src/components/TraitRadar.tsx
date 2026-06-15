@@ -14,9 +14,10 @@ type Props = {
   user: TraitVector;
   figure?: TraitVector;
   size?: number;
+  ariaLabel?: string;
 };
 
-export function TraitRadar({ user, figure, size = 400 }: Props) {
+export function TraitRadar({ user, figure, size = 400, ariaLabel }: Props) {
   const cx = size / 2;
   const cy = size / 2;
   const r = size * 0.36;
@@ -53,7 +54,7 @@ export function TraitRadar({ user, figure, size = 400 }: Props) {
       className="jx-radar"
       data-testid="trait-radar"
       role="img"
-      aria-label="十二维特征雷达"
+      aria-label={ariaLabel}
       style={{ maxWidth: '100%', height: 'auto', display: 'block' }}
     >
       {/* 装饰性宣纸背景 */}

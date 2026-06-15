@@ -64,7 +64,6 @@ export function TopBar() {
         }}
       >
         <span
-          aria-label="当前阶段"
           data-testid="topbar-phase"
           style={{
             fontFamily: 'var(--font-display)',
@@ -80,7 +79,7 @@ export function TopBar() {
         <BrushButton
           variant="ghost"
           onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-          title={theme === 'dark' ? '昼' : '夜'}
+          title={theme === 'dark' ? t.ui.themeLight : t.ui.themeDark}
           data-testid="btn-theme"
           aria-label={theme === 'dark' ? 'switch to light' : 'switch to dark'}
           style={{ minWidth: '2.5rem', padding: '0.25rem 0.6rem' }}
