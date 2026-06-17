@@ -1,6 +1,5 @@
 User-agent: *
 Allow: /
-Disallow: /sw.js
-Disallow: /workbox-*.js
+Disallow: /MindMirror/sw.js
 
 Sitemap: https://badhope.github.io/MindMirror/sitemap.xml

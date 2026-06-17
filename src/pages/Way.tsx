@@ -8,7 +8,7 @@
 // 5. 题目标题：进入时淡入
 // 6. 答题回溯提示：前面某题未答时提醒
 
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useState } from 'react';
 import { useStore } from '../store';
 import { itemsForDomain } from '../domain/items/items.index';
 import { figuresForDomain } from '../domain/figures/figures.index';

@@ -582,7 +582,7 @@ export const ITEMS_WEST_PHILOSOPHER: readonly Item[] = [
       { text: '欣然赴之', gloss: '以进为度', primary: { traitId: 9, delta: -1.4 } },
       { text: '偶一为之', gloss: '以进为体', primary: { traitId: 9, delta: -0.4 } },
       { text: '不拒不迎', gloss: '以中为度', primary: { traitId: 9, delta: 0.2 } },
-      { text: '以言为度', gloss: '以言为度', primary: { traitId: 9, delta: 0.8 } },
+      { text: '以言为度', gloss: '以言语为度量', primary: { traitId: 9, delta: 0.8 } },
       { text: '拒而守之', gloss: '以守为度', primary: { traitId: 9, delta: 1.2 } },
       { text: '远而不交', gloss: '以远为度', primary: { traitId: 9, delta: 1.4 } },
     ],
@@ -612,7 +612,7 @@ export const ITEMS_WEST_PHILOSOPHER: readonly Item[] = [
       { text: '不急不缓', gloss: '以中为度', primary: { traitId: 9, delta: 0.2 } },
       { text: '退而思之', gloss: '以退为老', primary: { traitId: 9, delta: 0.8 } },
       { text: '传道授业', gloss: '以传为老', primary: { traitId: 9, delta: 1.2 } },
-      { text: '归于无言', gloss: '以无言之', primary: { traitId: 9, delta: 1.4 } },
+      { text: '归于无言', gloss: '以无言为度', primary: { traitId: 9, delta: 1.4 } },
     ],
   },
 

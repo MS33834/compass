@@ -228,10 +228,10 @@ export const ITEMS_WEST_SCIENTIST: readonly Item[] = [
     promptGloss: '新理已立，旧制尚存，汝何从？',
     options: [
       { text: '守旧', gloss: '以旧为度', primary: { traitId: 4, delta: -1.2 } },
-      { text: '新旧并行', gloss: '以并行度', primary: { traitId: 4, delta: -0.4 } },
+      { text: '新旧并行', gloss: '以并行为度', primary: { traitId: 4, delta: -0.4 } },
       { text: '以旧证新', gloss: '以旧为证', primary: { traitId: 4, delta: 0.4 } },
       { text: '以新辅旧', gloss: '以新为辅', primary: { traitId: 4, delta: 0.6 } },
-      { text: '以新代旧', gloss: '以新代旧', primary: { traitId: 4, delta: 1.0 } },
+      { text: '以新代旧', gloss: '以新物代旧物', primary: { traitId: 4, delta: 1.0 } },
       { text: '化旧为新', gloss: '以化为度', primary: { traitId: 4, delta: 1.5 } },
     ],
   },
@@ -596,7 +596,7 @@ export const ITEMS_WEST_SCIENTIST: readonly Item[] = [
       { text: '半用半试', gloss: '以中为度', primary: { traitId: 11, delta: 0.0 } },
       { text: '敢用之', gloss: '以敢为度', primary: { traitId: 11, delta: 0.8 } },
       { text: '以身为试', gloss: '以身为度', primary: { traitId: 11, delta: 1.2 } },
-      { text: '以死为度', gloss: '以死为度', primary: { traitId: 11, delta: 1.5 } },
+      { text: '以死为度', gloss: '以生死为度量', primary: { traitId: 11, delta: 1.5 } },
     ],
   },
   {

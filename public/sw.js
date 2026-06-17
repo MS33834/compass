@@ -1,8 +1,10 @@
-// MindMirror · Service Worker (v5 - 极简策略)
-// 核心原则：JS/CSS 带内容 hash，浏览器自身缓存即可，SW 不干预
-// 只缓存静态资源（图片、字体等），避免 SW 缓存旧 JS 导致白屏
+// MindMirror · Service Worker (v6 - 离线可用)
+// 策略：
+// - 导航请求（HTML）：网络优先，离线回退缓存 index.html
+// - 带 hash 的 JS/CSS：浏览器自身缓存，SW 不干预
+// - 静态资源（图片/字体/SVG）：网络优先，离线降级缓存
 
-const CACHE = 'mindmirror-v5';
+const CACHE = 'mindmirror-v6';
 
 self.addEventListener('install', () => {
   self.skipWaiting();
@@ -11,7 +13,6 @@ self.addEventListener('install', () => {
 self.addEventListener('activate', e => {
   e.waitUntil(
     Promise.all([
-      // 清理所有旧缓存（v1/v2/v3/v4 全部清除）
       caches
         .keys()
         .then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))),
@@ -20,18 +21,38 @@ self.addEventListener('activate', e => {
   );
 });
 
+self.addEventListener('message', e => {
+  if (e.data === 'SKIP_WAITING') self.skipWaiting();
+});
+
 self.addEventListener('fetch', e => {
-  const url = new URL(e.request.url);
+  let url;
+  try {
+    url = new URL(e.request.url);
+  } catch {
+    return;
+  }
   if (url.origin !== location.origin) return;
   if (e.request.method !== 'GET') return;
 
-  // JS/CSS/HTML：完全不拦截，让浏览器自己处理
-  // 带 hash 的 JS/CSS 浏览器会永久缓存，不带 hash 的 HTML 每次请求最新
-  if (
-    url.pathname.endsWith('.js') ||
-    url.pathname.endsWith('.css') ||
-    url.pathname.endsWith('.html')
-  ) {
+  // 导航请求：网络优先，离线回退缓存的 index.html
+  if (e.request.mode === 'navigate') {
+    e.respondWith(
+      fetch(e.request)
+        .then(resp => {
+          const clone = resp.clone();
+          caches.open(CACHE).then(c => c.put(e.request, clone)).catch(() => {});
+          return resp;
+        })
+        .catch(() =>
+          caches.match(e.request).then(r => r || caches.match('/MindMirror/index.html') || caches.match('./index.html') || caches.match('/index.html'))
+        )
+    );
+    return;
+  }
+
+  // 带 hash 的 JS/CSS：浏览器自身缓存，SW 不拦截
+  if (url.pathname.endsWith('.js') || url.pathname.endsWith('.css')) {
     return;
   }
 
@@ -41,13 +62,10 @@ self.addEventListener('fetch', e => {
       .then(resp => {
         if (resp.ok) {
           const clone = resp.clone();
-          caches
-            .open(CACHE)
-            .then(c => c.put(e.request, clone))
-            .catch(() => {});
+          caches.open(CACHE).then(c => c.put(e.request, clone)).catch(() => {});
         }
         return resp;
       })
-      .catch(() => caches.match(e.request))
+      .catch(() => caches.match(e.request).then(r => r || Response.error()))
   );
 });

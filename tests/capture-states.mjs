@@ -46,7 +46,7 @@ async function injectAnswersAndFinish(page) {
   // 通过 localStorage 注入：答 30+ 题让 canFinish=true
   await page.evaluate(() => {
     // 找 30 个 item ids 注入
-    const k = 'mindmirror-v1';
+    const k = 'mindmirror-v2';
     const ans = {};
     for (let i = 1; i <= 30; i++) {
       ans[`el-${String(i).padStart(3, '0')}`] = (i * 3) % 6;

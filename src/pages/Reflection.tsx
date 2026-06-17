@@ -129,7 +129,7 @@ export function Reflection() {
 
   if (!report) return null;
 
-  const { primary, alternates, traitBreakdown, confidence: confVal } = report;
+  const { primary, alternates, confidence: confVal } = report;
 
   const flash = (msg: string) => {
     setToast(msg);

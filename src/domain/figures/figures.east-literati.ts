@@ -25,7 +25,7 @@ export const FIGURES_EAST_LITERATI: readonly Figure[] = [
       { title: '紫气东来', body: '老子西游，关令尹喜见紫气东来，知有圣人过此，果见老子。' },
       { title: '骑青牛西去', body: '老子出关时骑青牛，后世以青牛为老子之象。' },
     ],
-    echoes: ['el-zhuangzi', 'el-zhuangzi', 'el-lizhi'],
+    echoes: ['el-zhuangzi', 'el-lizhi'],
   },
   {
     id: 'el-zhuangzi',
@@ -79,7 +79,7 @@ export const FIGURES_EAST_LITERATI: readonly Figure[] = [
       { title: '五蠹之说', body: '韩非以儒、以侠、以纵横、以患御、以工商为五蠹，主张以法治国。' },
       { title: '说难孤愤', body: '作《说难》《孤愤》，皆为韩之削弱而发。' },
     ],
-    echoes: ['el-hanfeizi', 'el-lizhi', 'el-wanganshi'],
+    echoes: ['el-lizhi', 'el-wanganshi'],
   },
   {
     id: 'el-lizhi',
@@ -95,7 +95,7 @@ export const FIGURES_EAST_LITERATI: readonly Figure[] = [
       { title: '剃发为僧', body: '年六十二，剃发以示决裂，后世称为「异端之尤」。' },
       { title: '狱中自刎', body: '以剃刀自割其喉，两日始死。其骨气凛然如此。' },
     ],
-    echoes: ['el-hanfeizi', 'el-zhuangzi', 'el-lizhi'],
+    echoes: ['el-hanfeizi', 'el-zhuangzi'],
   },
   {
     id: 'el-wanganshi',
@@ -218,7 +218,7 @@ export const FIGURES_EAST_LITERATI: readonly Figure[] = [
       { title: '船山之号', body: '隐于石船山，自号船山老人。' },
       { title: '六经责我开生面', body: '言「六经责我开生面，七尺从天乞活埋」，其志凛然。' },
     ],
-    echoes: ['el-wangyangming', 'el-zhuxi', 'el-tansitong'],
+    echoes: ['el-wangyangming', 'el-zhuxi'],
   },
 
   // ── C 中段：0.40-0.60 ──
@@ -407,7 +407,7 @@ export const FIGURES_EAST_LITERATI: readonly Figure[] = [
       { title: '示儿', body: '临终作《示儿》，唯愿「王师北定中原日」。' },
       { title: '沈园之恋', body: '与前妻唐婉于沈园相遇，作《钗头凤》二首。' },
     ],
-    echoes: ['el-luyou', 'el-sushi', 'el-zhangdai'],
+    echoes: ['el-sushi', 'el-zhangdai'],
   },
   {
     id: 'el-zhangdai',
@@ -524,6 +524,6 @@ export const FIGURES_EAST_LITERATI: readonly Figure[] = [
       { title: '己亥杂诗', body: '作《己亥杂诗》三百一十五首，多讽时之作。' },
       { title: '病梅之叹', body: '作《病梅馆记》，以梅喻才人，叹其所遭。' },
     ],
-    echoes: ['el-yuanmei', 'el-liyu', 'el-tansitong'],
+    echoes: ['el-yuanmei', 'el-liyu'],
   },
 ];

@@ -7,7 +7,7 @@ const DEFAULT_BASE = `/${REPO_NAME}/`;
 export default defineConfig(({ mode }) => {
   const base = process.env.VITE_BASE_PATH || DEFAULT_BASE;
   return {
-    base: mode === 'static' ? './' : base,
+    base,
     plugins: [react()],
     resolve: {
       // 防御性配置：强制所有依赖使用顶层 React，避免嵌套依赖导致多实例
@@ -16,12 +16,12 @@ export default defineConfig(({ mode }) => {
     build: {
       outDir: 'dist',
       assetsDir: 'assets',
-      sourcemap: false,
+      sourcemap: 'hidden',
+      target: 'es2020',
       rollupOptions: {
         output: {
           manualChunks(id) {
             // 关键修复：把 zustand 与 react 合并到同一块，避免两个 React 实例
-            // 两个 React 实例会导致 "Invalid hook call" / "Minified React error #310"
             if (
               id.includes('node_modules/react/') ||
               id.includes('node_modules/react-dom/') ||
@@ -31,10 +31,21 @@ export default defineConfig(({ mode }) => {
             ) {
               return 'vendor-react';
             }
+            // 按域拆分数据块，减少首屏主 chunk 体积
+            if (id.includes('/domain/figures/')) return 'figures';
+            if (id.includes('/domain/items/')) return 'items';
           },
         },
       },
     },
+    // 生产环境移除 console.log/debug（Vite 8 使用 oxc，通过 define 兜底）
+    define:
+      mode === 'production'
+        ? {
+            'console.log': '() => {}',
+            'console.debug': '() => {}',
+          }
+        : {},
     server: {
       host: '0.0.0.0',
       port: 5173,

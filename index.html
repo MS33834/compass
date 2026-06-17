@@ -4,7 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="color-scheme" content="light dark" />
-    <meta name="theme-color" content="#f5efe0" />
+    <meta name="theme-color" content="#f5efe0" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)" />
 
     <title>Mirror · MindMirror · A Glass for Asking Thyself</title>
     <meta
@@ -189,7 +190,9 @@
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-          navigator.serviceWorker.register('./sw.js?v=5').catch(() => {});
+          navigator.serviceWorker.register('./sw.js?v=6').catch(err => {
+            console.warn('SW registration failed:', err);
+          });
         });
       }
     </script>

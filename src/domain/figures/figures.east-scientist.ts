@@ -205,7 +205,7 @@ export const FIGURES_EAST_SCIENTIST: readonly Figure[] = [
       { title: '游历', body: '30 余年游历，足迹遍 16 省。' },
       { title: '探溶洞', body: '对喀斯特地貌记述领先欧洲近 300 年。' },
     ],
-    echoes: ['esci-xuxiake', 'esci-pei', 'esci-li'],
+    echoes: ['esci-pei', 'esci-li'],
   },
 
   // ── C 中段 ──
@@ -456,7 +456,7 @@ export const FIGURES_EAST_SCIENTIST: readonly Figure[] = [
   {
     id: 'esci-zhu',
     name: '竺可桢',
-    era: '清',
+    era: '近代',
     domain: 'east-scientist',
     vector: [0.85, 0.5, 0.55, 0.6, 0.5, 0.5, 0.8, 0.98, 0.6, 0.8, 0.55, 0.6],
     signature: '求是。',
@@ -472,7 +472,7 @@ export const FIGURES_EAST_SCIENTIST: readonly Figure[] = [
   {
     id: 'esci-mao',
     name: '茅以升',
-    era: '清',
+    era: '近代',
     domain: 'east-scientist',
     vector: [0.8, 0.55, 0.65, 0.7, 0.55, 0.5, 0.85, 0.98, 0.5, 0.7, 0.7, 0.55],
     signature: '桥梁工程是造福人民的事业。',

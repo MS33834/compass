@@ -57,7 +57,7 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
       { title: '吕克昂', body: '于雅典创吕克昂学园，率弟子边走边讲，「逍遥学派」。' },
       { title: '吾爱吾师', body: '「吾爱吾师，吾尤爱真理」—— 真理高于师承。' },
     ],
-    echoes: ['wp-plato', 'wp-bacon', 'wp-aquinas'],
+    echoes: ['wp-plato', 'wp-bacon'],
   },
   {
     id: 'wp-voltaire',
@@ -260,7 +260,7 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
         body: '自题墓志铭：「生于 1711 年，卒于——；《人性论》《自然宗教对话录》作者。」',
       },
     ],
-    echoes: ['wp-kant', 'wp-bacon', 'wp-rousseau'],
+    echoes: ['wp-kant', 'wp-bacon'],
   },
   {
     id: 'wp-heidegger',
@@ -406,7 +406,7 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
       { title: '面容', body: '他者之「面容」（le visage）即是伦理学之起点。' },
       { title: '大屠杀', body: '家人在立陶宛为纳粹所害，思想萦绕「恶」之问。' },
     ],
-    echoes: ['wp-augustine', 'wp-pascal', 'wp-levinas'],
+    echoes: ['wp-augustine', 'wp-pascal'],
   },
 
   // ── E 极端内：处世 + 时序 + 慎行 ──
@@ -440,7 +440,7 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
       { title: '君主论', body: '「被人畏惧优于被人爱戴，倘二者不可得兼」—— 冷酷之论。' },
       { title: '被放逐', body: '因美第奇复辟被逐，隐居乡间写就《君主论》。' },
     ],
-    echoes: ['wp-hobbes', 'wp-marx', 'wp-rousseau'],
+    echoes: ['wp-hobbes', 'wp-marx'],
   },
   {
     id: 'wp-hobbes',
@@ -456,7 +456,7 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
       { title: '利维坦', body: '以「利维坦」喻国家主权，独裁以免混乱。' },
       { title: '怕死', body: '「人之本性使其求利避险，故需契约让渡。」' },
     ],
-    echoes: ['wp-machiavelli', 'wp-locke', 'wp-rousseau'],
+    echoes: ['wp-machiavelli', 'wp-locke'],
   },
   {
     id: 'wp-schopenhauer',
@@ -472,7 +472,7 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
       { title: '卷毛狗', body: '终身携卷毛狗散步，狗名「Atma」（梵语「我」）。' },
       { title: '迟来之誉', body: '著作初版无人问津，暮年因《附录与补遗》而声名大噪。' },
     ],
-    echoes: ['wp-nietzsche', 'wp-buddha', 'wp-seneca'],
+    echoes: ['wp-nietzsche', 'wp-seneca'],
   },
   {
     id: 'wp-benjamin',
@@ -488,7 +488,7 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
       { title: '拱廊街', body: '未竟巨著《拱廊街计划》，死后由阿多诺整理出版。' },
       { title: '波港', body: '1940 年于法西边陲被拒入境，自尽于波港。' },
     ],
-    echoes: ['wp-foucault', 'wp-adorno', 'wp-kafka'],
+    echoes: ['wp-foucault'],
   },
   {
     id: 'wp-foucault',

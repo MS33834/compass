@@ -7,7 +7,7 @@
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#f5efe0",
-  "theme_color": "#a8322e",
+  "theme_color": "#f5efe0",
   "lang": "en",
   "dir": "ltr",
   "categories": ["lifestyle", "education", "books"],

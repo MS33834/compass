@@ -13,6 +13,7 @@
   --jade: #4a6b54;
   --gold-dim: #b8954a;
   --ash: #999;
+  --rice-translucent: rgba(245, 239, 224, 0.85);
 
   /* ── 字 ── 加大加粗，古风感 ── */
   --font-display: '华文行楷', 'STXingkai', '楷体', 'KaiTi', 'STKaiti', '华文楷体', serif;
@@ -162,7 +163,12 @@ p {
   font-weight: 500;
   letter-spacing: 0.2em;
   cursor: pointer;
-  transition: all var(--t-base) var(--ease-out);
+  transition:
+    background var(--t-base) var(--ease-out),
+    color var(--t-base) var(--ease-out),
+    border-color var(--t-base) var(--ease-out),
+    transform var(--t-base) var(--ease-out),
+    box-shadow var(--t-base) var(--ease-out);
   user-select: none;
   text-align: center;
 }
@@ -892,6 +898,11 @@ button:focus:not(:focus-visible) {
 }
 .jx-stagger > *:nth-child(12) {
   animation-delay: 940ms;
+}
+/* 超过 12 个子元素时立即可见，避免永久 opacity:0 */
+.jx-stagger > *:nth-child(n + 13) {
+  opacity: 1;
+  animation: none;
 }
 
 /* 印章朱砂下压效果 */

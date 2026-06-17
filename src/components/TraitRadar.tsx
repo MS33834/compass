@@ -159,7 +159,6 @@ export function TraitRadar({ user, figure, size = 400, ariaLabel }: Props) {
 
       {/* 用户逐点（可交互） */}
       {userPoints.map((p, i) => {
-        const diff = figure ? Math.abs(user[i] - figure[i]) : 0;
         return (
           <g key={`up${i}`}>
             {/* 点击热区 */}

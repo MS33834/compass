@@ -257,7 +257,7 @@ async function run(browserName, viewport, locale) {
   await step('10 30 题阈值', async () => {
     // 通过 storage 注入：仅答 5 题
     await page.evaluate(() => {
-      const k = 'mindmirror-v1';
+      const k = 'mindmirror-v2';
       const raw = localStorage.getItem(k);
       if (!raw) return;
       const s = JSON.parse(raw);

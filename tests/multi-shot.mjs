@@ -57,7 +57,7 @@ async function waitForServer(url, timeoutMs = 30_000) {
 /** 通过 localStorage 注入 30+ 题答案，跳到 reflection */
 async function seedAnswersToReflection(page) {
   await page.evaluate(() => {
-    const k = 'mindmirror-v1';
+    const k = 'mindmirror-v2';
     const ans = {};
     for (let i = 1; i <= 30; i++) {
       ans[`el-${String(i).padStart(3, '0')}`] = (i * 3) % 6;
@@ -91,7 +91,7 @@ async function setPhase(page, phase) {
   if (phase === 'prologue') {
     // 显式 reset 到 prologue
     await page.evaluate(() => {
-      const k = 'mindmirror-v1';
+      const k = 'mindmirror-v2';
       localStorage.setItem(
         k,
         JSON.stringify({

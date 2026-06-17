@@ -705,7 +705,7 @@ export const ITEMS_EAST_STATEMAN: readonly Item[] = [
       { text: '一技为主', gloss: '以一御多', primary: { traitId: 8, delta: 0.8 } },
       { text: '数技', gloss: '以多为博', primary: { traitId: 8, delta: 0.0 } },
       { text: '通万技', gloss: '以博为要', primary: { traitId: 8, delta: -0.4 } },
-      { text: '学以应用', gloss: '不学无术', primary: { traitId: 8, delta: 1.0 } },
+      { text: '学以应用', gloss: '学以致用，知行合一', primary: { traitId: 8, delta: 1.0 } },
       { text: '学贯古今', gloss: '以博为精', primary: { traitId: 8, delta: -0.6 } },
     ],
   },

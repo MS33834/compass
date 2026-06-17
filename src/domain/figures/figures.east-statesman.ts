@@ -25,7 +25,7 @@ export const FIGURES_EAST_STATEMAN: readonly Figure[] = [
       { title: '城门立木', body: '商鞅立三丈木于南门，募民徙之北门予五十金，以明不欺，民信之。' },
       { title: '徙木立信', body: '法令初颁，取信于民为要。' },
     ],
-    echoes: ['es-li', 'es-fan', 'es-lisi'],
+    echoes: ['es-lisi'],
   },
   {
     id: 'es-fanju',
@@ -213,7 +213,7 @@ export const FIGURES_EAST_STATEMAN: readonly Figure[] = [
       { title: '虎门销烟', body: '1839 年 6 月 3 日起，虎门海滩销鸦片 237 万斤。' },
       { title: '谪戍伊犁', body: '戍伊犁途中作「苟利国家生死以，岂因祸福避趋之」。' },
     ],
-    echoes: ['es-haigui', 'es-haigui', 'es-wentianxiang'],
+    echoes: ['es-haigui', 'es-wentianxiang'],
   },
 
   // ── C 中段：稳健 + 守正 + 中庸 ──
@@ -231,7 +231,7 @@ export const FIGURES_EAST_STATEMAN: readonly Figure[] = [
       { title: '月下追韩信', body: '闻韩信亡，萧何不及告刘邦，连夜追之，刘邦始信。' },
       { title: '制九章律', body: '汉初法制多出其手。' },
     ],
-    echoes: ['es-fangxuanling', 'es-zhuge', 'es-zhoucheng'],
+    echoes: ['es-fangxuanling', 'es-zhuge'],
   },
   {
     id: 'es-fangxuanling',
@@ -361,7 +361,7 @@ export const FIGURES_EAST_STATEMAN: readonly Figure[] = [
       { title: '计除严嵩', body: '以孙女嫁严世蕃，设计扳倒严嵩。' },
       { title: '一纸三都', body: '门生故吏遍天下。' },
     ],
-    echoes: ['es-zhangqiu', 'es-fan', 'es-direnjie'],
+    echoes: ['es-zhangqiu', 'es-direnjie'],
   },
   {
     id: 'es-zhangzhidong',
@@ -377,7 +377,7 @@ export const FIGURES_EAST_STATEMAN: readonly Figure[] = [
       { title: '中体西用', body: '「中学为体，西学为用」晚清洋务思想核心。' },
       { title: '汉阳造', body: '主持创办汉阳铁厂、湖北织布局。' },
     ],
-    echoes: ['es-li', 'es-zhangqiu', 'es-liangqichao'],
+    echoes: ['es-zhangqiu', 'es-liangqichao'],
   },
   {
     id: 'es-lihongzhang',
@@ -393,7 +393,7 @@ export const FIGURES_EAST_STATEMAN: readonly Figure[] = [
       { title: '淮军', body: '仿湘军制办淮军，平捻军主力。' },
       { title: '签马关', body: '1895 年签《马关条约》，背负骂名。' },
     ],
-    echoes: ['es-zhangzhidong', 'es-zuo', 'es-zuo'],
+    echoes: ['es-zhangzhidong', 'es-zuo'],
   },
   {
     id: 'es-zhou',
@@ -409,7 +409,7 @@ export const FIGURES_EAST_STATEMAN: readonly Figure[] = [
       { title: '周公吐哺', body: '一沐三握发，一饭三吐哺，起以待士。' },
       { title: '制礼作乐', body: '奠定中华礼乐文明基础。' },
     ],
-    echoes: ['es-yi', 'es-fan', 'es-zhuge'],
+    echoes: ['es-yi', 'es-zhuge'],
   },
 
   // ── E 极端内：稳健 + 处世 + 长虑 ──
@@ -427,7 +427,7 @@ export const FIGURES_EAST_STATEMAN: readonly Figure[] = [
       { title: '负鼎俎', body: '负鼎俎以滋味说汤。' },
       { title: '放太甲', body: '太甲不明，伊尹放之于桐宫三年。' },
     ],
-    echoes: ['es-zhou', 'es-fanli', 'es-zhou'],
+    echoes: ['es-zhou', 'es-fanli'],
   },
   {
     id: 'es-fanli',

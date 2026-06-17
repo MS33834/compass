@@ -293,7 +293,7 @@ export const ITEMS_EAST_SCIENTIST: readonly Item[] = [
     promptGloss: '新理已得，旧器尚可用，汝当何从？',
     options: [
       { text: '守旧器', gloss: '以旧为度', primary: { traitId: 4, delta: -1.0 } },
-      { text: '新旧并行', gloss: '以并行度', primary: { traitId: 4, delta: 0.0 } },
+      { text: '新旧并行', gloss: '以并行为度', primary: { traitId: 4, delta: 0.0 } },
       { text: '以旧证新', gloss: '以旧为证', primary: { traitId: 4, delta: 0.2 } },
       { text: '以新辅旧', gloss: '以新为辅', primary: { traitId: 4, delta: 0.6 } },
       { text: '以新代旧', gloss: '以新为度', primary: { traitId: 4, delta: 1.0 } },
@@ -661,7 +661,7 @@ export const ITEMS_EAST_SCIENTIST: readonly Item[] = [
       { text: '半用半试', gloss: '以中为度', primary: { traitId: 11, delta: 0.0 } },
       { text: '敢用之', gloss: '以敢为度', primary: { traitId: 11, delta: 0.6 } },
       { text: '以身为试', gloss: '以身为度', primary: { traitId: 11, delta: 1.0 } },
-      { text: '以死为度', gloss: '以死为度', primary: { traitId: 11, delta: 1.4 } },
+      { text: '以死为度', gloss: '以生死为度量', primary: { traitId: 11, delta: 1.4 } },
     ],
   },
   {
@@ -733,7 +733,7 @@ export const ITEMS_EAST_SCIENTIST: readonly Item[] = [
       { text: '适', gloss: '以适为度', primary: { traitId: 12, delta: 0.0 } },
       { text: '繁', gloss: '以繁为度', primary: { traitId: 12, delta: 0.4 } },
       { text: '极繁', gloss: '以繁为度', primary: { traitId: 12, delta: 1.0 } },
-      { text: '图穷匕见', gloss: '以图为度', primary: { traitId: 12, delta: 0.6 } },
+      { text: '以繁为美', gloss: '繁复为尚', primary: { traitId: 12, delta: 0.6 } },
     ],
   },
   {
