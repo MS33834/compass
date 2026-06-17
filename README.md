@@ -92,6 +92,12 @@ npm run format        # prettier --write
 **GitHub Pages auto-deploy**: `.github/workflows/pages.yml` builds on `main` push and deploys via
 `actions/deploy-pages@v5` to `https://badhope.github.io/MindMirror/`.
 
+**Recent UX updates**:
+
+- Answer page (`Way`) uses a fixed viewport: no body scrolling, prompt + options centered, navigation always visible.
+- Theme / language toggles are available inside the answer page for an immersive experience.
+- Dark mode portraits are dimmed so the light SVG canvas does not blow out against the dark theme.
+
 **CI pipeline**: `.github/workflows/ci.yml` — `npm ci → typecheck → prettier → build → test`.
 
 ---
