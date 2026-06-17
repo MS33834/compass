@@ -235,11 +235,7 @@ export function Reflection() {
   };
 
   return (
-    <article
-      className="jx-container jx-scroll-reveal"
-      aria-labelledby="ref-title"
-      style={{ maxWidth: '64rem' }}
-    >
+    <article className="jx-container jx-scroll-reveal" aria-labelledby="ref-title">
       {/* 顶部装饰 */}
       <div
         aria-hidden
@@ -280,9 +276,6 @@ export function Reflection() {
           <AnimatedNumber target={primary.score * 100} durationMs={1600} startMs={200}>
             {v => t.reflection.score(Math.round(v))}
           </AnimatedNumber>
-          <span style={{ opacity: 0, position: 'absolute' }} aria-hidden>
-            ·
-          </span>
         </p>
       </header>
 
@@ -295,7 +288,7 @@ export function Reflection() {
           marginBottom: '3.5rem',
           textAlign: 'left',
         }}
-        className="jx-ref-grid jx-stagger"
+        className="jx-ref-grid jx-primary-grid jx-stagger"
       >
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start' }}>
           <div style={{ maxWidth: '220px', width: '100%' }}>
@@ -374,7 +367,7 @@ export function Reflection() {
           className="jx-alt-grid jx-stagger"
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(0, 11rem))',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(min(11rem, 100%), 1fr))',
             gap: '1rem',
             justifyContent: 'center',
           }}
@@ -458,7 +451,7 @@ export function Reflection() {
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(min(140px, 100%), 1fr))',
               gap: '0.6rem',
             }}
             className="jx-stagger"
@@ -738,34 +731,6 @@ export function Reflection() {
       )}
 
       <style>{`
-        @media (max-width: 640px) {
-          .jx-ref-grid { grid-template-columns: 1fr !important; }
-        }
-        @keyframes jx-fade-stagger {
-          from { opacity: 0; transform: translateY(8px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes jx-scroll-open {
-          from { opacity: 0; clip-path: inset(0 50% 0 50%); }
-          to { opacity: 1; clip-path: inset(0 0 0 0); }
-        }
-        .jx-scroll-reveal { animation: jx-scroll-open 1400ms var(--ease-out) both; }
-        .jx-stagger > * {
-          opacity: 0;
-          animation: jx-fade-stagger 500ms var(--ease-out) forwards;
-        }
-        .jx-stagger > *:nth-child(1) { animation-delay: 100ms; }
-        .jx-stagger > *:nth-child(2) { animation-delay: 180ms; }
-        .jx-stagger > *:nth-child(3) { animation-delay: 260ms; }
-        .jx-stagger > *:nth-child(4) { animation-delay: 340ms; }
-        .jx-stagger > *:nth-child(5) { animation-delay: 420ms; }
-        .jx-stagger > *:nth-child(6) { animation-delay: 500ms; }
-        .jx-stagger > *:nth-child(7) { animation-delay: 580ms; }
-        .jx-stagger > *:nth-child(8) { animation-delay: 660ms; }
-        .jx-stagger > *:nth-child(9) { animation-delay: 740ms; }
-        .jx-stagger > *:nth-child(10) { animation-delay: 820ms; }
-        .jx-stagger > *:nth-child(11) { animation-delay: 900ms; }
-        .jx-stagger > *:nth-child(12) { animation-delay: 980ms; }
         .jx-alt-card:hover {
           transform: translateY(-3px) scale(1.02);
           box-shadow: 0 8px 20px rgba(168,50,46,0.12);

@@ -124,7 +124,7 @@ export function Path() {
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(14rem, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(14rem, 100%), 1fr))',
           gap: '1.5rem',
           marginBottom: '3rem',
           maxWidth: '36rem',

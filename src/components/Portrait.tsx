@@ -30,6 +30,7 @@ export function Portrait({ figure }: Props) {
 
   return (
     <div
+      className="jx-portrait"
       style={{
         width: '100%',
         aspectRatio: '3 / 4',
@@ -58,6 +59,7 @@ export function Portrait({ figure }: Props) {
 function Placeholder({ figure }: Props) {
   return (
     <div
+      className="jx-portrait"
       style={{
         width: '100%',
         aspectRatio: '3 / 4',
