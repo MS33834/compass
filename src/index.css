@@ -953,18 +953,6 @@ main:focus {
   outline-offset: 2px;
 }
 
-/* 减少动画时禁用自定义动画 */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
-
 /* 高对比度偏好：增强对比 */
 @media (prefers-contrast: more) {
   :root {

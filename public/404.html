@@ -19,13 +19,12 @@
       // 避免将 JS/CSS/图片等资源请求也重定向（会导致 MIME 不匹配）
       try {
         var l = window.location;
-        var isNav = (document.referrer === '' || document.referrer.indexOf(l.origin) === 0);
         var path = l.pathname;
         // 匹配 /MindMirror/ 或 /MindMirror/index.html 或 /MindMirror（无尾斜杠）
         var base = '/MindMirror';
         if (path === base || path === base + '/' || path === base + '/index.html') {
           // 已在首页，无需重定向
-        } else if (path.indexOf(base + '/') === 0 && !path.match(/\.(js|css|svg|png|jpg|jpeg|gif|webp|ico|woff|woff2|ttf|eot|otf|json|xml|txt|map)$/i)) {
+        } else if (path.indexOf(base + '/') === 0 && !path.match(/\.(js|css|svg|png|jpg|jpeg|gif|webp|ico|woff|woff2|ttf|eot|otf|json|xml|txt|map|webmanifest)$/i)) {
           // 仅对非资源请求重定向到 SPA
           l.replace(base + '/' + l.search + l.hash);
         }

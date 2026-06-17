@@ -57,6 +57,18 @@ const applyTheme = (th: Theme) => {
 
 // 数据迁移函数
 const migrateState = (persistedState: any): State => {
+  if (!persistedState || typeof persistedState !== 'object') {
+    return {
+      phase: 'prologue',
+      domain: null,
+      answers: {},
+      currentIndex: 0,
+      locale: 'en',
+      theme: 'light',
+      report: null,
+      version: CURRENT_VERSION,
+    };
+  }
   if (!persistedState.version || persistedState.version < 2) {
     // v1 -> v2: 添加 version 字段
     return {
@@ -88,7 +100,10 @@ export const useStore = create<State & Actions>()(
         })),
       goPrev: () =>
         set((s: State & Actions) => ({ currentIndex: Math.max(0, s.currentIndex - 1) })),
-      goNext: () => set((s: State & Actions) => ({ currentIndex: s.currentIndex + 1 })),
+      goNext: () =>
+        set((s: State & Actions) => ({
+          currentIndex: Math.min(s.currentIndex + 1, 999),
+        })),
       setReport: (r: MatchReport) => set({ report: r, phase: 'reflection' }),
       reset: () =>
         set({

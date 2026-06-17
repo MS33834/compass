@@ -11,7 +11,9 @@
 import { TRAITS } from '../traits/trait.dimensions';
 import type { TraitVector } from '../traits/trait.types';
 
-const SQRT_12 = Math.sqrt(12);
+// 权重总和的平方根，用于归一化加权欧氏距离
+const WEIGHT_SUM = TRAITS.reduce((s, t) => s + t.weight, 0);
+const SQRT_WEIGHT_SUM = Math.sqrt(WEIGHT_SUM);
 const EPSILON = 1e-6;
 
 function weightedEuclid(a: TraitVector, b: TraitVector): number {
@@ -58,7 +60,7 @@ function shapeAgreement(a: TraitVector, b: TraitVector): number {
 
 /** 综合相似度 ∈ [0, 1]：距离 0.45 + 余弦 0.35 + 形态 0.2 */
 export function similarity(user: TraitVector, fig: TraitVector): number {
-  const e = weightedEuclid(user, fig) / SQRT_12;
+  const e = weightedEuclid(user, fig) / SQRT_WEIGHT_SUM;
   const c = cosine(user, fig);
   const shape = shapeAgreement(user, fig);
   return 0.45 * (1 - e) + 0.35 * c + 0.2 * shape;

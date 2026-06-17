@@ -94,7 +94,7 @@ async function captureOne(browser, { phase, theme }) {
     // 设置主题：使用 localStorage 注入（在导航前生效）
     await page.addInitScript(t => {
       try {
-        localStorage.setItem('mindmirror-v1.theme', t);
+        localStorage.setItem('mindmirror-v2.theme', t);
       } catch {
         /* noop */
       }

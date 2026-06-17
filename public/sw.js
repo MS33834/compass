@@ -44,9 +44,15 @@ self.addEventListener('fetch', e => {
           caches.open(CACHE).then(c => c.put(e.request, clone)).catch(() => {});
           return resp;
         })
-        .catch(() =>
-          caches.match(e.request).then(r => r || caches.match('/MindMirror/index.html') || caches.match('./index.html') || caches.match('/index.html'))
-        )
+        .catch(async () => {
+          const cached = await caches.match(e.request);
+          if (cached) return cached;
+          for (const fallback of ['/MindMirror/index.html', './index.html', '/index.html']) {
+            const r = await caches.match(fallback);
+            if (r) return r;
+          }
+          return Response.error();
+        })
     );
     return;
   }

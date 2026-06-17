@@ -31,9 +31,9 @@ export function Way() {
   const total = items.length;
   const item = items[currentIndex];
 
-  // 越界保护
+  // 越界保护：重定向到选域页（而非 prologue，避免丢失进度）
   useEffect(() => {
-    if (domain && !item) goPhase('prologue');
+    if (domain && !item) goPhase('path');
   }, [domain, item, goPhase]);
 
   // 回溯提示

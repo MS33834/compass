@@ -1,6 +1,6 @@
 [
   {
-    "name": "vendor-react (React + ReactDOM)",
+    "name": "vendor-react (React + ReactDOM + Zustand)",
     "path": "dist/assets/vendor-react-*.js",
     "limit": "200 KB",
     "gzip": true
@@ -8,19 +8,25 @@
   {
     "name": "index (应用主 bundle)",
     "path": "dist/assets/index-*.js",
-    "limit": "220 KB",
+    "limit": "80 KB",
     "gzip": true
   },
   {
-    "name": "vendor-state (Zustand 等状态)",
-    "path": "dist/assets/vendor-state-*.js",
-    "limit": "12 KB",
+    "name": "figures (人物数据)",
+    "path": "dist/assets/figures-*.js",
+    "limit": "120 KB",
+    "gzip": true
+  },
+  {
+    "name": "items (题目数据)",
+    "path": "dist/assets/items-*.js",
+    "limit": "180 KB",
     "gzip": true
   },
   {
     "name": "css (主样式表)",
     "path": "dist/assets/index-*.css",
-    "limit": "14 KB",
+    "limit": "20 KB",
     "gzip": true
   },
   {

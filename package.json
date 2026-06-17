@@ -17,8 +17,8 @@
     "test": "tsx tests/golden.spec.mjs",
     "test:unit": "tsx tests/unit.spec.mjs",
     "test:all": "tsx tests/golden.spec.mjs && tsx tests/unit.spec.mjs",
-    "format": "prettier --write \"src/**/*.{ts,tsx,css,md}\" \"*.{json,md,yml,yaml}\"",
-    "format:check": "prettier --check \"src/**/*.{ts,tsx,css,md}\" \"*.{json,md,yml,yaml}\"",
+    "format": "prettier --write \"src/**/*.{ts,tsx,css,md}\" \"*.{json,js,mjs,md,yml,yaml}\" \"tests/**/*.mjs\" \"scripts/**/*.mjs\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,css,md}\" \"*.{json,js,mjs,md,yml,yaml}\" \"tests/**/*.mjs\" \"scripts/**/*.mjs\"",
     "gen:portraits": "node scripts/gen-portraits.mjs"
   },
   "repository": {

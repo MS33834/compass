@@ -26,41 +26,24 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: npm
 
-      - name: Detect package manager
-        id: pm
-        run: |
-          if [ -f pnpm-lock.yaml ]; then echo "pm=pnpm" >> "$GITHUB_OUTPUT"
-          elif [ -f yarn.lock ]; then echo "pm=yarn" >> "$GITHUB_OUTPUT"
-          else echo "pm=npm" >> "$GITHUB_OUTPUT"; fi
+      - run: npm ci --no-audit --no-fund
 
-      - name: Install pnpm
-        if: steps.pm.outputs.pm == 'pnpm'
-        uses: pnpm/action-setup@v4
-        with:
-          version: 9
+      - name: Type-check
+        run: npm run typecheck
 
-      - name: Install
-        run: |
-          case "${{ steps.pm.outputs.pm }}" in
-            pnpm) pnpm install --frozen-lockfile ;;
-            yarn) yarn install --frozen-lockfile ;;
-            npm)  npm ci ;;
-          esac
+      - name: Test
+        run: npm run test:all
 
       - name: Build
-        run: |
-          case "${{ steps.pm.outputs.pm }}" in
-            pnpm) pnpm run build ;;
-            yarn) yarn run build ;;
-            npm)  npm run build:pages ;;
-          esac
+        run: npm run build:pages
 
       - name: Setup Pages
-        uses: actions/configure-pages@v6
+        uses: actions/configure-pages@v5
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v5
+        uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
 
@@ -74,4 +57,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v5
+        uses: actions/deploy-pages@v4

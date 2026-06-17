@@ -24,11 +24,13 @@ import { exportState, encodeResume, downloadJSON, readJSONFile } from '../share'
 // ── 工具：数字滚动动画 Hook ──
 function useAnimatedNumber(target: number, durationMs = 1600, startMs = 200) {
   const [val, setVal] = useState(0);
-  const started = useRef(false);
 
   useEffect(() => {
-    if (started.current) return;
-    started.current = true;
+    // target 为 0 时不启动动画（避免刷新后 report=null 时动画锁定）
+    if (target === 0) {
+      setVal(0);
+      return;
+    }
 
     const t0 = performance.now() + startMs;
     let raf = 0;
@@ -157,9 +159,11 @@ export function Reflection() {
 
   // C13 导出 JSON
   const handleExport = () => {
+    const items = domain ? itemsForDomain(domain) : [];
+    const maxIdx = Math.max(0, items.length - 1);
     const s = exportState({
       domain,
-      currentIndex: Object.keys(answers).length,
+      currentIndex: Math.min(Object.keys(answers).length, maxIdx),
       answers,
       locale,
       theme,
@@ -169,9 +173,11 @@ export function Reflection() {
 
   // C13 复制续答 URL
   const handleCopyResume = async () => {
+    const items = domain ? itemsForDomain(domain) : [];
+    const maxIdx = Math.max(0, items.length - 1);
     const s = exportState({
       domain,
-      currentIndex: Object.keys(answers).length,
+      currentIndex: Math.min(Object.keys(answers).length, maxIdx),
       answers,
       locale,
       theme,

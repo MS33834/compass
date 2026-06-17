@@ -27,7 +27,6 @@ export function confidence(answers: Record<string, number>, pool: readonly Item[
 
   // 3. 一致性：逐维答案的方向一致性
   const dimensionRaw = new Array(12).fill(null).map(() => [] as number[]);
-  const dimensionSign = new Array(12).fill(null).map(() => [] as number[]);
 
   for (const item of pool) {
     const optIdx = answers[item.id];
@@ -36,7 +35,6 @@ export function confidence(answers: Record<string, number>, pool: readonly Item[
     if (!opt) continue;
 
     dimensionRaw[opt.primary.traitId - 1].push(opt.primary.delta);
-    dimensionSign[opt.primary.traitId - 1].push(opt.primary.delta);
     for (const s of opt.secondary ?? []) {
       dimensionRaw[s.traitId - 1].push(s.delta);
     }
@@ -72,15 +70,8 @@ export function confidence(answers: Record<string, number>, pool: readonly Item[
   const consistency = consistencyCount > 0 ? consistencySum / consistencyCount : 0.5;
 
   // 4. 极值平衡性：避免所有维全高或全低
-  // —— 极端偏差的情况我们惩罚（正常人应该是有些维高有些维低）
-  // 衡量：分布的偏斜（skew 的程度）
-  let skew = 0;
-  for (let i = 0; i < 12; i++) {
-    const d = user[i] - mean;
-    skew += d * d * d;
-  }
-  skew = skew / 12; // 三阶矩
-  const balance = Math.max(0, 1 - Math.abs(skew) * 25);
+  // —— 用 mean 与 0.5 的偏差衡量，全高/全低时惩罚
+  const balance = Math.max(0, 1 - Math.abs(mean - 0.5) * 4);
 
   // 综合（完成度 0.45 + 决断度 0.25 + 一致性 0.20 + 平衡性 0.10）
   const raw = 0.45 * completeness + 0.25 * decisiveness + 0.2 * consistency + 0.1 * balance;

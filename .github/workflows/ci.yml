@@ -18,7 +18,7 @@ jobs:
           cache: npm
       - run: npm ci --no-audit --no-fund
       - run: npm run typecheck
-      - run: npx prettier --check "src/**/*.{ts,tsx,css,md}" "*.{json,js,mjs,md}" "tests/**/*.mjs" "scripts/**/*.mjs"
+      - run: npx prettier --check "src/**/*.{ts,tsx,css,md}" "*.{json,js,mjs,md,yml,yaml}" "tests/**/*.mjs" "scripts/**/*.mjs"
       - run: npm run build
         env:
           VITE_BASE_PATH: /

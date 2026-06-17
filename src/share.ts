@@ -37,7 +37,7 @@ const toB64 = (s: string) => {
 };
 
 const fromB64 = (s: string) => {
-  const norm = s.replace(/-/g, '+').replace(/_/g, '/') + '=='.slice(0, (4 - (s.length % 4)) % 4);
+  const norm = s.replace(/-/g, '+').replace(/_/g, '/') + '==='.slice(0, (4 - (s.length % 4)) % 4);
   const binary = atob(norm);
   const bytes = new Uint8Array(binary.length);
   for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
