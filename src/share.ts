@@ -28,7 +28,8 @@ function isValidShape(obj: unknown): obj is ExportShape {
   if (o.v !== 1) return false;
   // domain 可为 null 或合法 DomainId
   if (o.domain !== null && !VALID_DOMAINS.includes(o.domain as DomainId)) return false;
-  if (typeof o.currentIndex !== 'number' || !Number.isFinite(o.currentIndex)) return false;
+  if (typeof o.currentIndex !== 'number' || !Number.isInteger(o.currentIndex) || o.currentIndex < 0)
+    return false;
   if (!o.answers || typeof o.answers !== 'object') return false;
   // 校验 answers 的值均为有限数字
   for (const v of Object.values(o.answers as Record<string, unknown>)) {

@@ -42,7 +42,7 @@ ${footer(palette, fig.name, fig.seal)}
 <g transform="translate(46 600)">
   <text font-family="STKaiti, KaiTi, serif" font-size="10" fill="${palette.primary}" letter-spacing="2" opacity="0.7">${fig.caption} · 镜心选镜</text>
 </g>`;
-  return wrap(body, palette, seed);
+  return wrap(body, seed);
 }
 
 async function main() {

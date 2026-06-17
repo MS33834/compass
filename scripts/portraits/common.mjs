@@ -277,7 +277,7 @@ export function footer(palette, name, seal) {
 }
 
 // ─── SVG 整体骨架 ────────────────────────────────────────────────
-export function wrap(content, palette, seed = 1) {
+export function wrap(content, seed = 1) {
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 640" width="480" height="640" preserveAspectRatio="xMidYMid meet">
 ${filters(seed)}
 ${content}

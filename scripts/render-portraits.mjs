@@ -16,7 +16,6 @@ const SAMPLE = [
   'sushi',
   'quyuan',
   'liushao',
-  'tansitong',
   'wangwei',
   'zhangdai',
   'ouyangxiu',

@@ -55,28 +55,49 @@ const applyTheme = (th: Theme) => {
   document.documentElement.setAttribute('data-theme', th);
 };
 
-// 数据迁移函数
+// 数据迁移函数 · 同时校验字段形状，防止损坏的 localStorage 致运行时崩溃
 const migrateState = (persistedState: any): State => {
-  if (!persistedState || typeof persistedState !== 'object') {
-    return {
-      phase: 'prologue',
-      domain: null,
-      answers: {},
-      currentIndex: 0,
-      locale: 'en',
-      theme: 'light',
-      report: null,
-      version: CURRENT_VERSION,
-    };
-  }
-  if (!persistedState.version || persistedState.version < 2) {
-    // v1 -> v2: 添加 version 字段
-    return {
-      ...persistedState,
-      version: CURRENT_VERSION,
-    };
-  }
-  return persistedState;
+  const fallback: State = {
+    phase: 'prologue',
+    domain: null,
+    answers: {},
+    currentIndex: 0,
+    locale: 'en',
+    theme: 'light',
+    report: null,
+    version: CURRENT_VERSION,
+  };
+  if (!persistedState || typeof persistedState !== 'object') return fallback;
+
+  // 校验 answers 为普通对象
+  const rawAnswers = persistedState.answers;
+  const answers =
+    rawAnswers && typeof rawAnswers === 'object' && !Array.isArray(rawAnswers)
+      ? Object.fromEntries(
+          Object.entries(rawAnswers).filter(([, v]) => typeof v === 'number' && Number.isFinite(v))
+        )
+      : {};
+
+  // 校验 theme 枚举
+  const theme: Theme = persistedState.theme === 'dark' ? 'dark' : 'light';
+
+  // 校验 locale 枚举
+  const locale: Locale = persistedState.locale === 'zh' ? 'zh' : 'en';
+
+  // 校验 currentIndex 非负整数
+  const rawIdx = persistedState.currentIndex;
+  const currentIndex =
+    typeof rawIdx === 'number' && Number.isInteger(rawIdx) && rawIdx >= 0 ? rawIdx : 0;
+
+  return {
+    ...fallback,
+    ...persistedState,
+    answers,
+    theme,
+    locale,
+    currentIndex,
+    version: CURRENT_VERSION,
+  };
 };
 
 export const useStore = create<State & Actions>()(
@@ -100,10 +121,7 @@ export const useStore = create<State & Actions>()(
         })),
       goPrev: () =>
         set((s: State & Actions) => ({ currentIndex: Math.max(0, s.currentIndex - 1) })),
-      goNext: () =>
-        set((s: State & Actions) => ({
-          currentIndex: Math.min(s.currentIndex + 1, 999),
-        })),
+      goNext: () => set((s: State & Actions) => ({ currentIndex: s.currentIndex + 1 })),
       setReport: (r: MatchReport) => set({ report: r, phase: 'reflection' }),
       reset: () =>
         set({
@@ -113,7 +131,10 @@ export const useStore = create<State & Actions>()(
           phase: 'prologue',
           domain: null,
         }),
-      setLocale: (l: Locale) => set({ locale: l }),
+      setLocale: (l: Locale) => {
+        if (typeof document !== 'undefined') document.documentElement.lang = l;
+        set({ locale: l });
+      },
       setTheme: (th: Theme) => {
         applyTheme(th);
         if (typeof window !== 'undefined') {
@@ -121,7 +142,9 @@ export const useStore = create<State & Actions>()(
         }
         set({ theme: th });
       },
-      importState: (s: ExportShape) =>
+      importState: (s: ExportShape) => {
+        applyTheme(s.theme);
+        if (typeof document !== 'undefined') document.documentElement.lang = s.locale;
         set({
           answers: s.answers,
           domain: s.domain,
@@ -130,7 +153,8 @@ export const useStore = create<State & Actions>()(
           theme: s.theme,
           phase: s.domain && Object.keys(s.answers).length > 0 ? 'way' : 'prologue',
           report: null,
-        }),
+        });
+      },
     }),
     {
       name: STORAGE_KEY,
@@ -149,13 +173,10 @@ export const useStore = create<State & Actions>()(
           console.error('Failed to rehydrate state:', error);
           return;
         }
+        // merge 已完成迁移，此处仅需应用主题与语言
         if (s) {
-          // 执行数据迁移
-          const migrated = migrateState(s);
-          if (migrated.version !== s.version) {
-            useStore.setState(migrated);
-          }
-          applyTheme(migrated.theme);
+          applyTheme(s.theme);
+          if (typeof document !== 'undefined') document.documentElement.lang = s.locale;
         }
       },
       merge: (persistedState, currentState) => {

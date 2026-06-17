@@ -6,10 +6,13 @@ import { Verse } from '../components/Verse';
 import { useT } from '../i18n';
 
 export function Prologue() {
-  const { goPhase } = useStore();
+  const goPhase = useStore(s => s.goPhase);
   const t = useT();
-  // 用 useRef 缓存随机选择，只在首次渲染时计算
-  const pickRef = useRef(Math.floor(Math.random() * t.prologue.verses.length));
+  // 用 useRef 缓存随机选择，懒初始化避免每次渲染都计算
+  const pickRef = useRef<number | null>(null);
+  if (pickRef.current === null) {
+    pickRef.current = Math.floor(Math.random() * t.prologue.verses.length);
+  }
   const pick = pickRef.current;
   const lines = t.prologue.verses[pick];
 

@@ -163,8 +163,13 @@ export function TraitRadar({ user, figure, size = 400, ariaLabel }: Props) {
 
       {/* 用户逐点（可交互） */}
       {userPoints.map((p, i) => {
+        const traitName = TRAITS[i]?.name ?? `#${i + 1}`;
+        const titleText = figure
+          ? `${traitName} · ${youLabel} ${Math.round(user[i] * 100)} · ${ancientLabel} ${Math.round(figure[i] * 100)}`
+          : `${traitName} · ${youLabel} ${Math.round(user[i] * 100)}`;
         return (
           <g key={`up${i}`}>
+            <title>{titleText}</title>
             {/* 点击热区 */}
             <circle
               cx={cx + r * Math.cos(angles[i])}
@@ -190,12 +195,12 @@ export function TraitRadar({ user, figure, size = 400, ariaLabel }: Props) {
               }}
             />
             {/* 悬停时画出差异指示线 */}
-            {hoverIdx === i && figure && (
+            {hoverIdx === i && figure && figPoints && figPoints[i] && (
               <line
                 x1={p[0]}
                 y1={p[1]}
-                x2={figPoints![i][0]}
-                y2={figPoints![i][1]}
+                x2={figPoints[i][0]}
+                y2={figPoints[i][1]}
                 stroke="var(--cinnabar)"
                 strokeOpacity={0.5}
                 strokeDasharray="3 3"

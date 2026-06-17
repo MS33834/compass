@@ -1,3 +1,2 @@
 User-agent: *
-Allow: /
-Disallow: /MindMirror/sw.js
+Disallow: /sw.js

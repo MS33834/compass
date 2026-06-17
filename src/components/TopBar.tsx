@@ -4,7 +4,12 @@ import { BrushButton } from './BrushButton';
 import { useT } from '../i18n';
 
 export function TopBar() {
-  const { phase, reset, locale, setLocale, theme, setTheme } = useStore();
+  const phase = useStore(s => s.phase);
+  const locale = useStore(s => s.locale);
+  const theme = useStore(s => s.theme);
+  const reset = useStore(s => s.reset);
+  const setLocale = useStore(s => s.setLocale);
+  const setTheme = useStore(s => s.setTheme);
   const t = useT();
   const onLogo = () => {
     if (confirm(t.ui.returnHomeConfirm)) reset();
@@ -46,7 +51,7 @@ export function TopBar() {
           flexShrink: 0,
           whiteSpace: 'nowrap',
         }}
-        aria-label={t.ui.returnHome}
+        aria-label={`${t.ui.appName} — ${t.ui.returnHome}`}
       >
         <span className="jx-seal" aria-hidden>
           {t.ui.sealChar}

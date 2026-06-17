@@ -407,38 +407,6 @@ export const FIGURES = [
     },
   },
 
-  // ── 谭嗣同 · 横刀向天 ───────────────────────────
-  {
-    id: 'tansitong',
-    name: '谭嗣同',
-    era: 'qing',
-    seal: '仁学志',
-    motto: ['我自横刀', '向天笑'],
-    caption: '变法流血',
-    buildScene(p, ink) {
-      return `
-        ${mountains(p.secondary, 320, 50)}
-        ${cloud(120, 140, 100, p.ground)}
-        ${cloud(320, 150, 80, p.ground)}
-        <!-- 站者：顶天立地 -->
-        <g transform="translate(240 300)" fill="${ink}" opacity="0.95">
-          <ellipse cx="0" cy="0" rx="12" ry="15"/>
-          <path d="M -18 12 L -24 90 L 24 90 L 18 12 Z"/>
-          <ellipse cx="0" cy="-18" rx="10" ry="12" fill="${p.primary}"/>
-        </g>
-        <!-- 剑横 -->
-        <g transform="translate(240 320)">
-          <line x1="-50" y1="0" x2="50" y2="0" stroke="${p.ink}" stroke-width="2.6"/>
-          <rect x="-4" y="-8" width="8" height="16" fill="${p.seal}"/>
-          <circle cx="0" cy="-12" r="3" fill="${p.accent}"/>
-        </g>
-        <!-- 血梅飘零 -->
-        <g>
-          ${Array.from({ length: 8 }, (_, i) => `<circle cx="${100 + i * 36}" cy="${200 + ((i * 13) % 60)}" r="2.5" fill="${p.seal}" opacity="0.7"/>`).join('')}
-        </g>`;
-    },
-  },
-
   // ── 孔子 · 杏坛讲学 ───────────────────────────
   {
     id: 'kongzi',

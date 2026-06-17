@@ -1,13 +1,27 @@
-// MindMirror · Service Worker (v6 - 离线可用)
+// MindMirror · Service Worker (v7 - 离线可用)
 // 策略：
-// - 导航请求（HTML）：网络优先，离线回退缓存 index.html
+// - 导航请求（HTML）：网络优先，离线回退缓存的 index.html（预缓存 + 运行时缓存）
 // - 带 hash 的 JS/CSS：浏览器自身缓存，SW 不干预
 // - 静态资源（图片/字体/SVG）：网络优先，离线降级缓存
 
-const CACHE = 'mindmirror-v6';
+const CACHE = 'mindmirror-v7';
+const BASE = self.registration ? new URL('.', self.registration.scope).pathname : '/';
 
-self.addEventListener('install', () => {
-  self.skipWaiting();
+// 预缓存 app shell 核心文件
+const PRECACHE_URLS = [
+  `${BASE}`,
+  `${BASE}index.html`,
+  `${BASE}favicon.svg`,
+  `${BASE}manifest.webmanifest`,
+];
+
+self.addEventListener('install', e => {
+  e.waitUntil(
+    caches
+      .open(CACHE)
+      .then(c => c.addAll(PRECACHE_URLS).catch(() => {}))
+      .then(() => self.skipWaiting())
+  );
 });
 
 self.addEventListener('activate', e => {
@@ -42,12 +56,17 @@ self.addEventListener('fetch', e => {
         .then(resp => {
           const clone = resp.clone();
           caches.open(CACHE).then(c => c.put(e.request, clone)).catch(() => {});
+          // 同时缓存 index.html 作为稳定 fallback key
+          const indexReq = new Request(`${BASE}index.html`);
+          caches.open(CACHE).then(c => c.put(indexReq, clone.clone())).catch(() => {});
           return resp;
         })
         .catch(async () => {
+          // 先尝试精确匹配
           const cached = await caches.match(e.request);
           if (cached) return cached;
-          for (const fallback of ['/MindMirror/index.html', './index.html', '/index.html']) {
+          // 再尝试预缓存的 index.html
+          for (const fallback of [`${BASE}index.html`, `${BASE}`, './index.html', '/index.html']) {
             const r = await caches.match(fallback);
             if (r) return r;
           }

@@ -6,7 +6,7 @@
 // 3. 十二维卡片化：按差异排序的卡片网格 + 悬停详情 + 同/异/合 三态标签
 // 4. 报告页整体卷轴展开
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { useStore } from '../store';
 import { TraitRadar } from '../components/TraitRadar';
 import { Portrait } from '../components/Portrait';
@@ -54,6 +54,22 @@ function useAnimatedNumber(target: number, durationMs = 1600, startMs = 200) {
   return val;
 }
 
+// ── 隔离动画组件：避免动画帧重渲染整个 Reflection 页 ──
+function AnimatedNumber({
+  target,
+  durationMs,
+  startMs,
+  children,
+}: {
+  target: number;
+  durationMs?: number;
+  startMs?: number;
+  children: (val: number) => ReactNode;
+}) {
+  const val = useAnimatedNumber(target, durationMs, startMs);
+  return <>{children(val)}</>;
+}
+
 // ── 工具：逐维分类（同/近/异）
 function traitDiffLabel(
   diff: number,
@@ -65,12 +81,33 @@ function traitDiffLabel(
 }
 
 export function Reflection() {
-  const { report, domain, answers, goPhase, setReport, reset, locale, theme } = useStore();
+  const report = useStore(s => s.report);
+  const domain = useStore(s => s.domain);
+  const answers = useStore(s => s.answers);
+  const goPhase = useStore(s => s.goPhase);
+  const setReport = useStore(s => s.setReport);
+  const reset = useStore(s => s.reset);
+  const locale = useStore(s => s.locale);
+  const theme = useStore(s => s.theme);
   const t = useT();
   const [toast, setToast] = useState<string | null>(null);
   const fileRef = useRef<HTMLInputElement | null>(null);
   const goPhaseRef = useRef(goPhase);
   goPhaseRef.current = goPhase;
+
+  // flash 定时器：每次调用清除上一个，组件卸载时也清除
+  const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const flash = useCallback((msg: string) => {
+    if (toastTimer.current) clearTimeout(toastTimer.current);
+    setToast(msg);
+    toastTimer.current = setTimeout(() => setToast(null), 1500);
+  }, []);
+  useEffect(
+    () => () => {
+      if (toastTimer.current) clearTimeout(toastTimer.current);
+    },
+    []
+  );
 
   // 刷新后报告丢失：可由 domain + answers 重新计算
   useEffect(() => {
@@ -112,10 +149,6 @@ export function Reflection() {
       .map(x => x.traitId);
   }, [report]);
 
-  // 数字动画 —— 必须在条件 return 之前调用（Hooks 规则）
-  const animatedPct = useAnimatedNumber(report ? report.primary.score * 100 : 0, 1600, 200);
-  const animatedConf = useAnimatedNumber(report ? report.confidence * 100 : 0, 1400, 800);
-
   // 十二维：按差异从小到大排序后做卡片化呈现
   const sortedBreakdown = useMemo(
     () =>
@@ -132,11 +165,6 @@ export function Reflection() {
   if (!report) return null;
 
   const { primary, alternates, confidence: confVal } = report;
-
-  const flash = (msg: string) => {
-    setToast(msg);
-    setTimeout(() => setToast(null), 1500);
-  };
 
   // C18 分享
   const handleShare = async () => {
@@ -248,7 +276,10 @@ export function Reflection() {
           {primary.figure.name}
         </h1>
         <p style={{ color: 'var(--ink-faint)', fontSize: '1.05rem' }}>
-          {primary.figure.era} · {t.reflection.score(Math.round(animatedPct))}
+          {primary.figure.era} ·{' '}
+          <AnimatedNumber target={primary.score * 100} durationMs={1600} startMs={200}>
+            {v => t.reflection.score(Math.round(v))}
+          </AnimatedNumber>
           <span style={{ opacity: 0, position: 'absolute' }} aria-hidden>
             ·
           </span>
@@ -304,7 +335,9 @@ export function Reflection() {
                 fontFamily: 'var(--font-display)',
               }}
             >
-              {t.reflection.confidenceHint(Math.round(animatedConf))}
+              <AnimatedNumber target={confVal * 100} durationMs={1400} startMs={800}>
+                {v => t.reflection.confidenceHint(Math.round(v))}
+              </AnimatedNumber>
             </div>
           )}
 
@@ -354,7 +387,7 @@ export function Reflection() {
                 key={a.figure.id}
                 data-figure="alternate"
                 data-figure-id={a.figure.id}
-                className={isClose ? 'jx-alt-close' : ''}
+                className={`jx-alt-card${isClose ? ' jx-alt-close' : ''}`}
                 style={{
                   padding: '1.25rem 1rem',
                   background: isClose ? 'var(--rice-warm)' : 'transparent',
@@ -362,15 +395,6 @@ export function Reflection() {
                   position: 'relative',
                   transition: 'all 300ms var(--ease-out)',
                   textAlign: 'center',
-                  cursor: isClose ? 'default' : 'default',
-                }}
-                onMouseEnter={e => {
-                  e.currentTarget.style.transform = 'translateY(-3px) scale(1.02)';
-                  e.currentTarget.style.boxShadow = '0 8px 20px rgba(168,50,46,0.12)';
-                }}
-                onMouseLeave={e => {
-                  e.currentTarget.style.transform = '';
-                  e.currentTarget.style.boxShadow = '';
                 }}
               >
                 {idx === 0 && (
@@ -465,6 +489,7 @@ export function Reflection() {
                 <div
                   key={b.traitId}
                   data-trait-id={b.traitId}
+                  className="jx-trait-card"
                   style={{
                     padding: '0.8rem 0.75rem',
                     border: `1px solid ${borderColor}`,
@@ -472,15 +497,6 @@ export function Reflection() {
                     textAlign: 'center',
                     fontFamily: 'var(--font-display)',
                     transition: 'all 250ms var(--ease-out)',
-                    cursor: 'default',
-                  }}
-                  onMouseEnter={e => {
-                    e.currentTarget.style.transform = 'translateY(-2px)';
-                    e.currentTarget.style.boxShadow = '0 6px 14px rgba(26,26,26,0.08)';
-                  }}
-                  onMouseLeave={e => {
-                    e.currentTarget.style.transform = '';
-                    e.currentTarget.style.boxShadow = '';
                   }}
                 >
                   <div
@@ -750,6 +766,14 @@ export function Reflection() {
         .jx-stagger > *:nth-child(10) { animation-delay: 820ms; }
         .jx-stagger > *:nth-child(11) { animation-delay: 900ms; }
         .jx-stagger > *:nth-child(12) { animation-delay: 980ms; }
+        .jx-alt-card:hover {
+          transform: translateY(-3px) scale(1.02);
+          box-shadow: 0 8px 20px rgba(168,50,46,0.12);
+        }
+        .jx-trait-card:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 14px rgba(26,26,26,0.08);
+        }
       `}</style>
     </article>
   );

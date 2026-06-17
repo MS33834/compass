@@ -2,13 +2,13 @@
 //
 // 增强点：
 // 1. 顶部进度条：渐变色 + 已答/总数双指示
-// 2. 选项卡片：悬停微抬 + 选中朱砂印章动画 + 键盘焦点高亮
-// 3. 键盘导航：1-6 快速选，←→ 翻页，ESC 返回选域
+// 2. 选项卡片：CSS hover 微抬 + 选中朱砂印章动画 + 键盘焦点高亮
+// 3. 键盘导航：1-6 快速选，←→ 翻页，↑↓ 选项间移动，ESC 返回选域
 // 4. 底部跳过/上一题/下一题按钮组，流畅渐进
 // 5. 题目标题：进入时淡入
 // 6. 答题回溯提示：前面某题未答时提醒
 
-import { useEffect, useLayoutEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useMemo, useState } from 'react';
 import { useStore } from '../store';
 import { itemsForDomain } from '../domain/items/items.index';
 import { figuresForDomain } from '../domain/figures/figures.index';
@@ -19,8 +19,15 @@ import { Verse } from '../components/Verse';
 import { useT } from '../i18n';
 
 export function Way() {
-  const { domain, currentIndex, answers, answer, goPrev, goNext, goPhase, setReport, reset } =
-    useStore();
+  const domain = useStore(s => s.domain);
+  const currentIndex = useStore(s => s.currentIndex);
+  const answers = useStore(s => s.answers);
+  const answer = useStore(s => s.answer);
+  const goPrev = useStore(s => s.goPrev);
+  const goNext = useStore(s => s.goNext);
+  const goPhase = useStore(s => s.goPhase);
+  const setReport = useStore(s => s.setReport);
+  const reset = useStore(s => s.reset);
   const t = useT();
 
   useEffect(() => {
@@ -30,6 +37,7 @@ export function Way() {
   const items = useMemo(() => itemsForDomain(domain ?? 'east-literati'), [domain]);
   const total = items.length;
   const item = items[currentIndex];
+  const figures = useMemo(() => (domain ? figuresForDomain(domain) : []), [domain]);
 
   // 越界保护：重定向到选域页（而非 prologue，避免丢失进度）
   useEffect(() => {
@@ -47,15 +55,14 @@ export function Way() {
 
   if (!domain || !item) return null;
 
-  const figures = figuresForDomain(domain);
   const current = answers[item.id];
   const answeredCount = Object.keys(answers).length;
   const canFinish = answeredCount >= 30;
 
-  const handleFinish = () => {
+  const handleFinish = useCallback(() => {
     const r = buildReport(computeUserVector(answers, items), figures, answers, items);
     setReport(r);
-  };
+  }, [answers, items, figures, setReport]);
 
   const handleSkip = () => {
     if (currentIndex < total - 1) goNext();
@@ -64,8 +71,6 @@ export function Way() {
   // 切换题目时强制回到顶部（useLayoutEffect 保证在浏览器绘制前执行）
   useLayoutEffect(() => {
     window.scrollTo(0, 0);
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
   }, [currentIndex]);
 
   // 键盘导航
@@ -83,6 +88,14 @@ export function Way() {
           e.preventDefault();
           goNext();
         }
+      } else if (e.key === 'ArrowUp' && current === undefined) {
+        // 未选中时 ↑ 选中最后一项
+        e.preventDefault();
+        answer(item.id, item.options.length - 1);
+      } else if (e.key === 'ArrowDown' && current === undefined) {
+        // 未选中时 ↓ 选中第一项
+        e.preventDefault();
+        answer(item.id, 0);
       } else if (e.key >= '1' && e.key <= '6') {
         const optIndex = parseInt(e.key) - 1;
         if (optIndex < item.options.length) {
@@ -101,7 +114,7 @@ export function Way() {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentIndex, total, current, item, answer, goPrev, goNext, canFinish]);
+  }, [currentIndex, total, current, item, answer, goPrev, goNext, canFinish, handleFinish]);
 
   // 进度百分比
   const progressPct = Math.round((answeredCount / total) * 100);
@@ -259,6 +272,8 @@ export function Way() {
                 type="button"
                 role="radio"
                 aria-checked={selected}
+                tabIndex={selected ? 0 : -1}
+                className={`jx-way-option${selected ? ' jx-way-option--selected' : ''}`}
                 data-role="option"
                 data-opt-index={i}
                 data-testid={`option-${i}`}
@@ -279,23 +294,6 @@ export function Way() {
                   transform: selected ? 'translateY(-1px)' : 'none',
                   fontFamily: 'inherit',
                   fontSize: '1rem',
-                }}
-                onMouseEnter={e => {
-                  if (!selected) {
-                    e.currentTarget.style.transform = 'translateY(-2px)';
-                    e.currentTarget.style.boxShadow = '0 6px 18px rgba(26,26,26,0.12)';
-                    e.currentTarget.style.borderColor = 'var(--ink)';
-                  }
-                }}
-                onMouseLeave={e => {
-                  if (!selected) {
-                    e.currentTarget.style.transform = '';
-                    e.currentTarget.style.boxShadow = '';
-                    e.currentTarget.style.borderColor = 'var(--rice-deep)';
-                  } else {
-                    e.currentTarget.style.transform = 'translateY(-1px)';
-                    e.currentTarget.style.boxShadow = '0 4px 14px rgba(168, 50, 46, 0.15)';
-                  }
                 }}
               >
                 {/* 字母印章 */}
@@ -437,6 +435,7 @@ export function Way() {
       >
         <button
           type="button"
+          className="jx-way-reset"
           onClick={() => {
             if (confirm(t.ui.resetConfirm)) reset();
           }}
@@ -450,12 +449,6 @@ export function Way() {
             padding: '0.25rem 0.5rem',
             letterSpacing: '0.15em',
             transition: 'color 200ms',
-          }}
-          onMouseEnter={e => {
-            e.currentTarget.style.color = 'var(--cinnabar)';
-          }}
-          onMouseLeave={e => {
-            e.currentTarget.style.color = 'var(--ink-faint)';
           }}
         >
           {t.way.resetLabel}
@@ -472,6 +465,12 @@ export function Way() {
           to { opacity: 1; transform: translateY(0); }
         }
         .jx-fade-enter { animation: jx-fade-in 500ms var(--ease-out) both; }
+        .jx-way-option:not(.jx-way-option--selected):hover {
+          transform: translateY(-2px) !important;
+          box-shadow: 0 6px 18px rgba(26,26,26,0.12) !important;
+          border-color: var(--ink) !important;
+        }
+        .jx-way-reset:hover { color: var(--cinnabar) !important; }
       `}</style>
     </section>
   );

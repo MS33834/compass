@@ -1,6 +1,6 @@
 // 镜心 · 入口
 import { useT } from './i18n';
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useStore } from './store';
 import { TopBar } from './components/TopBar';
 import { Prologue } from './pages/Prologue';
@@ -9,22 +9,18 @@ import { Way } from './pages/Way';
 import { Reflection } from './pages/Reflection';
 
 export function App() {
-  const { phase } = useStore();
+  const phase = useStore(s => s.phase);
   const t = useT();
   const [currentPhase, setCurrentPhase] = useState(phase);
 
   // 阶段变化：先 600ms 翻页退出，再切换到新页面（带入场动画）
-  useLayoutEffect(() => {
-    if (phase === currentPhase) return;
-    // 立即回到顶部（useLayoutEffect 保证在绘制前执行）
-    window.scrollTo(0, 0);
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
-  }, [phase, currentPhase]);
-
   useEffect(() => {
     if (phase === currentPhase) return;
-    const timer = setTimeout(() => setCurrentPhase(phase), 600);
+    const timer = setTimeout(() => {
+      // 新页面挂载前回到顶部
+      window.scrollTo(0, 0);
+      setCurrentPhase(phase);
+    }, 600);
     return () => clearTimeout(timer);
   }, [phase, currentPhase]);
 

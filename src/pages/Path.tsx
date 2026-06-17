@@ -26,14 +26,27 @@ const REGION_KEYS: readonly DomainId[] = [
   'west-scientist',
 ];
 
+const REGIONS: readonly Region[] = ['east', 'west'];
+
 export function Path() {
-  const { selectDomain } = useStore();
+  const selectDomain = useStore(s => s.selectDomain);
   const t = useT();
   const [region, setRegion] = useState<Region>('east');
   const [picked, setPicked] = useState<DomainId | null>(null);
 
   const chosen = picked ? figuresForDomain(picked).length : 0;
   const ready = picked !== null && chosen > 0;
+
+  const handleTabKeyDown = (e: React.KeyboardEvent, current: Region) => {
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+      e.preventDefault();
+      const idx = REGIONS.indexOf(current);
+      const next =
+        REGIONS[(idx + (e.key === 'ArrowRight' ? 1 : -1) + REGIONS.length) % REGIONS.length];
+      setRegion(next);
+      setPicked(null);
+    }
+  };
 
   return (
     <section className="jx-container jx-page-enter" aria-labelledby="path-title">
@@ -79,11 +92,13 @@ export function Path() {
           flexWrap: 'wrap',
         }}
       >
-        {(['east', 'west'] as Region[]).map(r => (
+        {REGIONS.map(r => (
           <button
             key={r}
             role="tab"
             aria-selected={region === r}
+            tabIndex={region === r ? 0 : -1}
+            onKeyDown={e => handleTabKeyDown(e, r)}
             onClick={() => {
               setRegion(r);
               setPicked(null);

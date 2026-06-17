@@ -11,8 +11,8 @@
   --cinnabar: #a8322e;
   --cinnabar-soft: #c8543e;
   --jade: #4a6b54;
-  --gold-dim: #b8954a;
-  --ash: #999;
+  --gold-dim: #8a6d2f;
+  --ash: #6a6a6a;
   --rice-translucent: rgba(245, 239, 224, 0.85);
 
   /* ── 字 ── 加大加粗，古风感 ── */
@@ -655,8 +655,8 @@ button:focus:not(:focus-visible) {
   --cinnabar: #d8584a;
   --cinnabar-soft: #e07060;
   --jade: #6aaa8a;
-  --gold-dim: #c0a060;
-  --ash: #6a7080;
+  --gold-dim: #c8a868;
+  --ash: #9a9aa0;
   --rice-translucent: rgba(14, 20, 26, 0.85);
 }
 

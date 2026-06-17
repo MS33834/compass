@@ -18,35 +18,32 @@ import './index.css';
   }
 })();
 
-// C13 URL 续答：?resume=BASE64
+// C13 URL 续答 + 语言切换：?resume=BASE64 & ?lang=zh|en
+// 顺序：先 resume（恢复存档），再 lang（URL 参数覆盖存档语言）
 (() => {
   try {
     const params = new URLSearchParams(window.location.search);
+
+    // 1. 续答：同步导入，避免与 ?lang= 竞态
     const r = params.get('resume');
     if (r) {
       const s = decodeResume(r);
       if (s) {
-        queueMicrotask(() => useStore.getState().importState(s));
+        useStore.getState().importState(s);
         params.delete('resume');
-        const newQ = params.toString();
-        const newUrl = window.location.pathname + (newQ ? '?' + newQ : '');
-        window.history.replaceState({}, '', newUrl);
       }
     }
-  } catch {
-    /* noop */
-  }
-})();
 
-// ?lang=zh|en —— 支持 hreflang 备选链接与外部语言切换
-(() => {
-  try {
-    const params = new URLSearchParams(window.location.search);
+    // 2. 语言：URL 参数优先于存档
     const lang = params.get('lang');
     if (lang === 'zh' || lang === 'en') {
       useStore.getState().setLocale(lang);
       params.delete('lang');
-      const newQ = params.toString();
+    }
+
+    // 清理 URL 参数
+    const newQ = params.toString();
+    if (newQ !== window.location.search.slice(1)) {
       const newUrl = window.location.pathname + (newQ ? '?' + newQ : '');
       window.history.replaceState({}, '', newUrl);
     }
