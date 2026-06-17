@@ -38,6 +38,23 @@ import './index.css';
   }
 })();
 
+// ?lang=zh|en —— 支持 hreflang 备选链接与外部语言切换
+(() => {
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const lang = params.get('lang');
+    if (lang === 'zh' || lang === 'en') {
+      useStore.getState().setLocale(lang);
+      params.delete('lang');
+      const newQ = params.toString();
+      const newUrl = window.location.pathname + (newQ ? '?' + newQ : '');
+      window.history.replaceState({}, '', newUrl);
+    }
+  } catch {
+    /* noop */
+  }
+})();
+
 const root = document.getElementById('root');
 if (!root) throw new Error('root not found');
 

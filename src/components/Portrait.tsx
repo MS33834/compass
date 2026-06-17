@@ -5,7 +5,7 @@
 // 若图片加载失败，自动降级为占位卡片。
 
 import type { Figure } from '../domain/figures/figure.types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const BASE = import.meta.env.BASE_URL;
 
@@ -13,6 +13,11 @@ type Props = { figure: Figure };
 
 export function Portrait({ figure }: Props) {
   const [err, setErr] = useState(false);
+
+  // figure 变化时重置错误状态，避免复用组件实例时残留旧图的降级态
+  useEffect(() => {
+    setErr(false);
+  }, [figure.id]);
 
   if (err) {
     return <Placeholder figure={figure} />;

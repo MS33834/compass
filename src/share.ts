@@ -13,6 +13,32 @@ export type ExportShape = {
   theme: 'light' | 'dark';
 };
 
+const VALID_DOMAINS: readonly DomainId[] = [
+  'east-literati',
+  'east-statesman',
+  'east-scientist',
+  'west-philosopher',
+  'west-scientist',
+];
+
+/** 校验导入数据的结构合法性，防止构造的 URL/JSON 致应用崩溃 */
+function isValidShape(obj: unknown): obj is ExportShape {
+  if (!obj || typeof obj !== 'object') return false;
+  const o = obj as Record<string, unknown>;
+  if (o.v !== 1) return false;
+  // domain 可为 null 或合法 DomainId
+  if (o.domain !== null && !VALID_DOMAINS.includes(o.domain as DomainId)) return false;
+  if (typeof o.currentIndex !== 'number' || !Number.isFinite(o.currentIndex)) return false;
+  if (!o.answers || typeof o.answers !== 'object') return false;
+  // 校验 answers 的值均为有限数字
+  for (const v of Object.values(o.answers as Record<string, unknown>)) {
+    if (typeof v !== 'number' || !Number.isFinite(v)) return false;
+  }
+  if (o.locale !== 'zh' && o.locale !== 'en') return false;
+  if (o.theme !== 'light' && o.theme !== 'dark') return false;
+  return true;
+}
+
 export function exportState(s: Omit<ExportShape, 'v' | 'ts'>): ExportShape {
   return {
     v: 1,
@@ -51,8 +77,8 @@ export function encodeResume(s: ExportShape): string {
 export function decodeResume(s: string): ExportShape | null {
   try {
     const obj = JSON.parse(fromB64(s));
-    if (obj?.v !== 1) return null;
-    return obj as ExportShape;
+    if (!isValidShape(obj)) return null;
+    return obj;
   } catch {
     return null;
   }
@@ -74,8 +100,8 @@ export async function readJSONFile(file: File): Promise<ExportShape | null> {
   const text = await file.text();
   try {
     const obj = JSON.parse(text);
-    if (obj?.v !== 1) return null;
-    return obj as ExportShape;
+    if (!isValidShape(obj)) return null;
+    return obj;
   } catch {
     return null;
   }

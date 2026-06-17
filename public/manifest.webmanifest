@@ -22,7 +22,7 @@
   "shortcuts": [
     {
       "name": "Enter Mirror",
-      "url": "./?p=path",
+      "url": "./",
       "description": "Begin one inquiry"
     }
   ]

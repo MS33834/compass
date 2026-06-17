@@ -9,6 +9,7 @@
 import { useState } from 'react';
 import { TRAITS } from '../domain/traits/trait.dimensions';
 import type { TraitVector } from '../domain/traits/trait.types';
+import { useT } from '../i18n';
 
 type Props = {
   user: TraitVector;
@@ -22,6 +23,9 @@ export function TraitRadar({ user, figure, size = 400, ariaLabel }: Props) {
   const cy = size / 2;
   const r = size * 0.36;
   const N = 12;
+  const t = useT();
+  const youLabel = t.reflection.chartLabels.you;
+  const ancientLabel = t.reflection.chartLabels.ancient;
 
   // 各维角
   const angles = Array.from({ length: N }, (_, i) => -Math.PI / 2 + (i * 2 * Math.PI) / N);
@@ -236,7 +240,7 @@ export function TraitRadar({ user, figure, size = 400, ariaLabel }: Props) {
                   fill="var(--ink)"
                   fontFamily="var(--font-body)"
                 >
-                  汝 {Math.round(user[i] * 100)}
+                  {youLabel} {Math.round(user[i] * 100)}
                 </text>
                 {figure && (
                   <text
@@ -248,7 +252,7 @@ export function TraitRadar({ user, figure, size = 400, ariaLabel }: Props) {
                     fill="var(--cinnabar)"
                     fontFamily="var(--font-body)"
                   >
-                    古 {Math.round(figure[i] * 100)}
+                    {ancientLabel} {Math.round(figure[i] * 100)}
                   </text>
                 )}
               </>
