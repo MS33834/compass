@@ -81,7 +81,7 @@ export function TopBar() {
           onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
           title={theme === 'dark' ? t.ui.themeLight : t.ui.themeDark}
           data-testid="btn-theme"
-          aria-label={theme === 'dark' ? 'switch to light' : 'switch to dark'}
+          aria-label={theme === 'dark' ? t.ui.themeLabelLight : t.ui.themeLabelDark}
           style={{ minWidth: '2.5rem', padding: '0.25rem 0.6rem' }}
         >
           {theme === 'dark' ? '☾' : '☼'}

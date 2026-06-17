@@ -95,7 +95,6 @@ export function Reflection() {
       .sort((a, b) => a.diff - b.diff)
       .slice(0, 3)
       .map(x => x.traitId);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [report]);
 
   // 最差异的 3 维
@@ -109,27 +108,28 @@ export function Reflection() {
       .sort((a, b) => b.diff - a.diff)
       .slice(0, 3)
       .map(x => x.traitId);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [report]);
 
-  if (!report) return null;
-
-  const { primary, alternates, traitBreakdown, confidence: confVal } = report;
-
-  // 数字动画
-  const animatedPct = useAnimatedNumber(primary.score * 100, 1600, 200);
-  const animatedConf = useAnimatedNumber(confVal * 100, 1400, 800);
+  // 数字动画 —— 必须在条件 return 之前调用（Hooks 规则）
+  const animatedPct = useAnimatedNumber(report ? report.primary.score * 100 : 0, 1600, 200);
+  const animatedConf = useAnimatedNumber(report ? report.confidence * 100 : 0, 1400, 800);
 
   // 十二维：按差异从小到大排序后做卡片化呈现
   const sortedBreakdown = useMemo(
     () =>
-      [...traitBreakdown].sort((a, b) => {
-        const da = Math.abs(a.user - a.figure);
-        const db = Math.abs(b.user - b.figure);
-        return da - db;
-      }),
-    [traitBreakdown]
+      report
+        ? [...report.traitBreakdown].sort((a, b) => {
+            const da = Math.abs(a.user - a.figure);
+            const db = Math.abs(b.user - b.figure);
+            return da - db;
+          })
+        : [],
+    [report]
   );
+
+  if (!report) return null;
+
+  const { primary, alternates, traitBreakdown, confidence: confVal } = report;
 
   const flash = (msg: string) => {
     setToast(msg);
@@ -340,68 +340,66 @@ export function Reflection() {
             justifyContent: 'center',
           }}
         >
-          {alternates
-            .sort((a, b) => b.score - a.score)
-            .map((a, idx) => {
-              const diff = Math.abs(a.score - primary.score);
-              const isClose = diff < 0.05;
-              return (
-                <article
-                  key={a.figure.id}
-                  data-figure="alternate"
-                  data-figure-id={a.figure.id}
-                  className={isClose ? 'jx-alt-close' : ''}
-                  style={{
-                    padding: '1.25rem 1rem',
-                    background: isClose ? 'var(--rice-warm)' : 'transparent',
-                    border: `1px solid ${isClose ? 'var(--cinnabar)' : 'var(--rice-deep)'}`,
-                    position: 'relative',
-                    transition: 'all 300ms var(--ease-out)',
-                    textAlign: 'center',
-                    cursor: isClose ? 'default' : 'default',
-                  }}
-                  onMouseEnter={e => {
-                    e.currentTarget.style.transform = 'translateY(-3px) scale(1.02)';
-                    e.currentTarget.style.boxShadow = '0 8px 20px rgba(168,50,46,0.12)';
-                  }}
-                  onMouseLeave={e => {
-                    e.currentTarget.style.transform = '';
-                    e.currentTarget.style.boxShadow = '';
-                  }}
-                >
-                  {idx === 0 && (
-                    <span
-                      className="jx-chip jx-chip-cinnabar"
-                      style={{
-                        position: 'absolute',
-                        top: '-0.6rem',
-                        right: '0.5rem',
-                        fontSize: '0.75rem',
-                        padding: '0.15rem 0.5rem',
-                      }}
-                    >
-                      {t.reflection.mostSimilar}
-                    </span>
-                  )}
-                  <h3 style={{ marginBottom: '0.3rem', fontSize: '1.25rem' }}>{a.figure.name}</h3>
-                  <p style={{ fontSize: '0.875rem', color: 'var(--ink-faint)', margin: 0 }}>
-                    {a.figure.era}
-                  </p>
-                  <p
+          {alternates.map((a, idx) => {
+            const diff = Math.abs(a.score - primary.score);
+            const isClose = diff < 0.05;
+            return (
+              <article
+                key={a.figure.id}
+                data-figure="alternate"
+                data-figure-id={a.figure.id}
+                className={isClose ? 'jx-alt-close' : ''}
+                style={{
+                  padding: '1.25rem 1rem',
+                  background: isClose ? 'var(--rice-warm)' : 'transparent',
+                  border: `1px solid ${isClose ? 'var(--cinnabar)' : 'var(--rice-deep)'}`,
+                  position: 'relative',
+                  transition: 'all 300ms var(--ease-out)',
+                  textAlign: 'center',
+                  cursor: isClose ? 'default' : 'default',
+                }}
+                onMouseEnter={e => {
+                  e.currentTarget.style.transform = 'translateY(-3px) scale(1.02)';
+                  e.currentTarget.style.boxShadow = '0 8px 20px rgba(168,50,46,0.12)';
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.style.transform = '';
+                  e.currentTarget.style.boxShadow = '';
+                }}
+              >
+                {idx === 0 && (
+                  <span
+                    className="jx-chip jx-chip-cinnabar"
                     style={{
-                      marginTop: '0.5rem',
-                      fontFamily: 'var(--font-display)',
-                      color: isClose ? 'var(--cinnabar)' : 'var(--jade)',
-                      fontSize: '1rem',
-                      fontWeight: 600,
-                      letterSpacing: '0.1em',
+                      position: 'absolute',
+                      top: '-0.6rem',
+                      right: '0.5rem',
+                      fontSize: '0.75rem',
+                      padding: '0.15rem 0.5rem',
                     }}
                   >
-                    {t.reflection.score(Math.round(a.score * 100))}
-                  </p>
-                </article>
-              );
-            })}
+                    {t.reflection.mostSimilar}
+                  </span>
+                )}
+                <h3 style={{ marginBottom: '0.3rem', fontSize: '1.25rem' }}>{a.figure.name}</h3>
+                <p style={{ fontSize: '0.875rem', color: 'var(--ink-faint)', margin: 0 }}>
+                  {a.figure.era}
+                </p>
+                <p
+                  style={{
+                    marginTop: '0.5rem',
+                    fontFamily: 'var(--font-display)',
+                    color: isClose ? 'var(--cinnabar)' : 'var(--jade)',
+                    fontSize: '1rem',
+                    fontWeight: 600,
+                    letterSpacing: '0.1em',
+                  }}
+                >
+                  {t.reflection.score(Math.round(a.score * 100))}
+                </p>
+              </article>
+            );
+          })}
         </div>
       </section>
 
@@ -750,6 +748,3 @@ export function Reflection() {
     </article>
   );
 }
-
-// 引用辅助类型以规避 TS unused 检查
-type TraitRadar = typeof TraitRadar;

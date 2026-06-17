@@ -43,11 +43,15 @@ function shapeAgreement(a: TraitVector, b: TraitVector): number {
   const meanB = b.reduce((s, v) => s + v, 0) / 12;
   let agree = 0;
   for (let i = 0; i < 12; i++) {
-    // 同向（都高于均值 或 都低于均值）得 1 分，反向 0 分
     const da = a[i] - meanA;
     const db = b[i] - meanB;
-    if (da * db > 0) agree += 1;
-    else if (Math.abs(da) < 0.05 && Math.abs(db) < 0.05) agree += 0.5; // 都接近均值也算半分
+    if (da * db > 0) {
+      // 同向偏离（都高于或都低于各自均值）
+      agree += 1;
+    } else if (Math.abs(da) < 0.05 && Math.abs(db) < 0.05) {
+      // 两者都接近均值 —— 方向一致（同为中性），计满分
+      agree += 1;
+    }
   }
   return agree / 12;
 }

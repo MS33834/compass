@@ -74,9 +74,9 @@ export function renderBlurb(template: string, ctx: { name: string; era: string }
   return template.replace(/\{\{name\}\}/g, ctx.name).replace(/\{\{era\}\}/g, ctx.era);
 }
 
-/** 根据用户与古人在某维度的差，返回 lo/mid/hi 段 */
+/** 根据用户与古人在某维度的差（user - figure），返回 lo/mid/hi 段 */
 export function pickPolarity(diff: number): 'lo' | 'mid' | 'hi' {
-  if (diff > 0.15) return 'lo';
-  if (diff < -0.15) return 'hi';
+  if (diff > 0.15) return 'hi'; // 用户明显高于古人 → 偏高
+  if (diff < -0.15) return 'lo'; // 用户明显低于古人 → 偏低
   return 'mid';
 }

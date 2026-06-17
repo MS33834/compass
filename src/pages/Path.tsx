@@ -18,14 +18,6 @@ const DOMAIN_REGION: Record<DomainId, Region> = {
   'west-scientist': 'west',
 };
 
-const READY: Record<DomainId, boolean> = {
-  'east-literati': true,
-  'east-statesman': true,
-  'east-scientist': true,
-  'west-philosopher': true,
-  'west-scientist': true,
-};
-
 const REGION_KEYS: readonly DomainId[] = [
   'east-literati',
   'east-statesman',
@@ -41,7 +33,7 @@ export function Path() {
   const [picked, setPicked] = useState<DomainId | null>(null);
 
   const chosen = picked ? figuresForDomain(picked).length : 0;
-  const ready = picked && chosen > 0;
+  const ready = picked !== null && chosen > 0;
 
   return (
     <section className="jx-container jx-page-enter" aria-labelledby="path-title">
@@ -128,7 +120,7 @@ export function Path() {
         {REGION_KEYS.filter(d => DOMAIN_REGION[d] === region).map(d => {
           const count = figuresForDomain(d).length;
           const meta = t.path.domains[d];
-          const readyFlag = READY[d];
+          const readyFlag = count > 0;
           const active = picked === d;
           return (
             <button

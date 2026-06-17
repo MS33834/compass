@@ -25,17 +25,23 @@ export function exportState(s: Omit<ExportShape, 'v' | 'ts'>): ExportShape {
   };
 }
 
-// base64url 编码
-const toB64 = (s: string) =>
-  // 中文走 UTF-8
-  btoa(unescape(encodeURIComponent(s)))
-    .replace(/\+/g, '-')
-    .replace(/\//g, '_')
-    .replace(/=+$/, '');
+// base64url 编码（UTF-8 安全，使用 TextEncoder 替代已废弃的 escape/unescape）
+const textEncoder = new TextEncoder();
+const textDecoder = new TextDecoder();
+
+const toB64 = (s: string) => {
+  const bytes = textEncoder.encode(s);
+  let binary = '';
+  for (const b of bytes) binary += String.fromCharCode(b);
+  return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+};
 
 const fromB64 = (s: string) => {
   const norm = s.replace(/-/g, '+').replace(/_/g, '/') + '=='.slice(0, (4 - (s.length % 4)) % 4);
-  return decodeURIComponent(escape(atob(norm)));
+  const binary = atob(norm);
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+  return textDecoder.decode(bytes);
 };
 
 export function encodeResume(s: ExportShape): string {

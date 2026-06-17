@@ -13,6 +13,8 @@ export const zh = {
     skipToContent: '跳至正文',
     themeLight: '☼',
     themeDark: '☾',
+    themeLabelLight: '切换至亮色',
+    themeLabelDark: '切换至暗色',
     phase: {
       prologue: '入镜',
       path: '选域',

@@ -1,7 +1,7 @@
 // 镜心 · 置信度
 //
-// 综合四个维度（原三项 + 极值平衡）：
-// 1. 完成度：已答题占 60% 视为可靠（原题设）；低于则线性惩罚
+// 综合四个维度：
+// 1. 完成度：已答题占比，线性增长到 100% 才饱和（60% 仅得 0.6，避免过早自信）
 // 2. 决断度：12 维分布的方差 —— 若所有维都挤在 0.5 = 无倾向 = 低决断
 // 3. 一致性：同一维度多题的回答是否同向（内部逻辑是否一贯）
 // 4. 平衡惩罚：若用户向量的 12 维全偏高或全偏低是不合理
@@ -15,9 +15,8 @@ export function confidence(answers: Record<string, number>, pool: readonly Item[
   const answered = Object.keys(answers).length;
   const total = pool.length;
 
-  // 1. 完成度：60% 为"合格线
-  const threshold = Math.ceil(total * 0.6);
-  const completeness = Math.min(1, answered / threshold);
+  // 1. 完成度：线性增长，100% 答题才饱和
+  const completeness = total > 0 ? Math.min(1, answered / total) : 0;
 
   // 2. 决断度：
   const user = computeUserVector(answers, pool);

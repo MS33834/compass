@@ -15,6 +15,8 @@ export const en: Dict = {
     skipToContent: 'Skip to content',
     themeLight: '☼',
     themeDark: '☾',
+    themeLabelLight: 'Switch to light theme',
+    themeLabelDark: 'Switch to dark theme',
     phase: {
       prologue: 'Entry',
       path: 'Domain',
