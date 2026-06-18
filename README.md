@@ -3,12 +3,12 @@
 > **A quiet compass for the inner self.**  
 > Three minutes, three millennia — find who might sit with thee among 150 figures across 5 domains.
 
-[🌐 **Live Site**](https://badhope.github.io/compass/) ·
-[📦 **Repository**](https://github.com/badhope/compass) ·
+[🌐 **Live Site**](https://badhope.gitcode.host/compass/) ·
+[📦 **Repository**](https://gitcode.com/badhope/compass) ·
 [📜 **Changelog**](./CHANGELOG.md) ·
 [🛡 **License (PolyForm NC)**](./LICENSE)
 
-[中文](https://badhope.github.io/compass/?lang=zh) · 指南
+[中文](https://badhope.gitcode.host/compass/?lang=zh) · 指南
 
 **Compass** is a **local-first, privacy-first** tool for self-discovery through history.
 
@@ -97,7 +97,7 @@ npm run format        # prettier --write
 - Theme / language toggles are available inside the answer page for an immersive experience.
 - Dark mode portraits are dimmed so the light SVG canvas does not blow out against the dark theme.
 
-**CI pipeline**: `.github/workflows/ci.yml` — `npm ci → typecheck → prettier → build → test`.
+**CI pipeline**: `.gitlab-ci.yml` — `npm ci → typecheck → test → build:pages → GitCode Pages deploy`.
 
 ---
 

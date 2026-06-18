@@ -25,7 +25,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/badhope/compass.git"
+    "url": "https://gitcode.com/badhope/compass.git"
   },
   "keywords": [
     "compass",
@@ -37,26 +37,20 @@
     "privacy",
     "pwa",
     "static-site",
-    "github-pages",
+    "gitcode-pages",
     "react",
     "typescript",
     "vite"
   ],
   "author": {
     "name": "badhope",
-    "url": "https://github.com/badhope"
+    "url": "https://gitcode.com/badhope"
   },
   "license": "PolyForm-Noncommercial-1.0.0",
   "bugs": {
-    "url": "https://github.com/badhope/compass/issues"
+    "url": "https://gitcode.com/badhope/compass/issues"
   },
-  "homepage": "https://badhope.github.io/compass/",
-  "funding": [
-    {
-      "type": "github",
-      "url": "https://github.com/sponsors/badhope"
-    }
-  ],
+  "homepage": "https://badhope.gitcode.host/compass/",
   "dependencies": {
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

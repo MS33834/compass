@@ -50,7 +50,7 @@
 
 跨端方案用 Taro，一套代码可以编译成网页、小程序、桌面应用。
 
-部署方面，网页版用 GitHub Pages（免费），小程序用微信云开发（有免费额度）。
+部署方面，网页版用 GitCode Pages（免费），小程序用微信云开发（有免费额度）。
 
 ### 2.3 核心算法
 
@@ -141,8 +141,8 @@
 
 **项目负责人：** 熊泽城  
 **联系方式：** [待填写]  
-**项目地址：** https://badhope.github.io/compass/  
-**代码仓库：** https://github.com/badhope/compass
+**项目地址：** https://badhope.gitcode.host/compass/  
+**代码仓库：** https://gitcode.com/badhope/compass
 
 ---
 
