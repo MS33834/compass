@@ -5,7 +5,6 @@ import { computeUserVector } from '../src/domain/matching/vector.ts';
 import { similarity, breakTie } from '../src/domain/matching/scoring.ts';
 import { confidence } from '../src/domain/matching/confidence.ts';
 import { ITEMS_EAST_LITERATI } from '../src/domain/items/items.east-literati.ts';
-// TraitVector 类型在运行时不需要，移除 type import
 
 let pass = 0;
 let fail = 0;
@@ -26,8 +25,7 @@ function close(a, b, eps = 1e-6) {
 
 console.log('指南 · 单元测试\n');
 
-// ========== 向量生成测试 ==========
-console.log('【向量生成】');
+console.log('向量生成');
 
 // 测试 1：全未答题（应使用全局均值）
 {
@@ -38,7 +36,6 @@ console.log('【向量生成】');
     vector.every(v => v >= 0.05 && v <= 0.95),
     '全未答题：所有值在 [0.05, 0.95] 范围内'
   );
-  // 全未答题时，所有维度应该接近全局均值（约 0.5 左右）
   const mean = vector.reduce((s, v) => s + v, 0) / 12;
   assert(mean >= 0.4 && mean <= 0.6, `全未答题：均值接近 0.5（实际 ${mean.toFixed(3)}）`);
 }
@@ -52,7 +49,6 @@ console.log('【向量生成】');
     vector.every(v => v >= 0.05 && v <= 0.95),
     '部分答题：所有值在 [0.05, 0.95] 范围内'
   );
-  // 未答题维度应该使用中性值 0.5
   const unansweredDims = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]; // 除第 0 维外
   const unansweredMean = unansweredDims.reduce((s, i) => s + vector[i], 0) / unansweredDims.length;
   assert(
@@ -64,15 +60,14 @@ console.log('【向量生成】');
 // 测试 3：极端答案（全选极端选项）
 {
   const answers = {};
-  // 假设所有题目都选第 1 个选项（可能是极端值）
-  ITEMS_EAST_LITERATI.forEach((item, idx) => {
+  ITEMS_EAST_LITERATI.forEach(item => {
     answers[item.id] = 0;
   });
   const vector = computeUserVector(answers, ITEMS_EAST_LITERATI);
   assert(vector.length === 12, '极端答案：向量长度为 12');
   assert(
     vector.every(v => v >= 0.05 && v <= 0.95),
-    '极端答案：所有值在 [0.05, 0.95] 范围内（边界处理生效）'
+    '极端答案：所有值在 [0.05, 0.95] 范围内'
   );
 }
 
@@ -82,13 +77,10 @@ console.log('【向量生成】');
   const answers2 = { 'el-001': 0, 'el-002': 0, 'el-003': 0, 'el-004': 0 }; // 4 题
   const vector1 = computeUserVector(answers1, ITEMS_EAST_LITERATI);
   const vector2 = computeUserVector(answers2, ITEMS_EAST_LITERATI);
-  // 覆盖度越高，自适应系数越大，区分度越高
-  // 这里只是验证函数能正常运行，具体值取决于数据
   assert(vector1.length === 12 && vector2.length === 12, '自适应系数：不同覆盖度生成不同向量');
 }
 
-// ========== 匹配算法测试 ==========
-console.log('\n【匹配算法】');
+console.log('\n匹配算法');
 
 // 测试 1：相同向量相似度应为 1
 {
@@ -111,8 +103,6 @@ console.log('\n【匹配算法】');
   const v2 = [0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05];
   const sim = similarity(v1, v2);
   assert(sim >= 0 && sim <= 1, `极端向量：相似度在 [0, 1] 范围内（实际 ${sim.toFixed(6)}）`);
-  // 注意：由于余弦相似度在平行向量时为 1.0，即使欧氏距离大，综合相似度也可能 > 0.5
-  // 这是算法特性，不是 bug
 }
 
 // 测试 4：平局检测
@@ -129,12 +119,10 @@ console.log('\n【匹配算法】');
   const v1 = [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5];
   const v2 = [0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6, 0.6];
   const sim = similarity(v1, v2);
-  // 权重比例 0.55:0.45，相似度应该在 0.5-1 之间
   assert(sim >= 0.5 && sim <= 1, `权重比例：相似度合理（实际 ${sim.toFixed(6)}）`);
 }
 
-// ========== 置信度计算测试 ==========
-console.log('\n【置信度计算】');
+console.log('\n置信度计算');
 
 // 测试 1：全未答题
 {
@@ -173,9 +161,8 @@ console.log('\n【置信度计算】');
 // 测试 4：一致性检测（答案前后矛盾）
 {
   const answers = {};
-  // 假设同一维度的题目选不同选项（可能矛盾）
   ITEMS_EAST_LITERATI.slice(0, 8).forEach((item, idx) => {
-    answers[item.id] = idx % 2 === 0 ? 0 : 1; // 交替选择
+    answers[item.id] = idx % 2 === 0 ? 0 : 1;
   });
   const conf = confidence(answers, ITEMS_EAST_LITERATI);
   assert(conf >= 0 && conf <= 1, `一致性检测：置信度在 [0, 1] 范围内（实际 ${conf.toFixed(6)}）`);
@@ -184,7 +171,6 @@ console.log('\n【置信度计算】');
 // 测试 5：决断度检测（答案是否明确）
 {
   const answers = {};
-  // 全部选第 1 个选项（可能是极端值，方差大）
   ITEMS_EAST_LITERATI.forEach(item => {
     answers[item.id] = 0;
   });

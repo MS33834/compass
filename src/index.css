@@ -3,11 +3,10 @@
 :root {
   /* ── 色 ── */
   --ink: #1a1a1a;
-  --ink-soft: #2c2c2c;
-  --ink-faint: #404040;
+  --ink-soft: #252525;
   --rice: #f5efe0;
   --rice-warm: #ebe3cf;
-  --rice-deep: #e0d6bd;
+  --rice-deep: #d9cdb8;
   --cinnabar: #a8322e;
   --cinnabar-soft: #c8543e;
   --jade: #4a6b54;
@@ -205,7 +204,7 @@ p {
 .cp-btn-ghost {
   border: none;
   background: transparent;
-  color: var(--ink-faint);
+  color: var(--ink-soft);
 }
 
 .cp-btn-ghost:hover {
@@ -254,7 +253,7 @@ p {
 .cp-verse .gloss {
   font-family: var(--font-body);
   font-size: 1rem;
-  color: var(--ink-faint);
+  color: var(--ink-soft);
   line-height: 1.6;
 }
 
@@ -273,7 +272,7 @@ p {
   text-align: center;
 }
 
-/* 页面切换 - 增强停顿效果 */
+/* 页面切换 - 停顿效果 */
 .cp-fade-enter {
   animation: cp-fade-in var(--t-slow) var(--ease-in-out) both;
 }
@@ -335,7 +334,7 @@ p {
   animation: cp-fade-in 600ms var(--ease-out) both;
 }
 
-/* 卷轴展开 - 增强版 */
+/* 卷轴展开 */
 .cp-scroll-reveal {
   animation: cp-scroll-open var(--t-slow) var(--ease-in-out) both;
 }
@@ -467,7 +466,7 @@ p {
   animation: cp-radar-fade 1000ms var(--ease-in-out) 800ms forwards;
 }
 
-/* 响应式 - 手机竖屏 (320px - 480px) */
+/* 手机竖屏 (320px - 480px) */
 @media (max-width: 480px) {
   :root {
     --sp-4: 0.875rem;
@@ -544,14 +543,14 @@ p {
   }
 }
 
-/* 响应式 - 手机横屏/平板 (481px - 768px) */
+/* 手机横屏/平板 (481px - 768px) */
 @media (min-width: 481px) and (max-width: 768px) {
   .cp-container {
     padding: var(--sp-6) var(--sp-4);
   }
 }
 
-/* 响应式 - 平板竖屏及以下：映照页网格转单列 */
+/* 平板竖屏及以下：映照页网格转单列 */
 @media (max-width: 640px) {
   .cp-ref-grid {
     grid-template-columns: minmax(0, 1fr) !important;
@@ -562,14 +561,14 @@ p {
   }
 }
 
-/* 响应式 - 平板/小桌面 (769px - 1024px) */
+/* 平板/小桌面 (769px - 1024px) */
 @media (min-width: 769px) and (max-width: 1024px) {
   .cp-container {
     padding: var(--sp-8) var(--sp-6);
   }
 }
 
-/* 响应式 - 超小屏 (320px 以下，如 iPhone SE 1代) */
+/* 超小屏 (320px 以下，如 iPhone SE 1代) */
 @media (max-width: 320px) {
   h2 {
     font-size: 1.25rem;
@@ -742,7 +741,7 @@ body.cp-way-no-scroll #root {
 
 .cp-way-meta {
   margin: 0;
-  color: var(--ink-faint);
+  color: var(--ink-soft);
   font-size: 0.8rem;
   font-family: var(--font-display);
   letter-spacing: 0.12em;
@@ -769,7 +768,7 @@ body.cp-way-no-scroll #root {
   padding: 0 0.4rem;
   background: transparent;
   border: 1px solid var(--rice-deep);
-  color: var(--ink-faint);
+  color: var(--ink-soft);
   font-family: var(--font-display);
   font-size: 0.75rem;
   letter-spacing: 0.05em;
@@ -839,7 +838,7 @@ body.cp-way-no-scroll #root {
 }
 
 .cp-way-gloss {
-  color: var(--ink-faint);
+  color: var(--ink-soft);
   margin: 0 auto 0.75rem;
   font-size: 0.9rem;
   font-family: var(--font-body);
@@ -931,7 +930,7 @@ body.cp-way-no-scroll #root {
 .cp-way-gloss-inline {
   font-family: var(--font-body);
   font-size: 0.8rem;
-  color: var(--ink-faint);
+  color: var(--ink-soft);
   line-height: 1.4;
 }
 
@@ -960,10 +959,10 @@ body.cp-way-no-scroll #root {
 .cp-way-hint {
   text-align: center;
   margin: 0.25rem 0 0;
-  font-size: 0.6rem;
-  color: var(--ink-faint);
+  font-size: 0.65rem;
+  color: var(--ink-soft);
   font-family: var(--font-display);
-  opacity: 0.7;
+  opacity: 0.85;
   letter-spacing: 0.1em;
 }
 
@@ -972,7 +971,7 @@ body.cp-way-no-scroll #root {
   margin: 0.1rem auto 0;
   background: none;
   border: none;
-  color: var(--ink-faint);
+  color: var(--ink-soft);
   font-size: 0.65rem;
   font-family: var(--font-display);
   cursor: pointer;
@@ -1030,7 +1029,7 @@ body.cp-way-no-scroll #root {
   display: inline-block;
   padding: 0.5rem 0.75rem;
   font-family: var(--font-display);
-  color: var(--ink-faint);
+  color: var(--ink-soft);
   font-size: 0.875rem;
   letter-spacing: 0.05em;
 }
@@ -1039,7 +1038,6 @@ body.cp-way-no-scroll #root {
 :root[data-theme='dark'] {
   --ink: #e8e2d0;
   --ink-soft: #d0cab8;
-  --ink-faint: #9a9080;
   --rice: #0e141a;
   --rice-warm: #1a232c;
   --rice-deep: #283342;
@@ -1080,7 +1078,7 @@ body.cp-way-no-scroll #root {
   color: var(--rice);
 }
 :root[data-theme='dark'] .cp-btn-ghost {
-  color: var(--ink-faint);
+  color: var(--ink-soft);
 }
 :root[data-theme='dark'] .cp-btn-ghost:hover {
   color: var(--cinnabar);
@@ -1095,7 +1093,7 @@ body.cp-way-no-scroll #root {
   color: var(--ink);
 }
 :root[data-theme='dark'] .cp-verse .gloss {
-  color: var(--ink-faint);
+  color: var(--ink-soft);
 }
 
 :root[data-theme='dark'] .cp-blurb {
@@ -1197,7 +1195,7 @@ body.cp-way-no-scroll #root {
 .cp-empty {
   text-align: center;
   padding: var(--sp-12) var(--sp-6);
-  color: var(--ink-faint);
+  color: var(--ink-soft);
   font-family: var(--font-display);
   letter-spacing: 0.1em;
 }
@@ -1260,7 +1258,7 @@ body.cp-way-no-scroll #root {
   opacity: 0;
   animation: cp-fade-stagger 500ms var(--ease-out) forwards;
 }
-/* 安全兜底：动画结束或不可用时确保可见 */
+/* 浏览器不支持动画时保持可见 */
 @supports not (animation: cp-fade-stagger 1ms) {
   .cp-stagger > * {
     opacity: 1;
@@ -1319,9 +1317,9 @@ body.cp-way-no-scroll #root {
   transform: scale(1.06);
 }
 
-/* ─── 响应式打磨（已有断点，移除重复） ─── */
+/* ─── 断点修正（移除重复） ─── */
 
-/* ─── 无障碍增强 ─── */
+/* ─── 无障碍 ─── */
 
 /* Skip link — 键盘用户按 Tab 第一个可见 */
 .cp-skip-link {
@@ -1350,23 +1348,21 @@ main:focus {
   outline: none;
 }
 
-/* 强制增强所有可聚焦元素的轮廓 */
+/* 可聚焦元素轮廓 */
 :focus-visible {
   outline: 2px solid var(--cinnabar);
   outline-offset: 2px;
 }
 
-/* 高对比度偏好：增强对比 */
+/* 高对比度偏好 */
 @media (prefers-contrast: more) {
   :root {
     --ink: #000000;
     --ink-soft: #1a1a1a;
-    --ink-faint: #3a3a3a;
   }
   :root[data-theme='dark'] {
     --ink: #ffffff;
     --ink-soft: #f0f0f0;
-    --ink-faint: #d0d0d0;
   }
 }
 
@@ -1417,7 +1413,7 @@ main:focus {
   border: 1px solid var(--rice-deep);
   padding: 0.5rem 0.75rem;
   font-size: 0.75rem;
-  color: var(--ink-faint);
+  color: var(--ink-soft);
   font-family: var(--font-display);
   border-radius: 2px;
   opacity: 0;

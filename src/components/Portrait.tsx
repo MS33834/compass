@@ -3,7 +3,7 @@
 //
 // 真正的全人像留给设计师二次出图。
 // 此处先用 <img> 加载 public/portraits/.../ 下的水墨写意 SVG。
-// 若图片加载失败，自动降级为占位卡片。
+// 加载失败时显示占位卡片。
 
 import type { Figure } from '../domain/figures/figure.types';
 import { useEffect, useState } from 'react';
@@ -24,7 +24,7 @@ export function Portrait({ figure }: Props) {
     return <Placeholder figure={figure} />;
   }
 
-  // 确保 portrait 路径在 GitHub Pages 子路径下正确解析
+  // 确保子路径下 portrait 路径解析正确
   const portraitSrc = figure.portrait.startsWith('/')
     ? figure.portrait
     : `${BASE}${figure.portrait}`;
@@ -78,7 +78,7 @@ function Placeholder({ figure }: Props) {
       <div
         style={{
           fontSize: '0.875rem',
-          color: 'var(--ink-faint)',
+          color: 'var(--ink-soft)',
           fontFamily: 'var(--font-display)',
           letterSpacing: '0.2em',
         }}

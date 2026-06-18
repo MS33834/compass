@@ -1,10 +1,4 @@
-// 指南 · 映照 · 卷（增强版）
-//
-// 特性：
-// 1. 主区映照数字：从 0 动态累加到匹配度 —— 数字滚动动画
-// 2. 同道列表卡片：逐张淡入 + 悬停微缩放 + 同道值渐增
-// 3. 十二维卡片化：按差异排序的卡片网格 + 悬停详情 + 同/异/合 三态标签
-// 4. 报告页整体卷轴展开
+// 指南 · 映照 · 卷
 
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { useStore } from '../store';
@@ -241,11 +235,11 @@ export function Reflection() {
         aria-hidden
         style={{
           textAlign: 'center',
-          color: 'var(--ink-faint)',
+          color: 'var(--ink-soft)',
           fontSize: '0.8rem',
           letterSpacing: '0.6em',
           marginBottom: '1.5rem',
-          opacity: 0.5,
+          opacity: 0.35,
           fontFamily: 'var(--font-accent)',
         }}
       >
@@ -255,7 +249,7 @@ export function Reflection() {
       <header style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
         <p
           style={{
-            color: 'var(--ink-faint)',
+            color: 'var(--ink-soft)',
             fontSize: '0.875rem',
             fontFamily: 'var(--font-display)',
             letterSpacing: '0.35em',
@@ -271,7 +265,7 @@ export function Reflection() {
         >
           {primary.figure.name}
         </h1>
-        <p style={{ color: 'var(--ink-faint)', fontSize: '1.05rem' }}>
+        <p style={{ color: 'var(--ink-soft)', fontSize: '1.05rem' }}>
           {primary.figure.era} ·{' '}
           <AnimatedNumber target={primary.score * 100} durationMs={1600} startMs={200}>
             {v => t.reflection.score(Math.round(v))}
@@ -337,7 +331,7 @@ export function Reflection() {
           {primary.figure.anecdotes && primary.figure.anecdotes.length > 0 && (
             <details
               className="cp-anecdotes"
-              style={{ marginTop: '1rem', color: 'var(--ink-faint)', fontSize: '0.9rem' }}
+              style={{ marginTop: '1rem', color: 'var(--ink-soft)', fontSize: '0.9rem' }}
             >
               <summary
                 style={{
@@ -405,7 +399,7 @@ export function Reflection() {
                   </span>
                 )}
                 <h3 style={{ marginBottom: '0.3rem', fontSize: '1.25rem' }}>{a.figure.name}</h3>
-                <p style={{ fontSize: '0.875rem', color: 'var(--ink-faint)', margin: 0 }}>
+                <p style={{ fontSize: '0.875rem', color: 'var(--ink-soft)', margin: 0 }}>
                   {a.figure.era}
                 </p>
                 <p
@@ -515,7 +509,9 @@ export function Reflection() {
                     >
                       {label.text}
                     </span>
-                    <span style={{ color: 'var(--ink-faint)', opacity: 0.6 }}>#{idx + 1}</span>
+                    <span aria-hidden style={{ color: 'var(--ink-soft)', opacity: 0.5 }}>
+                      #{idx + 1}
+                    </span>
                   </div>
                   <div style={{ fontSize: '1.3rem', color: 'var(--ink)', marginBottom: '0.25rem' }}>
                     {trait.glyph}
@@ -608,7 +604,7 @@ export function Reflection() {
                     style={{
                       marginTop: '0.5rem',
                       fontSize: '0.75rem',
-                      color: 'var(--ink-faint)',
+                      color: 'var(--ink-soft)',
                       fontFamily: 'var(--font-body)',
                       lineHeight: 1.5,
                     }}
@@ -621,8 +617,8 @@ export function Reflection() {
                     style={{
                       marginTop: '0.4rem',
                       fontSize: '0.7rem',
-                      color: 'var(--ink-faint)',
-                      opacity: 0.7,
+                      color: 'var(--ink-soft)',
+                      opacity: 0.85,
                       letterSpacing: '0.1em',
                     }}
                   >

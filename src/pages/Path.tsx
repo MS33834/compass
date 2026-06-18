@@ -55,11 +55,11 @@ export function Path() {
         aria-hidden
         style={{
           textAlign: 'center',
-          color: 'var(--ink-faint)',
+          color: 'var(--ink-soft)',
           fontSize: '0.8rem',
           letterSpacing: '0.6em',
           marginBottom: '1.5rem',
-          opacity: 0.5,
+          opacity: 0.35,
           fontFamily: 'var(--font-accent)',
         }}
       >
@@ -175,7 +175,7 @@ export function Path() {
               </h2>
               <p
                 style={{
-                  color: 'var(--ink-faint)',
+                  color: 'var(--ink-soft)',
                   fontSize: '0.9rem',
                   margin: '0 0 1rem 0',
                   lineHeight: 1.7,
@@ -239,11 +239,11 @@ export function Path() {
         aria-hidden
         style={{
           textAlign: 'center',
-          color: 'var(--ink-faint)',
+          color: 'var(--ink-soft)',
           fontSize: '0.7rem',
           letterSpacing: '0.4em',
           marginTop: '3rem',
-          opacity: 0.3,
+          opacity: 0.25,
         }}
       >
         ✧ · · ✧ · · ✧

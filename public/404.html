@@ -15,7 +15,7 @@
     <meta name="twitter:card" content="summary_large_image" />
     <title>Compass · 指南</title>
     <script>
-      // SPA 路由兜底：仅对导航请求重定向到 index.html
+      // SPA 路由回退：仅对导航请求重定向到 index.html
       // 避免将 JS/CSS/图片等资源请求也重定向（会导致 MIME 不匹配）
       try {
         var l = window.location;

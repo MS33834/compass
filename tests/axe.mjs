@@ -8,7 +8,7 @@ import { join } from 'node:path';
 import { createRequire } from 'node:module';
 
 const require = createRequire(import.meta.url);
-// axe-core 不一定在 dependencies 里；从 node_modules 兜底解析
+// 运行时加载 axe-core
 let axeSource;
 try {
   axeSource = readFileSync(require.resolve('axe-core/axe.min.js'), 'utf8');
@@ -21,7 +21,7 @@ const BASE = process.env.AXE_BASE || 'http://127.0.0.1:4173/';
 const REPORT_DIR = 'tests/axe-reports';
 mkdirSync(REPORT_DIR, { recursive: true });
 
-// 扫描路径：启动页 + 走一遍入内 → 选域 → 映照（4 步关键路径）
+// 扫描页面：启动页 / 入内 / 选域 / 映照
 const SCENES = [
   { name: 'prologue', setup: null },
   {
@@ -29,7 +29,7 @@ const SCENES = [
     setup: async page => {
       await page
         .locator('button')
-        .filter({ hasText: /入内|开始|启程|照己|照一照/i })
+        .filter({ hasText: /入内|开始|启程|照己|照一照|Begin/i })
         .first()
         .click();
       await page.waitForTimeout(500);
@@ -58,13 +58,16 @@ async function scanScene(browser, viewport, scene) {
   const context = await browser.newContext({
     viewport: { width: viewport.width, height: viewport.height },
     locale: 'zh-CN',
+    colorScheme: 'light',
   });
   const page = await context.newPage();
 
   // 自动接受 confirm
   page.on('dialog', dialog => dialog.accept());
 
-  await page.goto(BASE, { waitUntil: 'networkidle' });
+  const url = new URL(BASE);
+  url.searchParams.set('lang', 'zh');
+  await page.goto(url.toString(), { waitUntil: 'networkidle' });
   await page.waitForTimeout(900); // 等淡入完成
 
   if (scene.setup) {
@@ -136,7 +139,7 @@ async function scanScene(browser, viewport, scene) {
   // 写总览
   writeFileSync(join(REPORT_DIR, 'summary.json'), JSON.stringify(summary, null, 2));
 
-  // 终判：任何 critical/serious 即 fail
+  // 存在 critical/serious 则失败
   const totalFail = summary.reduce((acc, s) => acc + s.criticalSerious, 0);
   console.log(`\n── 总览：critical/serious 违规 ${totalFail} 处`);
   if (totalFail > 0) {

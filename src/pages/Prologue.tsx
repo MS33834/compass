@@ -23,12 +23,12 @@ export function Prologue() {
         aria-hidden
         style={{
           textAlign: 'center',
-          color: 'var(--ink-faint)',
+          color: 'var(--ink-soft)',
           fontSize: '0.9rem',
           fontFamily: 'var(--font-accent)',
           letterSpacing: '0.5em',
           marginBottom: '1rem',
-          opacity: 0.6,
+          opacity: 0.4,
         }}
       >
         ✦ ─── ◆ ─── ✦
@@ -81,11 +81,11 @@ export function Prologue() {
         aria-hidden
         style={{
           textAlign: 'center',
-          color: 'var(--ink-faint)',
+          color: 'var(--ink-soft)',
           fontSize: '0.8rem',
           letterSpacing: '0.3em',
           margin: '2rem 0',
-          opacity: 0.4,
+          opacity: 0.3,
           fontFamily: 'var(--font-accent)',
         }}
       >
@@ -108,7 +108,7 @@ export function Prologue() {
       <p
         style={{
           textAlign: 'center',
-          color: 'var(--ink-faint)',
+          color: 'var(--ink-soft)',
           fontSize: '0.875rem',
           marginTop: '4rem',
           fontFamily: 'var(--font-accent)',
@@ -122,11 +122,11 @@ export function Prologue() {
         aria-hidden
         style={{
           textAlign: 'center',
-          color: 'var(--ink-faint)',
+          color: 'var(--ink-soft)',
           fontSize: '0.75rem',
           letterSpacing: '0.4em',
           marginTop: '2rem',
-          opacity: 0.3,
+          opacity: 0.25,
         }}
       >
         ✧ · · ✧ · · ✧

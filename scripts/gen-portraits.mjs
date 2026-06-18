@@ -1,5 +1,5 @@
 // scripts/gen-portraits.mjs
-// 编排：调用 common.mjs + 多域 figures，为各域人物生成 480×640 精致 SVG 肖像
+// 调用 common.mjs 与多域 figures，生成各域人物 SVG 肖像
 // 输出: public/portraits/<domain>/<id>.svg
 
 import { writeFile, mkdir } from 'node:fs/promises';
@@ -58,7 +58,7 @@ async function main() {
       console.log(`  ✓ [${domain}] ${fig.id.padEnd(16)} ${fig.name}  →  ${fig.seal}`);
     }
   }
-  console.log(`\n完成：${total} 张精致肖像已写入 ${ROOT}`);
+  console.log(`\n完成：${total} 张肖像已写入 ${ROOT}`);
 }
 
 main().catch(e => {

@@ -72,7 +72,7 @@ export function TopBar() {
           data-testid="topbar-phase"
           style={{
             fontFamily: 'var(--font-display)',
-            color: 'var(--ink-faint)',
+            color: 'var(--ink-soft)',
             fontSize: '0.875rem',
             letterSpacing: '0.1em',
             padding: '0 0.5rem',

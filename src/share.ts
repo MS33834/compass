@@ -21,7 +21,7 @@ const VALID_DOMAINS: readonly DomainId[] = [
   'west-scientist',
 ];
 
-/** 校验导入数据的结构合法性，防止构造的 URL/JSON 致应用崩溃 */
+/** 校验导入数据结构，防止非法数据崩溃应用 */
 function isValidShape(obj: unknown): obj is ExportShape {
   if (!obj || typeof obj !== 'object') return false;
   const o = obj as Record<string, unknown>;
@@ -52,7 +52,7 @@ export function exportState(s: Omit<ExportShape, 'v' | 'ts'>): ExportShape {
   };
 }
 
-// base64url 编码（UTF-8 安全，使用 TextEncoder 替代已废弃的 escape/unescape）
+// base64url 编码（UTF-8 安全）
 const textEncoder = new TextEncoder();
 const textDecoder = new TextDecoder();
 

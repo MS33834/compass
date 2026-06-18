@@ -10,7 +10,7 @@ export default defineConfig(({ mode }) => {
     base,
     plugins: [react()],
     resolve: {
-      // 防御性配置：强制所有依赖使用顶层 React，避免嵌套依赖导致多实例
+      // 强制复用顶层 React，避免多实例
       dedupe: ['react', 'react-dom', 'react/jsx-runtime', 'use-sync-external-store'],
     },
     build: {
@@ -21,7 +21,7 @@ export default defineConfig(({ mode }) => {
       rollupOptions: {
         output: {
           manualChunks(id) {
-            // 关键修复：把 zustand 与 react 合并到同一块，避免两个 React 实例
+            // 把 react / react-dom / zustand 等合并到 vendor-react，避免重复打包
             if (
               id.includes('node_modules/react/') ||
               id.includes('node_modules/react-dom/') ||
@@ -31,14 +31,14 @@ export default defineConfig(({ mode }) => {
             ) {
               return 'vendor-react';
             }
-            // 按域拆分数据块，减少首屏主 chunk 体积
+            // 按域拆分为 figures / items chunk
             if (id.includes('/domain/figures/')) return 'figures';
             if (id.includes('/domain/items/')) return 'items';
           },
         },
       },
     },
-    // 生产环境移除 console.log/debug（Vite 8 使用 oxc，通过 define 兜底）
+    // 生产环境移除 console.log/debug
     define:
       mode === 'production'
         ? {

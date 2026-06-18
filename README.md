@@ -29,7 +29,7 @@ Your answers never leave your device (`localStorage`). Compass never talks to a 
 
 - **To thyself be true** — No labels, no scores, no cloud. Just bearing.
 - **Algorithm as backbone** — 12 orthogonal trait dimensions. Weighted Euclidean (0.45) + Cosine (0.35) + Shape-agreement (0.20).
-- **Beauty as skin** — Rice paper canvas, ink-brush typography, cinnabar seals. No cookie-cutter AI aesthetics.
+- **Beauty as skin** — Rice paper canvas, ink-brush typography, cinnabar seals.
 - **Thou art the measure** — One primary reflection, four kindred spirits. The rest remain shadows outside the glass.
 
 ---
@@ -70,7 +70,7 @@ See [`src/domain/traits/trait.dimensions.ts`](./src/domain/traits/trait.dimensio
 | Styling   | Vanilla CSS + CSS custom properties (`src/index.css`) |
 | Fonts     | Noto Serif SC / LXGW WenKai (system-fallback)         |
 | PWA       | Vanilla Service Worker (no Workbox)                   |
-| Deploy    | GitHub Pages (Actions)                                |
+| Deploy    | GitCode Pages                                         |
 | License   | [PolyForm Noncommercial 1.0.0](./LICENSE)             |
 
 No third-party tracking. No analytics. No backend.
@@ -83,14 +83,13 @@ No third-party tracking. No analytics. No backend.
 npm install           # Install dependencies
 npm run dev           # Dev server (http://localhost:5173)
 npm run build         # Production build to dist/
-npm run build:pages   # GitHub Pages build (base = /compass/)
+npm run build:pages   # Static Pages build (base = /compass/)
 npm run typecheck     # tsc --noEmit
 npm test              # Golden cases + unit tests
 npm run format        # prettier --write
 ```
 
-**GitHub Pages auto-deploy**: `.github/workflows/pages.yml` builds on `main` push and deploys via
-`actions/deploy-pages@v5` to `https://badhope.github.io/compass/`.
+**GitCode Pages auto-deploy**: push to `main` and enable Pages in project settings.
 
 **Recent UX updates**:
 
@@ -110,13 +109,8 @@ npm run format        # prettier --write
 │   ├── ISSUE_TEMPLATE/         # bug-report / feature-add-figure
 │   ├── workflows/              # ci.yml / pages.yml
 │   └── FUNDING.yml             # 赞助
-├── .trae/documents/            # 产品 / 技术文档
-│   ├── prd.md
-│   ├── tech-arch.md
-│   ├── refactor-plan.md
-│   └── golden-cases.md         # 18 条金样例
 ├── public/
-│   ├── 404.html                # SPA 404 兜底
+│   ├── 404.html                # SPA 404 回退
 │   ├── favicon.svg
 │   ├── manifest.webmanifest    # PWA
 │   ├── robots.txt
@@ -143,7 +137,7 @@ npm run format        # prettier --write
 │   ├── share.ts                # 答卷导入/导出 (Base64 + URL)
 │   ├── store.ts                # Zustand 全局态
 │   └── index.css               # 主题（墨黑/朱砂/青玉/宣纸 + 霞鹜文楷）
-├── tests/                      # axe / e2e / golden / link-check / 多视口截图
+├── tests/                      # axe / e2e / golden / unit
 ├── .editorconfig
 ├── .gitattributes
 ├── .gitignore
@@ -177,16 +171,13 @@ Toggle with the language button in the top bar. UI dicts at [`src/i18n/en.ts`](.
 
 ## 🧪 Quality Assurance
 
-| Tool           | Scope                            | Config                  |
-| -------------- | -------------------------------- | ----------------------- |
-| `tsc --noEmit` | Types                            | `tsconfig.json`         |
-| `prettier`     | Formatting                       | `.prettierrc`           |
-| `npm test`     | Golden cases + unit tests        | `tests/golden.spec.mjs` |
-| Lighthouse CI  | perf ≥ 85 / a11y ≥ 95 / seo ≥ 90 | `.lighthouserc.json`    |
-| axe-core       | a11y (WCAG AA)                   | `tests/axe.mjs`         |
-| Playwright E2E | 4 viewports (320/375/768/1280)   | `tests/e2e.mjs`         |
-| size-limit     | Bundle budget ≤ 280 KB gzip      | `.size-limit.json`      |
-| link-check     | Internal .md references          | `tests/link-check.mjs`  |
+| Tool           | Scope                          | Config                  |
+| -------------- | ------------------------------ | ----------------------- |
+| `tsc --noEmit` | Types                          | `tsconfig.json`         |
+| `prettier`     | Formatting                     | `.prettierrc`           |
+| `npm test`     | Golden cases + unit tests      | `tests/golden.spec.mjs` |
+| axe-core       | a11y (WCAG AA)                 | `tests/axe.mjs`         |
+| Playwright E2E | 4 viewports (320/375/768/1280) | `tests/e2e.mjs`         |
 
 ---
 
@@ -219,7 +210,3 @@ Every question, every choice, every step is yours. Compass sets no right answers
 keeps no scores, stores nothing but thou hast asked it to. Only the bearing.
 
 May you take the bearing and find thyself.
-
----
-
-_Made with rice paper, ink, and cinnabar. Zero AI-slop aesthetics guarantee._ 🖌️

@@ -49,7 +49,7 @@ async function run(browserName, viewport, locale) {
   page.on('console', m => {
     if (m.type() === 'error') FAIL.push({ name: `${viewport.width} console.error`, err: m.text() });
   });
-  // 自动接受 confirm 对话框（reset 等场景）
+  // 自动接受 confirm 对话框
   page.on('dialog', dialog => dialog.accept());
 
   // 0. 启动（强制中文，E2E 断言基于 zh 文案）
@@ -59,7 +59,7 @@ async function run(browserName, viewport, locale) {
     await page.goto(url.toString(), { waitUntil: 'networkidle' });
     // 等启动页淡出（fade-in 完成 ~1.5s）
     await page.waitForSelector('button:has-text("入内")', { timeout: 5000 });
-    // 关键：标题
+    // 校验标题
     const title = await page.title();
     if (!title || title.length < 4) throw new Error('title 无内容');
   })(page);
@@ -131,7 +131,7 @@ async function run(browserName, viewport, locale) {
     await page.waitForTimeout(500);
   })(page);
 
-  // 4. 出照：自动进入映照
+  // 4. 出照：进入映照
   await step('04 出照：进入映照页', async () => {
     await page.waitForSelector('[data-figure="primary"]', { timeout: 5000 });
     // 等所有同道卡完成布局
