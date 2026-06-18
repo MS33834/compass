@@ -1,4 +1,4 @@
-// 镜心 · E2E 全流程模拟
+// 指南 · E2E 全流程模拟
 // 跑法：npx playwright test tests/e2e.mjs
 // 覆盖：启动页 → 入镜 → 选域 → 答 48 题 → 出镜 → 映照 → 复位
 
@@ -6,7 +6,7 @@ import { chromium, devices } from 'playwright';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
-const BASE = process.env.E2E_BASE || 'http://127.0.0.1:4173/MindMirror/';
+const BASE = process.env.E2E_BASE || 'http://127.0.0.1:4173/Compass/';
 const SHOTS = 'tests/e2e-shots';
 mkdirSync(SHOTS, { recursive: true });
 
@@ -257,7 +257,7 @@ async function run(browserName, viewport, locale) {
   await step('10 30 题阈值', async () => {
     // 通过 storage 注入：仅答 5 题
     await page.evaluate(() => {
-      const k = 'mindmirror-v2';
+      const k = 'compass-v2';
       const raw = localStorage.getItem(k);
       if (!raw) return;
       const s = JSON.parse(raw);
@@ -307,7 +307,7 @@ async function run(browserName, viewport, locale) {
 }
 
 (async () => {
-  console.log(`镜心 · E2E · ${BASE}`);
+  console.log(`指南 · E2E · ${BASE}`);
   await run('desktop', { width: 1280, height: 800 }, 'zh');
   await run('tablet', { width: 768, height: 1024 }, 'zh');
   await run('mobile', { width: 375, height: 812 }, 'zh');

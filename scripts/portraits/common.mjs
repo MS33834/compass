@@ -219,7 +219,7 @@ export function header(palette, era, motto) {
     <!-- 朝代小印 -->
     <g transform="translate(82 32)">
       <rect x="0" y="0" width="22" height="22" fill="${palette.seal}"/>
-      <text x="11" y="16" text-anchor="middle" font-family="serif" font-size="11" fill="${palette.ground}" font-weight="700">镜</text>
+      <text x="11" y="16" text-anchor="middle" font-family="serif" font-size="11" fill="${palette.ground}" font-weight="700">指</text>
     </g>
     <!-- 题词：右半 -->
     <g transform="translate(120 44)">
@@ -265,7 +265,7 @@ export function footer(palette, name, seal) {
     <g transform="translate(46 540)">
       <text font-family="STKaiti, KaiTi, serif" font-size="38" fill="${palette.ink}" letter-spacing="14" font-weight="700">${name}</text>
       <!-- 姓名小注：右侧小字 -->
-      <text x="0" y="40" font-family="STKaiti, KaiTi, serif" font-size="10" fill="${palette.primary}" letter-spacing="3" opacity="0.85">东方文人 · 镜心之镜</text>
+      <text x="0" y="40" font-family="STKaiti, KaiTi, serif" font-size="10" fill="${palette.primary}" letter-spacing="3" opacity="0.85">东方文人 · 指南之镜</text>
     </g>
     <!-- 篆刻朱砂方印：右下角 -->
     <g transform="translate(360 530)">

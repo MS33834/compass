@@ -1,4 +1,4 @@
-// 镜心 · 报告生成
+// 指南 · 报告生成
 
 import { TRAITS } from '../traits/trait.dimensions';
 import { topN } from './matching';

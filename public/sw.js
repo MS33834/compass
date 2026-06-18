@@ -1,10 +1,10 @@
-// MindMirror · Service Worker (v7 - 离线可用)
+// Compass · Service Worker (v1 - 离线可用)
 // 策略：
 // - 导航请求（HTML）：网络优先，离线回退缓存的 index.html（预缓存 + 运行时缓存）
 // - 带 hash 的 JS/CSS：浏览器自身缓存，SW 不干预
 // - 静态资源（图片/字体/SVG）：网络优先，离线降级缓存
 
-const CACHE = 'mindmirror-v7';
+const CACHE = 'compass-v1';
 const BASE = self.registration ? new URL('.', self.registration.scope).pathname : '/';
 
 // 预缓存 app shell 核心文件

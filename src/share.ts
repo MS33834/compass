@@ -1,4 +1,4 @@
-// 镜心 · 报告 / 答 序列化
+// 指南 · 报告 / 答 序列化
 // 仅含 answers + domain + currentIndex + locale + theme，不含任何指纹字段
 
 import type { DomainId } from './domain/figures/figure.types';
@@ -85,7 +85,7 @@ export function decodeResume(s: string): ExportShape | null {
   }
 }
 
-export function downloadJSON(s: ExportShape, filename = 'mindmirror.json') {
+export function downloadJSON(s: ExportShape, filename = 'compass.json') {
   const blob = new Blob([JSON.stringify(s, null, 2)], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');

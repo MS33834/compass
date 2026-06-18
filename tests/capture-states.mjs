@@ -1,4 +1,4 @@
-// 镜心 · 多状态截图
+// 指南 · 多状态截图
 //
 // 输出：.trae/render/states/{phase}-{theme}.png
 //   prologue-light.png   / prologue-dark.png
@@ -46,7 +46,7 @@ async function injectAnswersAndFinish(page) {
   // 通过 localStorage 注入：答 30+ 题让 canFinish=true
   await page.evaluate(() => {
     // 找 30 个 item ids 注入
-    const k = 'mindmirror-v2';
+    const k = 'compass-v2';
     const ans = {};
     for (let i = 1; i <= 30; i++) {
       ans[`el-${String(i).padStart(3, '0')}`] = (i * 3) % 6;
@@ -94,7 +94,7 @@ async function captureOne(browser, { phase, theme }) {
     // 设置主题：使用 localStorage 注入（在导航前生效）
     await page.addInitScript(t => {
       try {
-        localStorage.setItem('mindmirror-v2.theme', t);
+        localStorage.setItem('compass-v2.theme', t);
       } catch {
         /* noop */
       }

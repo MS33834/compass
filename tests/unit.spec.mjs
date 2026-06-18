@@ -1,4 +1,4 @@
-// 镜心 · 单元测试 · 向量生成、匹配算法、置信度计算
+// 指南 · 单元测试 · 向量生成、匹配算法、置信度计算
 // 跑法：npm run test:unit
 
 import { computeUserVector } from '../src/domain/matching/vector.ts';
@@ -24,7 +24,7 @@ function close(a, b, eps = 1e-6) {
   return Math.abs(a - b) < eps;
 }
 
-console.log('镜心 · 单元测试\n');
+console.log('指南 · 单元测试\n');
 
 // ========== 向量生成测试 ==========
 console.log('【向量生成】');

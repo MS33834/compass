@@ -1,6 +1,6 @@
-// 镜心 · Zustand 全局状态
+// 指南 · Zustand 全局状态
 //
-// 持久化键：mindmirror-v2（版本号便于迁移）
+// 持久化键：compass-v2（版本号便于迁移）
 // 持久化字段：answers + locale + theme + 进度（phase / domain / currentIndex）
 // 报告（report）不入盘：可由 answers + domain 在映照页重新计算
 // 故：刷新可在原页面继续；清空则通过 reset() 主动清 localStorage
@@ -39,7 +39,7 @@ type Actions = {
   importState: (s: ExportShape) => void;
 };
 
-const STORAGE_KEY = 'mindmirror-v2';
+const STORAGE_KEY = 'compass-v2';
 const CURRENT_VERSION = 2;
 
 const detectInitialTheme = (): Theme => {

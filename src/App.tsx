@@ -1,4 +1,4 @@
-// 镜心 · 入口
+// 指南 · 入口
 import { useT } from './i18n';
 import { useEffect, useState } from 'react';
 import { useStore } from './store';

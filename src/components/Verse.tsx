@@ -1,4 +1,4 @@
-// 镜心 · 古文-白话 双行排版
+// 指南 · 古文-白话 双行排版
 
 type Props = { text: string; gloss?: string };
 

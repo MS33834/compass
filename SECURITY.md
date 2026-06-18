@@ -1,9 +1,9 @@
-# 镜心 · 安防
+# 指南 · 安防
 
 ## 原则
 
 - **无后端** = 无服务端处理流程。汝所答不越汝之浏览器。
-- **最小存储** = localStorage 中仅存答题索引（`jingxin-v1`）
+- **最小存储** = localStorage 中仅存答题索引（`compass-v2`）
   与语言偏好（zh / en）。不含任何可识别信息。
 - **最小依赖** = `react` + `react-dom` + `zustand` 三件，无第三方追踪 SDK。
 

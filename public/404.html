@@ -6,22 +6,22 @@
     <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content="#f5efe0" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)" />
-    <meta property="og:title" content="MindMirror · 镜心" />
+    <meta property="og:title" content="Compass · 指南" />
     <meta
       property="og:description"
-      content="A mirror for asking thyself — maps your answers to historical figures across three thousand years."
+      content="A quiet compass for the inner self — maps your answers to historical figures across three thousand years."
     />
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
-    <title>MindMirror · 镜心</title>
+    <title>Compass · 指南</title>
     <script>
       // SPA 路由兜底：仅对导航请求重定向到 index.html
       // 避免将 JS/CSS/图片等资源请求也重定向（会导致 MIME 不匹配）
       try {
         var l = window.location;
         var path = l.pathname;
-        // 匹配 /MindMirror/ 或 /MindMirror/index.html 或 /MindMirror（无尾斜杠）
-        var base = '/MindMirror';
+        // 匹配 /compass/ 或 /compass/index.html 或 /compass（无尾斜杠）
+        var base = '/compass';
         if (path === base || path === base + '/' || path === base + '/index.html') {
           // 已在首页，无需重定向
         } else if (path.indexOf(base + '/') === 0 && !path.match(/\.(js|css|svg|png|jpg|jpeg|gif|webp|ico|woff|woff2|ttf|eot|otf|json|xml|txt|map|webmanifest)$/i)) {
@@ -35,7 +35,7 @@
               boot.innerHTML =
                 '<div><div class="seal">404</div><h1>Page Not Found</h1><p>The page you seek is not here.</p><a href="' +
                 base +
-                '/" style="display:inline-block;padding:12px 24px;background:#a8322e;color:#f5efe0;text-decoration:none;border-radius:4px;font-size:16px;">Return to Mirror</a></div>';
+                '/" style="display:inline-block;padding:12px 24px;background:#a8322e;color:#f5efe0;text-decoration:none;border-radius:4px;font-size:16px;">Return to Compass</a></div>';
             }
           }, 3000);
         }
@@ -126,13 +126,13 @@
   <body>
     <div id="jx-boot">
       <div>
-        <div class="seal">镜</div>
-        <h1 data-en="Mirror" data-zh="镜心">Mirror</h1>
-        <p data-en="A glass for asking thyself." data-zh="一面问己之镜。三分钟，三千年。">
-          A glass for asking thyself.
+        <div class="seal">指</div>
+        <h1 data-en="Compass" data-zh="指南">Compass</h1>
+        <p data-en="A quiet compass for the inner self." data-zh="一座心内之指南。三分钟，三千年。">
+          A quiet compass for the inner self.
         </p>
         <div class="spin">
-          <span class="dot"></span> <span data-en="Loading…" data-zh="入镜中…">Loading…</span>
+          <span class="dot"></span> <span data-en="Loading…" data-zh="拨针中…">Loading…</span>
         </div>
       </div>
     </div>
@@ -161,14 +161,14 @@
           font-family: serif;
         "
       >
-        <h1 data-en="Mirror requires JavaScript" data-zh="镜心 需 JavaScript 方可入镜">
-          Mirror requires JavaScript
+        <h1 data-en="Compass requires JavaScript" data-zh="指南 需 JavaScript 方可入内">
+          Compass requires JavaScript
         </h1>
         <p
-          data-en="Mirror is a pure-frontend glass for asking thyself. Please enable JavaScript and look again."
-          data-zh="镜心 是一面纯前端的问己之镜。请开启 JavaScript，再来照一照。"
+          data-en="Compass is a pure-frontend tool for self-discovery. Please enable JavaScript and look again."
+          data-zh="指南 是一座纯前端的寻己之塔。请开启 JavaScript，再来照一照。"
         >
-          Mirror is a pure-frontend glass for asking thyself. Please enable JavaScript and look
+          Compass is a pure-frontend tool for self-discovery. Please enable JavaScript and look
           again.
         </p>
       </div>

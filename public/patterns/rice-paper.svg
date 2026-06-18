@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- 镜心 · 宣纸底纹 · 240×240 可平铺 -->
+<!-- 指南 · 宣纸底纹 · 240×240 可平铺 -->
 <svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240">
   <defs>
     <filter id="fiber" x="0" y="0" width="100%" height="100%">

@@ -1,4 +1,4 @@
-// 镜心 · 人物库数据契约
+// 指南 · 人物库数据契约
 
 import type { TraitVector } from '../traits/trait.types';
 

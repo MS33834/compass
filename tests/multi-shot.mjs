@@ -1,4 +1,4 @@
-// 镜心 · C22 多尺寸截图
+// 指南 · C22 多尺寸截图
 //
 // 视口 × phase 矩阵（3 × 3 = 9 张）
 // 视口：320×568 (iPhone SE) / 768×1024 (iPad) / 1440×900 (Desktop)
@@ -57,7 +57,7 @@ async function waitForServer(url, timeoutMs = 30_000) {
 /** 通过 localStorage 注入 30+ 题答案，跳到 reflection */
 async function seedAnswersToReflection(page) {
   await page.evaluate(() => {
-    const k = 'mindmirror-v2';
+    const k = 'compass-v2';
     const ans = {};
     for (let i = 1; i <= 30; i++) {
       ans[`el-${String(i).padStart(3, '0')}`] = (i * 3) % 6;
@@ -91,7 +91,7 @@ async function setPhase(page, phase) {
   if (phase === 'prologue') {
     // 显式 reset 到 prologue
     await page.evaluate(() => {
-      const k = 'mindmirror-v2';
+      const k = 'compass-v2';
       localStorage.setItem(
         k,
         JSON.stringify({

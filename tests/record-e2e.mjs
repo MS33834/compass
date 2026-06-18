@@ -1,4 +1,4 @@
-// 镜心 · E2E 录制脚本
+// 指南 · E2E 录制脚本
 //
 // 流程：启动 preview → 录屏 + 关键节点截图
 // 跑法：node tests/record-e2e.mjs

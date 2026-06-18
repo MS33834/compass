@@ -1,4 +1,5 @@
-// 镜心 · 人物手绘肖像
+/// <reference types="vite/client" />
+// 指南 · 人物手绘肖像
 //
 // 真正的全人像留给设计师二次出图。
 // 此处先用 <img> 加载 public/portraits/.../ 下的水墨写意 SVG。
@@ -112,7 +113,7 @@ function Placeholder({ figure }: Props) {
         className="jx-seal"
         aria-hidden
       >
-        镜
+        指
       </div>
     </div>
   );

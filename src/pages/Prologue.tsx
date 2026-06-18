@@ -1,4 +1,4 @@
-// 镜心 · 入门 · 题
+// 指南 · 入门 · 题
 import { useRef } from 'react';
 import { useStore } from '../store';
 import { BrushButton } from '../components/BrushButton';

@@ -5,6 +5,6 @@ page.on('requestfailed', r => console.log('FAILED:', r.url(), r.failure()?.error
 page.on('response', r => {
   if (r.status() >= 400) console.log('HTTP', r.status(), r.url());
 });
-await page.goto('http://127.0.0.1:4173/MindMirror/');
+await page.goto('http://127.0.0.1:4173/Compass/');
 await page.waitForTimeout(2000);
 await browser.close();

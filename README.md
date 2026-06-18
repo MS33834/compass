@@ -1,40 +1,40 @@
-# Mirror · MindMirror
+# Compass · 指南
 
-> **A glass for asking thyself.**  
+> **A quiet compass for the inner self.**  
 > Three minutes, three millennia — find who might sit with thee among 150 figures across 5 domains.
 
-[🌐 **Live Site**](https://badhope.github.io/MindMirror/) ·
-[📦 **Repository**](https://github.com/badhope/MindMirror) ·
+[🌐 **Live Site**](https://badhope.github.io/compass/) ·
+[📦 **Repository**](https://github.com/badhope/compass) ·
 [📜 **Changelog**](./CHANGELOG.md) ·
 [🛡 **License (PolyForm NC)**](./LICENSE)
 
-[中文](https://badhope.github.io/MindMirror/?lang=zh) · 镜心
+[中文](https://badhope.github.io/compass/?lang=zh) · 指南
 
-**Mirror** is a **local-first, privacy-first** tool for self-reflection through history.
+**Compass** is a **local-first, privacy-first** tool for self-discovery through history.
 
-Answer 60 questions across a 12-dimensional trait space. Mirror maps your responses to a historical counterpart — using a blend of weighted Euclidean, cosine, and shape-agreement similarity — and reveals your reflection among 150 figures from East and West.
+Answer 60 questions across a 12-dimensional trait space. Compass maps your responses to a historical counterpart — using a blend of weighted Euclidean, cosine, and shape-agreement similarity — and reveals your bearing among 150 figures from East and West.
 
-- 🪞 **East Literati** · 30 poets, lyricists, essayists, thinkers
-- 🪞 **East Statesmen** · 30 chancellors, generals, reformers
-- 🪞 **East Scientists** · 30 astronomers, mathematicians, engineers
-- 🪞 **West Philosophers** · 30 Greek, continental, and Anglo-American thinkers
-- 🪞 **West Scientists & Ideas** · 30 founders of modern science and thought
+- 🧭 **East Literati** · 30 poets, lyricists, essayists, thinkers
+- 🧭 **East Statesmen** · 30 chancellors, generals, reformers
+- 🧭 **East Scientists** · 30 astronomers, mathematicians, engineers
+- 🧭 **West Philosophers** · 30 Greek, continental, and Anglo-American thinkers
+- 🧭 **West Scientists & Ideas** · 30 founders of modern science and thought
 
 **5 domains · 150 figures · 240 items.**  
-Your answers never leave your device (`localStorage`). Mirror never talks to a server.
+Your answers never leave your device (`localStorage`). Compass never talks to a server.
 
 ---
 
 ## ✒ Philosophy
 
-- **To thyself be true** — No labels, no scores, no cloud. Just reflection.
+- **To thyself be true** — No labels, no scores, no cloud. Just bearing.
 - **Algorithm as backbone** — 12 orthogonal trait dimensions. Weighted Euclidean (0.45) + Cosine (0.35) + Shape-agreement (0.20).
 - **Beauty as skin** — Rice paper canvas, ink-brush typography, cinnabar seals. No cookie-cutter AI aesthetics.
 - **Thou art the measure** — One primary reflection, four kindred spirits. The rest remain shadows outside the glass.
 
 ---
 
-## 🪞 How to Play
+## 🧭 How to Play
 
 1. **Enter** — One of three opening verses, chosen at random
 2. **Choose a Domain** — East or West, five paths await
@@ -83,14 +83,14 @@ No third-party tracking. No analytics. No backend.
 npm install           # Install dependencies
 npm run dev           # Dev server (http://localhost:5173)
 npm run build         # Production build to dist/
-npm run build:pages   # GitHub Pages build (base = /MindMirror/)
+npm run build:pages   # GitHub Pages build (base = /compass/)
 npm run typecheck     # tsc --noEmit
 npm test              # Golden cases + unit tests
 npm run format        # prettier --write
 ```
 
 **GitHub Pages auto-deploy**: `.github/workflows/pages.yml` builds on `main` push and deploys via
-`actions/deploy-pages@v5` to `https://badhope.github.io/MindMirror/`.
+`actions/deploy-pages@v5` to `https://badhope.github.io/compass/`.
 
 **Recent UX updates**:
 
@@ -209,16 +209,16 @@ Please read [CONTRIBUTING.md](./CONTRIBUTING.md) and [CODE_OF_CONDUCT.md](./CODE
 ## 📜 License
 
 [PolyForm Noncommercial 1.0.0](./LICENSE) — Free for non-commercial use. Commercial use requires separate licensing.
-Copyright © 2024-2026 badhope (Mirror · MindMirror).
+Copyright © 2024-2026 badhope (Compass · 指南).
 
 ---
 
 ## 🙏 Colophon
 
-Every question, every choice, every step is yours. Mirror sets no right answers,
-keeps no scores, stores nothing but thou hast asked it to. Only the glass.
+Every question, every choice, every step is yours. Compass sets no right answers,
+keeps no scores, stores nothing but thou hast asked it to. Only the bearing.
 
-May you enter the mirror and find thyself.
+May you take the bearing and find thyself.
 
 ---
 

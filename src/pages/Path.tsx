@@ -1,4 +1,4 @@
-// 镜心 · 选域 · 路
+// 指南 · 选域 · 路
 
 import { useState } from 'react';
 import { useStore } from '../store';

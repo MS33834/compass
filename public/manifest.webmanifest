@@ -1,7 +1,7 @@
 {
-  "name": "MindMirror · 镜心",
-  "short_name": "MindMirror",
-  "description": "A mirror for asking thyself — maps your answers to historical figures via a 12-dimension trait space. Pure frontend, all local, zero backend.",
+  "name": "Compass · 指南",
+  "short_name": "Compass",
+  "description": "A quiet compass for the inner self — maps your answers to historical figures via a 12-dimension trait space. Pure frontend, all local, zero backend.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
@@ -21,7 +21,7 @@
   ],
   "shortcuts": [
     {
-      "name": "Enter Mirror",
+      "name": "Begin Journey",
       "url": "./",
       "description": "Begin one inquiry"
     }

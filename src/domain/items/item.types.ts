@@ -1,4 +1,4 @@
-// 镜心 · 题库数据契约
+// 指南 · 题库数据契约
 
 import type { TraitId } from '../traits/trait.types';
 

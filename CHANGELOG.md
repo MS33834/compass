@@ -1,6 +1,16 @@
-# 镜心 · 史记
+# 指南 · 史记
 
 > 一切版本，皆以本文件为正。
+
+## v0.3.0 · 改名 Compass（2026-06-17）
+
+- **重命名 MindMirror → Compass**（中文「指南」）
+  - 仓库、应用、文档、缓存键（`compass-v2`）、SW 缓存（`compass-v1`）统一改名
+  - PWA 显示名 `Compass · 指南`，Vite base 切换为 `/compass/`
+  - GitHub Pages 部署地址由 `badhope.github.io/MindMirror/` 改为 `badhope.github.io/compass/`
+- **i18n 文本重写**：en 字典全面更新为 "Compass" 调性；zh 改为"指南 / 拨针 / 映照"
+- **150 张人物肖像**重新生成，水印由"镜心选镜"改为"指南选镜"
+- **启动页/404 文档**全部更新：标题、描述、加载提示
 
 ## v0.2.1 · 答题固定视口与视觉打磨（2026-06-17）
 

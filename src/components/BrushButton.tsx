@@ -1,4 +1,4 @@
-// 镜心 · 笔触按钮
+// 指南 · 笔触按钮
 import type { ButtonHTMLAttributes, ReactNode } from 'react';
 
 type Props = ButtonHTMLAttributes<HTMLButtonElement> & {

@@ -1,4 +1,4 @@
-// 镜心 · 英文 UI 字典
+// 指南 · 英文 UI 字典
 // 典雅英译，与中文半文言语调相配
 
 import type { Dict } from './zh';
@@ -6,8 +6,8 @@ import type { Dict } from './zh';
 // 显式声明为 Dict 类型（不依赖 typeof 推导，让字符串可自由翻译）
 export const en: Dict = {
   ui: {
-    appName: 'Mirror',
-    sealChar: '鏡',
+    appName: 'Compass',
+    sealChar: 'Compass',
     returnHome: 'Home',
     returnHomeConfirm: 'Return to home will clear all answers. Continue?',
     resetConfirm: 'Starting over will clear all answers. Continue?',
@@ -21,17 +21,17 @@ export const en: Dict = {
       prologue: 'Entry',
       path: 'Domain',
       way: 'Inquiry',
-      reflection: 'Mirror',
+      reflection: 'Reflection',
     },
   },
   prologue: {
-    title: 'Mirror',
-    seal: '鏡',
-    enter: 'Enter',
-    privacy: 'Your answers stay on your device. Mirror never goes online.',
+    title: 'Compass',
+    seal: 'Compass',
+    enter: 'Begin',
+    privacy: 'Your answers stay on your device. Compass never goes online.',
     verses: [
       [
-        { text: 'Mirror', gloss: 'A glass for asking thyself.' },
+        { text: 'Compass', gloss: 'A quiet compass for the inner self.' },
         {
           text: 'Among three thousand years, who might sit with thee?',
           gloss: 'Answer in form, in spirit, in a parallel resonance of time.',
@@ -39,8 +39,8 @@ export const en: Dict = {
       ],
       [
         {
-          text: 'Three thousand years live in the glass',
-          gloss: 'Seek not without; thy answer is the reflection.',
+          text: 'Three thousand years live within',
+          gloss: 'Seek not without; thy answer is the bearing.',
         },
         {
           text: 'Their shadow is not thou, yet not-not-thou.',
@@ -48,9 +48,9 @@ export const en: Dict = {
         },
       ],
       [
-        { text: 'Enter', gloss: 'Three minutes, three millennia.' },
+        { text: 'Begin', gloss: 'Three minutes, three millennia.' },
         {
-          text: 'Borrow the shadows of the ancients to mirror one thought of thine.',
+          text: 'Borrow the shadows of the ancients to bear one thought of thine.',
           gloss: 'No right or wrong — only sincerity.',
         },
       ],
@@ -96,7 +96,7 @@ export const en: Dict = {
     resetLabel: '· Clear & Restart ·',
   },
   reflection: {
-    sealLabel: 'THY MIRROR',
+    sealLabel: 'THY COMPASS',
     score: (pct: number) => `Affinity ${pct}%`,
     samePath: 'Kindred Spirits',
     twelve: 'Twelve Vectors',
@@ -105,15 +105,15 @@ export const en: Dict = {
     changeDomain: 'Change Domain',
     reset: 'Begin Anew',
     lowConfidence:
-      '(Few answers given — this is but a faint reflection. Answer more for a clearer mirror.)',
-    confidenceHint: (pct: number) => `Confidence ~${pct}% · Early answers, mirror still forming`,
+      '(Few answers given — this is but a faint bearing. Answer more for a clearer compass.)',
+    confidenceHint: (pct: number) => `Confidence ~${pct}% · Early answers, compass still forming`,
     mostSimilar: 'Closest',
     youExceed: 'You exceed',
     youFallShort: 'You fall short',
     youMatch: 'Matched',
     traitLabels: { same: 'Same', close: 'Close', diverge: 'Diverge' },
     chartLabels: { you: 'You', ancient: 'Ancient' },
-    share: 'Share Mirror',
+    share: 'Share Compass',
     exportJSON: 'Export JSON',
     importJSON: 'Import JSON',
     copyResume: 'Copy Resume Link',
@@ -123,7 +123,7 @@ export const en: Dict = {
     importFail: 'Import failed: invalid file',
   },
   share: {
-    title: 'A mirror for asking thyself',
-    text: 'I took a mirror — come take one too.',
+    title: 'A quiet compass for the inner self',
+    text: 'I took a bearing — come take one too.',
   },
 };

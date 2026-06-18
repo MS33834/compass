@@ -1,4 +1,4 @@
-// 镜心 · 题库索引
+// 指南 · 题库索引
 
 import { ITEMS_EAST_LITERATI } from './items.east-literati';
 import { ITEMS_EAST_STATEMAN } from './items.east-statesman';

@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
-const REPO_NAME = 'MindMirror';
+const REPO_NAME = 'compass';
 const DEFAULT_BASE = `/${REPO_NAME}/`;
 
 export default defineConfig(({ mode }) => {

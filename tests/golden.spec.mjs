@@ -1,4 +1,4 @@
-// 镜心 · 金样例
+// 指南 · 金样例
 // 5 个虚拟用户向量 → 期望主镜人物
 // 跑法：npm test
 
@@ -37,7 +37,7 @@ function check(name, user, expectedId, minScore = 0) {
   }
 }
 
-console.log('镜心 · 金样例 · 5 问\n');
+console.log('指南 · 金样例 · 5 问\n');
 
 // 1. 全极端外 → 老子
 check(

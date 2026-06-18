@@ -1,4 +1,4 @@
-// 镜心 · 顶部导航
+// 指南 · 顶部导航
 import { useStore } from '../store';
 import { BrushButton } from './BrushButton';
 import { useT } from '../i18n';

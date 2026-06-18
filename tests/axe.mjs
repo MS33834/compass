@@ -1,4 +1,4 @@
-// 镜心 · axe-core 无障碍扫描
+// 指南 · axe-core 无障碍扫描
 // 跑法：node tests/axe.mjs
 // 前置：vite preview 已在 4173 端口运行（CI 脚本里 npx vite preview --port 4173 --base ./）
 
@@ -88,7 +88,7 @@ async function scanScene(browser, viewport, scene) {
 }
 
 (async () => {
-  console.log(`镜心 · axe-core a11y 扫描 · ${BASE}\n`);
+  console.log(`指南 · axe-core a11y 扫描 · ${BASE}\n`);
 
   const browser = await chromium.launch();
   const summary = [];

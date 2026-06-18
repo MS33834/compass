@@ -1,4 +1,4 @@
-// 镜心 · 人物库索引
+// 指南 · 人物库索引
 
 import { FIGURES_EAST_LITERATI } from './figures.east-literati';
 import { FIGURES_EAST_STATEMAN } from './figures.east-statesman';
