@@ -32,14 +32,14 @@ export function App() {
 
   return (
     <>
-      <a className="jx-skip-link" href="#main-content">
+      <a className="cp-skip-link" href="#main-content">
         {t.ui.skipToContent}
       </a>
       {!immersive && <TopBar />}
       <main
         id="main-content"
         tabIndex={-1}
-        className={`jx-page-enter${exiting ? ' jx-page-exit' : ''}`}
+        className={`cp-page-enter${exiting ? ' cp-page-exit' : ''}`}
         key={currentPhase}
       >
         {currentPhase === 'prologue' && <Prologue key="prologue" />}

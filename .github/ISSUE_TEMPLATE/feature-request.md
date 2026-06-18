@@ -1,6 +1,6 @@
 ---
 name: 功能建议 · Feature request
-about: 对镜心的改进 / 新功能 / 体验优化
+about: 对指南的改进 / 新功能 / 体验优化
 title: '[feature] '
 labels: ['enhancement']
 assignees: []

@@ -1,13 +1,13 @@
 // 指南 · E2E 录制脚本
 //
 // 流程：启动 preview → 录屏 + 关键节点截图
-// 跑法：node tests/record-e2e.mjs
+// 用法：node tests/record-e2e.mjs
 // 输出：
 //   .trae/render/full-flow.webm     —— 完整流程录屏
 //   .trae/render/prologue.png
 //   .trae/render/path.png
 //   .trae/render/way-3.png         (答到第 3 题时)
-//   .trae/render/way-30.png        (答到第 30 题 / 出镜时)
+//   .trae/render/way-30.png        (答到第 30 题 / 出照时)
 //   .trae/render/reflection.png
 
 import { chromium } from 'playwright';
@@ -89,7 +89,7 @@ async function main() {
     await page.screenshot({ path: join(OUT_DIR, 'prologue.png'), fullPage: true });
     console.log('  ✓ prologue.png');
 
-    // 4. 入镜 → path
+    // 4. 入内 → path
     await page.locator('[data-testid="btn-enter"]').click();
     await page.waitForSelector('[data-domain="east-literati"]', { timeout: 8_000 });
     await page.waitForTimeout(600);
@@ -129,7 +129,7 @@ async function main() {
       }
       await page.waitForTimeout(80);
     }
-    // 若 loop 未达 48 题则补点出镜
+    // 若 loop 未达 48 题则补点出照
     const finishLast = page.locator('[data-testid="btn-finish"]');
     if ((await finishLast.count()) > 0) {
       try {

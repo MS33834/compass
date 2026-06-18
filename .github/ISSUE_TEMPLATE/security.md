@@ -1,6 +1,6 @@
 ---
 name: 安全报告 · Security report
-about: 私密报告镜心的安全漏洞
+about: 私密报告指南的安全漏洞
 title: '[security] '
 labels: ['security']
 assignees: []
@@ -20,7 +20,7 @@ assignees: []
 
 ## 环境 · Environment
 
-- 版本：v0.2.0
+- 版本：v0.3.0
 - 浏览器 / 操作系统：
 
 ## 复现 · Steps to reproduce

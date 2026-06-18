@@ -17,6 +17,8 @@
     "test": "tsx tests/golden.spec.mjs",
     "test:unit": "tsx tests/unit.spec.mjs",
     "test:all": "tsx tests/golden.spec.mjs && tsx tests/unit.spec.mjs",
+    "test:e2e": "node tests/e2e.mjs",
+    "test:axe": "node tests/axe.mjs",
     "format": "prettier --write \"src/**/*.{ts,tsx,css,md}\" \"*.{json,js,mjs,md,yml,yaml}\" \"tests/**/*.mjs\" \"scripts/**/*.mjs\"",
     "format:check": "prettier --check \"src/**/*.{ts,tsx,css,md}\" \"*.{json,js,mjs,md,yml,yaml}\" \"tests/**/*.mjs\" \"scripts/**/*.mjs\"",
     "gen:portraits": "node scripts/gen-portraits.mjs"
@@ -27,7 +29,6 @@
   },
   "keywords": [
     "compass",
-    "jingxin",
     "trait-space",
     "personality-test",
     "historical-figures",
@@ -66,6 +67,7 @@
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^6.0.2",
+    "playwright": "^1.49.0",
     "prettier": "^3.3.3",
     "tsx": "^4.22.4",
     "typescript": "~5.5.3",

@@ -8,9 +8,9 @@ type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
 
 export function BrushButton({ variant = 'default', children, className = '', ...rest }: Props) {
   const cls =
-    'jx-btn' +
-    (variant === 'primary' ? ' jx-btn-primary' : '') +
-    (variant === 'ghost' ? ' jx-btn-ghost' : '') +
+    'cp-btn' +
+    (variant === 'primary' ? ' cp-btn-primary' : '') +
+    (variant === 'ghost' ? ' cp-btn-ghost' : '') +
     (className ? ' ' + className : '');
   return (
     <button className={cls} {...rest}>

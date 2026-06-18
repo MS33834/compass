@@ -55,7 +55,7 @@ export function TraitRadar({ user, figure, size = 400, ariaLabel }: Props) {
   return (
     <svg
       viewBox={`0 0 ${size} ${size}`}
-      className="jx-radar"
+      className="cp-radar"
       data-testid="trait-radar"
       role="img"
       aria-label={ariaLabel}
@@ -122,7 +122,7 @@ export function TraitRadar({ user, figure, size = 400, ariaLabel }: Props) {
             strokeLinejoin="round"
             style={{
               opacity: 0,
-              animation: 'jx-radar-fade-in 1200ms ease 400ms forwards',
+              animation: 'cp-radar-fade-in 1200ms ease 400ms forwards',
             }}
           />
           {/* 古人逐点 */}
@@ -138,7 +138,7 @@ export function TraitRadar({ user, figure, size = 400, ariaLabel }: Props) {
               style={{
                 transition: 'all 200ms ease',
                 opacity: 0,
-                animation: 'jx-radar-fade-in 1200ms ease 800ms forwards',
+                animation: 'cp-radar-fade-in 1200ms ease 800ms forwards',
               }}
             />
           ))}
@@ -157,7 +157,7 @@ export function TraitRadar({ user, figure, size = 400, ariaLabel }: Props) {
           strokeDasharray: 2000,
           strokeDashoffset: 2000,
           animation:
-            'jx-radar-draw 1600ms cubic-bezier(0.2, 0.9, 0.3, 1) 200ms forwards, jx-radar-glow 4000ms ease-in-out 1800ms infinite',
+            'cp-radar-draw 1600ms cubic-bezier(0.2, 0.9, 0.3, 1) 200ms forwards, cp-radar-glow 4000ms ease-in-out 1800ms infinite',
         }}
       />
 
@@ -268,13 +268,13 @@ export function TraitRadar({ user, figure, size = 400, ariaLabel }: Props) {
 
       {/* 动画样式定义 */}
       <style>{`
-        @keyframes jx-radar-draw {
+        @keyframes cp-radar-draw {
           to { stroke-dashoffset: 0; }
         }
-        @keyframes jx-radar-fade-in {
+        @keyframes cp-radar-fade-in {
           to { opacity: 1; }
         }
-        @keyframes jx-radar-glow {
+        @keyframes cp-radar-glow {
           0%, 100% { stroke-width: 2; }
           50% { stroke-width: 2.4; }
         }

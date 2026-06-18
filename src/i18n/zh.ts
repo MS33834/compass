@@ -79,7 +79,7 @@ export const zh = {
     resetLabel: '· 清零重来 ·',
   },
   reflection: {
-    sealLabel: '镜 中 之 人',
+    sealLabel: '指 南 之 人',
     score: (pct: number) => `同道 ${pct}%`,
     samePath: '同道',
     twelve: '十二维',
@@ -88,7 +88,7 @@ export const zh = {
     changeDomain: '换一个域',
     reset: '再来一次',
     lowConfidence: '（汝所答尚少，此映照为略影；若欲更明，再答若干题即可。）',
-    confidenceHint: (pct: number) => `映照可信约 ${pct}% · 答题尚浅，镜影未全`,
+    confidenceHint: (pct: number) => `映照可信约 ${pct}% · 答题尚浅，形影未全`,
     mostSimilar: '最似',
     youExceed: '汝 过之',
     youFallShort: '汝 不及',
@@ -106,7 +106,7 @@ export const zh = {
   },
   share: {
     title: '一座心内之指南',
-    text: '我照了一镜，汝亦来照一照。',
+    text: '我照了一次指南，汝亦来照一照。',
   },
 };
 

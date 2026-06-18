@@ -51,6 +51,10 @@ vite.config.ts.timestamp-*.log
 # TypeScript
 *.tsbuildinfo
 
-# Trae IDE 产物
+# Trae IDE 产物（截图、报告、渲染产物一概不入库）
 .trae/
-!.trae/documents/
+
+# 测试运行时产物
+tests/axe-reports/
+tests/e2e-shots/
+*.log

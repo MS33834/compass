@@ -53,7 +53,7 @@ export function TopBar() {
         }}
         aria-label={`${t.ui.appName} — ${t.ui.returnHome}`}
       >
-        <span className="jx-seal" aria-hidden>
+        <span className="cp-seal" aria-hidden>
           {t.ui.sealChar}
         </span>
         <span>{t.ui.appName}</span>

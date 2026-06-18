@@ -1,6 +1,6 @@
 // 指南 · 金样例
 // 5 个虚拟用户向量 → 期望主镜人物
-// 跑法：npm test
+// 用法：npm test
 
 import { similarity } from '../src/domain/matching/scoring.ts';
 import { FIGURES_EAST_LITERATI } from '../src/domain/figures/figures.east-literati.ts';

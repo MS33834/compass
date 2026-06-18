@@ -6,7 +6,7 @@ import { useStore } from './store';
 import { decodeResume } from './share';
 import './index.css';
 
-// C7 主题：首屏前应用 data-theme，避免白闪
+// 主题：首屏前应用 data-theme，避免白闪
 (() => {
   try {
     const saved = localStorage.getItem('compass-v2.theme');
@@ -18,7 +18,7 @@ import './index.css';
   }
 })();
 
-// C13 URL 续答 + 语言切换：?resume=BASE64 & ?lang=zh|en
+// URL 续答 + 语言切换：?resume=BASE64 & ?lang=zh|en
 // 顺序：先 resume（恢复存档），再 lang（URL 参数覆盖存档语言）
 (() => {
   try {
@@ -105,7 +105,7 @@ class GlobalErrorBoundary extends Component<{ children: ReactNode }, { error: Er
   }
   render() {
     if (this.state.error) {
-      const boot = document.getElementById('jx-boot');
+      const boot = document.getElementById('cp-boot');
       if (boot) boot.remove();
 
       const e = this.state.error;
@@ -182,7 +182,7 @@ try {
     </GlobalErrorBoundary>
   );
 } catch (e) {
-  const boot = document.getElementById('jx-boot');
+  const boot = document.getElementById('cp-boot');
   if (boot) boot.remove();
   renderErrorUI(root, '加载失败', (e as Error)?.message || String(e), (e as Error)?.stack);
   throw e;
@@ -191,7 +191,7 @@ try {
 // React 挂载完成后清除启动加载页
 requestAnimationFrame(() => {
   requestAnimationFrame(() => {
-    const boot = document.getElementById('jx-boot');
+    const boot = document.getElementById('cp-boot');
     if (boot && boot.parentNode) {
       boot.style.transition = 'opacity 400ms ease';
       boot.style.opacity = '0';

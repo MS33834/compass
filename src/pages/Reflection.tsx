@@ -1,7 +1,7 @@
 // 指南 · 映照 · 卷（增强版）
 //
-// 增强点：
-// 1. 主镜映照数字：从 0 动态累加到匹配度 —— 数字滚动动画
+// 特性：
+// 1. 主区映照数字：从 0 动态累加到匹配度 —— 数字滚动动画
 // 2. 同道列表卡片：逐张淡入 + 悬停微缩放 + 同道值渐增
 // 3. 十二维卡片化：按差异排序的卡片网格 + 悬停详情 + 同/异/合 三态标签
 // 4. 报告页整体卷轴展开
@@ -123,7 +123,7 @@ export function Reflection() {
     }
   }, [report, domain, answers, setReport]);
 
-  // C17 同道 3 维高亮（必须在任何条件 return 之前）
+  // 同道 3 维高亮（必须在任何条件 return 之前）
   const top3 = useMemo<number[]>(() => {
     if (!report) return [];
     return [...report.traitBreakdown]
@@ -166,7 +166,7 @@ export function Reflection() {
 
   const { primary, alternates, confidence: confVal } = report;
 
-  // C18 分享
+  // 分享
   const handleShare = async () => {
     const shareData = {
       title: t.share.title,
@@ -185,7 +185,7 @@ export function Reflection() {
     }
   };
 
-  // C13 导出 JSON
+  // 导出 JSON
   const handleExport = () => {
     const items = domain ? itemsForDomain(domain) : [];
     const maxIdx = Math.max(0, items.length - 1);
@@ -199,7 +199,7 @@ export function Reflection() {
     downloadJSON(s);
   };
 
-  // C13 复制续答 URL
+  // 复制续答 URL
   const handleCopyResume = async () => {
     const items = domain ? itemsForDomain(domain) : [];
     const maxIdx = Math.max(0, items.length - 1);
@@ -220,7 +220,7 @@ export function Reflection() {
     }
   };
 
-  // C13 导入 JSON
+  // 导入 JSON
   const handleImport = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const f = e.target.files?.[0];
     if (!f) return;
@@ -235,7 +235,7 @@ export function Reflection() {
   };
 
   return (
-    <article className="jx-container jx-scroll-reveal" aria-labelledby="ref-title">
+    <article className="cp-container cp-scroll-reveal" aria-labelledby="ref-title">
       {/* 顶部装饰 */}
       <div
         aria-hidden
@@ -279,7 +279,7 @@ export function Reflection() {
         </p>
       </header>
 
-      {/* ─ 主镜：人像 + 诗赋 ─ */}
+      {/* ─ 主区：人像 + 诗赋 ─ */}
       <section
         style={{
           display: 'grid',
@@ -288,7 +288,7 @@ export function Reflection() {
           marginBottom: '3.5rem',
           textAlign: 'left',
         }}
-        className="jx-ref-grid jx-primary-grid jx-stagger"
+        className="cp-ref-grid cp-primary-grid cp-stagger"
       >
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start' }}>
           <div style={{ maxWidth: '220px', width: '100%' }}>
@@ -300,7 +300,7 @@ export function Reflection() {
             <Verse text={primary.figure.signature} gloss={primary.figure.bio} />
           </div>
           <div
-            className="jx-blurb"
+            className="cp-blurb"
             style={{
               marginTop: '1.5rem',
               padding: '1.25rem 1.5rem',
@@ -336,7 +336,7 @@ export function Reflection() {
 
           {primary.figure.anecdotes && primary.figure.anecdotes.length > 0 && (
             <details
-              className="jx-anecdotes"
+              className="cp-anecdotes"
               style={{ marginTop: '1rem', color: 'var(--ink-faint)', fontSize: '0.9rem' }}
             >
               <summary
@@ -364,7 +364,7 @@ export function Reflection() {
       <section style={{ marginBottom: '4rem' }}>
         <h2 style={{ marginBottom: '1.5rem', textAlign: 'center' }}>{t.reflection.samePath}</h2>
         <div
-          className="jx-alt-grid jx-stagger"
+          className="cp-alt-grid cp-stagger"
           style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fill, minmax(min(11rem, 100%), 1fr))',
@@ -380,7 +380,7 @@ export function Reflection() {
                 key={a.figure.id}
                 data-figure="alternate"
                 data-figure-id={a.figure.id}
-                className={`jx-alt-card${isClose ? ' jx-alt-close' : ''}`}
+                className={`cp-alt-card${isClose ? ' cp-alt-close' : ''}`}
                 style={{
                   padding: '1.25rem 1rem',
                   background: isClose ? 'var(--rice-warm)' : 'transparent',
@@ -392,7 +392,7 @@ export function Reflection() {
               >
                 {idx === 0 && (
                   <span
-                    className="jx-chip jx-chip-cinnabar"
+                    className="cp-chip cp-chip-cinnabar"
                     style={{
                       position: 'absolute',
                       top: '-0.6rem',
@@ -436,7 +436,7 @@ export function Reflection() {
             gap: '2rem',
             alignItems: 'start',
           }}
-          className="jx-ref-grid"
+          className="cp-ref-grid"
         >
           <div style={{ display: 'flex', justifyContent: 'center' }}>
             <TraitRadar
@@ -454,7 +454,7 @@ export function Reflection() {
               gridTemplateColumns: 'repeat(auto-fill, minmax(min(140px, 100%), 1fr))',
               gap: '0.6rem',
             }}
-            className="jx-stagger"
+            className="cp-stagger"
           >
             {sortedBreakdown.map((b, idx) => {
               const trait = TRAITS.find(tt => tt.id === b.traitId);
@@ -482,7 +482,7 @@ export function Reflection() {
                 <div
                   key={b.traitId}
                   data-trait-id={b.traitId}
-                  className="jx-trait-card"
+                  className="cp-trait-card"
                   style={{
                     padding: '0.8rem 0.75rem',
                     border: `1px solid ${borderColor}`,
@@ -693,7 +693,7 @@ export function Reflection() {
         <div
           role="status"
           aria-live="polite"
-          className="jx-toast"
+          className="cp-toast"
           style={{
             position: 'fixed',
             bottom: '1.5rem',
@@ -706,7 +706,7 @@ export function Reflection() {
             fontSize: '0.875rem',
             borderRadius: '2px',
             zIndex: 100,
-            animation: 'jx-fade-stagger 200ms var(--ease-out) both',
+            animation: 'cp-fade-stagger 200ms var(--ease-out) both',
             maxWidth: '90vw',
             wordBreak: 'break-word',
           }}
@@ -731,11 +731,11 @@ export function Reflection() {
       )}
 
       <style>{`
-        .jx-alt-card:hover {
+        .cp-alt-card:hover {
           transform: translateY(-3px) scale(1.02);
           box-shadow: 0 8px 20px rgba(168,50,46,0.12);
         }
-        .jx-trait-card:hover {
+        .cp-trait-card:hover {
           transform: translateY(-2px);
           box-shadow: 0 6px 14px rgba(26,26,26,0.08);
         }

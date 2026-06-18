@@ -1,5 +1,5 @@
 // 指南 · 站内 .md 链接自检
-// 跑法：node tests/link-check.mjs
+// 用法：node tests/link-check.mjs
 // 扫描所有 .md 文件里的相对 .md 引用（包括 ./xxx.md / ../xxx.md / [text](path.md) / [text](path.md#anchor)），
 // 验证被引用的 .md 在仓库内存在。锚点暂不校验（不要求每个标题都精确匹配）。
 

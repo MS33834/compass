@@ -55,7 +55,7 @@ const applyTheme = (th: Theme) => {
   document.documentElement.setAttribute('data-theme', th);
 };
 
-// 数据迁移函数 · 同时校验字段形状，防止损坏的 localStorage 致运行时崩溃
+// 数据迁移与校验
 const migrateState = (persistedState: any): State => {
   const fallback: State = {
     phase: 'prologue',

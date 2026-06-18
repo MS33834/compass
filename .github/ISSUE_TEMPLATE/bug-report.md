@@ -1,6 +1,6 @@
 ---
 name: 报 bug · Bug report
-about: 镜心 映照有误 / 运行出错 / 显示异常
+about: 指南 映照有误 / 运行出错 / 显示异常
 title: '[bug] '
 labels: ['bug']
 assignees: []
@@ -16,7 +16,7 @@ assignees: []
 
 ## 复现 · Steps to reproduce
 
-1. 打开 https://badhope.github.io/MindMirror/
+1. 打开 https://badhope.github.io/Compass/
 2. 选域：…
 3. 答到第 N 题：…
 4. 出错 / 显示异常

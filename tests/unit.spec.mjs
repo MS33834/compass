@@ -1,5 +1,5 @@
 // 指南 · 单元测试 · 向量生成、匹配算法、置信度计算
-// 跑法：npm run test:unit
+// 用法：npm run test:unit
 
 import { computeUserVector } from '../src/domain/matching/vector.ts';
 import { similarity, breakTie } from '../src/domain/matching/scoring.ts';

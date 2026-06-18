@@ -15,7 +15,7 @@ import { buildReport } from '../domain/matching/report';
 import { BrushButton } from '../components/BrushButton';
 import { useT } from '../i18n';
 
-const NO_SCROLL_CLASS = 'jx-way-no-scroll';
+const NO_SCROLL_CLASS = 'cp-way-no-scroll';
 
 export function Way() {
   const domain = useStore(s => s.domain);
@@ -128,24 +128,24 @@ export function Way() {
   const currentProgressPct = Math.round(((currentIndex + 1) / total) * 100);
 
   return (
-    <section className="jx-way-shell jx-page-enter" aria-labelledby="way-title">
+    <section className="cp-way-shell cp-page-enter" aria-labelledby="way-title">
       {/* 顶部：进度 + 题号 + 回溯提示 + 主题/语言切换 */}
-      <header className="jx-way-header">
-        <div className="jx-way-progress" aria-hidden>
-          <div className="jx-way-progress-current" style={{ width: `${currentProgressPct}%` }} />
-          <div className="jx-way-progress-answered" style={{ width: `${progressPct}%` }} />
+      <header className="cp-way-header">
+        <div className="cp-way-progress" aria-hidden>
+          <div className="cp-way-progress-current" style={{ width: `${currentProgressPct}%` }} />
+          <div className="cp-way-progress-answered" style={{ width: `${progressPct}%` }} />
         </div>
 
-        <div className="jx-way-topbar">
-          <p className="jx-way-meta" data-testid="way-progress-text">
+        <div className="cp-way-topbar">
+          <p className="cp-way-meta" data-testid="way-progress-text">
             <span>{t.way.question(currentIndex + 1, total)}</span>
             <span>{t.way.answered(answeredCount, total)}</span>
           </p>
 
-          <div className="jx-way-controls">
+          <div className="cp-way-controls">
             <button
               type="button"
-              className="jx-way-control"
+              className="cp-way-control"
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
               title={theme === 'dark' ? t.ui.themeLabelLight : t.ui.themeLabelDark}
               aria-label={theme === 'dark' ? t.ui.themeLabelLight : t.ui.themeLabelDark}
@@ -155,7 +155,7 @@ export function Way() {
             </button>
             <button
               type="button"
-              className="jx-way-control"
+              className="cp-way-control"
               onClick={() => setLocale(locale === 'zh' ? 'en' : 'zh')}
               aria-label={t.ui.toggleLang}
               data-testid="way-btn-lang"
@@ -165,22 +165,22 @@ export function Way() {
           </div>
         </div>
 
-        {showBacktrack && <div className="jx-way-backtrack">{t.way.backtrackHint}</div>}
+        {showBacktrack && <div className="cp-way-backtrack">{t.way.backtrackHint}</div>}
       </header>
 
       {/* 中间：题目 + 选项，内容过多时可内部滚动 */}
-      <div ref={scrollRef} className="jx-way-scroll">
+      <div ref={scrollRef} className="cp-way-scroll">
         <article
           key={item.id}
-          className="jx-way-question jx-fade-enter"
+          className="cp-way-question cp-fade-enter"
           aria-labelledby="way-title"
         >
-          <h2 id="way-title" data-testid="way-prompt" className="jx-way-prompt">
+          <h2 id="way-title" data-testid="way-prompt" className="cp-way-prompt">
             {item.prompt}
           </h2>
-          {item.promptGloss && <p className="jx-way-gloss">{item.promptGloss}</p>}
+          {item.promptGloss && <p className="cp-way-gloss">{item.promptGloss}</p>}
 
-          <div role="radiogroup" aria-label={t.way.optionsLabel} className="jx-way-options">
+          <div role="radiogroup" aria-label={t.way.optionsLabel} className="cp-way-options">
             {item.options.map((opt, i) => {
               const selected = current === i;
               const letter = String.fromCharCode(65 + i);
@@ -191,18 +191,18 @@ export function Way() {
                   role="radio"
                   aria-checked={selected}
                   tabIndex={selected ? 0 : -1}
-                  className={`jx-way-option${selected ? ' jx-way-option--selected' : ''}`}
+                  className={`cp-way-option${selected ? ' cp-way-option--selected' : ''}`}
                   data-role="option"
                   data-opt-index={i}
                   data-testid={`option-${i}`}
                   onClick={() => answer(item.id, i)}
                 >
-                  <span className="jx-way-letter" aria-hidden>
+                  <span className="cp-way-letter" aria-hidden>
                     {letter}
                   </span>
-                  <span className="jx-way-option-text">
-                    <span className="jx-way-ancient">{opt.text}</span>
-                    {opt.gloss && <span className="jx-way-gloss-inline">{opt.gloss}</span>}
+                  <span className="cp-way-option-text">
+                    <span className="cp-way-ancient">{opt.text}</span>
+                    {opt.gloss && <span className="cp-way-gloss-inline">{opt.gloss}</span>}
                   </span>
                 </button>
               );
@@ -212,8 +212,8 @@ export function Way() {
       </div>
 
       {/* 底部：导航 + 提示 + 重置 */}
-      <footer className="jx-way-footer">
-        <nav className="jx-way-nav" data-testid="way-nav">
+      <footer className="cp-way-footer">
+        <nav className="cp-way-nav" data-testid="way-nav">
           <BrushButton
             variant="ghost"
             onClick={goPrev}
@@ -256,11 +256,11 @@ export function Way() {
           )}
         </nav>
 
-        <p className="jx-way-hint">{t.way.keyboardHint}</p>
+        <p className="cp-way-hint">{t.way.keyboardHint}</p>
 
         <button
           type="button"
-          className="jx-way-reset"
+          className="cp-way-reset"
           onClick={() => {
             if (confirm(t.ui.resetConfirm)) reset();
           }}

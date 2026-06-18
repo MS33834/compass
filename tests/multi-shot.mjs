@@ -1,4 +1,4 @@
-// 指南 · C22 多尺寸截图
+// 指南 · 多尺寸截图
 //
 // 视口 × phase 矩阵（3 × 3 = 9 张）
 // 视口：320×568 (iPhone SE) / 768×1024 (iPad) / 1440×900 (Desktop)
@@ -6,7 +6,7 @@
 // 输出：.trae/render/multi/{viewport-name}--{phase}.png
 // 报告：.trae/render/multi/report.md
 //
-// 跑法：node tests/multi-shot.mjs
+// 用法：node tests/multi-shot.mjs
 
 import { chromium } from 'playwright';
 import { spawn } from 'node:child_process';
@@ -27,7 +27,7 @@ const PHASES = ['prologue', 'way', 'reflection'];
 
 // 关键选择器（按 phase）
 const KEY_SELECTORS = {
-  prologue: ['[data-testid="btn-enter"]', 'h1#prologue-title', '.jx-seal-large'],
+  prologue: ['[data-testid="btn-enter"]', 'h1#prologue-title', '.cp-seal-large'],
   way: ['[data-testid="way-prompt"]', '[data-role="option"]', '[data-testid="way-nav"]'],
   reflection: [
     '[data-figure="primary"]',
@@ -114,7 +114,7 @@ async function setPhase(page, phase) {
     return;
   }
   if (phase === 'way') {
-    // 入镜 → 选域 → 开始
+    // 入内 → 选域 → 开始
     await page.locator('[data-testid="btn-enter"]').click();
     await page.waitForSelector('[data-domain="east-literati"]', { timeout: 5_000 });
     await page.locator('[data-domain="east-literati"]').click();
@@ -229,7 +229,7 @@ async function shootOne(browser, vp, phase) {
 }
 
 function buildMarkdown(rows) {
-  let md = '# C22 · 多尺寸截图报告\n\n';
+  let md = '# 多尺寸截图报告\n\n';
   md += `生成时间：${new Date().toISOString()}\n\n`;
   md += `视口：${VIEWPORTS.map(v => `${v.name} (${v.width}×${v.height})`).join('、')}\n\n`;
   md += `phase：${PHASES.join('、')}\n\n`;

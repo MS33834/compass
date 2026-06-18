@@ -49,7 +49,7 @@ export function Path() {
   };
 
   return (
-    <section className="jx-container jx-page-enter" aria-labelledby="path-title">
+    <section className="cp-container cp-page-enter" aria-labelledby="path-title">
       {/* 顶部装饰 */}
       <div
         aria-hidden
@@ -67,7 +67,7 @@ export function Path() {
       </div>
 
       <header style={{ textAlign: 'center', marginBottom: '3rem' }}>
-        <h1 id="path-title" className="jx-ink-spread">
+        <h1 id="path-title" className="cp-ink-spread">
           {t.path.title}
         </h1>
         <p
@@ -203,7 +203,7 @@ export function Path() {
       </div>
 
       {picked && (
-        <div className="jx-fade-enter" style={{ textAlign: 'center' }}>
+        <div className="cp-fade-enter" style={{ textAlign: 'center' }}>
           {/* 装饰分隔 */}
           <div
             aria-hidden

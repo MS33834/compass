@@ -31,7 +31,7 @@ export function Portrait({ figure }: Props) {
 
   return (
     <div
-      className="jx-portrait"
+      className="cp-portrait"
       style={{
         width: '100%',
         aspectRatio: '3 / 4',
@@ -60,7 +60,7 @@ export function Portrait({ figure }: Props) {
 function Placeholder({ figure }: Props) {
   return (
     <div
-      className="jx-portrait"
+      className="cp-portrait"
       style={{
         width: '100%',
         aspectRatio: '3 / 4',
@@ -110,7 +110,7 @@ function Placeholder({ figure }: Props) {
       </div>
       <div
         style={{ position: 'absolute', right: '0.75rem', bottom: '0.75rem' }}
-        className="jx-seal"
+        className="cp-seal"
         aria-hidden
       >
         指

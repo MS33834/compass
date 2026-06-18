@@ -5,7 +5,7 @@
 //   way-light.png        / way-dark.png
 //   reflection-light.png / reflection-dark.png
 //
-// 跑法：node tests/capture-states.mjs
+// 用法：node tests/capture-states.mjs
 
 import { chromium } from 'playwright';
 import { spawn } from 'node:child_process';
@@ -66,7 +66,7 @@ async function injectAnswersAndFinish(page) {
     localStorage.setItem(k, JSON.stringify(s));
   });
   await page.reload({ waitUntil: 'networkidle' });
-  // 末题点出镜
+  // 末题点出照
   await page.waitForSelector('[data-testid="btn-finish"]:not([disabled])', { timeout: 8_000 });
   await page.locator('[data-testid="btn-finish"]').click();
   await page.waitForSelector('[data-figure="primary"]', { timeout: 8_000 });
@@ -106,7 +106,7 @@ async function captureOne(browser, { phase, theme }) {
       await page.waitForSelector('[data-testid="btn-enter"]', { timeout: 8_000 });
       await page.waitForTimeout(900);
     } else if (phase === 'way') {
-      // 入镜 → 选域 → 开始
+      // 入内 → 选域 → 开始
       await page.locator('[data-testid="btn-enter"]').click();
       await page.waitForSelector('[data-domain="east-literati"]', { timeout: 5_000 });
       await page.locator('[data-domain="east-literati"]').click();

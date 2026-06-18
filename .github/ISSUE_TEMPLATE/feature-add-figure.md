@@ -1,6 +1,6 @@
 ---
 name: 添域 · Add a new domain
-about: 为镜心新增一域（30+ 人物 + 48 题）
+about: 为指南新增一域（30+ 人物 + 48 题）
 title: '[domain] '
 labels: ['enhancement', 'domain']
 assignees: []

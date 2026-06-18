@@ -146,7 +146,7 @@ p {
 }
 
 /* 笔触感按钮 */
-.jx-btn {
+.cp-btn {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -173,7 +173,7 @@ p {
   text-align: center;
 }
 
-.jx-btn:hover {
+.cp-btn:hover {
   background: var(--cinnabar);
   color: var(--rice);
   border-color: var(--cinnabar);
@@ -181,34 +181,34 @@ p {
   box-shadow: 0 4px 12px rgba(168, 50, 46, 0.2);
 }
 
-.jx-btn:active {
+.cp-btn:active {
   transform: translateY(0);
 }
 
-.jx-btn:disabled {
+.cp-btn:disabled {
   opacity: 0.3;
   cursor: not-allowed;
   transform: none;
 }
 
-.jx-btn-primary {
+.cp-btn-primary {
   background: var(--ink);
   color: var(--rice);
 }
 
-.jx-btn-primary:hover {
+.cp-btn-primary:hover {
   background: var(--cinnabar);
   border-color: var(--cinnabar);
   color: var(--rice);
 }
 
-.jx-btn-ghost {
+.cp-btn-ghost {
   border: none;
   background: transparent;
   color: var(--ink-faint);
 }
 
-.jx-btn-ghost:hover {
+.cp-btn-ghost:hover {
   background: transparent;
   color: var(--cinnabar);
   transform: none;
@@ -216,7 +216,7 @@ p {
 }
 
 /* 印章 */
-.jx-seal {
+.cp-seal {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -235,7 +235,7 @@ p {
 }
 
 /* 古文-白话 双行 */
-.jx-verse {
+.cp-verse {
   display: flex;
   flex-direction: column;
   gap: var(--sp-2);
@@ -243,7 +243,7 @@ p {
   text-align: center;
 }
 
-.jx-verse .ancient {
+.cp-verse .ancient {
   font-family: var(--font-display);
   font-size: 1.5rem;
   font-weight: 500;
@@ -251,7 +251,7 @@ p {
   letter-spacing: 0.1em;
 }
 
-.jx-verse .gloss {
+.cp-verse .gloss {
   font-family: var(--font-body);
   font-size: 1rem;
   color: var(--ink-faint);
@@ -259,14 +259,14 @@ p {
 }
 
 /* 容器 */
-.jx-container {
+.cp-container {
   max-width: 56rem;
   margin: 0 auto;
   padding: var(--sp-8) var(--sp-6);
   text-align: center;
 }
 
-.jx-container-narrow {
+.cp-container-narrow {
   max-width: 36rem;
   margin: 0 auto;
   padding: var(--sp-8) var(--sp-6);
@@ -274,11 +274,11 @@ p {
 }
 
 /* 页面切换 - 增强停顿效果 */
-.jx-fade-enter {
-  animation: jx-fade-in var(--t-slow) var(--ease-in-out) both;
+.cp-fade-enter {
+  animation: cp-fade-in var(--t-slow) var(--ease-in-out) both;
 }
 
-@keyframes jx-fade-in {
+@keyframes cp-fade-in {
   0% {
     opacity: 0;
     transform: translateY(20px);
@@ -293,16 +293,16 @@ p {
 }
 
 /* ─── 页面切换动画：卷轴翻页效果 ─── */
-.jx-page-enter {
-  animation: jx-page-flip-in 1200ms var(--ease-in-out) both;
+.cp-page-enter {
+  animation: cp-page-flip-in 1200ms var(--ease-in-out) both;
 }
 
 /* 页面退出：快速淡出 */
-.jx-page-exit {
-  animation: jx-page-fade-out 400ms var(--ease-in-out) both;
+.cp-page-exit {
+  animation: cp-page-fade-out 400ms var(--ease-in-out) both;
 }
 
-@keyframes jx-page-fade-out {
+@keyframes cp-page-fade-out {
   from {
     opacity: 1;
     transform: translateY(0);
@@ -313,7 +313,7 @@ p {
   }
 }
 
-@keyframes jx-page-flip-in {
+@keyframes cp-page-flip-in {
   0% {
     opacity: 0;
     transform: perspective(1200px) rotateY(-15deg) translateX(-40px);
@@ -331,16 +331,16 @@ p {
 }
 
 /* 入场淡入：用于旧组件退出后，新组件挂载前 */
-.jx-fade-in {
-  animation: jx-fade-in 600ms var(--ease-out) both;
+.cp-fade-in {
+  animation: cp-fade-in 600ms var(--ease-out) both;
 }
 
 /* 卷轴展开 - 增强版 */
-.jx-scroll-reveal {
-  animation: jx-scroll-open var(--t-slow) var(--ease-in-out) both;
+.cp-scroll-reveal {
+  animation: cp-scroll-open var(--t-slow) var(--ease-in-out) both;
 }
 
-@keyframes jx-scroll-open {
+@keyframes cp-scroll-open {
   0% {
     opacity: 0;
     clip-path: inset(0 50% 0 50%);
@@ -358,11 +358,11 @@ p {
 }
 
 /* 墨迹晕染进入 */
-.jx-ink-spread {
-  animation: jx-ink-spread-in 1000ms var(--ease-out) both;
+.cp-ink-spread {
+  animation: cp-ink-spread-in 1000ms var(--ease-out) both;
 }
 
-@keyframes jx-ink-spread-in {
+@keyframes cp-ink-spread-in {
   0% {
     opacity: 0;
     transform: scale(0.9);
@@ -379,11 +379,11 @@ p {
 }
 
 /* 竹简展开 */
-.jx-bamboo-unfold {
-  animation: jx-bamboo-unfold 1400ms var(--ease-in-out) both;
+.cp-bamboo-unfold {
+  animation: cp-bamboo-unfold 1400ms var(--ease-in-out) both;
 }
 
-@keyframes jx-bamboo-unfold {
+@keyframes cp-bamboo-unfold {
   0% {
     opacity: 0;
     transform: scaleX(0.3);
@@ -400,7 +400,7 @@ p {
 }
 
 /* 进度条 */
-.jx-progress {
+.cp-progress {
   width: 100%;
   height: 2px;
   background: var(--rice-deep);
@@ -408,7 +408,7 @@ p {
   overflow: hidden;
 }
 
-.jx-progress-fill {
+.cp-progress-fill {
   position: absolute;
   inset: 0 auto 0 0;
   background: var(--jade);
@@ -416,7 +416,7 @@ p {
 }
 
 /* 标签 chip */
-.jx-chip {
+.cp-chip {
   display: inline-block;
   padding: var(--sp-1) var(--sp-3);
   font-family: var(--font-display);
@@ -427,18 +427,18 @@ p {
   border-radius: 2px;
 }
 
-.jx-chip-cinnabar {
+.cp-chip-cinnabar {
   background: var(--cinnabar);
   color: var(--rice);
 }
 
-.jx-chip-jade {
+.cp-chip-jade {
   background: var(--jade);
   color: var(--rice);
 }
 
 /* 雷达图动画 */
-@keyframes jx-radar-draw {
+@keyframes cp-radar-draw {
   from {
     stroke-dashoffset: 1000;
   }
@@ -447,13 +447,13 @@ p {
   }
 }
 
-.jx-radar-user {
+.cp-radar-user {
   stroke-dasharray: 1000;
   stroke-dashoffset: 1000;
-  animation: jx-radar-draw 1500ms var(--ease-out) 200ms forwards;
+  animation: cp-radar-draw 1500ms var(--ease-out) 200ms forwards;
 }
 
-@keyframes jx-radar-fade {
+@keyframes cp-radar-fade {
   from {
     opacity: 0;
   }
@@ -462,9 +462,9 @@ p {
   }
 }
 
-.jx-radar-figure {
+.cp-radar-figure {
   opacity: 0;
-  animation: jx-radar-fade 1000ms var(--ease-in-out) 800ms forwards;
+  animation: cp-radar-fade 1000ms var(--ease-in-out) 800ms forwards;
 }
 
 /* 响应式 - 手机竖屏 (320px - 480px) */
@@ -475,15 +475,15 @@ p {
     --sp-8: 1.5rem;
   }
 
-  .jx-btn {
+  .cp-btn {
     font-size: 1rem;
     padding: var(--sp-3) var(--sp-6);
     min-width: 8rem;
     letter-spacing: 0.15em;
   }
 
-  .jx-container,
-  .jx-container-narrow {
+  .cp-container,
+  .cp-container-narrow {
     padding: var(--sp-6) var(--sp-4);
     max-width: 100%;
     overflow-x: hidden;
@@ -508,32 +508,32 @@ p {
   }
 
   /* 映照十二维：窄屏改为单列 */
-  .jx-ref-grid {
+  .cp-ref-grid {
     grid-template-columns: minmax(0, 1fr) !important;
   }
-  .jx-ref-grid > svg.jx-radar {
+  .cp-ref-grid > svg.cp-radar {
     max-width: 16rem;
     margin: 0 auto;
   }
   /* 同道卡：窄屏单列 */
-  .jx-alt-grid {
+  .cp-alt-grid {
     grid-template-columns: minmax(0, 1fr) !important;
   }
-  /* 主镜：窄屏单列 */
-  .jx-primary-grid {
+  /* 主区：窄屏单列 */
+  .cp-primary-grid {
     grid-template-columns: minmax(0, 1fr) !important;
     text-align: center;
   }
-  .jx-primary-grid .jx-portrait {
+  .cp-primary-grid .cp-portrait {
     margin: 0 auto;
   }
 
   /* 防止文字溢出 */
-  .jx-verse .ancient {
+  .cp-verse .ancient {
     font-size: 1.125rem;
     word-break: break-word;
   }
-  .jx-verse .gloss {
+  .cp-verse .gloss {
     font-size: 0.9rem;
     word-break: break-word;
   }
@@ -546,17 +546,17 @@ p {
 
 /* 响应式 - 手机横屏/平板 (481px - 768px) */
 @media (min-width: 481px) and (max-width: 768px) {
-  .jx-container {
+  .cp-container {
     padding: var(--sp-6) var(--sp-4);
   }
 }
 
 /* 响应式 - 平板竖屏及以下：映照页网格转单列 */
 @media (max-width: 640px) {
-  .jx-ref-grid {
+  .cp-ref-grid {
     grid-template-columns: minmax(0, 1fr) !important;
   }
-  .jx-ref-grid > svg.jx-radar {
+  .cp-ref-grid > svg.cp-radar {
     max-width: 18rem;
     margin: 0 auto;
   }
@@ -564,7 +564,7 @@ p {
 
 /* 响应式 - 平板/小桌面 (769px - 1024px) */
 @media (min-width: 769px) and (max-width: 1024px) {
-  .jx-container {
+  .cp-container {
     padding: var(--sp-8) var(--sp-6);
   }
 }
@@ -582,53 +582,53 @@ p {
     font-size: 0.95rem;
   }
 
-  .jx-btn {
+  .cp-btn {
     font-size: 0.95rem;
     padding: var(--sp-2) var(--sp-4);
     min-width: 7rem;
   }
 
-  .jx-container,
-  .jx-container-narrow {
+  .cp-container,
+  .cp-container-narrow {
     padding: var(--sp-4) var(--sp-3);
     max-width: 100%;
     overflow-x: hidden;
   }
 
   /* 答题页进一步压缩 */
-  .jx-way-shell {
+  .cp-way-shell {
     padding: 0.5rem 0.625rem 0.35rem;
   }
-  .jx-way-prompt {
+  .cp-way-prompt {
     font-size: 1.35rem;
   }
-  .jx-way-gloss {
+  .cp-way-gloss {
     font-size: 0.8rem;
     margin-bottom: 0.5rem;
   }
-  .jx-way-option {
+  .cp-way-option {
     padding: 0.45rem 0.55rem;
     font-size: 0.85rem;
     gap: 0.45rem;
   }
-  .jx-way-letter {
+  .cp-way-letter {
     width: 1.6rem;
     height: 1.6rem;
     min-width: 1.6rem;
     font-size: 0.8rem;
   }
-  .jx-way-ancient {
+  .cp-way-ancient {
     font-size: 0.9rem;
   }
-  .jx-way-gloss-inline {
+  .cp-way-gloss-inline {
     font-size: 0.72rem;
   }
-  .jx-way-nav .jx-btn {
+  .cp-way-nav .cp-btn {
     min-width: 4.8rem;
     padding: 0.4rem 0.6rem;
     font-size: 0.82rem;
   }
-  .jx-way-hint {
+  .cp-way-hint {
     font-size: 0.6rem;
   }
 
@@ -662,7 +662,7 @@ button:focus:not(:focus-visible) {
     scroll-behavior: auto !important;
   }
   /* 确保 stagger 内容在减少动效模式下立即可见 */
-  .jx-stagger > * {
+  .cp-stagger > * {
     opacity: 1 !important;
   }
 }
@@ -670,16 +670,16 @@ button:focus:not(:focus-visible) {
 /* ─── 答题页固定视口布局 ─── */
 
 /* 仅答题页禁止 body 滚动，其他页面不受影响 */
-body.jx-way-no-scroll {
+body.cp-way-no-scroll {
   overflow: hidden;
 }
 
-body.jx-way-no-scroll #root {
+body.cp-way-no-scroll #root {
   overflow: hidden;
   height: 100%;
 }
 
-.jx-way-shell {
+.cp-way-shell {
   position: fixed;
   inset: 0;
   z-index: 15;
@@ -700,12 +700,12 @@ body.jx-way-no-scroll #root {
 }
 
 /* 顶部：进度条 + 题号 */
-.jx-way-header {
+.cp-way-header {
   flex: 0 0 auto;
   padding-bottom: 0.5rem;
 }
 
-.jx-way-progress {
+.cp-way-progress {
   position: relative;
   height: 5px;
   background: var(--rice-deep);
@@ -713,7 +713,7 @@ body.jx-way-no-scroll #root {
   border-radius: 1px;
 }
 
-.jx-way-progress-current {
+.cp-way-progress-current {
   position: absolute;
   left: 0;
   top: 0;
@@ -723,7 +723,7 @@ body.jx-way-no-scroll #root {
   transition: width 400ms var(--ease-out);
 }
 
-.jx-way-progress-answered {
+.cp-way-progress-answered {
   position: absolute;
   left: 0;
   top: 0;
@@ -732,7 +732,7 @@ body.jx-way-no-scroll #root {
   transition: width 400ms var(--ease-out);
 }
 
-.jx-way-topbar {
+.cp-way-topbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -740,7 +740,7 @@ body.jx-way-no-scroll #root {
   margin-top: 0.4rem;
 }
 
-.jx-way-meta {
+.cp-way-meta {
   margin: 0;
   color: var(--ink-faint);
   font-size: 0.8rem;
@@ -753,14 +753,14 @@ body.jx-way-no-scroll #root {
   gap: 0.5rem;
 }
 
-.jx-way-controls {
+.cp-way-controls {
   display: flex;
   align-items: center;
   gap: 0.35rem;
   flex-shrink: 0;
 }
 
-.jx-way-control {
+.cp-way-control {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -778,18 +778,18 @@ body.jx-way-no-scroll #root {
   transition: all 200ms var(--ease-out);
 }
 
-.jx-way-control:hover {
+.cp-way-control:hover {
   border-color: var(--ink);
   color: var(--ink);
   background: var(--rice-warm);
 }
 
-.jx-way-control:focus-visible {
+.cp-way-control:focus-visible {
   outline: 2px solid var(--cinnabar);
   outline-offset: 1px;
 }
 
-.jx-way-backtrack {
+.cp-way-backtrack {
   margin-top: 0.4rem;
   padding: 0.35rem 0.5rem;
   background: rgba(184, 149, 74, 0.1);
@@ -799,11 +799,11 @@ body.jx-way-no-scroll #root {
   font-family: var(--font-display);
   text-align: center;
   letter-spacing: 0.08em;
-  animation: jx-fade-stagger 400ms var(--ease-out) both;
+  animation: cp-fade-stagger 400ms var(--ease-out) both;
 }
 
 /* 中间滚动区：题目 + 选项 */
-.jx-way-scroll {
+.cp-way-scroll {
   flex: 1 1 auto;
   min-height: 0;
   overflow-y: auto;
@@ -812,16 +812,16 @@ body.jx-way-no-scroll #root {
   scrollbar-width: thin;
 }
 
-.jx-way-scroll::-webkit-scrollbar {
+.cp-way-scroll::-webkit-scrollbar {
   width: 4px;
 }
 
-.jx-way-scroll::-webkit-scrollbar-thumb {
+.cp-way-scroll::-webkit-scrollbar-thumb {
   background: var(--rice-deep);
   border-radius: 2px;
 }
 
-.jx-way-question {
+.cp-way-question {
   display: flex;
   flex-direction: column;
   min-height: 100%;
@@ -831,14 +831,14 @@ body.jx-way-no-scroll #root {
   margin: 0 auto;
 }
 
-.jx-way-prompt {
+.cp-way-prompt {
   font-size: clamp(1.5rem, 5.5vw, 2.2rem);
   line-height: 1.25;
   margin: 0 0 0.35rem;
   padding: 0;
 }
 
-.jx-way-gloss {
+.cp-way-gloss {
   color: var(--ink-faint);
   margin: 0 auto 0.75rem;
   font-size: 0.9rem;
@@ -849,7 +849,7 @@ body.jx-way-no-scroll #root {
 }
 
 /* 选项列表 */
-.jx-way-options {
+.cp-way-options {
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
@@ -857,7 +857,7 @@ body.jx-way-no-scroll #root {
   padding-bottom: 0.35rem;
 }
 
-.jx-way-option {
+.cp-way-option {
   text-align: left;
   padding: 0.45rem 0.65rem;
   background: transparent;
@@ -874,20 +874,20 @@ body.jx-way-no-scroll #root {
   line-height: 1.35;
 }
 
-.jx-way-option--selected {
+.cp-way-option--selected {
   background: var(--rice-warm);
   border-color: var(--cinnabar);
   box-shadow: 0 3px 10px rgba(168, 50, 46, 0.12);
   transform: translateY(-1px);
 }
 
-.jx-way-option:not(.jx-way-option--selected):hover {
+.cp-way-option:not(.cp-way-option--selected):hover {
   border-color: var(--ink);
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(26, 26, 26, 0.1);
 }
 
-.jx-way-letter {
+.cp-way-letter {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -906,13 +906,13 @@ body.jx-way-no-scroll #root {
   transition: all 200ms var(--ease-out);
 }
 
-.jx-way-option--selected .jx-way-letter {
+.cp-way-option--selected .cp-way-letter {
   background: var(--cinnabar);
   color: var(--rice);
   border-color: var(--cinnabar);
 }
 
-.jx-way-option-text {
+.cp-way-option-text {
   flex: 1;
   overflow: hidden;
   word-break: break-word;
@@ -922,13 +922,13 @@ body.jx-way-no-scroll #root {
   padding-top: 0.1rem;
 }
 
-.jx-way-ancient {
+.cp-way-ancient {
   font-family: var(--font-display);
   font-size: 1rem;
   letter-spacing: 0.05em;
 }
 
-.jx-way-gloss-inline {
+.cp-way-gloss-inline {
   font-family: var(--font-body);
   font-size: 0.8rem;
   color: var(--ink-faint);
@@ -936,13 +936,13 @@ body.jx-way-no-scroll #root {
 }
 
 /* 底部导航 */
-.jx-way-footer {
+.cp-way-footer {
   flex: 0 0 auto;
   padding-top: 0.4rem;
   border-top: 1px solid var(--rice-deep);
 }
 
-.jx-way-nav {
+.cp-way-nav {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -950,14 +950,14 @@ body.jx-way-no-scroll #root {
   flex-wrap: wrap;
 }
 
-.jx-way-nav .jx-btn {
+.cp-way-nav .cp-btn {
   min-width: 4.8rem;
   padding: 0.4rem 0.7rem;
   font-size: 0.85rem;
   letter-spacing: 0.1em;
 }
 
-.jx-way-hint {
+.cp-way-hint {
   text-align: center;
   margin: 0.25rem 0 0;
   font-size: 0.6rem;
@@ -967,7 +967,7 @@ body.jx-way-no-scroll #root {
   letter-spacing: 0.1em;
 }
 
-.jx-way-reset {
+.cp-way-reset {
   display: block;
   margin: 0.1rem auto 0;
   background: none;
@@ -981,12 +981,12 @@ body.jx-way-no-scroll #root {
   transition: color 200ms;
 }
 
-.jx-way-reset:hover {
+.cp-way-reset:hover {
   color: var(--cinnabar);
 }
 
 /* 选项 A-F 字母印章 */
-.jx-opt-letter {
+.cp-opt-letter {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1003,21 +1003,21 @@ body.jx-way-no-scroll #root {
   flex-shrink: 0;
 }
 
-.jx-opt-row {
+.cp-opt-row {
   display: flex;
   align-items: flex-start;
   gap: 0;
   width: 100%;
 }
 
-[data-role='option'][aria-checked='true'] .jx-opt-letter {
+[data-role='option'][aria-checked='true'] .cp-opt-letter {
   background: var(--cinnabar);
   color: var(--rice);
   border-color: var(--cinnabar);
 }
 
-/* 入镜大字 镜 */
-.jx-mark {
+/* 印章大字 */
+.cp-mark {
   font-family: var(--font-display);
   color: var(--cinnabar);
   letter-spacing: 0;
@@ -1026,7 +1026,7 @@ body.jx-way-no-scroll #root {
 }
 
 /* 启动页 / 复位 提示卡 */
-.jx-hint {
+.cp-hint {
   display: inline-block;
   padding: 0.5rem 0.75rem;
   font-family: var(--font-display);
@@ -1035,7 +1035,7 @@ body.jx-way-no-scroll #root {
   letter-spacing: 0.05em;
 }
 
-/* ─── C7 夜间模式（玄青 + 月白 + 朱砂） ─── */
+/* ─── 夜间模式（玄青 + 月白 + 朱砂） ─── */
 :root[data-theme='dark'] {
   --ink: #e8e2d0;
   --ink-soft: #d0cab8;
@@ -1067,56 +1067,56 @@ body.jx-way-no-scroll #root {
   color: var(--ink);
 }
 
-:root[data-theme='dark'] .jx-btn {
+:root[data-theme='dark'] .cp-btn {
   border-color: var(--ink-soft);
   color: var(--ink);
 }
-:root[data-theme='dark'] .jx-btn-primary {
+:root[data-theme='dark'] .cp-btn-primary {
   background: var(--ink);
   color: var(--rice);
 }
-:root[data-theme='dark'] .jx-btn-primary:hover {
+:root[data-theme='dark'] .cp-btn-primary:hover {
   background: var(--cinnabar);
   color: var(--rice);
 }
-:root[data-theme='dark'] .jx-btn-ghost {
+:root[data-theme='dark'] .cp-btn-ghost {
   color: var(--ink-faint);
 }
-:root[data-theme='dark'] .jx-btn-ghost:hover {
+:root[data-theme='dark'] .cp-btn-ghost:hover {
   color: var(--cinnabar);
 }
 
-:root[data-theme='dark'] .jx-seal {
+:root[data-theme='dark'] .cp-seal {
   background: var(--cinnabar);
   color: var(--rice);
 }
 
-:root[data-theme='dark'] .jx-verse .ancient {
+:root[data-theme='dark'] .cp-verse .ancient {
   color: var(--ink);
 }
-:root[data-theme='dark'] .jx-verse .gloss {
+:root[data-theme='dark'] .cp-verse .gloss {
   color: var(--ink-faint);
 }
 
-:root[data-theme='dark'] .jx-blurb {
+:root[data-theme='dark'] .cp-blurb {
   background: var(--rice-warm) !important;
   border-left-color: var(--cinnabar) !important;
   color: var(--ink) !important;
 }
 
-:root[data-theme='dark'] .jx-progress {
+:root[data-theme='dark'] .cp-progress {
   background: var(--rice-deep);
 }
-:root[data-theme='dark'] .jx-progress-fill {
+:root[data-theme='dark'] .cp-progress-fill {
   background: var(--jade);
 }
 
-:root[data-theme='dark'] .jx-opt-letter {
+:root[data-theme='dark'] .cp-opt-letter {
   background: var(--rice-warm);
   color: var(--ink);
   border-color: var(--rice-deep);
 }
-:root[data-theme='dark'] [data-role='option'][aria-checked='true'] .jx-opt-letter {
+:root[data-theme='dark'] [data-role='option'][aria-checked='true'] .cp-opt-letter {
   background: var(--cinnabar);
   color: var(--rice);
 }
@@ -1128,31 +1128,31 @@ body.jx-way-no-scroll #root {
   box-shadow: 0 0 0 4px rgba(216, 88, 74, 0.25);
 }
 
-:root[data-theme='dark'] .jx-trait-highlight {
+:root[data-theme='dark'] .cp-trait-highlight {
   background: linear-gradient(90deg, rgba(216, 88, 74, 0.08) 0%, rgba(216, 88, 74, 0.02) 100%);
   border-left: 2px solid var(--cinnabar);
   padding-left: 0.5rem;
 }
 
-:root[data-theme='dark'] svg.jx-radar circle,
-:root[data-theme='dark'] svg.jx-radar line {
+:root[data-theme='dark'] svg.cp-radar circle,
+:root[data-theme='dark'] svg.cp-radar line {
   stroke: var(--ink-soft);
 }
 
 /* 夜间模式：人物肖像降亮度，避免浅色 SVG 在暗背景中过曝 */
-:root[data-theme='dark'] .jx-portrait img,
-:root[data-theme='dark'] .jx-portrait svg {
+:root[data-theme='dark'] .cp-portrait img,
+:root[data-theme='dark'] .cp-portrait svg {
   filter: brightness(0.82) contrast(1.05);
 }
 
-/* ─── C14 视觉品牌正式化 ─── */
-.jx-seal-large {
+/* ─── 视觉品牌 ─── */
+.cp-seal-large {
   display: inline-block;
   font-size: clamp(4rem, 12vw, 8rem);
-  animation: jx-seal-print 800ms var(--ease-out) both;
+  animation: cp-seal-print 800ms var(--ease-out) both;
 }
 
-@keyframes jx-seal-print {
+@keyframes cp-seal-print {
   0% {
     transform: scale(2.5);
     opacity: 0;
@@ -1170,7 +1170,7 @@ body.jx-way-no-scroll #root {
   }
 }
 
-.jx-trait-highlight {
+.cp-trait-highlight {
   background: linear-gradient(90deg, rgba(168, 50, 46, 0.06) 0%, rgba(168, 50, 46, 0.01) 100%);
   border-left: 2px solid var(--cinnabar);
   padding-left: 0.5rem;
@@ -1178,23 +1178,23 @@ body.jx-way-no-scroll #root {
 }
 
 /* Empty / Loading 三态 */
-.jx-loading {
+.cp-loading {
   display: inline-block;
   width: 1.5rem;
   height: 1.5rem;
   border: 2px solid var(--rice-deep);
   border-top-color: var(--cinnabar);
   border-radius: 50%;
-  animation: jx-spin 800ms linear infinite;
+  animation: cp-spin 800ms linear infinite;
 }
 
-@keyframes jx-spin {
+@keyframes cp-spin {
   to {
     transform: rotate(360deg);
   }
 }
 
-.jx-empty {
+.cp-empty {
   text-align: center;
   padding: var(--sp-12) var(--sp-6);
   color: var(--ink-faint);
@@ -1202,7 +1202,7 @@ body.jx-way-no-scroll #root {
   letter-spacing: 0.1em;
 }
 
-.jx-error {
+.cp-error {
   text-align: center;
   padding: var(--sp-8);
   border: 1.5px dashed var(--cinnabar);
@@ -1211,8 +1211,8 @@ body.jx-way-no-scroll #root {
   font-family: var(--font-display);
 }
 
-/* ─── C8 高级动画 ─── */
-@keyframes jx-stamp-in {
+/* ─── 动画 ─── */
+@keyframes cp-stamp-in {
   0% {
     transform: scale(2.2) rotate(-8deg);
     opacity: 0;
@@ -1226,11 +1226,11 @@ body.jx-way-no-scroll #root {
   }
 }
 
-.jx-stamp-in {
-  animation: jx-stamp-in 600ms var(--ease-out) both;
+.cp-stamp-in {
+  animation: cp-stamp-in 600ms var(--ease-out) both;
 }
 
-@keyframes jx-roll-open {
+@keyframes cp-roll-open {
   from {
     clip-path: inset(0 0 0 50%);
     opacity: 0;
@@ -1241,11 +1241,11 @@ body.jx-way-no-scroll #root {
   }
 }
 
-.jx-roll-open {
-  animation: jx-roll-open 700ms var(--ease-in-out) both;
+.cp-roll-open {
+  animation: cp-roll-open 700ms var(--ease-in-out) both;
 }
 
-@keyframes jx-fade-stagger {
+@keyframes cp-fade-stagger {
   from {
     opacity: 0;
     transform: translateY(8px);
@@ -1256,75 +1256,75 @@ body.jx-way-no-scroll #root {
   }
 }
 
-.jx-stagger > * {
+.cp-stagger > * {
   opacity: 0;
-  animation: jx-fade-stagger 500ms var(--ease-out) forwards;
+  animation: cp-fade-stagger 500ms var(--ease-out) forwards;
 }
 /* 安全兜底：动画结束或不可用时确保可见 */
-@supports not (animation: jx-fade-stagger 1ms) {
-  .jx-stagger > * {
+@supports not (animation: cp-fade-stagger 1ms) {
+  .cp-stagger > * {
     opacity: 1;
   }
 }
-.jx-stagger > *:nth-child(1) {
+.cp-stagger > *:nth-child(1) {
   animation-delay: 60ms;
 }
-.jx-stagger > *:nth-child(2) {
+.cp-stagger > *:nth-child(2) {
   animation-delay: 140ms;
 }
-.jx-stagger > *:nth-child(3) {
+.cp-stagger > *:nth-child(3) {
   animation-delay: 220ms;
 }
-.jx-stagger > *:nth-child(4) {
+.cp-stagger > *:nth-child(4) {
   animation-delay: 300ms;
 }
-.jx-stagger > *:nth-child(5) {
+.cp-stagger > *:nth-child(5) {
   animation-delay: 380ms;
 }
-.jx-stagger > *:nth-child(6) {
+.cp-stagger > *:nth-child(6) {
   animation-delay: 460ms;
 }
-.jx-stagger > *:nth-child(7) {
+.cp-stagger > *:nth-child(7) {
   animation-delay: 540ms;
 }
-.jx-stagger > *:nth-child(8) {
+.cp-stagger > *:nth-child(8) {
   animation-delay: 620ms;
 }
-.jx-stagger > *:nth-child(9) {
+.cp-stagger > *:nth-child(9) {
   animation-delay: 700ms;
 }
-.jx-stagger > *:nth-child(10) {
+.cp-stagger > *:nth-child(10) {
   animation-delay: 780ms;
 }
-.jx-stagger > *:nth-child(11) {
+.cp-stagger > *:nth-child(11) {
   animation-delay: 860ms;
 }
-.jx-stagger > *:nth-child(12) {
+.cp-stagger > *:nth-child(12) {
   animation-delay: 940ms;
 }
 /* 超过 12 个子元素时立即可见，避免永久 opacity:0 */
-.jx-stagger > *:nth-child(n + 13) {
+.cp-stagger > *:nth-child(n + 13) {
   opacity: 1;
   animation: none;
 }
 
 /* 印章朱砂下压效果 */
-.jx-cinnabar-stamp {
+.cp-cinnabar-stamp {
   transition:
     transform 200ms var(--ease-out),
     background 200ms;
 }
 
-.jx-cinnabar-stamp:hover {
+.cp-cinnabar-stamp:hover {
   transform: scale(1.06);
 }
 
 /* ─── 响应式打磨（已有断点，移除重复） ─── */
 
-/* ─── C12 a11y 增量 ─── */
+/* ─── 无障碍增强 ─── */
 
 /* Skip link — 键盘用户按 Tab 第一个可见 */
-.jx-skip-link {
+.cp-skip-link {
   position: absolute;
   top: -100px;
   left: 0.5rem;
@@ -1339,8 +1339,8 @@ body.jx-way-no-scroll #root {
   transition: top 200ms var(--ease-out);
 }
 
-.jx-skip-link:focus,
-.jx-skip-link:focus-visible {
+.cp-skip-link:focus,
+.cp-skip-link:focus-visible {
   top: 0.5rem;
   outline: 2px solid var(--ink);
   outline-offset: 2px;
@@ -1371,34 +1371,34 @@ main:focus {
 }
 
 /* ─── 同道高亮样式 ─── */
-.jx-alt-close {
+.cp-alt-close {
   transform: scale(1.02);
   box-shadow: 0 4px 12px rgba(168, 50, 46, 0.15);
 }
 
-.jx-alt-close:hover {
+.cp-alt-close:hover {
   transform: scale(1.04);
   box-shadow: 0 6px 16px rgba(168, 50, 46, 0.2);
 }
 
 /* ─── 跳过按钮样式 ─── */
-.jx-btn-skip {
+.cp-btn-skip {
   font-size: 0.875rem;
   padding: var(--sp-2) var(--sp-4);
   opacity: 0.7;
 }
 
-.jx-btn-skip:hover {
+.cp-btn-skip:hover {
   opacity: 1;
   background: var(--rice-warm);
 }
 
 /* ─── 回溯提示样式 ─── */
-.jx-backtrack-hint {
-  animation: jx-pulse 2s var(--ease-in-out) infinite;
+.cp-backtrack-hint {
+  animation: cp-pulse 2s var(--ease-in-out) infinite;
 }
 
-@keyframes jx-pulse {
+@keyframes cp-pulse {
   0%,
   100% {
     opacity: 0.8;
@@ -1409,7 +1409,7 @@ main:focus {
 }
 
 /* ─── 键盘导航提示 ─── */
-.jx-keyboard-hint {
+.cp-keyboard-hint {
   position: fixed;
   bottom: 1rem;
   right: 1rem;
@@ -1428,7 +1428,7 @@ main:focus {
   word-break: break-word;
 }
 
-.jx-keyboard-hint.visible {
+.cp-keyboard-hint.visible {
   opacity: 0.9;
 }
 
@@ -1445,7 +1445,7 @@ a:focus-visible {
 
 /* ─── 触摸设备优化 ─── */
 @media (hover: none) and (pointer: coarse) {
-  .jx-btn {
+  .cp-btn {
     min-height: 44px;
     min-width: 44px;
   }
@@ -1461,14 +1461,14 @@ a:focus-visible {
     display: none;
   }
 
-  .jx-btn,
-  .jx-skip-link,
-  .jx-keyboard-hint {
+  .cp-btn,
+  .cp-skip-link,
+  .cp-keyboard-hint {
     display: none;
   }
 
-  .jx-container,
-  .jx-container-narrow {
+  .cp-container,
+  .cp-container-narrow {
     max-width: 100%;
     padding: 0;
   }

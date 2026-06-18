@@ -4,7 +4,7 @@ type Props = { text: string; gloss?: string };
 
 export function Verse({ text, gloss }: Props) {
   return (
-    <div className="jx-verse">
+    <div className="cp-verse">
       <span className="ancient">「{text}」</span>
       {gloss && <span className="gloss">—— {gloss}</span>}
     </div>

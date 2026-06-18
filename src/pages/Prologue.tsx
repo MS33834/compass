@@ -17,7 +17,7 @@ export function Prologue() {
   const lines = t.prologue.verses[pick];
 
   return (
-    <section className="jx-container-narrow jx-page-enter" aria-labelledby="prologue-title">
+    <section className="cp-container-narrow cp-page-enter" aria-labelledby="prologue-title">
       {/* 顶部装饰 */}
       <div
         aria-hidden
@@ -37,7 +37,7 @@ export function Prologue() {
       <div style={{ textAlign: 'center', padding: '3rem 0 2rem' }}>
         <div
           aria-hidden
-          className="jx-seal-large jx-stamp-in"
+          className="cp-seal-large cp-stamp-in"
           style={{
             color: 'var(--cinnabar)',
             fontFamily: 'var(--font-display)',
@@ -50,7 +50,7 @@ export function Prologue() {
         </div>
         <h1
           id="prologue-title"
-          className="jx-ink-spread"
+          className="cp-ink-spread"
           style={{ marginBottom: '1rem', animationDelay: '400ms' }}
         >
           {t.prologue.title}
@@ -70,7 +70,7 @@ export function Prologue() {
         </div>
       </div>
 
-      <div style={{ marginBottom: '3rem' }} className="jx-bamboo-unfold">
+      <div style={{ marginBottom: '3rem' }} className="cp-bamboo-unfold">
         {lines.map((l, i) => (
           <Verse key={i} text={l.text} gloss={l.gloss} />
         ))}
@@ -89,7 +89,7 @@ export function Prologue() {
           fontFamily: 'var(--font-accent)',
         }}
       >
-        ── 墨 · 心 · 镜 ──
+        ── 墨 · 心 · 指 ──
       </div>
 
       <div

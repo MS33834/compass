@@ -1,5 +1,5 @@
 // 指南 · axe-core 无障碍扫描
-// 跑法：node tests/axe.mjs
+// 用法：node tests/axe.mjs
 // 前置：vite preview 已在 4173 端口运行（CI 脚本里 npx vite preview --port 4173 --base ./）
 
 import { chromium } from 'playwright';
@@ -21,7 +21,7 @@ const BASE = process.env.AXE_BASE || 'http://127.0.0.1:4173/';
 const REPORT_DIR = 'tests/axe-reports';
 mkdirSync(REPORT_DIR, { recursive: true });
 
-// 扫描路径：启动页 + 走一遍入镜 → 选域 → 映照（4 步关键路径）
+// 扫描路径：启动页 + 走一遍入内 → 选域 → 映照（4 步关键路径）
 const SCENES = [
   { name: 'prologue', setup: null },
   {
@@ -29,7 +29,7 @@ const SCENES = [
     setup: async page => {
       await page
         .locator('button')
-        .filter({ hasText: /入镜|开始|启程|照己|照一照/i })
+        .filter({ hasText: /入内|开始|启程|照己|照一照/i })
         .first()
         .click();
       await page.waitForTimeout(500);

@@ -1,12 +1,12 @@
 // 指南 · E2E 全流程模拟
-// 跑法：npx playwright test tests/e2e.mjs
-// 覆盖：启动页 → 入镜 → 选域 → 答 48 题 → 出镜 → 映照 → 复位
+// 用法：npx playwright test tests/e2e.mjs
+// 覆盖：启动页 → 入内 → 选域 → 答 48 题 → 出照 → 映照 → 复位
 
 import { chromium, devices } from 'playwright';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
-const BASE = process.env.E2E_BASE || 'http://127.0.0.1:4173/Compass/';
+const BASE = process.env.E2E_BASE || 'http://127.0.0.1:4173/compass/';
 const SHOTS = 'tests/e2e-shots';
 mkdirSync(SHOTS, { recursive: true });
 
@@ -30,7 +30,7 @@ function step(name, fn) {
 }
 
 const SCENES = {
-  prologue: '入镜',
+  prologue: '入内',
   path: '选域',
   way: '答题',
   reflection: '映照',
@@ -52,11 +52,13 @@ async function run(browserName, viewport, locale) {
   // 自动接受 confirm 对话框（reset 等场景）
   page.on('dialog', dialog => dialog.accept());
 
-  // 0. 启动
+  // 0. 启动（强制中文，E2E 断言基于 zh 文案）
   await step('00 启动', async () => {
-    await page.goto(BASE, { waitUntil: 'networkidle' });
+    const url = new URL(BASE);
+    url.searchParams.set('lang', 'zh');
+    await page.goto(url.toString(), { waitUntil: 'networkidle' });
     // 等启动页淡出（fade-in 完成 ~1.5s）
-    await page.waitForSelector('button:has-text("入镜")', { timeout: 5000 });
+    await page.waitForSelector('button:has-text("入内")', { timeout: 5000 });
     // 关键：标题
     const title = await page.title();
     if (!title || title.length < 4) throw new Error('title 无内容');
@@ -65,12 +67,12 @@ async function run(browserName, viewport, locale) {
   await page.waitForTimeout(900); // 等淡入完成（700ms 动效 + 余量）
   await page.screenshot({ path: join(SHOTS, `${viewport.width}-00-boot.png`), fullPage: true });
 
-  // 1. 入镜按钮
-  await step('01 入镜：点入镜按钮', async () => {
+  // 1. 入内按钮
+  await step('01 入内：点入内按钮', async () => {
     // 等待 React 挂载
     await page.waitForSelector('button', { timeout: 8000 });
-    // 找含"入镜"或"开始"或"照"或"启"的按钮
-    const btn = page.getByRole('button', { name: /入镜|开始|启程|照己|照一照/i }).first();
+    // 找含"入内"或"开始"或"照"或"启"的按钮
+    const btn = page.getByRole('button', { name: /入内|开始|启程|照己|照一照/i }).first();
     await btn.waitFor({ timeout: 5000 });
     await btn.click();
     // 等页面进入 path
@@ -113,22 +115,24 @@ async function run(browserName, viewport, locale) {
       if (await next.count()) {
         await next.click();
       } else {
-        // 最后一题，找"出镜"
+        // 最后一题，等"出照"按钮稳定后强制点击（避免动效导致 detached）
         const finish = page.locator('[data-testid="btn-finish"]').first();
-        await finish.click();
+        await finish.waitFor({ state: 'visible' });
+        await page.waitForTimeout(150);
+        await finish.click({ force: true });
       }
-      await page.waitForTimeout(60);
+      await page.waitForTimeout(80);
     }
-    // 48 题答完，再点出镜
+    // 48 题答完，再点出照
     const finish = page.locator('[data-testid="btn-finish"]').first();
     if (await finish.count()) {
-      await finish.click();
+      await finish.click({ force: true });
     }
     await page.waitForTimeout(500);
   })(page);
 
-  // 4. 出镜：自动进入映照
-  await step('04 出镜：进入映照页', async () => {
+  // 4. 出照：自动进入映照
+  await step('04 出照：进入映照页', async () => {
     await page.waitForSelector('[data-figure="primary"]', { timeout: 5000 });
     // 等所有同道卡完成布局
     await page.waitForFunction(
@@ -144,7 +148,7 @@ async function run(browserName, viewport, locale) {
   });
 
   // 5. 验证映照
-  await step('05 映照：主镜 + 同道 + 12 维', async () => {
+  await step('05 映照：主区 + 同道 + 12 维', async () => {
     // 雷达图存在
     const radar = page.locator('[data-testid="trait-radar"]');
     const radarCount = await radar.count();
@@ -163,9 +167,9 @@ async function run(browserName, viewport, locale) {
     if (await reset.count()) {
       await reset.click();
       await page.waitForTimeout(500);
-      // 应回到入镜页
-      const rujing = await page.getByRole('button', { name: /入镜/ }).count();
-      if (rujing === 0) throw new Error('复位后未回到入镜页');
+      // 应回到入内页
+      const rujing = await page.getByRole('button', { name: /入内/ }).count();
+      if (rujing === 0) throw new Error('复位后未回到入内页');
     } else {
       throw new Error('未找到复位按钮');
     }
@@ -176,7 +180,7 @@ async function run(browserName, viewport, locale) {
   // 7. 中途刷新应保留作答
   await step('07 刷新保留', async () => {
     // 再走一遍到第 5 题
-    await page.locator('button:has-text("入镜")').click();
+    await page.locator('button:has-text("入内")').click();
     await page.waitForTimeout(300);
     await page.locator('[data-domain="east-literati"]').click();
     await page.waitForTimeout(300);
@@ -235,7 +239,7 @@ async function run(browserName, viewport, locale) {
     if (primaryAfter === 0) throw new Error('刷新后未恢复映照页');
     const primaryName = await page.locator('[data-figure="primary"]').textContent();
     if (primaryName !== primaryBefore) {
-      throw new Error(`刷新后主镜人物变了: before=${primaryBefore} after=${primaryName}`);
+      throw new Error(`刷新后主区人物变了: before=${primaryBefore} after=${primaryName}`);
     }
   })(page);
 
@@ -253,7 +257,7 @@ async function run(browserName, viewport, locale) {
     })(page);
   }
 
-  // 10. 30 题阈值：少于 30 题不能出镜
+  // 10. 30 题阈值：少于 30 题不能出照
   await step('10 30 题阈值', async () => {
     // 通过 storage 注入：仅答 5 题
     await page.evaluate(() => {
@@ -276,30 +280,27 @@ async function run(browserName, viewport, locale) {
     await page.waitForTimeout(500);
     // 在最后一题
     const finish = page.locator('[data-testid="btn-finish"]').first();
-    if ((await finish.count()) === 0) throw new Error('应可见出镜按钮');
+    if ((await finish.count()) === 0) throw new Error('应可见出照按钮');
     // 但仅答 5 题，所以应禁用
     const isDisabled = await finish.evaluate(b => b.disabled);
-    if (!isDisabled) throw new Error('仅 5 题时出镜按钮应禁用');
+    if (!isDisabled) throw new Error('仅 5 题时出照按钮应禁用');
     // 验证 tooltip 提示再答几道
     const title = await finish.getAttribute('title');
     if (!title || !title.includes('再答')) {
-      throw new Error(`出镜按钮应有 tooltip 提示剩余题数: ${title}`);
+      throw new Error(`出照按钮应有 tooltip 提示剩余题数: ${title}`);
     }
   })(page);
 
-  // 11. 语言切换：EN/中
+  // 11. 语言切换：EN/中（way 页无 TopBar，用页内切换按钮）
   await step('11 语言切换', async () => {
-    const toggle = page.getByRole('button', { name: /^EN$|^中$/ }).first();
-    if ((await toggle.count()) > 0) {
-      const phaseBefore = await page.locator('[data-testid="topbar-phase"]').textContent();
-      await toggle.click();
-      await page.waitForTimeout(100);
-      const phaseAfter = await page.locator('[data-testid="topbar-phase"]').textContent();
-      if (phaseBefore === phaseAfter) {
-        throw new Error('点击 EN/中 后 phase 指示器未变');
-      }
-    } else {
-      throw new Error('未找到 EN/中 切换');
+    const toggle = page.locator('[data-testid="way-btn-lang"]').first();
+    if ((await toggle.count()) === 0) throw new Error('未找到语言切换按钮');
+    const progressBefore = await page.locator('[data-testid="way-progress-text"]').textContent();
+    await toggle.click();
+    await page.waitForTimeout(200);
+    const progressAfter = await page.locator('[data-testid="way-progress-text"]').textContent();
+    if (progressBefore === progressAfter) {
+      throw new Error('点击语言切换后进度文案未变');
     }
   })(page);
 
