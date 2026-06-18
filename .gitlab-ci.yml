@@ -1,0 +1,15 @@
+image: node:20-slim
+
+pages:
+  stage: deploy
+  script:
+    - npm ci --no-audit --no-fund
+    - npm run typecheck
+    - npm run test:all
+    - npm run build:pages
+    - mv dist public
+  artifacts:
+    paths:
+      - public
+  only:
+    - main
