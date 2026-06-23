@@ -75,12 +75,14 @@ function traitDiffLabel(
 }
 
 export function Reflection() {
+  const phase = useStore(s => s.phase);
   const report = useStore(s => s.report);
   const domain = useStore(s => s.domain);
   const answers = useStore(s => s.answers);
   const goPhase = useStore(s => s.goPhase);
   const setReport = useStore(s => s.setReport);
   const reset = useStore(s => s.reset);
+  const viewFigure = useStore(s => s.viewFigure);
   const locale = useStore(s => s.locale);
   const theme = useStore(s => s.theme);
   const t = useT();
@@ -105,6 +107,7 @@ export function Reflection() {
 
   // 刷新后报告丢失：可由 domain + answers 重新计算
   useEffect(() => {
+    if (phase !== 'reflection') return;
     if (report) return;
     if (!domain || Object.keys(answers).length < 30) {
       goPhaseRef.current('prologue');
@@ -112,19 +115,25 @@ export function Reflection() {
     }
     let cancelled = false;
     (async () => {
-      const [items, figures] = await Promise.all([
-        itemsForDomain(domain),
-        figuresForDomain(domain),
-      ]);
-      if (cancelled) return;
-      const r = buildReport(computeUserVector(answers, items), figures, answers, items);
-      if (r) setReport(r);
-      else goPhaseRef.current('prologue');
+      try {
+        const [items, figures] = await Promise.all([
+          itemsForDomain(domain),
+          figuresForDomain(domain),
+        ]);
+        if (cancelled) return;
+        const r = buildReport(computeUserVector(answers, items), figures, answers, items);
+        if (r) setReport(r);
+        else goPhaseRef.current('prologue');
+      } catch (err) {
+        if (cancelled) return;
+        console.error('Compass: failed to rebuild report', err);
+        goPhaseRef.current('prologue');
+      }
     })();
     return () => {
       cancelled = true;
     };
-  }, [report, domain, answers, setReport]);
+  }, [phase, report, domain, answers, setReport]);
 
   // 同道 3 维高亮（必须在任何条件 return 之前）
   const top3 = useMemo<number[]>(() => {
@@ -196,36 +205,44 @@ export function Reflection() {
 
   // 导出 JSON
   const handleExport = async () => {
-    const items = domain ? await itemsForDomain(domain) : [];
-    const maxIdx = Math.max(0, items.length - 1);
-    const s = exportState({
-      domain,
-      currentIndex: Math.min(Object.keys(answers).length, maxIdx),
-      answers,
-      locale,
-      theme,
-    });
-    downloadJSON(s);
+    try {
+      const items = domain ? await itemsForDomain(domain) : [];
+      const maxIdx = Math.max(0, items.length - 1);
+      const s = exportState({
+        domain,
+        currentIndex: Math.min(Object.keys(answers).length, maxIdx),
+        answers,
+        locale,
+        theme,
+      });
+      downloadJSON(s);
+    } catch (err) {
+      console.error('Compass: failed to export answers', err);
+    }
   };
 
   // 复制续答 URL
   const handleCopyResume = async () => {
-    const items = domain ? await itemsForDomain(domain) : [];
-    const maxIdx = Math.max(0, items.length - 1);
-    const s = exportState({
-      domain,
-      currentIndex: Math.min(Object.keys(answers).length, maxIdx),
-      answers,
-      locale,
-      theme,
-    });
-    const enc = encodeResume(s);
-    const url = `${window.location.origin}${window.location.pathname}?resume=${enc}`;
     try {
-      await navigator.clipboard.writeText(url);
-      flash(t.reflection.shareCopied);
-    } catch {
-      flash(url);
+      const items = domain ? await itemsForDomain(domain) : [];
+      const maxIdx = Math.max(0, items.length - 1);
+      const s = exportState({
+        domain,
+        currentIndex: Math.min(Object.keys(answers).length, maxIdx),
+        answers,
+        locale,
+        theme,
+      });
+      const enc = encodeResume(s);
+      const url = `${window.location.origin}${window.location.pathname}?resume=${enc}`;
+      try {
+        await navigator.clipboard.writeText(url);
+        flash(t.reflection.shareCopied);
+      } catch {
+        flash(url);
+      }
+    } catch (err) {
+      console.error('Compass: failed to copy resume link', err);
     }
   };
 
@@ -300,9 +317,21 @@ export function Reflection() {
         className="cp-ref-grid cp-primary-grid cp-stagger"
       >
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start' }}>
-          <div style={{ maxWidth: '220px', width: '100%' }}>
+          <button
+            type="button"
+            onClick={() => viewFigure(primary.figure.id)}
+            aria-label={`${primary.figure.name} · ${t.figureDetail.bio}`}
+            style={{
+              maxWidth: '220px',
+              width: '100%',
+              background: 'none',
+              border: 'none',
+              padding: 0,
+              cursor: 'pointer',
+            }}
+          >
             <Portrait figure={primary.figure} />
-          </div>
+          </button>
         </div>
         <div>
           <div style={{ textAlign: 'left' }}>
@@ -389,6 +418,16 @@ export function Reflection() {
                 key={a.figure.id}
                 data-figure="alternate"
                 data-figure-id={a.figure.id}
+                role="button"
+                tabIndex={0}
+                aria-label={`${a.figure.name} · ${a.figure.era}`}
+                onClick={() => viewFigure(a.figure.id)}
+                onKeyDown={e => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    viewFigure(a.figure.id);
+                  }
+                }}
                 className={`cp-alt-card${isClose ? ' cp-alt-close' : ''}`}
                 style={{
                   padding: '1.25rem 1rem',
@@ -397,6 +436,7 @@ export function Reflection() {
                   position: 'relative',
                   transition: 'all 300ms var(--ease-out)',
                   textAlign: 'center',
+                  cursor: 'pointer',
                 }}
               >
                 {idx === 0 && (

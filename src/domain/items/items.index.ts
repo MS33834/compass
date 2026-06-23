@@ -25,9 +25,14 @@ export async function itemsForDomain(d: DomainId): Promise<readonly Item[]> {
   const loader = DOMAIN_TO_LOADER[d];
   if (!loader) return [];
 
-  const mod = await loader();
-  const exportName = Object.keys(mod).find(k => k.startsWith('ITEMS_'));
-  const items = exportName ? mod[exportName] : [];
-  cache.set(d, items);
-  return items;
+  try {
+    const mod = await loader();
+    const exportName = Object.keys(mod).find(k => k.startsWith('ITEMS_'));
+    const items = exportName ? mod[exportName] : [];
+    cache.set(d, items);
+    return items;
+  } catch (err) {
+    console.error(`Compass: failed to load items for domain ${d}`, err);
+    return [];
+  }
 }

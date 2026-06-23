@@ -32,11 +32,18 @@ export function FigureDetail() {
     }
     let cancelled = false;
     setLoading(true);
-    findFigureById(viewingFigure).then(f => {
-      if (cancelled) return;
-      setFigure(f);
-      setLoading(false);
-    });
+    findFigureById(viewingFigure)
+      .then(f => {
+        if (cancelled) return;
+        setFigure(f);
+        setLoading(false);
+      })
+      .catch(err => {
+        if (cancelled) return;
+        console.error('Compass: failed to load figure detail', err);
+        setFigure(undefined);
+        setLoading(false);
+      });
     return () => {
       cancelled = true;
     };
@@ -48,10 +55,16 @@ export function FigureDetail() {
       return;
     }
     let cancelled = false;
-    Promise.all(figure.echoes.map(id => findFigureById(id))).then(found => {
-      if (cancelled) return;
-      setRelated(found.filter((f): f is Figure => Boolean(f)));
-    });
+    Promise.all(figure.echoes.map(id => findFigureById(id)))
+      .then(found => {
+        if (cancelled) return;
+        setRelated(found.filter((f): f is Figure => Boolean(f)));
+      })
+      .catch(err => {
+        if (cancelled) return;
+        console.error('Compass: failed to load related figures', err);
+        setRelated([]);
+      });
     return () => {
       cancelled = true;
     };

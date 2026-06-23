@@ -32,11 +32,16 @@ export async function figuresForDomain(d: DomainId): Promise<readonly Figure[]> 
   const loader = DOMAIN_TO_LOADER[d];
   if (!loader) return [];
 
-  const mod = await loader();
-  const exportName = Object.keys(mod).find(k => k.startsWith('FIGURES_'));
-  const figures = exportName ? mod[exportName] : [];
-  cache.set(d, figures);
-  return figures;
+  try {
+    const mod = await loader();
+    const exportName = Object.keys(mod).find(k => k.startsWith('FIGURES_'));
+    const figures = exportName ? mod[exportName] : [];
+    cache.set(d, figures);
+    return figures;
+  } catch (err) {
+    console.error(`Compass: failed to load figures for domain ${d}`, err);
+    return [];
+  }
 }
 
 export function figuresCountForDomain(d: DomainId): number {
