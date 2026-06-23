@@ -4,7 +4,7 @@
 > Three minutes, three millennia — find who might sit with thee among 150 figures across 5 domains.
 
 [🌐 **Live Site**](https://badhope.gitcode.host/compass/) ·
-[📦 **Repository**](https://gitcode.com/badhope/compass) ·
+[📦 **Repository**](https://github.com/MS33834/compass) ·
 [📜 **Changelog**](./CHANGELOG.md) ·
 [🛡 **License (PolyForm NC)**](./LICENSE)
 
@@ -107,7 +107,7 @@ npm run format        # prettier --write
 .
 ├── .github/
 │   ├── ISSUE_TEMPLATE/         # bug-report / feature-add-figure
-│   ├── workflows/              # ci.yml / pages.yml
+│   ├── workflows/              # ci.yml
 │   └── FUNDING.yml             # 赞助
 ├── public/
 │   ├── 404.html                # SPA 404 回退
@@ -142,10 +142,8 @@ npm run format        # prettier --write
 ├── .gitattributes
 ├── .gitignore
 ├── .gitleaks.toml
-├── .lighthouserc.json
 ├── .node-version               # 20
 ├── .prettierrc / .prettierignore
-├── .size-limit.json
 ├── CHANGELOG.md
 ├── CODE_OF_CONDUCT.md
 ├── CONTRIBUTING.md

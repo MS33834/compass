@@ -2,7 +2,7 @@
   "name": "compass",
   "version": "0.3.0",
   "private": true,
-  "description": "Compass · a quiet compass for the inner self. Answer 60 questions across a 12-dimensional trait space to find your historical counterpart across 5 domains, 151 figures, 240 items. Local-first, no server, no tracking.",
+  "description": "Compass · a quiet compass for the inner self. Answer 60 questions across a 12-dimensional trait space to find your historical counterpart across 5 domains, 150 figures, 240 items. Local-first, no server, no tracking.",
   "type": "module",
   "engines": {
     "node": ">=20.0.0",
@@ -25,7 +25,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://gitcode.com/badhope/compass.git"
+    "url": "https://github.com/MS33834/compass.git"
   },
   "keywords": [
     "compass",
@@ -48,10 +48,11 @@
   },
   "license": "PolyForm-Noncommercial-1.0.0",
   "bugs": {
-    "url": "https://gitcode.com/badhope/compass/issues"
+    "url": "https://github.com/MS33834/compass/issues"
   },
   "homepage": "https://badhope.gitcode.host/compass/",
   "dependencies": {
+    "gsap": "^3.15.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "zustand": "^4.5.5"

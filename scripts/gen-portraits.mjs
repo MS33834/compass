@@ -7,7 +7,7 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { FIGURES } from './portraits/figures.mjs';
-import { FIGURES_EAST_STATEMAN } from './portraits/figures.east-statesman.mjs';
+import { FIGURES_EAST_STATESMAN } from './portraits/figures.east-statesman.mjs';
 import { FIGURES_EAST_SCIENTIST } from './portraits/figures.east-scientist.mjs';
 import { FIGURES_WEST_PHILOSOPHER } from './portraits/figures.west-philosopher.mjs';
 import { FIGURES_WEST_SCIENTIST } from './portraits/figures.west-scientist.mjs';
@@ -18,7 +18,7 @@ const ROOT = resolve(__dirname, '../public/portraits');
 
 const DOMAINS = [
   { id: 'east-literati', figures: FIGURES },
-  { id: 'east-statesman', figures: FIGURES_EAST_STATEMAN },
+  { id: 'east-statesman', figures: FIGURES_EAST_STATESMAN },
   { id: 'east-scientist', figures: FIGURES_EAST_SCIENTIST },
   { id: 'west-philosopher', figures: FIGURES_WEST_PHILOSOPHER },
   { id: 'west-scientist', figures: FIGURES_WEST_SCIENTIST },

@@ -31,9 +31,8 @@ export default defineConfig(({ mode }) => {
             ) {
               return 'vendor-react';
             }
-            // 按域拆分为 figures / items chunk
-            if (id.includes('/domain/figures/')) return 'figures';
-            if (id.includes('/domain/items/')) return 'items';
+            // 人物库 / 题库通过 import.meta.glob 动态导入，
+            // 不强制归并到单 chunk，使每个域可独立按需加载。
           },
         },
       },

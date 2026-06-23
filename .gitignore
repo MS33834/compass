@@ -57,4 +57,9 @@ vite.config.ts.timestamp-*.log
 # 测试运行时产物
 tests/axe-reports/
 tests/e2e-shots/
+test-screenshots/
 *.log
+
+# 一次性调试脚本（不提交）
+tests/debug-*.mjs
+tests/diagnose*.mjs

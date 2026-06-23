@@ -29,7 +29,7 @@ import {
   pavilionFree,
 } from './common.mjs';
 
-export const FIGURES_EAST_STATEMAN = [
+export const FIGURES_EAST_STATESMAN = [
   // ── A 极端外：变法 + 果决 + 刚毅 ──
   {
     id: 'shangyang',

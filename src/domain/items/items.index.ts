@@ -1,29 +1,33 @@
-// 指南 · 题库索引
+/// <reference types="vite/client" />
+// 指南 · 题库索引（按域懒加载）
 
-import { ITEMS_EAST_LITERATI } from './items.east-literati';
-import { ITEMS_EAST_STATEMAN } from './items.east-statesman';
-import { ITEMS_EAST_SCIENTIST } from './items.east-scientist';
-import { ITEMS_WEST_PHILOSOPHER } from './items.west-philosopher';
-import { ITEMS_WEST_SCIENTIST } from './items.west-scientist';
 import type { Item } from './item.types';
 import type { DomainId } from '../figures/figure.types';
 
-const ITEMS_BY_DOMAIN: Record<DomainId, readonly Item[]> = {
-  'east-literati': ITEMS_EAST_LITERATI,
-  'east-statesman': ITEMS_EAST_STATEMAN,
-  'east-scientist': ITEMS_EAST_SCIENTIST,
-  'west-philosopher': ITEMS_WEST_PHILOSOPHER,
-  'west-scientist': ITEMS_WEST_SCIENTIST,
+type ItemModule = { readonly [exportName: string]: readonly Item[] };
+
+const loaders = import.meta.glob<ItemModule>('./items.*.ts');
+
+const DOMAIN_TO_LOADER: Record<DomainId, () => Promise<ItemModule>> = {
+  'east-literati': loaders['./items.east-literati.ts'] as () => Promise<ItemModule>,
+  'east-statesman': loaders['./items.east-statesman.ts'] as () => Promise<ItemModule>,
+  'east-scientist': loaders['./items.east-scientist.ts'] as () => Promise<ItemModule>,
+  'west-philosopher': loaders['./items.west-philosopher.ts'] as () => Promise<ItemModule>,
+  'west-scientist': loaders['./items.west-scientist.ts'] as () => Promise<ItemModule>,
 };
 
-export function itemsForDomain(d: DomainId): readonly Item[] {
-  return ITEMS_BY_DOMAIN[d];
-}
+const cache = new Map<DomainId, readonly Item[]>();
 
-export const ALL_ITEMS: readonly Item[] = [
-  ...ITEMS_EAST_LITERATI,
-  ...ITEMS_EAST_STATEMAN,
-  ...ITEMS_EAST_SCIENTIST,
-  ...ITEMS_WEST_PHILOSOPHER,
-  ...ITEMS_WEST_SCIENTIST,
-];
+export async function itemsForDomain(d: DomainId): Promise<readonly Item[]> {
+  const cached = cache.get(d);
+  if (cached) return cached;
+
+  const loader = DOMAIN_TO_LOADER[d];
+  if (!loader) return [];
+
+  const mod = await loader();
+  const exportName = Object.keys(mod).find(k => k.startsWith('ITEMS_'));
+  const items = exportName ? mod[exportName] : [];
+  cache.set(d, items);
+  return items;
+}

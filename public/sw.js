@@ -54,11 +54,12 @@ self.addEventListener('fetch', e => {
     e.respondWith(
       fetch(e.request)
         .then(resp => {
-          const clone = resp.clone();
-          caches.open(CACHE).then(c => c.put(e.request, clone)).catch(() => {});
+          const cloneForRequest = resp.clone();
+          const cloneForIndex = resp.clone();
+          caches.open(CACHE).then(c => c.put(e.request, cloneForRequest)).catch(() => {});
           // 同时缓存 index.html 作为稳定 fallback key
           const indexReq = new Request(`${BASE}index.html`);
-          caches.open(CACHE).then(c => c.put(indexReq, clone.clone())).catch(() => {});
+          caches.open(CACHE).then(c => c.put(indexReq, cloneForIndex)).catch(() => {});
           return resp;
         })
         .catch(async () => {
