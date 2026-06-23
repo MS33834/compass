@@ -48,10 +48,10 @@ export const ITEMS_WEST_PHILOSOPHER: readonly Item[] = [
         secondary: [{ traitId: 3, delta: 0.3 }],
       },
       { text: '赖于常识', gloss: '以常为度', primary: { traitId: 1, delta: 0.0 } },
-      { text: '思于「我思」', gloss: '笛卡尔之径', primary: { traitId: 1, delta: 1.0 } },
+      { text: '思于「我思」', gloss: '从我思出发', primary: { traitId: 1, delta: 1.0 } },
       {
         text: '存于「彼在」',
-        gloss: '海德格尔之径',
+        gloss: '从存在出发',
         primary: { traitId: 1, delta: 1.2 },
         secondary: [{ traitId: 9, delta: 0.4 }],
       },
@@ -75,7 +75,7 @@ export const ITEMS_WEST_PHILOSOPHER: readonly Item[] = [
       { text: '转身向光', gloss: '知而求之', primary: { traitId: 1, delta: 1.0 } },
       {
         text: '出洞穴',
-        gloss: '柏拉图之径',
+        gloss: '走向可知之光',
         primary: { traitId: 1, delta: 1.2 },
         secondary: [{ traitId: 4, delta: 0.4 }],
       },
@@ -109,12 +109,12 @@ export const ITEMS_WEST_PHILOSOPHER: readonly Item[] = [
     prompt: '激情与节制',
     promptGloss: '汝于情感，倾于何端？',
     options: [
-      { text: '以智节情', gloss: '斯多葛之径', primary: { traitId: 2, delta: -1.0 } },
+      { text: '以智节情', gloss: '以理性节制情感', primary: { traitId: 2, delta: -1.0 } },
       { text: '静多于动', gloss: '以静为度', primary: { traitId: 2, delta: -0.4 } },
       { text: '不偏不倚', gloss: '执两用中', primary: { traitId: 2, delta: 0.0 } },
       { text: '动多于静', gloss: '以情为真', primary: { traitId: 2, delta: 0.6 } },
       { text: '纵情而往', gloss: '以情为道', primary: { traitId: 2, delta: 1.0 } },
-      { text: '酒神之醉', gloss: '尼采之径', primary: { traitId: 2, delta: 1.4 } },
+      { text: '酒神之醉', gloss: '以情感为最高表达', primary: { traitId: 2, delta: 1.4 } },
     ],
   },
   {

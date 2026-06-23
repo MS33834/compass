@@ -20,7 +20,11 @@ export const FIGURES_EAST_LITERATI: readonly Figure[] = [
     signature: '道可道，非常道；名可名，非常名。',
     bio: '姓李名耳，字聃。楚苦县人。周守藏室之史，见周之衰，乃西出函谷，关令尹喜强之著书，遂作《道德经》五千言，言道、德、虚、无、自然之意。',
     portrait: 'portraits/east-literati/laozi.svg',
-    matchBlurb: '汝与 {{name}} 同，思至形而上之境，所言皆欲及于永恒。',
+    matchBlurb: [
+      '汝与 {{name}} 同，思至形而上之境，所言皆欲及于永恒。',
+      '汝与 {{name}} 同，放眼千秋，不囿于朝夕。',
+      '汝与 {{name}} 同，于书山学海中自得其乐。',
+    ],
     anecdotes: [
       { title: '紫气东来', body: '老子西游，关令尹喜见紫气东来，知有圣人过此，果见老子。' },
       { title: '骑青牛西去', body: '老子出关时骑青牛，后世以青牛为老子之象。' },
@@ -36,7 +40,11 @@ export const FIGURES_EAST_LITERATI: readonly Figure[] = [
     signature: '天地与我并生，而万物与我为一。',
     bio: '名周，宋国蒙人。曾为漆园吏。楚威王闻其名，厚币迎之，许以为相，庄子笑曰：子独不见郊祭之牺牛乎？吾将曳尾于涂中。遂终身不仕。',
     portrait: 'portraits/east-literati/zhuangzi.svg',
-    matchBlurb: '汝与 {{name}} 同，游于物之初，以逍遥为归。',
+    matchBlurb: [
+      '汝与 {{name}} 同，思至形而上之境，所言皆欲及于永恒。',
+      '汝与 {{name}} 同，以变求通，不为祖宗之法所囿。',
+      '汝与 {{name}} 同，放眼千秋，不囿于朝夕。',
+    ],
     anecdotes: [
       {
         title: '庄周梦蝶',
@@ -55,7 +63,11 @@ export const FIGURES_EAST_LITERATI: readonly Figure[] = [
     signature: '兼相爱，交相利。',
     bio: '名翟，鲁人或宋人。出身工匠，自学成才。倡兼爱、非攻、尚同、节用。门徒众多，组织严密，赴汤蹈火死不旋踵。',
     portrait: 'portraits/east-literati/mozi.svg',
-    matchBlurb: '汝与 {{name}} 同，思以济天下为任，不辞劳苦。',
+    matchBlurb: [
+      '汝与 {{name}} 同，不泥古、不奉常，以新为归。',
+      '汝与 {{name}} 同，思至形而上之境，所言皆欲及于永恒。',
+      '汝与 {{name}} 同，于书山学海中自得其乐。',
+    ],
     anecdotes: [
       {
         title: '止楚攻宋',
@@ -74,7 +86,11 @@ export const FIGURES_EAST_LITERATI: readonly Figure[] = [
     signature: '法不阿贵，绳不挠曲。',
     bio: '韩国诸公子，李斯同门。著《韩非子》五十五篇。秦王见其书，叹曰：嗟乎！寡人得见此人与之游，死不恨矣！遂急攻韩，使秦攻之以入秦。李斯害之，赐死于狱。',
     portrait: 'portraits/east-literati/hanfeizi.svg',
-    matchBlurb: '汝与 {{name}} 同，以法为天下之公器，不以情乱之。',
+    matchBlurb: [
+      '汝与 {{name}} 同，破旧立新，虽千万人吾往矣。',
+      '汝与 {{name}} 同，博而能约，厚积薄发。',
+      '汝与 {{name}} 同，思至形而上之境，所言皆欲及于永恒。',
+    ],
     anecdotes: [
       { title: '五蠹之说', body: '韩非以儒、以侠、以纵横、以患御、以工商为五蠹，主张以法治国。' },
       { title: '说难孤愤', body: '作《说难》《孤愤》，皆为韩之削弱而发。' },
@@ -90,7 +106,11 @@ export const FIGURES_EAST_LITERATI: readonly Figure[] = [
     signature: '夫童心者，真心也……若失却童心，便失却真心。',
     bio: '号卓吾，又号温陵居士。福建晋江人。万历年间弃官寓于湖北麻城，剃发为僧。著《焚书》《藏书》，以「童心说」批儒，斥道学为假人。被诬下狱，自刎于狱中。',
     portrait: 'portraits/east-literati/lizhi.svg',
-    matchBlurb: '汝与 {{name}} 同，以童心为真，不屑以假面示人。',
+    matchBlurb: [
+      '汝与 {{name}} 同，敢破常名常道，另立一套言语。',
+      '汝与 {{name}} 同，以风险为阶梯，步步登高。',
+      '汝与 {{name}} 同，能于众说之上立一己之见，思入幽微。',
+    ],
     anecdotes: [
       { title: '剃发为僧', body: '年六十二，剃发以示决裂，后世称为「异端之尤」。' },
       { title: '狱中自刎', body: '以剃刀自割其喉，两日始死。其骨气凛然如此。' },
@@ -106,7 +126,11 @@ export const FIGURES_EAST_LITERATI: readonly Figure[] = [
     signature: '不畏浮云遮望眼，自缘身在最高层。',
     bio: '字介甫，号半山。抚州临川人。庆历进士。熙宁二年任参知政事，推行新法，号「熙宁变法」。虽遭旧党反对而不悔。',
     portrait: 'portraits/east-literati/wanganshi.svg',
-    matchBlurb: '汝与 {{name}} 同，敢为天下先，不恤人言。',
+    matchBlurb: [
+      '汝与 {{name}} 同，起而行之，不坐而论道。',
+      '汝与 {{name}} 同，敢为天下先，不恤人言。',
+      '汝与 {{name}} 同，心志刚毅，以执为骨。',
+    ],
     anecdotes: [
       { title: '青苗法', body: '以常平仓为本，行青苗法，贷谷于民而收其息，意在抑兼并。' },
       { title: '三不足之说', body: '倡「天变不足畏，人言不足恤，祖宗之法不足守」，为革新之宣言。' },
@@ -124,7 +148,11 @@ export const FIGURES_EAST_LITERATI: readonly Figure[] = [
     signature: '性恶者，善伪之所生也。',
     bio: '名况，字卿。赵人。游学于齐稷下，三为祭酒。弟子有韩非、李斯。倡「性恶论」，与孟子「性善」相对。',
     portrait: 'portraits/east-literati/xunzi.svg',
-    matchBlurb: '汝与 {{name}} 同，以学化性，以礼为约。',
+    matchBlurb: [
+      '汝与 {{name}} 同，以学化性，以礼为约。',
+      '汝与 {{name}} 同，好穷理以究天人之际，不以耳目之实自限。',
+      '汝与 {{name}} 同，心志刚毅，以执为骨。',
+    ],
     anecdotes: [
       { title: '劝学', body: '作《劝学》篇，言「青，取之于蓝而青于蓝；冰，水为之而寒于水」。' },
       { title: '性恶与礼', body: '主性恶，而以礼法矫之，故重师法、重积学。' },
@@ -140,7 +168,11 @@ export const FIGURES_EAST_LITERATI: readonly Figure[] = [
     signature: '路漫漫其修远兮，吾将上下而求索。',
     bio: '名平，字原，又名正则，字灵均。楚贵族。任左徒，主张联齐抗秦，后遭谗被放。乃作《离骚》《九歌》《天问》。自沉于汨罗江，以死殉国。',
     portrait: 'portraits/east-literati/quyuan.svg',
-    matchBlurb: '汝与 {{name}} 同，以香草为喻，以洁身为志。',
+    matchBlurb: [
+      '汝与 {{name}} 同，情如春水，不藏不掩。',
+      '汝与 {{name}} 同，虽九死其犹未悔。',
+      '汝与 {{name}} 同，博而能约，厚积薄发。',
+    ],
     anecdotes: [
       { title: '端午之由', body: '屈原投江日，百姓竞渡以救之，投粽以饲鱼，后成端午之俗。' },
       { title: '天问百二十', body: '作《天问》，问天地万物之理，凡百七十余问，气象宏大。' },
@@ -156,7 +188,11 @@ export const FIGURES_EAST_LITERATI: readonly Figure[] = [
     signature: '千山鸟飞绝，万径人踪灭。孤舟蓑笠翁，独钓寒江雪。',
     bio: '字子厚，河东人。贞元进士。参与王叔文变法，失败后贬永州司马、柳州刺史。与韩愈倡古文运动，并称「韩柳」。',
     portrait: 'portraits/east-literati/liuzongyuan.svg',
-    matchBlurb: '汝与 {{name}} 同，处穷而志不屈，以文为心。',
+    matchBlurb: [
+      '汝与 {{name}} 同，博而能约，厚积薄发。',
+      '汝与 {{name}} 同，思至形而上之境，所言皆欲及于永恒。',
+      '汝与 {{name}} 同，认准一事，便不辞险阻。',
+    ],
     anecdotes: [
       {
         title: '永州八记',
@@ -175,7 +211,11 @@ export const FIGURES_EAST_LITERATI: readonly Figure[] = [
     signature: '知是行之始，行是知之成。',
     bio: '名守仁，字伯安，余姚人。弘治进士。谪龙场时悟「心即理」，倡「知行合一」「致良知」。平宁王之乱，立功封新建伯。',
     portrait: 'portraits/east-literati/wangyangming.svg',
-    matchBlurb: '汝与 {{name}} 同，以心为理，以行为知，知行不二。',
+    matchBlurb: [
+      '汝与 {{name}} 同，信念一旦立定，便成汝之脊梁。',
+      '汝与 {{name}} 同，起而行之，不坐而论道。',
+      '汝与 {{name}} 同，博而能约，厚积薄发。',
+    ],
     anecdotes: [
       {
         title: '龙场悟道',
@@ -197,7 +237,11 @@ export const FIGURES_EAST_LITERATI: readonly Figure[] = [
     signature: '问渠那得清如许？为有源头活水来。',
     bio: '字元晦，一字仲晦，号晦庵。徽州婺源人。绍兴进士。集理学之大成，编《四书章句集注》，为后世科举之圭臬。',
     portrait: 'portraits/east-literati/zhuxi.svg',
-    matchBlurb: '汝与 {{name}} 同，以理为宗，以学为日课。',
+    matchBlurb: [
+      '汝与 {{name}} 同，以理为宗，以学为日课。',
+      '汝与 {{name}} 同，不为一时之计，而谋百代。',
+      '汝与 {{name}} 同，心志刚毅，以执为骨。',
+    ],
     anecdotes: [
       { title: '朱子家训', body: '作《朱子家训》与《童蒙须知》，重日常修身之学。' },
       { title: '鹅湖之会', body: '与陆九渊辩于鹅湖寺，为理学心学之争端。' },
@@ -213,7 +257,11 @@ export const FIGURES_EAST_LITERATI: readonly Figure[] = [
     signature: '天理即在人欲中。',
     bio: '字而农，号姜斋，湖南衡阳人。明亡，拒仕清，隐于湘西山中。著《船山遗书》百万言，集明清思想之大成。',
     portrait: 'portraits/east-literati/wangfuzhi.svg',
-    matchBlurb: '汝与 {{name}} 同，思入幽微，以身为器。',
+    matchBlurb: [
+      '汝与 {{name}} 同，百折而不回，守其志如一。',
+      '汝与 {{name}} 同，学求深耕，以精为归。',
+      '汝与 {{name}} 同，以长远为念，不以眼前得失动心。',
+    ],
     anecdotes: [
       { title: '船山之号', body: '隐于石船山，自号船山老人。' },
       { title: '六经责我开生面', body: '言「六经责我开生面，七尺从天乞活埋」，其志凛然。' },
@@ -231,7 +279,11 @@ export const FIGURES_EAST_LITERATI: readonly Figure[] = [
     signature: '己所不欲，勿施于人。',
     bio: '名丘，字仲尼，鲁国曲阜人。少贫，曾为委吏、乘田。中年聚徒讲学，弟子三千，贤者七十二。周游列国凡十四年，返鲁而删《诗》《书》、订《礼》《乐》、作《春秋》。',
     portrait: 'portraits/east-literati/kongzi.svg',
-    matchBlurb: '汝与 {{name}} 同，以仁为宗，以礼为教，不倦于学。',
+    matchBlurb: [
+      '汝与 {{name}} 同，以仁为宗，以礼为教，不倦于学。',
+      '汝与 {{name}} 同，不为一时之计，而谋百代。',
+      '汝与 {{name}} 同，以群体为先，忘身以济天下。',
+    ],
     anecdotes: [
       { title: '韦编三绝', body: '晚年读《易》，「韦编三绝」，可见其勤。' },
       { title: '三月不知肉味', body: '在齐闻《韶》乐，「三月不知肉味」，言其美。' },
@@ -247,7 +299,11 @@ export const FIGURES_EAST_LITERATI: readonly Figure[] = [
     signature: '穷则独善其身，达则兼善天下。',
     bio: '名轲，邹人。子思之门人。倡「性善」「义利之辨」「民贵君轻」。周游齐梁，未得行其道，归而与万章之徒著书七篇。',
     portrait: 'portraits/east-literati/mengzi.svg',
-    matchBlurb: '汝与 {{name}} 同，以善为性，以义为节。',
+    matchBlurb: [
+      '汝与 {{name}} 同，以学为日课，终身不厌。',
+      '汝与 {{name}} 同，百折而不回，守其志如一。',
+      '汝与 {{name}} 同，思千载之下，以永恒为尺度。',
+    ],
     anecdotes: [
       { title: '孟母三迁', body: '孟母为择良邻而三迁其居，后世为家教之典。' },
       { title: '浩然之气', body: '「我善养吾浩然之气」，为千古志气之说。' },
@@ -263,7 +319,11 @@ export const FIGURES_EAST_LITERATI: readonly Figure[] = [
     signature: '采菊东篱下，悠然见南山。',
     bio: '名潜，字元亮，浔阳柴桑人。曾为彭泽令八十余日，叹曰：吾不能为五斗米折腰，拳拳事乡里小人。即日解印归田。',
     portrait: 'portraits/east-literati/taoyuanming.svg',
-    matchBlurb: '汝与 {{name}} 同，以田园为安，以自然为师。',
+    matchBlurb: [
+      '汝与 {{name}} 同，处喧而守静，不为世网所羁。',
+      '汝与 {{name}} 同，以美为津梁，通乎天地。',
+      '汝与 {{name}} 同，思千载之下，以永恒为尺度。',
+    ],
     anecdotes: [
       { title: '不为五斗米折腰', body: '为彭泽令，郡督邮至，县吏请束带见之，叹而解印归。' },
       { title: '桃花源记', body: '作《桃花源记》，托武陵渔人入一与世隔绝之地，寄托其乌托邦之想。' },
@@ -279,7 +339,11 @@ export const FIGURES_EAST_LITERATI: readonly Figure[] = [
     signature: '行到水穷处，坐看云起时。',
     bio: '字摩诘，太原祁人。开元进士。诗、书、画、乐俱工。晚居辋川，弹琴长啸，与裴迪等唱和。',
     portrait: 'portraits/east-literati/wangwei.svg',
-    matchBlurb: '汝与 {{name}} 同，以诗为禅，以画为心。',
+    matchBlurb: [
+      '汝与 {{name}} 同，以诗为禅，以画为心。',
+      '汝与 {{name}} 同，辞锋所至，能令金石为开。',
+      '汝与 {{name}} 同，向内求心安，以内省为日课。',
+    ],
     anecdotes: [
       { title: '诗佛', body: '以「诗佛」名，谓其诗中有画、画中有诗。' },
       { title: '辋川别业', body: '得宋之问蓝田辋川别业，竹洲花坞，日与友吟咏其中。' },
@@ -295,7 +359,11 @@ export const FIGURES_EAST_LITERATI: readonly Figure[] = [
     signature: '师者，所以传道受业解惑也。',
     bio: '字退之，河南河阳人。贞元进士。倡古文运动，以「文以载道」自任。谏迎佛骨，几死。',
     portrait: 'portraits/east-literati/hanyu.svg',
-    matchBlurb: '汝与 {{name}} 同，以道为任，以文为器。',
+    matchBlurb: [
+      '汝与 {{name}} 同，博而能约，厚积薄发。',
+      '汝与 {{name}} 同，心志刚毅，以执为骨。',
+      '汝与 {{name}} 同，以长远为念，不以眼前得失动心。',
+    ],
     anecdotes: [
       {
         title: '谏迎佛骨',
@@ -314,7 +382,11 @@ export const FIGURES_EAST_LITERATI: readonly Figure[] = [
     signature: '醉翁之意不在酒，在乎山水之间也。',
     bio: '字永叔，号醉翁，晚年号六一居士。吉州永丰人。倡古文、尊韩愈，与宋祁合修《新唐书》，自著《新五代史》。',
     portrait: 'portraits/east-literati/ouyangxiu.svg',
-    matchBlurb: '汝与 {{name}} 同，以文为乐，以山水为友。',
+    matchBlurb: [
+      '汝与 {{name}} 同，于书山学海中自得其乐。',
+      '汝与 {{name}} 同，放眼千秋，不囿于朝夕。',
+      '汝与 {{name}} 同，辞锋所至，能令金石为开。',
+    ],
     anecdotes: [
       { title: '醉翁亭', body: '贬滁州时作《醉翁亭记》，与民同乐，寄情山水。' },
       {
@@ -335,7 +407,11 @@ export const FIGURES_EAST_LITERATI: readonly Figure[] = [
     signature: '人固有一死，或重于泰山，或轻于鸿毛。',
     bio: '字子长，夏阳人。继父业为太史令，因李陵之祸受宫刑，忍辱著《史记》一百三十篇，为史家之绝唱。',
     portrait: 'portraits/east-literati/simaqian.svg',
-    matchBlurb: '汝与 {{name}} 同，以史为志，忍辱以成其大。',
+    matchBlurb: [
+      '汝与 {{name}} 同，于书山学海中自得其乐。',
+      '汝与 {{name}} 同，放眼千秋，不囿于朝夕。',
+      '汝与 {{name}} 同，百折而不回，守其志如一。',
+    ],
     anecdotes: [
       { title: '李陵之祸', body: '为李陵降匈奴辩护，下蚕室受宫刑。' },
       { title: '史家之绝唱', body: '鲁迅誉为「史家之绝唱，无韵之《离骚》」。' },
@@ -351,7 +427,11 @@ export const FIGURES_EAST_LITERATI: readonly Figure[] = [
     signature: '安得广厦千万间，大庇天下寒士俱欢颜。',
     bio: '字子美，自号少陵野老。巩县人。困守长安十年，安史之乱中颠沛流离，茅屋为秋风所破，仍忧国忧民。',
     portrait: 'portraits/east-literati/dufu.svg',
-    matchBlurb: '汝与 {{name}} 同，忧以天下，乐以苍生。',
+    matchBlurb: [
+      '汝与 {{name}} 同，忧以天下，乐以苍生。',
+      '汝与 {{name}} 同，以美为津梁，通乎天地。',
+      '汝与 {{name}} 同，情动于衷而形于言，不以掩抑为德。',
+    ],
     anecdotes: [
       {
         title: '茅屋为秋风所破歌',
@@ -370,7 +450,11 @@ export const FIGURES_EAST_LITERATI: readonly Figure[] = [
     signature: '野火烧不尽，春风吹又生。',
     bio: '字乐天，号香山居士。太原人。贞元进士。倡「新乐府」，以诗反映民生。',
     portrait: 'portraits/east-literati/baijuyi.svg',
-    matchBlurb: '汝与 {{name}} 同，以诗为时，以民为本。',
+    matchBlurb: [
+      '汝与 {{name}} 同，以诗为时，以民为本。',
+      '汝与 {{name}} 同，以文为刃，以辞为锋。',
+      '汝与 {{name}} 同，以情为真，哀乐过人。',
+    ],
     anecdotes: [
       { title: '长恨歌', body: '作《长恨歌》，写唐玄宗与杨贵妃事，缠绵悱恻。' },
       { title: '琵琶行', body: '作《琵琶行》，与琵琶女「同是天涯沦落人」。' },
@@ -386,7 +470,11 @@ export const FIGURES_EAST_LITERATI: readonly Figure[] = [
     signature: '一蓑烟雨任平生。',
     bio: '字子瞻，号东坡居士。眉山人。嘉祐进士。诗文书画俱绝，又通经史、研佛道。被贬黄州、惠州、儋州，皆以诗文自遣。',
     portrait: 'portraits/east-literati/sushi.svg',
-    matchBlurb: '汝与 {{name}} 同，处困而豁达，以诗酒为怀。',
+    matchBlurb: [
+      '汝与 {{name}} 同，学求深耕，以精为归。',
+      '汝与 {{name}} 同，以美为津梁，通乎天地。',
+      '汝与 {{name}} 同，以文为刃，以辞为锋。',
+    ],
     anecdotes: [
       { title: '赤壁赋', body: '贬黄州时游赤壁，作前后《赤壁赋》，与客问答，托物言志。' },
       { title: '东坡肉', body: '贬黄州时创东坡肉，流传至今。' },
@@ -402,7 +490,11 @@ export const FIGURES_EAST_LITERATI: readonly Figure[] = [
     signature: '王师北定中原日，家祭无忘告乃翁。',
     bio: '字务观，号放翁。山阴人。绍兴试礼部第一，为秦桧所黜。一生主张抗金，诗作万首，篇篇系国事。',
     portrait: 'portraits/east-literati/luyou.svg',
-    matchBlurb: '汝与 {{name}} 同，以家国为念，至老不衰。',
+    matchBlurb: [
+      '汝与 {{name}} 同，以群体为先，忘身以济天下。',
+      '汝与 {{name}} 同，逆风而行，不改其步。',
+      '汝与 {{name}} 同，心易感、意难平，常以悲喜为歌。',
+    ],
     anecdotes: [
       { title: '示儿', body: '临终作《示儿》，唯愿「王师北定中原日」。' },
       { title: '沈园之恋', body: '与前妻唐婉于沈园相遇，作《钗头凤》二首。' },
@@ -418,7 +510,11 @@ export const FIGURES_EAST_LITERATI: readonly Figure[] = [
     signature: '少为纨绔子弟，极爱繁华。',
     bio: '字宗子，号陶庵，山阴人。明亡后披发入山，著《陶庵梦忆》《西湖梦寻》以记前朝繁华。',
     portrait: 'portraits/east-literati/zhangdai.svg',
-    matchBlurb: '汝与 {{name}} 同，以梦为真，以忆为生。',
+    matchBlurb: [
+      '汝与 {{name}} 同，心有韵致，凡所触皆成诗。',
+      '汝与 {{name}} 同，辞锋所至，能令金石为开。',
+      '汝与 {{name}} 同，学求深耕，以精为归。',
+    ],
     anecdotes: [
       { title: '湖心亭看雪', body: '作《湖心亭看雪》，仅百五十字，写尽雪夜孤怀。' },
       { title: '夜航船', body: '编《夜航船》，凡天下事物，皆载其略。' },
@@ -436,7 +532,11 @@ export const FIGURES_EAST_LITERATI: readonly Figure[] = [
     signature: '凡事要规规矩矩地去做。',
     bio: '字伯涵，号涤生。湖南湘乡人。道光进士。办湘军、平太平天国。倡洋务运动，又重修身、为家教。',
     portrait: 'portraits/east-literati/zengguofan.svg',
-    matchBlurb: '汝与 {{name}} 同，以修为本，以恒为功。',
+    matchBlurb: [
+      '汝与 {{name}} 同，心志刚毅，以执为骨。',
+      '汝与 {{name}} 同，心系苍生，忧乐与共。',
+      '汝与 {{name}} 同，以学为日课，终身不厌。',
+    ],
     anecdotes: [
       { title: '日课十二条', body: '立日课十二条，主敬、静坐、早起、读书不二、读史、写日记等。' },
       { title: '家书八百', body: '家书八百余通，为家教之范。' },
@@ -452,7 +552,11 @@ export const FIGURES_EAST_LITERATI: readonly Figure[] = [
     signature: '世间桃李出深山，尘世谁能解赏音。',
     bio: '字笠鸿，号笠翁。浙江兰溪人。清初戏曲家、文学家。倡「立主脑」「减头绪」「密针线」之戏论。',
     portrait: 'portraits/east-literati/liyu.svg',
-    matchBlurb: '汝与 {{name}} 同，以戏为真，以乐为道。',
+    matchBlurb: [
+      '汝与 {{name}} 同，以美为津梁，通乎天地。',
+      '汝与 {{name}} 同，言华丽，以辞采为骨。',
+      '汝与 {{name}} 同，情如春水，不藏不掩。',
+    ],
     anecdotes: [
       { title: '芥子园画传', body: '编《芥子园画传》，为画学入门之津梁。' },
       { title: '闲情偶寄', body: '作《闲情偶寄》，论戏曲、饮食、颐养、花木，皆有趣味。' },
@@ -468,7 +572,11 @@ export const FIGURES_EAST_LITERATI: readonly Figure[] = [
     signature: '性灵之说，足以救朴学之弊。',
     bio: '字子才，号简斋。钱塘人。乾隆进士。倡「性灵说」，与赵翼、蒋士铨并称「乾隆三大家」。',
     portrait: 'portraits/east-literati/yuanmei.svg',
-    matchBlurb: '汝与 {{name}} 同，以性灵为诗，以真率为人。',
+    matchBlurb: [
+      '汝与 {{name}} 同，以性灵为诗，以真率为人。',
+      '汝与 {{name}} 同，辞锋所至，能令金石为开。',
+      '汝与 {{name}} 同，情动于衷而形于言，不以掩抑为德。',
+    ],
     anecdotes: [
       { title: '随园诗话', body: '作《随园诗话》，主性灵，反格调。' },
       { title: '随园食谱', body: '作《随园食单》，记南北食肆之味。' },
@@ -484,7 +592,11 @@ export const FIGURES_EAST_LITERATI: readonly Figure[] = [
     signature: '人生若只如初见，何事秋风悲画扇。',
     bio: '名成德，字容若，号楞伽山人。满洲正黄旗人。明珠之子。康熙进士。词以小令见长，缠绵悱恻，王国维评为「北宋以来，一人而已」。',
     portrait: 'portraits/east-literati/nalanxingde.svg',
-    matchBlurb: '汝与 {{name}} 同，以情为真，以悲为美。',
+    matchBlurb: [
+      '汝与 {{name}} 同，以情为真，以悲为美。',
+      '汝与 {{name}} 同，观物以情，重意象而轻言说。',
+      '汝与 {{name}} 同，辞锋所至，能令金石为开。',
+    ],
     anecdotes: [
       { title: '饮水词', body: '词集名《饮水词》，取「如人饮水，冷暖自知」之意。' },
       { title: '悼亡词', body: '妻卢氏亡故后，词风大转，多悼亡之作。' },
@@ -500,7 +612,11 @@ export const FIGURES_EAST_LITERATI: readonly Figure[] = [
     signature: '寻寻觅觅，冷冷清清，凄凄惨惨戚戚。',
     bio: '号易安居士。济南人。嫁赵明诚，夫妇雅好金石。靖康之难后，颠沛流离，所藏尽失。词为婉约之宗。',
     portrait: 'portraits/east-literati/liushao.svg',
-    matchBlurb: '汝与 {{name}} 同，以愁为词，以瘦为美。',
+    matchBlurb: [
+      '汝与 {{name}} 同，以愁为词，以瘦为美。',
+      '汝与 {{name}} 同，言华丽，以辞采为骨。',
+      '汝与 {{name}} 同，求美之心，是汝与世界对话的方式。',
+    ],
     anecdotes: [
       {
         title: '如梦令',
@@ -519,7 +635,11 @@ export const FIGURES_EAST_LITERATI: readonly Figure[] = [
     signature: '落红不是无情物，化作春泥更护花。',
     bio: '字璱人，号定盦。浙江仁和人。嘉庆进士。一身以才名傲世，倡「九州生气恃风雷」，为晚清思想之先声。',
     portrait: 'portraits/east-literati/gongzizhen.svg',
-    matchBlurb: '汝与 {{name}} 同，悲而能发，辞锋如雷。',
+    matchBlurb: [
+      '汝与 {{name}} 同，悲而能发，辞锋如雷。',
+      '汝与 {{name}} 同，情动于衷而形于言，不以掩抑为德。',
+      '汝与 {{name}} 同，以美为津梁，通乎天地。',
+    ],
     anecdotes: [
       { title: '己亥杂诗', body: '作《己亥杂诗》三百一十五首，多讽时之作。' },
       { title: '病梅之叹', body: '作《病梅馆记》，以梅喻才人，叹其所遭。' },

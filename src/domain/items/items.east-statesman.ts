@@ -3,7 +3,7 @@
 
 import type { Item } from './item.types';
 
-export const ITEMS_EAST_STATEMAN: readonly Item[] = [
+export const ITEMS_EAST_STATESMAN: readonly Item[] = [
   // ── T1 思辨 ──
   {
     id: 'es-001',
@@ -50,35 +50,35 @@ export const ITEMS_EAST_STATEMAN: readonly Item[] = [
     prompt: '朝有积弊',
     promptGloss: '朝中积弊甚久，欲一朝尽革，汝当如何？',
     options: [
-      { text: '徐徐图之', gloss: '渐变缓改', primary: { traitId: 1, delta: -0.8 } },
+      { text: '徐徐图之', gloss: '渐变缓改，不求速成', primary: { traitId: 1, delta: -1.2 } },
       {
         text: '择其大者',
-        gloss: '先改要害',
-        primary: { traitId: 1, delta: 0.0 },
+        gloss: '先改要害，余者徐图',
+        primary: { traitId: 1, delta: -0.6 },
         secondary: [{ traitId: 3, delta: 0.4 }],
       },
       {
         text: '广引众议',
-        gloss: '问策百官',
-        primary: { traitId: 1, delta: 0.4 },
+        gloss: '问策百官，集思广益',
+        primary: { traitId: 1, delta: 0.0 },
         secondary: [{ traitId: 5, delta: 0.4 }],
       },
       {
         text: '力推全变',
-        gloss: '一朝尽革',
-        primary: { traitId: 1, delta: 1.0 },
+        gloss: '力主全变，次第而行',
+        primary: { traitId: 1, delta: 0.5 },
         secondary: [{ traitId: 11, delta: 0.4 }],
       },
       {
         text: '考其本末',
-        gloss: '寻根溯源',
-        primary: { traitId: 1, delta: 1.2 },
+        gloss: '寻根溯源，再图变革',
+        primary: { traitId: 1, delta: 0.9 },
         secondary: [{ traitId: 8, delta: 0.4 }],
       },
       {
         text: '不破不立',
-        gloss: '破而后立',
-        primary: { traitId: 1, delta: 1.4 },
+        gloss: '破旧立新，彻底变革',
+        primary: { traitId: 1, delta: 1.3 },
         secondary: [{ traitId: 4, delta: 0.5 }],
       },
     ],
@@ -101,7 +101,11 @@ export const ITEMS_EAST_STATEMAN: readonly Item[] = [
         primary: { traitId: 1, delta: 0.2 },
         secondary: [{ traitId: 5, delta: 0.4 }],
       },
-      { text: '摸石头', gloss: '试探渐进', primary: { traitId: 1, delta: -0.8 } },
+      {
+        text: '以步探河',
+        gloss: '以脚步试探河水深浅，再徐图前进',
+        primary: { traitId: 1, delta: -0.8 },
+      },
       {
         text: '改水路',
         gloss: '求其本源',

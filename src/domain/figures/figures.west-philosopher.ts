@@ -20,7 +20,11 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
     signature: 'ἓν οἶδα ὅτι οὐδὲν οἶδα.',
     bio: '雅典人。生于公元前 469 年。街头与人辩论「何为正义」「何为善」，自谓「助产术」。以渎神罪被判死，饮鸩从容。',
     portrait: 'portraits/west-philosopher/socrates.svg',
-    matchBlurb: '汝与 {{name}} 同，知己之无知，能以一问撼千年。',
+    matchBlurb: [
+      '汝与 {{name}} 同，知己之无知，能以一问撼千年。',
+      '汝与 {{name}} 同，善于以言语形塑人心。',
+      '汝与 {{name}} 同，破旧立新，虽千万人吾往矣。',
+    ],
     anecdotes: [
       { title: '饮鸩从容', body: '被判死，从容与友谈灵魂不灭，饮鸩而终。' },
       { title: '产婆术', body: '自称不教人知识，只帮人「生出」自己的见解。' },
@@ -36,7 +40,11 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
     signature: 'Ideārum mundi.',
     bio: '雅典人。苏格拉底弟子、亚里士多德之师。创「学园」，著《理想国》《会饮》。以「理念论」开西方形上学。',
     portrait: 'portraits/west-philosopher/plato.svg',
-    matchBlurb: '汝与 {{name}} 同，能于万物之上见理念，思至永恒。',
+    matchBlurb: [
+      '汝与 {{name}} 同，能于万物之上见理念，思至永恒。',
+      '汝与 {{name}} 同，不泥古、不奉常，以新为归。',
+      '汝与 {{name}} 同，以学为日课，终身不厌。',
+    ],
     anecdotes: [
       { title: '学园', body: '于雅典西北郊创「学园」（Akadēmeia），传道千年。' },
       { title: '洞喻', body: '以洞穴之喻论可知世界与可知理念之别。' },
@@ -52,7 +60,11 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
     signature: 'Amicus Plato, sed magis amica veritas.',
     bio: '斯塔吉拉人。柏拉图弟子，亚历山大大帝之师。创吕克昂。著《形而上学》《尼各马可伦理学》。集古希腊哲学之大成。',
     portrait: 'portraits/west-philosopher/aristotle.svg',
-    matchBlurb: '汝与 {{name}} 同，能博学而务实，致广大而尽精微。',
+    matchBlurb: [
+      '汝与 {{name}} 同，能博学而务实，致广大而尽精微。',
+      '汝与 {{name}} 同，思至形而上之境，所言皆欲及于永恒。',
+      '汝与 {{name}} 同，颠覆不是为了颠覆，是为了更接近真。',
+    ],
     anecdotes: [
       { title: '吕克昂', body: '于雅典创吕克昂学园，率弟子边走边讲，「逍遥学派」。' },
       { title: '吾爱吾师', body: '「吾爱吾师，吾尤爱真理」—— 真理高于师承。' },
@@ -68,7 +80,11 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
     signature: "Écrasez l'infâme.",
     bio: '原名弗朗索瓦-玛丽·阿鲁埃。法国启蒙巨擘。倡思想自由、宗教宽容。著《哲学通信》《老实人》。',
     portrait: 'portraits/west-philosopher/voltaire.svg',
-    matchBlurb: '汝与 {{name}} 同，以笔为剑，敢笑权贵、能破千年暗。',
+    matchBlurb: [
+      '汝与 {{name}} 同，以笔为剑，敢笑权贵、能破千年暗。',
+      '汝与 {{name}} 同，以变求通，不为祖宗之法所囿。',
+      '汝与 {{name}} 同，不入虎穴，焉得虎子。',
+    ],
     anecdotes: [
       { title: '碾碎丑类', body: "晚年常坐沙龙高呼「Écrasez l'infâme」（碾碎可耻之物）。" },
       { title: '开明君主', body: '与普鲁士腓特烈大帝、俄国叶卡捷琳娜通信，倡「开明专制」。' },
@@ -84,7 +100,11 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
     signature: 'Gott ist tot.',
     bio: '德国人。普鲁士贵族出身。宣告「上帝已死」，倡「超人」「永恒轮回」「权力意志」。',
     portrait: 'portraits/west-philosopher/nietzsche.svg',
-    matchBlurb: '汝与 {{name}} 同，能以己身立法，孤独而高迈。',
+    matchBlurb: [
+      '汝与 {{name}} 同，颠覆不是为了颠覆，是为了更接近真。',
+      '汝与 {{name}} 同，以文为刃，以辞为锋。',
+      '汝与 {{name}} 同，百折而不回，守其志如一。',
+    ],
     anecdotes: [
       { title: '都灵之马', body: '1889 年于都灵见马被鞭，抱马而泣，精神崩溃。' },
       { title: '查拉图斯特拉', body: '以波斯先知查拉图斯特拉之口，言「超人」之教。' },
@@ -100,7 +120,11 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
     signature: "L'existence précède l'essence.",
     bio: '巴黎人。存在主义巨擘。著《存在与虚无》《存在主义是一种人文主义》。1964 年拒领诺贝尔文学奖。',
     portrait: 'portraits/west-philosopher/sartre.svg',
-    matchBlurb: '汝与 {{name}} 同，能先承担而后定义，敢以自由承重。',
+    matchBlurb: [
+      '汝与 {{name}} 同，善于以言语形塑人心。',
+      '汝与 {{name}} 同，破旧立新，虽千万人吾往矣。',
+      '汝与 {{name}} 同，好穷理以究天人之际，不以耳目之实自限。',
+    ],
     anecdotes: [
       { title: '拒领诺奖', body: '1964 年获诺贝尔文学奖，拒之，谓作家不应被体制化。' },
       { title: '五月风暴', body: '1968 年五月风暴中现身街头，支持学生运动。' },
@@ -118,7 +142,11 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
     signature: 'Cogito, ergo sum.',
     bio: '法国人。近代哲学之父。倡「我思故我在」。著《第一哲学沉思集》《方法论》。',
     portrait: 'portraits/west-philosopher/descartes.svg',
-    matchBlurb: '汝与 {{name}} 同，能于万般可疑中执一不疑，思至清澈。',
+    matchBlurb: [
+      '汝与 {{name}} 同，学求深耕，以精为归。',
+      '汝与 {{name}} 同，以思为杖，欲探万物之所以然。',
+      '汝与 {{name}} 同，破旧立新，虽千万人吾往矣。',
+    ],
     anecdotes: [
       { title: '普遍怀疑', body: '把一切可疑者皆置于怀疑之锤下，唯「我思」不可疑。' },
       { title: '坐标几何', body: '发明解析几何，以数与形通联。' },
@@ -134,7 +162,11 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
     signature: 'Sapere aude.',
     bio: '哥尼斯堡人。德国古典哲学奠基者。著《纯粹理性批判》《实践理性批判》《判断力批判》。',
     portrait: 'portraits/west-philosopher/kant.svg',
-    matchBlurb: '汝与 {{name}} 同，能以先验之眼看万象，立规律于永恒。',
+    matchBlurb: [
+      '汝与 {{name}} 同，能以先验之眼看万象，立规律于永恒。',
+      '汝与 {{name}} 同，于书山学海中自得其乐。',
+      '汝与 {{name}} 同，虽九死其犹未悔。',
+    ],
     anecdotes: [
       { title: '哥尼斯堡', body: '居哥尼斯堡三十年，散步准时，邻居以之对表。' },
       { title: '敢于认知', body: '「Sapere aude」（敢于运用你自己的理智）—— 启蒙之格言。' },
@@ -150,7 +182,11 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
     signature: 'Was vernünftig ist, das ist wirklich.',
     bio: '斯图加特人。德国古典哲学集大成者。倡「绝对精神」「辩证法」。',
     portrait: 'portraits/west-philosopher/hegel.svg',
-    matchBlurb: '汝与 {{name}} 同，能于历史之流中见精神之旅，思至宏大。',
+    matchBlurb: [
+      '汝与 {{name}} 同，能于历史之流中见精神之旅，思至宏大。',
+      '汝与 {{name}} 同，思至形而上之境，所言皆欲及于永恒。',
+      '汝与 {{name}} 同，百折而不回，守其志如一。',
+    ],
     anecdotes: [
       { title: '凡是合乎理性的', body: '「凡是合乎理性的都是现实的，凡是现实的都是合乎理性的。」' },
       { title: '主奴辩证', body: '以主人与奴隶之关系开「自我意识」之辩证。' },
@@ -167,7 +203,11 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
       'Die Philosophen haben die Welt nur verschieden interpretiert; es kömmt drauf an, sie zu verändern.',
     bio: '特里尔人。哲学家、经济学家、革命导师。与恩格斯创立马克思主义。著《资本论》《共产党宣言》。',
     portrait: 'portraits/west-philosopher/marx.svg',
-    matchBlurb: '汝与 {{name}} 同，能以哲思撼世，思于阶级与历史。',
+    matchBlurb: [
+      '汝与 {{name}} 同，破旧立新，虽千万人吾往矣。',
+      '汝与 {{name}} 同，于危局中见机遇，于险径上求通途。',
+      '汝与 {{name}} 同，心志刚毅，以执为骨。',
+    ],
     anecdotes: [
       {
         title: '共产党宣言',
@@ -186,7 +226,11 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
     signature: 'Wovon man nicht sprechen kann, darüber muss man schweigen.',
     bio: '维也纳人。犹太裔奥地利哲学家。语言哲学奠基者。著《逻辑哲学论》《哲学研究》。',
     portrait: 'portraits/west-philosopher/wittgenstein.svg',
-    matchBlurb: '汝与 {{name}} 同，能于语言之限处立其边界，思至沉默。',
+    matchBlurb: [
+      '汝与 {{name}} 同，能于语言之限处立其边界，思至沉默。',
+      '汝与 {{name}} 同，以学为日课，终身不厌。',
+      '汝与 {{name}} 同，不泥古、不奉常，以新为归。',
+    ],
     anecdotes: [
       { title: '工程师', body: '一战期间自愿入奥军，携《逻辑哲学论》手稿于战壕。' },
       { title: '小学教师', body: '放弃遗产，下乡做小学教师，又做园丁助手。' },
@@ -202,7 +246,11 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
     signature: 'Il faut imaginer Sisyphe heureux.',
     bio: '法属阿尔及利亚人。存在主义代表，荒诞哲学奠基者。著《局外人》《西西弗神话》。1957 年诺贝尔文学奖。',
     portrait: 'portraits/west-philosopher/camus.svg',
-    matchBlurb: '汝与 {{name}} 同，能于荒诞中推石上山，笑对虚无。',
+    matchBlurb: [
+      '汝与 {{name}} 同，善于以言语形塑人心。',
+      '汝与 {{name}} 同，能于众说之上立一己之见，思入幽微。',
+      '汝与 {{name}} 同，不泥古、不奉常，以新为归。',
+    ],
     anecdotes: [
       { title: '西西弗', body: '「应该想象西西弗是幸福的」—— 与荒诞共处。' },
       { title: '决裂', body: '与萨特就「革命暴力」决裂，坚持道德之不可让渡。' },
@@ -220,7 +268,11 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
     signature: 'Knowledge is power.',
     bio: '伦敦人。英格兰哲学家、科学家、法学家。实验科学倡导者。著《新工具》《新大西岛》。',
     portrait: 'portraits/west-philosopher/bacon.svg',
-    matchBlurb: '汝与 {{name}} 同，能以经验破偶像，思以致用。',
+    matchBlurb: [
+      '汝与 {{name}} 同，博而能约，厚积薄发。',
+      '汝与 {{name}} 同，敢破常名常道，另立一套言语。',
+      '汝与 {{name}} 同，善于以言语形塑人心。',
+    ],
     anecdotes: [
       { title: '四偶像', body: '《新工具》揭四种「偶像」（种族、洞穴、市场、剧场），破偏见之根。' },
       { title: '冻鸡实验', body: '传说其因雪地冷冻鸡肉感染肺炎而逝，以身殉「冷」之研究。' },
@@ -236,7 +288,11 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
     signature: 'Tabula rasa.',
     bio: '英格兰人。经验主义奠基者、自由主义之父。著《人类理解论》《政府论》。',
     portrait: 'portraits/west-philosopher/locke.svg',
-    matchBlurb: '汝与 {{name}} 同，能于白纸之上绘世之理，思至宽容。',
+    matchBlurb: [
+      '汝与 {{name}} 同，以学为日课，终身不厌。',
+      '汝与 {{name}} 同，辞锋所至，能令金石为开。',
+      '汝与 {{name}} 同，心志刚毅，以执为骨。',
+    ],
     anecdotes: [
       { title: '白板', body: '心灵本是「白板」（tabula rasa），一切知识皆自经验来。' },
       { title: '生命权', body: '提出「生命、自由、财产」三大自然权利，影响美国独立宣言。' },
@@ -252,7 +308,11 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
     signature: 'Miracles are violations of laws of nature.',
     bio: '苏格兰人。经验主义高峰，怀疑论巨擘。著《人性论》《人类理解研究》。',
     portrait: 'portraits/west-philosopher/hume.svg',
-    matchBlurb: '汝与 {{name}} 同，能于信念之根处探其源，思至冷静。',
+    matchBlurb: [
+      '汝与 {{name}} 同，博而能约，厚积薄发。',
+      '汝与 {{name}} 同，言华丽，以辞采为骨。',
+      '汝与 {{name}} 同，认准一事，便不辞险阻。',
+    ],
     anecdotes: [
       { title: '是与否', body: '将形而上学家比为「否认奇迹，却坚信自己昨日存在」者。' },
       {
@@ -271,7 +331,11 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
     signature: 'Die Sprache ist das Haus des Seins.',
     bio: '德国人。存在哲学巨擘。著《存在与时间》。后返山间小屋，思「存在」之真。',
     portrait: 'portraits/west-philosopher/heidegger.svg',
-    matchBlurb: '汝与 {{name}} 同，能于林中路中问存在，思至幽微。',
+    matchBlurb: [
+      '汝与 {{name}} 同，以学为日课，终身不厌。',
+      '汝与 {{name}} 同，不为一时之计，而谋百代。',
+      '汝与 {{name}} 同，敢破常名常道，另立一套言语。',
+    ],
     anecdotes: [
       { title: '林中路', body: '于黑森林托特瑙堡小屋居三十年，《林中路》记其思。' },
       { title: '向死而生', body: '「向死存在」（Sein-zum-Tode）—— 在直面死亡处本真地活。' },
@@ -287,7 +351,11 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
     signature: 'Verständigung.',
     bio: '杜塞尔多夫人。法兰克福学派第二代旗手。著《公共领域的结构转型》《交往行为理论》。',
     portrait: 'portraits/west-philosopher/habermas.svg',
-    matchBlurb: '汝与 {{name}} 同，能于公共之言中求共识，思至开放。',
+    matchBlurb: [
+      '汝与 {{name}} 同，能于公共之言中求共识，思至开放。',
+      '汝与 {{name}} 同，以天下为怀，不以一己为念。',
+      '汝与 {{name}} 同，汝之表达，能使无形者显形。',
+    ],
     anecdotes: [
       { title: '交往理性', body: '倡「交往行为理论」，立言于主体间之合理言说。' },
       { title: '战后反思', body: '阿多诺之后，重建批判理论之「未竟之业」。' },
@@ -303,7 +371,11 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
     signature: 'Justice as fairness.',
     bio: '马里兰州人。当代政治哲学巨擘。著《正义论》。以「无知之幕」立公平之义。',
     portrait: 'portraits/west-philosopher/rawls.svg',
-    matchBlurb: '汝与 {{name}} 同，能于无知之幕后立公平之义，思至慎密。',
+    matchBlurb: [
+      '汝与 {{name}} 同，以识为器，以学为粮。',
+      '汝与 {{name}} 同，能于无知之幕后立公平之义，思至慎密。',
+      '汝与 {{name}} 同，信念一旦立定，便成汝之脊梁。',
+    ],
     anecdotes: [
       { title: '无知之幕', body: '设「原初状态」中的人不知自己地位，倡义之原则。' },
       { title: '差异原则', body: '「社会之不平等，须对最不利者最有利」—— 平等之辩证。' },
@@ -321,7 +393,11 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
     signature: 'Quid est enim vita, nisi continua meditatio mortis?',
     bio: '罗马人。斯多葛派哲学家，尼禄之师。著《论生命之短促》《论幸福》。',
     portrait: 'portraits/west-philosopher/seneca.svg',
-    matchBlurb: '汝与 {{name}} 同，能于命运之浪中守其内明，思至平静。',
+    matchBlurb: [
+      '汝与 {{name}} 同，于书山学海中自得其乐。',
+      '汝与 {{name}} 同，处喧而守静，不为世网所羁。',
+      '汝与 {{name}} 同，不为一时之计，而谋百代。',
+    ],
     anecdotes: [
       { title: '自我审视', body: '「向死而生」—— 每日问己今日将死。' },
       { title: '为师', body: '尼禄幼年即受其教，后尼禄反令其自尽。' },
@@ -337,7 +413,11 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
     signature: 'Credo ut intelligam.',
     bio: '北非人。基督教神学与西方哲学之父。著《忏悔录》《上帝之城》。',
     portrait: 'portraits/west-philosopher/augustine.svg',
-    matchBlurb: '汝与 {{name}} 同，能于信仰之中得大智，思至深远。',
+    matchBlurb: [
+      '汝与 {{name}} 同，博而能约，厚积薄发。',
+      '汝与 {{name}} 同，思千载之下，以永恒为尺度。',
+      '汝与 {{name}} 同，知进退之机，能全身而远害。',
+    ],
     anecdotes: [
       { title: '花园顿悟', body: '听童声「拿起来读」，翻《罗马书》而皈依。' },
       { title: '时间之问', body: '《忏悔录》卷十一问「时间是什么」，千古未答。' },
@@ -353,7 +433,11 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
     signature: "L'homme n'est qu'un roseau, le plus faible de la nature.",
     bio: '法国人。数学家、物理学家、哲学家。著《思想录》。',
     portrait: 'portraits/west-philosopher/pascal.svg',
-    matchBlurb: '汝与 {{name}} 同，能于苇草之身见思想之重，思至澄澈。',
+    matchBlurb: [
+      '汝与 {{name}} 同，学求深耕，以精为归。',
+      '汝与 {{name}} 同，以长远为念，不以眼前得失动心。',
+      '汝与 {{name}} 同，以文为刃，以辞为锋。',
+    ],
     anecdotes: [
       { title: '赌注', body: '《思想录》以「帕斯卡赌注」论上帝之存在。' },
       { title: '计算器', body: '十九岁造帕斯卡计算器，为机械计算之先。' },
@@ -369,7 +453,11 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
     signature: 'Leap of faith.',
     bio: '哥本哈根人。丹麦神学家、存在主义先驱。著《恐惧与战栗》《哲学片断》。',
     portrait: 'portraits/west-philosopher/kierkegaard.svg',
-    matchBlurb: '汝与 {{name}} 同，能于理性之穷处一跃而入，思至决绝。',
+    matchBlurb: [
+      '汝与 {{name}} 同，学求深耕，以精为归。',
+      '汝与 {{name}} 同，知进退之机，能全身而远害。',
+      '汝与 {{name}} 同，放眼千秋，不囿于朝夕。',
+    ],
     anecdotes: [
       { title: '亚伯拉罕', body: '以亚伯拉罕献以撒论「信仰之跃」，悖于伦理而存。' },
       { title: '雷吉娜', body: '与雷吉娜解除婚约，独自于哥本哈根街巷中踽行。' },
@@ -385,7 +473,11 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
     signature: 'La durée.',
     bio: '巴黎人。法国哲学家。倡「生命之流」「绵延」（durée）。1927 年诺贝尔文学奖。',
     portrait: 'portraits/west-philosopher/bergson.svg',
-    matchBlurb: '汝与 {{name}} 同，能于绵延之流中见生命，思至灵动。',
+    matchBlurb: [
+      '汝与 {{name}} 同，以学为日课，终身不厌。',
+      '汝与 {{name}} 同，不为一时之计，而谋百代。',
+      '汝与 {{name}} 同，言华丽，以辞采为骨。',
+    ],
     anecdotes: [
       { title: '绵延', body: '以「绵延」（durée）论真正之时间，反对空间化。' },
       { title: '千年对话', body: '临终嘱：「我最后的思索是关于圣奥古斯丁……」' },
@@ -401,7 +493,11 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
     signature: "L'autrui.",
     bio: '立陶宛人。法籍犹太裔哲学家。著《整体与无限》。倡「他者哲学」。',
     portrait: 'portraits/west-philosopher/levinas.svg',
-    matchBlurb: '汝与 {{name}} 同，能于他者之面容中见伦理，思至柔善。',
+    matchBlurb: [
+      '汝与 {{name}} 同，学求深耕，以精为归。',
+      '汝与 {{name}} 同，知进退之机，能全身而远害。',
+      '汝与 {{name}} 同，放眼千秋，不囿于朝夕。',
+    ],
     anecdotes: [
       { title: '面容', body: '他者之「面容」（le visage）即是伦理学之起点。' },
       { title: '大屠杀', body: '家人在立陶宛为纳粹所害，思想萦绕「恶」之问。' },
@@ -419,7 +515,11 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
     signature: 'Ἀταραξία.',
     bio: '雅典人。伊壁鸠鲁学派创始人。倡「快乐」即无痛苦，著《主要格言》。',
     portrait: 'portraits/west-philosopher/epicurus.svg',
-    matchBlurb: '汝与 {{name}} 同，能于静园之中养心，思至安宁。',
+    matchBlurb: [
+      '汝与 {{name}} 同，能于静园之中养心，思至安宁。',
+      '汝与 {{name}} 同，以长远为念，不以眼前得失动心。',
+      '汝与 {{name}} 同，以学为日课，终身不厌。',
+    ],
     anecdotes: [
       { title: '花园', body: '于雅典城外设「花园」，与友共修静乐之学。' },
       { title: '友第一', body: '「朋友之在场即幸福之全部」—— 友谊至上。' },
@@ -435,7 +535,11 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
     signature: 'Virtù contro fortuna.',
     bio: '佛罗伦萨人。意大利政治哲学家。著《君主论》《论李维》。',
     portrait: 'portraits/west-philosopher/machiavelli.svg',
-    matchBlurb: '汝与 {{name}} 同，能于权谋中见实相，思至冷彻。',
+    matchBlurb: [
+      '汝与 {{name}} 同，于书山学海中自得其乐。',
+      '汝与 {{name}} 同，处喧而守静，不为世网所羁。',
+      '汝与 {{name}} 同，辞锋所至，能令金石为开。',
+    ],
     anecdotes: [
       { title: '君主论', body: '「被人畏惧优于被人爱戴，倘二者不可得兼」—— 冷酷之论。' },
       { title: '被放逐', body: '因美第奇复辟被逐，隐居乡间写就《君主论》。' },
@@ -451,7 +555,11 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
     signature: 'Bellum omnium contra omnes.',
     bio: '英格兰人。政治哲学奠基者。著《利维坦》。',
     portrait: 'portraits/west-philosopher/hobbes.svg',
-    matchBlurb: '汝与 {{name}} 同，能以利维坦之眼看世，思至清醒。',
+    matchBlurb: [
+      '汝与 {{name}} 同，博而能约，厚积薄发。',
+      '汝与 {{name}} 同，向内求心安，以内省为日课。',
+      '汝与 {{name}} 同，善于以言语形塑人心。',
+    ],
     anecdotes: [
       { title: '利维坦', body: '以「利维坦」喻国家主权，独裁以免混乱。' },
       { title: '怕死', body: '「人之本性使其求利避险，故需契约让渡。」' },
@@ -467,7 +575,11 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
     signature: 'Die Welt als Wille und Vorstellung.',
     bio: '但泽人。德国哲学家。倡「意志」为世界之本体。著《作为意志和表象的世界》。',
     portrait: 'portraits/west-philosopher/schopenhauer.svg',
-    matchBlurb: '汝与 {{name}} 同，能于意志之海中见其苦，思至深沉。',
+    matchBlurb: [
+      '汝与 {{name}} 同，于书山学海中自得其乐。',
+      '汝与 {{name}} 同，处喧而守静，不为世网所羁。',
+      '汝与 {{name}} 同，不为一时之计，而谋百代。',
+    ],
     anecdotes: [
       { title: '卷毛狗', body: '终身携卷毛狗散步，狗名「Atma」（梵语「我」）。' },
       { title: '迟来之誉', body: '著作初版无人问津，暮年因《附录与补遗》而声名大噪。' },
@@ -483,7 +595,11 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
     signature: 'Es gibt kein Dokument der Kultur, das nicht zugleich ein solches der Barbarei ist.',
     bio: '柏林人。德国犹太裔哲学家、文学批评家。著《机械复制时代的艺术作品》《单行道》。',
     portrait: 'portraits/west-philosopher/benjamin.svg',
-    matchBlurb: '汝与 {{name}} 同，能于碎片之中见星丛，思至精巧。',
+    matchBlurb: [
+      '汝与 {{name}} 同，能于碎片之中见星丛，思至精巧。',
+      '汝与 {{name}} 同，善于以言语形塑人心。',
+      '汝与 {{name}} 同，放眼千秋，不囿于朝夕。',
+    ],
     anecdotes: [
       { title: '拱廊街', body: '未竟巨著《拱廊街计划》，死后由阿多诺整理出版。' },
       { title: '波港', body: '1940 年于法西边陲被拒入境，自尽于波港。' },
@@ -499,7 +615,11 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
     signature: 'Pouvoir/savoir.',
     bio: '普瓦捷人。法国哲学家。著《疯癫与文明》《规训与惩罚》《性史》。',
     portrait: 'portraits/west-philosopher/foucault.svg',
-    matchBlurb: '汝与 {{name}} 同，能于权力之眼中见其谱系，思至锋利。',
+    matchBlurb: [
+      '汝与 {{name}} 同，于书山学海中自得其乐。',
+      '汝与 {{name}} 同，以文为刃，以辞为锋。',
+      '汝与 {{name}} 同，不为一时之计，而谋百代。',
+    ],
     anecdotes: [
       { title: '疯癫', body: '以「愚人船」开西方之疯癫史，论理性对疯狂之排斥。' },
       { title: '圆桌监狱', body: '以「全景敞视监狱」（Panopticon）喻现代规训社会。' },

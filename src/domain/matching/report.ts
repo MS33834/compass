@@ -2,7 +2,7 @@
 
 import { TRAITS } from '../traits/trait.dimensions';
 import { topN } from './matching';
-import { renderBlurb, pickPolarity, BLURB } from './blurb';
+import { renderBlurb, pickPolarity, BLURB, selectBlurb } from './blurb';
 import { confidence } from './confidence';
 import type { TraitVector } from '../traits/trait.types';
 import type { Figure } from '../figures/figure.types';
@@ -27,16 +27,19 @@ export function buildReport(
   pool: readonly Figure[],
   answers: Record<string, number>,
   itemPool: readonly Item[]
-): MatchReport {
+): MatchReport | null {
+  if (pool.length === 0 || itemPool.length === 0) return null;
+
   const conf = confidence(answers, itemPool);
   const top = topN(user, pool, 5);
+  if (top.length === 0) return null;
   const [primary, ...rest] = top;
 
   return {
     primary: {
       figure: primary.figure,
       score: primary.score,
-      blurb: renderBlurb(primary.figure.matchBlurb, {
+      blurb: renderBlurb(selectBlurb(primary.figure.matchBlurb, user, primary.figure.vector), {
         name: primary.figure.name,
         era: primary.figure.era,
       }),
@@ -44,7 +47,7 @@ export function buildReport(
     alternates: rest.map(a => ({
       figure: a.figure,
       score: a.score,
-      blurb: renderBlurb(a.figure.matchBlurb, {
+      blurb: renderBlurb(selectBlurb(a.figure.matchBlurb, user, a.figure.vector), {
         name: a.figure.name,
         era: a.figure.era,
       }),

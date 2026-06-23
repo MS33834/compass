@@ -9,7 +9,7 @@
 
 import type { Figure } from './figure.types';
 
-export const FIGURES_EAST_STATEMAN: readonly Figure[] = [
+export const FIGURES_EAST_STATESMAN: readonly Figure[] = [
   // ── A 极端外：变法 + 果决 + 刚毅 + 敢赌 ──
   {
     id: 'es-shangyang',
@@ -20,7 +20,11 @@ export const FIGURES_EAST_STATEMAN: readonly Figure[] = [
     signature: '治世不一道，便国不法古。',
     bio: '公孙氏，名鞅，卫国人。入秦说孝公行变法，废井田、开阡陌、奖军功、行县制。秦以富强。孝公卒，遭车裂，百姓哭之。',
     portrait: 'portraits/east-statesman/shangyang.svg',
-    matchBlurb: '汝与 {{name}} 同，以法为骨，以变为道，敢为天下先。',
+    matchBlurb: [
+      '汝与 {{name}} 同，以法为骨，以变为道，敢为天下先。',
+      '汝与 {{name}} 同，起而行之，不坐而论道。',
+      '汝与 {{name}} 同，百折而不回，守其志如一。',
+    ],
     anecdotes: [
       { title: '城门立木', body: '商鞅立三丈木于南门，募民徙之北门予五十金，以明不欺，民信之。' },
       { title: '徙木立信', body: '法令初颁，取信于民为要。' },
@@ -36,7 +40,11 @@ export const FIGURES_EAST_STATEMAN: readonly Figure[] = [
     signature: '远交而近攻，得寸则王之寸也。',
     bio: '字叔，魏人。尝受辱于须贾，几死。走秦说昭王，倡「远交近攻」，废穰侯，逐华阳，相机而动，秦以日强。',
     portrait: 'portraits/east-statesman/fanju.svg',
-    matchBlurb: '汝与 {{name}} 同，能忍辱而后发，知机而善断。',
+    matchBlurb: [
+      '汝与 {{name}} 同，能忍辱而后发，知机而善断。',
+      '汝与 {{name}} 同，世界在动，汝亦以动回应。',
+      '汝与 {{name}} 同，不泥古、不奉常，以新为归。',
+    ],
     anecdotes: [
       { title: '绨袍恋恋', body: '范雎既相秦，念魏齐之辱，故有绨袍恋恋之讥。' },
       { title: '远交近攻', body: '为秦定下数十年外交战略。' },
@@ -52,7 +60,11 @@ export const FIGURES_EAST_STATEMAN: readonly Figure[] = [
     signature: '诟莫大于卑贱，而悲莫甚于穷困。',
     bio: '楚国上蔡人。师荀卿，学帝王术。入秦佐秦始皇统一天下，书同文、车同轨、行郡县。沙丘之变后被赵高所害，腰斩咸阳市。',
     portrait: 'portraits/east-statesman/lisi.svg',
-    matchBlurb: '汝与 {{name}} 同，善书亦善政，能以尺牍定天下。',
+    matchBlurb: [
+      '汝与 {{name}} 同，善书亦善政，能以尺牍定天下。',
+      '汝与 {{name}} 同，临机立断，有雷霆之气。',
+      '汝与 {{name}} 同，敢破常名常道，另立一套言语。',
+    ],
     anecdotes: [
       {
         title: '仓鼠之叹',
@@ -71,7 +83,11 @@ export const FIGURES_EAST_STATEMAN: readonly Figure[] = [
     signature: '我非相，乃摄也。',
     bio: '字叔大，号太岳。湖广江陵人。万历初为相，行一条鞭法、清丈田亩、考成法，使万历前十年号为「万历中兴」。',
     portrait: 'portraits/east-statesman/zhangqiu.svg',
-    matchBlurb: '汝与 {{name}} 同，执国如执秤，毫厘不让。',
+    matchBlurb: [
+      '汝与 {{name}} 同，行事果决，不以三思自误。',
+      '汝与 {{name}} 同，以变求通，不为祖宗之法所囿。',
+      '汝与 {{name}} 同，虽九死其犹未悔。',
+    ],
     anecdotes: [
       { title: '一条鞭法', body: '将田赋、徭役、杂税并为银两计征，简化赋役。' },
       { title: '考成法', body: '以六部官员办事效率为考核，逾期者严处。' },
@@ -87,7 +103,11 @@ export const FIGURES_EAST_STATEMAN: readonly Figure[] = [
     signature: '变者，天道也。',
     bio: '广东南海人。光绪进士。倡维新变法，撰《新学伪经考》《孔子改制考》。公车上书，百日维新，戊戌变法失败后流亡海外。',
     portrait: 'portraits/east-statesman/kangyouwei.svg',
-    matchBlurb: '汝与 {{name}} 同，思以制度变天下，敢为天下先。',
+    matchBlurb: [
+      '汝与 {{name}} 同，思以制度变天下，敢为天下先。',
+      '汝与 {{name}} 同，博而能约，厚积薄发。',
+      '汝与 {{name}} 同，敢赌敢为，以负为立身之姿。',
+    ],
     anecdotes: [
       {
         title: '公车上书',
@@ -106,7 +126,11 @@ export const FIGURES_EAST_STATEMAN: readonly Figure[] = [
     signature: '扪虱而谈天下事。',
     bio: '字景略，北海剧人。布衣时扪虱与桓温论天下，旁若无人。苻坚得之，比之诸葛孔明。相前秦，诛豪强、举贤才、治关中。',
     portrait: 'portraits/east-statesman/wangmeng.svg',
-    matchBlurb: '汝与 {{name}} 同，貌寝而才高，乱世能自守。',
+    matchBlurb: [
+      '汝与 {{name}} 同，临机立断，有雷霆之气。',
+      '汝与 {{name}} 同，心志刚毅，以执为骨。',
+      '汝与 {{name}} 同，以思为杖，欲探万物之所以然。',
+    ],
     anecdotes: [
       { title: '扪虱谈天下', body: '王猛布衣见桓温，谈天下事如指掌，扪虱而言，旁若无人。' },
       { title: '关中大治', body: '相苻坚十年，关中清晏，百姓丰乐。' },
@@ -124,7 +148,11 @@ export const FIGURES_EAST_STATEMAN: readonly Figure[] = [
     signature: '仓廪实而知礼节，衣食足而知荣辱。',
     bio: '名夷吾，字仲，颍上人。初事公子纠，后相齐桓公，九合诸侯，一匡天下。通工商、重盐铁，助桓公首霸。',
     portrait: 'portraits/east-statesman/guanzhong.svg',
-    matchBlurb: '汝与 {{name}} 同，能通商惠工，使民得利而国自富。',
+    matchBlurb: [
+      '汝与 {{name}} 同，敢破常名常道，另立一套言语。',
+      '汝与 {{name}} 同，于纷陈之象中独寻其理。',
+      '汝与 {{name}} 同，起而行之，不坐而论道。',
+    ],
     anecdotes: [
       {
         title: '老马识途',
@@ -143,7 +171,11 @@ export const FIGURES_EAST_STATEMAN: readonly Figure[] = [
     signature: '踊贵而屦贱。',
     bio: '字仲，谥平仲，齐国莱人。相齐灵公、庄公、景公三朝，以节俭、机敏、善辩闻名。',
     portrait: 'portraits/east-statesman/yanying.svg',
-    matchBlurb: '汝与 {{name}} 同，善以辞令折冲樽俎，不战而屈人之兵。',
+    matchBlurb: [
+      '汝与 {{name}} 同，学求深耕，以精为归。',
+      '汝与 {{name}} 同，以思为杖，欲探万物之所以然。',
+      '汝与 {{name}} 同，虽九死其犹未悔。',
+    ],
     anecdotes: [
       { title: '二桃杀三士', body: '晏婴设计使公孙接、田开疆、古冶子三勇士自刎。' },
       { title: '使楚不辱', body: '出使楚国，巧辞应对，使楚王不敢辱齐使。' },
@@ -159,7 +191,11 @@ export const FIGURES_EAST_STATEMAN: readonly Figure[] = [
     signature: '鞠躬尽瘁，死而后已。',
     bio: '字孔明，号卧龙。琅邪阳都人。隐居隆中十年，刘备三顾而出。辅蜀汉，联吴抗曹，南征北伐。',
     portrait: 'portraits/east-statesman/zhuge.svg',
-    matchBlurb: '汝与 {{name}} 同，能以一隅敌天下，知其不可而为之。',
+    matchBlurb: [
+      '汝与 {{name}} 同，不惮繁琐，乐在穷究。',
+      '汝与 {{name}} 同，百折而不回，守其志如一。',
+      '汝与 {{name}} 同，能以一隅敌天下，知其不可而为之。',
+    ],
     anecdotes: [
       { title: '草船借箭', body: '以草船诱曹军放箭，得箭十万。' },
       { title: '七擒孟获', body: '南征七擒七纵，使孟获心服。' },
@@ -176,7 +212,11 @@ export const FIGURES_EAST_STATEMAN: readonly Figure[] = [
     signature: '先天下之忧而忧，后天下之乐而乐。',
     bio: '字希文，苏州吴县人。幼时家贫，划粥断齑。庆历新政，推行明黜陟、抑侥幸。戍边西北，号令严明，西夏不敢犯。',
     portrait: 'portraits/east-statesman/fanzhongyan.svg',
-    matchBlurb: '汝与 {{name}} 同，以天下为怀，以民为念。',
+    matchBlurb: [
+      '汝与 {{name}} 同，学求深耕，以精为归。',
+      '汝与 {{name}} 同，逆风而行，不改其步。',
+      '汝与 {{name}} 同，能于众说之上立一己之见，思入幽微。',
+    ],
     anecdotes: [
       { title: '划粥断齑', body: '少时家贫，煮粥凉后切为四块，早晚取食。' },
       { title: '渔家傲', body: '塞下秋来风景异，写戍边将士之苦。' },
@@ -192,7 +232,11 @@ export const FIGURES_EAST_STATEMAN: readonly Figure[] = [
     signature: '精忠报国。',
     bio: '字鹏举，相州汤阴人。少时家贫，从周侗学武。宗泽部下，屡破金兵。岳家军令出如山，金人叹「撼山易，撼岳家军难」。',
     portrait: 'portraits/east-statesman/yuefei.svg',
-    matchBlurb: '汝与 {{name}} 同，以忠义为骨，以军旅为家。',
+    matchBlurb: [
+      '汝与 {{name}} 同，行事果决，不以三思自误。',
+      '汝与 {{name}} 同，以忠义为骨，以军旅为家。',
+      '汝与 {{name}} 同，以天下为怀，不以一己为念。',
+    ],
     anecdotes: [
       { title: '精忠报国', body: '母刺其背「精忠报国」四字。' },
       { title: '风波亭', body: '为秦桧所害，年三十九。' },
@@ -208,7 +252,11 @@ export const FIGURES_EAST_STATEMAN: readonly Figure[] = [
     signature: '苟利国家生死以，岂因祸福避趋之。',
     bio: '字元抚，又字少穆、石麟，福建侯官人。湖广总督时禁烟。虎门销烟，名震天下。后谪戍伊犁，犹兴修水利。',
     portrait: 'portraits/east-statesman/linze.svg',
-    matchBlurb: '汝与 {{name}} 同，知其不可而为之，心系苍生。',
+    matchBlurb: [
+      '汝与 {{name}} 同，百折而不回，守其志如一。',
+      '汝与 {{name}} 同，行事果决，不以三思自误。',
+      '汝与 {{name}} 同，心系苍生，忧乐与共。',
+    ],
     anecdotes: [
       { title: '虎门销烟', body: '1839 年 6 月 3 日起，虎门海滩销鸦片 237 万斤。' },
       { title: '谪戍伊犁', body: '戍伊犁途中作「苟利国家生死以，岂因祸福避趋之」。' },
@@ -226,7 +274,11 @@ export const FIGURES_EAST_STATEMAN: readonly Figure[] = [
     signature: '月下追韩信。',
     bio: '沛县人。初为沛吏，从刘邦起义。荐韩信、举贤才、治关中补给。',
     portrait: 'portraits/east-statesman/xiaohe.svg',
-    matchBlurb: '汝与 {{name}} 同，能识人用人，幕后安定。',
+    matchBlurb: [
+      '汝与 {{name}} 同，能识人用人，幕后安定。',
+      '汝与 {{name}} 同，以天下为怀，不以一己为念。',
+      '汝与 {{name}} 同，百折而不回，守其志如一。',
+    ],
     anecdotes: [
       { title: '月下追韩信', body: '闻韩信亡，萧何不及告刘邦，连夜追之，刘邦始信。' },
       { title: '制九章律', body: '汉初法制多出其手。' },
@@ -242,7 +294,11 @@ export const FIGURES_EAST_STATEMAN: readonly Figure[] = [
     signature: '孜孜为国，知无不为。',
     bio: '字乔，齐州临淄人。隋时举进士，谪归。佐李世民定天下。相太宗二十载，与杜如晦并称「房谋杜断」。',
     portrait: 'portraits/east-statesman/fangxuanling.svg',
-    matchBlurb: '汝与 {{name}} 同，能谋善断，佐盛世之治。',
+    matchBlurb: [
+      '汝与 {{name}} 同，于书山学海中自得其乐。',
+      '汝与 {{name}} 同，以天下为怀，不以一己为念。',
+      '汝与 {{name}} 同，百折而不回，守其志如一。',
+    ],
     anecdotes: [
       { title: '房谋杜断', body: '房玄龄善谋，杜如晦善断，唐初良相。' },
       { title: '修五代史', body: '主修梁、陈、北齐、北周、隋五代史。' },
@@ -258,7 +314,11 @@ export const FIGURES_EAST_STATEMAN: readonly Figure[] = [
     signature: '以人为镜，可以明得失。',
     bio: '字玄成，魏州曲城人。少孤出家。初事太子李建成，后佐太宗。敢谏，前后二百余事。',
     portrait: 'portraits/east-statesman/weizheng.svg',
-    matchBlurb: '汝与 {{name}} 同，能以直声辅盛世，知无不言。',
+    matchBlurb: [
+      '汝与 {{name}} 同，心志刚毅，以执为骨。',
+      '汝与 {{name}} 同，于书山学海中自得其乐。',
+      '汝与 {{name}} 同，能于众说之上立一己之见，思入幽微。',
+    ],
     anecdotes: [
       { title: '十渐不克终', body: '上疏论太宗「十渐」，太宗嘉纳之。' },
       { title: '以人为镜', body: '太宗谓「以人为镜」即魏徵。' },
@@ -274,7 +334,11 @@ export const FIGURES_EAST_STATEMAN: readonly Figure[] = [
     signature: '人生自古谁无死，留取丹心照汗青。',
     bio: '字宋瑞，一字履善，号文山。吉州庐陵人。宝祐四年状元。起兵抗元，兵败被执，作《过零丁洋》《正气歌》。',
     portrait: 'portraits/east-statesman/wentianxiang.svg',
-    matchBlurb: '汝与 {{name}} 同，知其不可而守其节，不以死生易志。',
+    matchBlurb: [
+      '汝与 {{name}} 同，知其不可而守其节，不以死生易志。',
+      '汝与 {{name}} 同，群己之间，重公义而轻私利。',
+      '汝与 {{name}} 同，学求深耕，以精为归。',
+    ],
     anecdotes: [
       { title: '正气歌', body: '狱中所作「天地有正气，杂然赋流形」，千古名篇。' },
       { title: '从容就义', body: '大都柴市就义，年四十七。' },
@@ -290,7 +354,11 @@ export const FIGURES_EAST_STATEMAN: readonly Figure[] = [
     signature: '天下事，无一不可对人言。',
     bio: '字汝贤，号刚峰，广东琼山人。举人出身。任户部主事时上《治安疏》骂嘉靖。复出后清丈田亩、推行一条鞭法。',
     portrait: 'portraits/east-statesman/haigui.svg',
-    matchBlurb: '汝与 {{name}} 同，直道而行，宁折不弯。',
+    matchBlurb: [
+      '汝与 {{name}} 同，虽九死其犹未悔。',
+      '汝与 {{name}} 同，好穷理以究天人之际，不以耳目之实自限。',
+      '汝与 {{name}} 同，行事果决，不以三思自误。',
+    ],
     anecdotes: [
       { title: '骂嘉靖', body: '上《治安疏》直骂嘉靖帝「家家皆净而无财用」，下狱几死。' },
       { title: '备棺上疏', body: '自知触帝怒，预先备好棺材。' },
@@ -306,7 +374,11 @@ export const FIGURES_EAST_STATEMAN: readonly Figure[] = [
     signature: '十年饮冰，难凉热血。',
     bio: '字卓如，号任公，广东新会人。师康有为，倡维新。流亡日本，办《清议报》《新民丛报》。',
     portrait: 'portraits/east-statesman/liangqichao.svg',
-    matchBlurb: '汝与 {{name}} 同，思以新民而新国，文以载道。',
+    matchBlurb: [
+      '汝与 {{name}} 同，博而能约，厚积薄发。',
+      '汝与 {{name}} 同，言华丽，以辞采为骨。',
+      '汝与 {{name}} 同，以思为杖，欲探万物之所以然。',
+    ],
     anecdotes: [
       { title: '《时务报》', body: '主笔《时务报》，鼓吹维新。' },
       { title: '饮冰室主人', body: '天津饮冰室著书立说，著作等身。' },
@@ -324,7 +396,11 @@ export const FIGURES_EAST_STATEMAN: readonly Figure[] = [
     signature: '愿弃人间事，欲从赤松子游。',
     bio: '字子房，韩国人。祖、父五世相韩。秦灭韩，刺客击始皇未中。圯桥受书，佐刘邦定天下。',
     portrait: 'portraits/east-statesman/zhangliang.svg',
-    matchBlurb: '汝与 {{name}} 同，能于乱世全身而退，知止而后有定。',
+    matchBlurb: [
+      '汝与 {{name}} 同，学求深耕，以精为归。',
+      '汝与 {{name}} 同，能于乱世全身而退，知止而后有定。',
+      '汝与 {{name}} 同，处喧而守静，不为世网所羁。',
+    ],
     anecdotes: [
       { title: '圯桥授书', body: '下邳圯桥遇黄石公，受《太公兵法》。' },
       { title: '辞封万户', body: '佐汉定天下后，专意修道。' },
@@ -340,7 +416,11 @@ export const FIGURES_EAST_STATEMAN: readonly Figure[] = [
     signature: '以周兴亡为镜，可以明得失。',
     bio: '字怀英，山西太原人。举明经。初任大理寺丞，一年中断狱 17000 人，无冤诉。相武则天，再兴唐室。',
     portrait: 'portraits/east-statesman/direnjie.svg',
-    matchBlurb: '汝与 {{name}} 同，明察秋毫，处事周全。',
+    matchBlurb: [
+      '汝与 {{name}} 同，博而能约，厚积薄发。',
+      '汝与 {{name}} 同，思至形而上之境，所言皆欲及于永恒。',
+      '汝与 {{name}} 同，认准一事，便不辞险阻。',
+    ],
     anecdotes: [
       { title: '一年断狱', body: '一年断案一万七千，无一冤诉。' },
       { title: '复唐之功', body: '保李氏、荐张柬之，促武则天还政于唐。' },
@@ -356,7 +436,11 @@ export const FIGURES_EAST_STATEMAN: readonly Figure[] = [
     signature: '能屈能伸。',
     bio: '字子升，号少湖，上海华亭人。嘉靖朝为相。隐忍多年，最终扳倒严嵩。后培养张居正。',
     portrait: 'portraits/east-statesman/xujie.svg',
-    matchBlurb: '汝与 {{name}} 同，能屈能伸，知机而动。',
+    matchBlurb: [
+      '汝与 {{name}} 同，以学为日课，终身不厌。',
+      '汝与 {{name}} 同，百折而不回，守其志如一。',
+      '汝与 {{name}} 同，能屈能伸，知机而动。',
+    ],
     anecdotes: [
       { title: '计除严嵩', body: '以孙女嫁严世蕃，设计扳倒严嵩。' },
       { title: '一纸三都', body: '门生故吏遍天下。' },
@@ -372,7 +456,11 @@ export const FIGURES_EAST_STATEMAN: readonly Figure[] = [
     signature: '中学为体，西学为用。',
     bio: '字孝达，号香帅，直隶南皮人。晚清四大名臣之一。办洋务、兴实业、开学堂，主持《奏定学堂章程》。',
     portrait: 'portraits/east-statesman/zhangzhidong.svg',
-    matchBlurb: '汝与 {{name}} 同，能融汇古今，缓图新变。',
+    matchBlurb: [
+      '汝与 {{name}} 同，以学为日课，终身不厌。',
+      '汝与 {{name}} 同，好穷理以究天人之际，不以耳目之实自限。',
+      '汝与 {{name}} 同，以群体为先，忘身以济天下。',
+    ],
     anecdotes: [
       { title: '中体西用', body: '「中学为体，西学为用」晚清洋务思想核心。' },
       { title: '汉阳造', body: '主持创办汉阳铁厂、湖北织布局。' },
@@ -388,7 +476,11 @@ export const FIGURES_EAST_STATEMAN: readonly Figure[] = [
     signature: '一代人办一代事。',
     bio: '字少荃，安徽合肥人。师曾国藩，办淮军。任直隶总督、北洋大臣，主持洋务。',
     portrait: 'portraits/east-statesman/lihongzhang.svg',
-    matchBlurb: '汝与 {{name}} 同，能在夹缝中求实事。',
+    matchBlurb: [
+      '汝与 {{name}} 同，学求深耕，以精为归。',
+      '汝与 {{name}} 同，以思为杖，欲探万物之所以然。',
+      '汝与 {{name}} 同，虽九死其犹未悔。',
+    ],
     anecdotes: [
       { title: '淮军', body: '仿湘军制办淮军，平捻军主力。' },
       { title: '签马关', body: '1895 年签《马关条约》，背负骂名。' },
@@ -404,7 +496,11 @@ export const FIGURES_EAST_STATEMAN: readonly Figure[] = [
     signature: '周监于二代，郁郁乎文哉！',
     bio: '姬旦，文王之子，武王之弟。辅武王伐纣。制礼作乐，分封诸侯，天下归心。',
     portrait: 'portraits/east-statesman/zhou.svg',
-    matchBlurb: '汝与 {{name}} 同，能以礼乐化天下，不言而教。',
+    matchBlurb: [
+      '汝与 {{name}} 同，博而能约，厚积薄发。',
+      '汝与 {{name}} 同，心志刚毅，以执为骨。',
+      '汝与 {{name}} 同，心系苍生，忧乐与共。',
+    ],
     anecdotes: [
       { title: '周公吐哺', body: '一沐三握发，一饭三吐哺，起以待士。' },
       { title: '制礼作乐', body: '奠定中华礼乐文明基础。' },
@@ -422,7 +518,11 @@ export const FIGURES_EAST_STATEMAN: readonly Figure[] = [
     signature: '调和鼎鼐，燮理阴阳。',
     bio: '名挚。夏末有莘氏之媵臣。负鼎俎以滋味说汤，致于王道。相汤、外丙、仲壬、太甲四朝。',
     portrait: 'portraits/east-statesman/yi.svg',
-    matchBlurb: '汝与 {{name}} 同，能以调和之道安天下，不争而治。',
+    matchBlurb: [
+      '汝与 {{name}} 同，于书山学海中自得其乐。',
+      '汝与 {{name}} 同，处喧而守静，不为世网所羁。',
+      '汝与 {{name}} 同，不为一时之计，而谋百代。',
+    ],
     anecdotes: [
       { title: '负鼎俎', body: '负鼎俎以滋味说汤。' },
       { title: '放太甲', body: '太甲不明，伊尹放之于桐宫三年。' },
@@ -438,7 +538,11 @@ export const FIGURES_EAST_STATEMAN: readonly Figure[] = [
     signature: '飞鸟尽，良弓藏；狡兔死，走狗烹。',
     bio: '字少伯，楚国宛人。佐越王勾践十年生聚、十年教训，灭吴。功成后泛舟五湖，称「陶朱公」经商。',
     portrait: 'portraits/east-statesman/fanli.svg',
-    matchBlurb: '汝与 {{name}} 同，能全身而退，功成不居。',
+    matchBlurb: [
+      '汝与 {{name}} 同，博而能约，厚积薄发。',
+      '汝与 {{name}} 同，向内求心安，以内省为日课。',
+      '汝与 {{name}} 同，认准一事，便不辞险阻。',
+    ],
     anecdotes: [
       { title: '勾践灭吴', body: '十年生聚，十年教训，辅勾践灭吴。' },
       { title: '三致千金', body: '改名「陶朱公」后，三致千金。' },
@@ -454,7 +558,11 @@ export const FIGURES_EAST_STATEMAN: readonly Figure[] = [
     signature: '抬棺出关。',
     bio: '字季高，湖南湘阴人。晚清四大名臣之一。平太平天国、捻军。督办新疆军务，抬棺出嘉峪关，收复新疆。',
     portrait: 'portraits/east-statesman/zuo.svg',
-    matchBlurb: '汝与 {{name}} 同，能以暮年赴边关，知其不可犹为之。',
+    matchBlurb: [
+      '汝与 {{name}} 同，认准一事，便不辞险阻。',
+      '汝与 {{name}} 同，以学为日课，终身不厌。',
+      '汝与 {{name}} 同，临机立断，有雷霆之气。',
+    ],
     anecdotes: [
       { title: '抬棺出关', body: '六十三岁抬棺出嘉峪关，收复新疆。' },
       { title: '收复新疆', body: '平阿古柏、收伊犁，西北重归版图。' },
@@ -470,7 +578,11 @@ export const FIGURES_EAST_STATEMAN: readonly Figure[] = [
     signature: '天下为公。',
     bio: '名文，字德明，号日新，后改逸仙。广东香山人。倡三民主义，领导辛亥革命，终结帝制。',
     portrait: 'portraits/east-statesman/sunyatsen.svg',
-    matchBlurb: '汝与 {{name}} 同，能以信念撼千年之局，知其不可犹为之。',
+    matchBlurb: [
+      '汝与 {{name}} 同，认准一事，便不辞险阻。',
+      '汝与 {{name}} 同，破旧立新，虽千万人吾往矣。',
+      '汝与 {{name}} 同，博而能约，厚积薄发。',
+    ],
     anecdotes: [
       { title: '驱除鞑虏', body: '领导辛亥革命，终结两千余年帝制。' },
       { title: '三民主义', body: '民族、民权、民生，三大主义。' },
@@ -486,7 +598,11 @@ export const FIGURES_EAST_STATEMAN: readonly Figure[] = [
     signature: '三分天下诸葛亮，一统江山刘伯温。',
     bio: '名基，字伯温，浙江青田人。元末进士，弃官隐居。佐朱元璋灭陈友谅、张士诚，北伐中原。',
     portrait: 'portraits/east-statesman/liubow.svg',
-    matchBlurb: '汝与 {{name}} 同，能洞察先机，谋定而后动。',
+    matchBlurb: [
+      '汝与 {{name}} 同，博而能约，厚积薄发。',
+      '汝与 {{name}} 同，心志刚毅，以执为骨。',
+      '汝与 {{name}} 同，知进退之机，能全身而远害。',
+    ],
     anecdotes: [
       { title: '烧饼歌', body: '传说预言后世之事，民间称「烧饼歌」。' },
       { title: '佐朱灭元', body: '佐朱元璋统一天下。' },
@@ -502,7 +618,11 @@ export const FIGURES_EAST_STATEMAN: readonly Figure[] = [
     signature: '愿者上钩。',
     bio: '姜姓，吕氏，名尚，字子牙，号太公望。年八十垂钓渭水，文王载与俱归，武王尊为「师尚父」。佐武王灭纣。',
     portrait: 'portraits/east-statesman/jiang.svg',
-    matchBlurb: '汝与 {{name}} 同，能以一生待一遇，知命而不争。',
+    matchBlurb: [
+      '汝与 {{name}} 同，所知愈多，所疑亦深。',
+      '汝与 {{name}} 同，知进退之机，能全身而远害。',
+      '汝与 {{name}} 同，千秋事业，方称吾志。',
+    ],
     anecdotes: [
       { title: '直钩钓王', body: '渭水垂钓，鱼钩离水三寸，愿者上钩。' },
       { title: '封神榜', body: '《封神演义》以其为背景，托名所作。' },

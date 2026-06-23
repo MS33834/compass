@@ -7,6 +7,9 @@
 //
 // 占位符：{{name}} 古人名；{{era}} 时代
 
+import { TRAITS } from '../traits/trait.dimensions';
+import type { TraitVector } from '../traits/trait.types';
+
 export const BLURB: Record<number, { lo: string; mid: string; hi: string }> = {
   1: {
     lo: '汝与 {{name}} 同，行事不滞于玄谈，握今即握道。',
@@ -79,4 +82,41 @@ export function pickPolarity(diff: number): 'lo' | 'mid' | 'hi' {
   if (diff > 0.15) return 'hi'; // 用户明显高于古人 → 偏高
   if (diff < -0.15) return 'lo'; // 用户明显低于古人 → 偏低
   return 'mid';
+}
+
+/** 从 matchBlurb（单条或数组）中选出最贴合用户特征的一条。
+ *
+ * 约定：若人物提供多条 blurb，它们应按该人物最显著的维度由高到低排列。
+ * 算法会计算用户与人物在各维度的加权绝对差异，并在这些显著维度中选出
+ * 差异最大的一项，返回对应下标的 blurb；若差异均较小，则默认返回第一条。
+ */
+export function selectBlurb(
+  matchBlurb: string | string[],
+  user: TraitVector,
+  figure: TraitVector
+): string {
+  const templates = Array.isArray(matchBlurb) ? matchBlurb : [matchBlurb];
+  if (templates.length === 1) return templates[0];
+
+  // 取人物最显著的 N 个维度（N = blurb 数量），按人物向量值降序
+  const topTraitIndices = TRAITS.map((_, i) => i)
+    .sort((a, b) => figure[b] - figure[a])
+    .slice(0, templates.length);
+
+  // 在这些显著维度中，找出用户与人物差异最大的一项
+  let bestLocalIndex = 0;
+  let bestScore = -1;
+  topTraitIndices.forEach((traitIndex, localIndex) => {
+    const diff = Math.abs(user[traitIndex] - figure[traitIndex]);
+    const score = diff * TRAITS[traitIndex].weight;
+    if (score > bestScore) {
+      bestScore = score;
+      bestLocalIndex = localIndex;
+    }
+  });
+
+  // 若所有显著维度的差异都不明显，退回第一条（更稳妥、可预期的默认）
+  if (bestScore < 0.1) return templates[0];
+
+  return templates[bestLocalIndex];
 }

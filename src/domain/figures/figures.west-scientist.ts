@@ -20,7 +20,11 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
     signature: '天动还是地动，唯观测以决。',
     bio: '波兰人。1473 年生于托伦。倡日心说，著《天体运行论》，开近代天文学之新纪元。',
     portrait: 'portraits/west-scientist/copernicus.svg',
-    matchBlurb: '汝与 {{name}} 同，能于众信之理外见其蔽，破千年之蔽。',
+    matchBlurb: [
+      '汝与 {{name}} 同，以学为日课，终身不厌。',
+      '汝与 {{name}} 同，好穷理以究天人之际，不以耳目之实自限。',
+      '汝与 {{name}} 同，敢破常名常道，另立一套言语。',
+    ],
     anecdotes: [
       { title: '日心说', body: '1543 年出版《天体运行论》，倡地动日静，撼托勒密之千年权威。' },
       { title: '临终付梓', body: '临终方见己作印成，旋即辞世。' },
@@ -36,7 +40,11 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
     signature: '然其所以然，必以实验为据。',
     bio: '意大利人。1564 年生于比萨。改良望远镜，发现木星四卫星与金星相位。近代实验科学之父。',
     portrait: 'portraits/west-scientist/galileo.svg',
-    matchBlurb: '汝与 {{name}} 同，能以一器之微窥宇宙之大，敢破千年之信。',
+    matchBlurb: [
+      '汝与 {{name}} 同，能于众说之上立一己之见，思入幽微。',
+      '汝与 {{name}} 同，不泥古、不奉常，以新为归。',
+      '汝与 {{name}} 同，学求深耕，以精为归。',
+    ],
     anecdotes: [
       { title: '斜塔实验', body: '据传于比萨斜塔做落体实验，破亚里士多德之论。' },
       { title: '仍地动也', body: '受宗教裁判所审讯，被迫认罪后低语：「但它确实在动。」' },
@@ -52,7 +60,11 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
     signature: '若我有所见，立于巨人之肩。',
     bio: '英国人。1643 年生于林肯郡。发明微积分、发现万有引力、创经典力学。著《自然哲学之数学原理》。',
     portrait: 'portraits/west-scientist/newton.svg',
-    matchBlurb: '汝与 {{name}} 同，能以万有之理统摄万象，思至清明。',
+    matchBlurb: [
+      '汝与 {{name}} 同，能以万有之理统摄万象，思至清明。',
+      '汝与 {{name}} 同，于书山学海中自得其乐。',
+      '汝与 {{name}} 同，破旧立新，虽千万人吾往矣。',
+    ],
     anecdotes: [
       { title: '苹果落地', body: '传说苹果落而悟万有引力。' },
       { title: '炼金术士', body: '其实终身沉于炼金术与神学，物理学只是其业余之一。' },
@@ -68,7 +80,11 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
     signature: 'E = mc²。',
     bio: '德裔犹太人。1879 年生于乌尔姆。1905 奇迹年：光电效应、狭义相对论、布朗运动。1915 完成广义相对论。',
     portrait: 'portraits/west-scientist/einstein.svg',
-    matchBlurb: '汝与 {{name}} 同，能于常识之外见时空之真，思至幽深。',
+    matchBlurb: [
+      '汝与 {{name}} 同，能于常识之外见时空之真，思至幽深。',
+      '汝与 {{name}} 同，以变求通，不为祖宗之法所囿。',
+      '汝与 {{name}} 同，以学为日课，终身不厌。',
+    ],
     anecdotes: [
       { title: '1905 奇迹年', body: '一年连发四篇革命性论文。' },
       { title: '诺贝尔奖', body: '1921 年以光电效应（而非相对论）获诺奖。' },
@@ -84,7 +100,11 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
     signature: '于万物中，拾其微光。',
     bio: '波兰裔法国人。1867 年生于华沙。与夫居里发现钋、镭。1903 年诺物理学奖，1911 年诺化学奖，独得两项。',
     portrait: 'portraits/west-scientist/curie.svg',
-    matchBlurb: '汝与 {{name}} 同，能以一缕清辉照百年之暗，行至无悔。',
+    matchBlurb: [
+      '汝与 {{name}} 同，以思为杖，欲探万物之所以然。',
+      '汝与 {{name}} 同，虽九死其犹未悔。',
+      '汝与 {{name}} 同，博而能约，厚积薄发。',
+    ],
     anecdotes: [
       { title: '镭之光', body: '于沥青铀矿中数吨提炼出 0.1 克氯化镭。' },
       { title: '双诺奖', body: '科学史唯一于两不同领域获诺奖者。' },
@@ -100,7 +120,11 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
     signature: '我不能创造之物，我即不能理解。',
     bio: '美国人。1918 年生于纽约。量子电动力学奠基人之一，1965 年诺物理学奖。著《费曼物理学讲义》。',
     portrait: 'portraits/west-scientist/feynman.svg',
-    matchBlurb: '汝与 {{name}} 同，能以童心入物理，以戏笔写大道。',
+    matchBlurb: [
+      '汝与 {{name}} 同，不泥古、不奉常，以新为归。',
+      '汝与 {{name}} 同，学求深耕，以精为归。',
+      '汝与 {{name}} 同，善于以言语形塑人心。',
+    ],
     anecdotes: [
       { title: '路径积分', body: '以「所有可能路径求和」重塑量子力学。' },
       { title: '邦戈鼓手', body: '业余为邦戈鼓手，参与加州理工学院舞会。' },
@@ -118,7 +142,11 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
     signature: '几何之美者，宇宙所用也。',
     bio: '德国人。1571 年生于符腾堡。师从第谷，发现行星运动三大定律。著《新天文学》《世界的和谐》。',
     portrait: 'portraits/west-scientist/kepler.svg',
-    matchBlurb: '汝与 {{name}} 同，能于数与形之间听宇宙之和声。',
+    matchBlurb: [
+      '汝与 {{name}} 同，学求深耕，以精为归。',
+      '汝与 {{name}} 同，以思为杖，欲探万物之所以然。',
+      '汝与 {{name}} 同，破旧立新，虽千万人吾往矣。',
+    ],
     anecdotes: [
       { title: '三大定律', body: '椭圆轨道、面积速度恒定、周期平方比距离立方。' },
       { title: '母亲巫讼', body: '其母被诬为巫婆，开普勒亲为辩护一年。' },
@@ -134,7 +162,11 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
     signature: '此岸所见，足以概然。',
     bio: '德国人。1646 年生于莱比锡。与牛顿各自独立发明微积分。创符号逻辑，著《神正论》《单子论》。',
     portrait: 'portraits/west-scientist/leibniz.svg',
-    matchBlurb: '汝与 {{name}} 同，能以符号统摄万象，思至精微。',
+    matchBlurb: [
+      '汝与 {{name}} 同，能以符号统摄万象，思至精微。',
+      '汝与 {{name}} 同，好穷理以究天人之际，不以耳目之实自限。',
+      '汝与 {{name}} 同，破旧立新，虽千万人吾往矣。',
+    ],
     anecdotes: [
       { title: '微积分之争', body: '与牛顿争微积分发明权，「符号之役」。' },
       { title: '最好世界', body: '庞德朱德街：「此乃众可能世界中最佳者。」' },
@@ -150,7 +182,11 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
     signature: '最适者存，非最强者。',
     bio: '英国人。1809 年生于施鲁斯伯里。乘贝格尔号环球考察五年，著《物种起源》，立进化论之基。',
     portrait: 'portraits/west-scientist/darwin.svg',
-    matchBlurb: '汝与 {{name}} 同，能于万物之中见亿万年之迁流。',
+    matchBlurb: [
+      '汝与 {{name}} 同，学求深耕，以精为归。',
+      '汝与 {{name}} 同，以思为杖，欲探万物之所以然。',
+      '汝与 {{name}} 同，放眼千秋，不囿于朝夕。',
+    ],
     anecdotes: [
       { title: '贝格尔号', body: '1831-1836 随贝格尔号环球考察。' },
       { title: '迟迟不发表', body: '与华莱士同时得自然选择理论，犹豫廿年方发表。' },
@@ -166,7 +202,11 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
     signature: '磁可生电，电亦可磁。',
     bio: '英国人。1791 年生于伦敦。铁匠之子，自学成才。发现电磁感应、发明发电机与电动机。',
     portrait: 'portraits/west-scientist/faraday.svg',
-    matchBlurb: '汝与 {{name}} 同，能以铁磁之器化无形之力。',
+    matchBlurb: [
+      '汝与 {{name}} 同，博而能约，厚积薄发。',
+      '汝与 {{name}} 同，心志刚毅，以执为骨。',
+      '汝与 {{name}} 同，以思为杖，欲探万物之所以然。',
+    ],
     anecdotes: [
       { title: '电磁感应', body: '1831 年发现磁变生电之理。' },
       { title: '圣诞讲座', body: '于皇家学会为儿童做圣诞讲座十九年。' },
@@ -182,7 +222,11 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
     signature: '能量之发，乃以粒也。',
     bio: '德国人。1858 年生于基尔。1900 年提出能量量子化假说，开量子力学之门。1918 年诺物理学奖。',
     portrait: 'portraits/west-scientist/planck.svg',
-    matchBlurb: '汝与 {{name}} 同，能于连续中见其断裂，思至幽微。',
+    matchBlurb: [
+      '汝与 {{name}} 同，以学为日课，终身不厌。',
+      '汝与 {{name}} 同，好穷理以究天人之际，不以耳目之实自限。',
+      '汝与 {{name}} 同，心志刚毅，以执为骨。',
+    ],
     anecdotes: [
       { title: '量子之始', body: '为解黑体辐射难题，引入能量量子。' },
       { title: '丧子之痛', body: '长子一战殁于凡尔登，次子被纳粹处决。' },
@@ -198,7 +242,11 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
     signature: '所测愈精，所知愈昧。',
     bio: '德国人。1901 年生于维尔茨堡。25 岁创立矩阵力学，1927 年提出不确定性原理。1932 年诺物理学奖。',
     portrait: 'portraits/west-scientist/heisenberg.svg',
-    matchBlurb: '汝与 {{name}} 同，能于可知之限处见其度，思至精严。',
+    matchBlurb: [
+      '汝与 {{name}} 同，能于可知之限处见其度，思至精严。',
+      '汝与 {{name}} 同，理性如刃，能剖开日常之蒙。',
+      '汝与 {{name}} 同，能于陈规之外别开生面。',
+    ],
     anecdotes: [
       { title: '不确定性', body: '位置与动量不可同时精确测定。' },
       { title: '哥本哈根', body: '与玻尔在哥本哈根学派中数度激辩。' },
@@ -216,7 +264,11 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
     signature: '物不生灭，唯相变耳。',
     bio: '法国人。1743 年生于巴黎。推翻燃素说，建立氧化燃烧理论，著《化学基础论》。近代化学之父。',
     portrait: 'portraits/west-scientist/lavoisier.svg',
-    matchBlurb: '汝与 {{name}} 同，能于炉火之变中见物质之恒。',
+    matchBlurb: [
+      '汝与 {{name}} 同，博而能约，厚积薄发。',
+      '汝与 {{name}} 同，心志刚毅，以执为骨。',
+      '汝与 {{name}} 同，见义则行，不为迟疑所误。',
+    ],
     anecdotes: [
       { title: '质量守恒', body: '经严密定量实验立物质不灭定律。' },
       { title: '死于断头', body: '法国大革命中被送上断头台，「共和国不需要学者」。' },
@@ -232,7 +284,11 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
     signature: '光、热、电、磁，皆波也。',
     bio: '苏格兰人。1831 年生于爱丁堡。统一电磁理论，预言电磁波。著《电磁学通论》。',
     portrait: 'portraits/west-scientist/maxwell.svg',
-    matchBlurb: '汝与 {{name}} 同，能以四方程统御万象，思至简明。',
+    matchBlurb: [
+      '汝与 {{name}} 同，于书山学海中自得其乐。',
+      '汝与 {{name}} 同，虽九死其犹未悔。',
+      '汝与 {{name}} 同，不为一时之计，而谋百代。',
+    ],
     anecdotes: [
       { title: '四方程', body: '高斯、安培、法拉第、麦克斯韦方程组，统御电磁。' },
       { title: '色觉之解', body: '幼年即对色彩理论有研究。' },
@@ -248,7 +304,11 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
     signature: '形之所现，必有因焉。',
     bio: '奥地利人。1822 年生于西里西亚。修道院修士，豌豆杂交实验，发现遗传两大定律。被忽视 35 年。',
     portrait: 'portraits/west-scientist/mendel.svg',
-    matchBlurb: '汝与 {{name}} 同，能于一畦豌豆中见生命之经。',
+    matchBlurb: [
+      '汝与 {{name}} 同，以学为日课，终身不厌。',
+      '汝与 {{name}} 同，百折而不回，守其志如一。',
+      '汝与 {{name}} 同，思千载之下，以永恒为尺度。',
+    ],
     anecdotes: [
       { title: '八年豌豆', body: '1856-1864 培植上万株豌豆。' },
       { title: '身后之荣', body: '1900 年被三位植物学家重新发现。' },
@@ -264,7 +324,11 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
     signature: '电波之有，吾已验之。',
     bio: '德国人。1857 年生于汉堡。1887 年实验证实电磁波存在。频率单位「赫兹」以其名。',
     portrait: 'portraits/west-scientist/hertz.svg',
-    matchBlurb: '汝与 {{name}} 同，能于空无之间捕无形之波。',
+    matchBlurb: [
+      '汝与 {{name}} 同，以学为日课，终身不厌。',
+      '汝与 {{name}} 同，百折而不回，守其志如一。',
+      '汝与 {{name}} 同，行事果决，不以三思自误。',
+    ],
     anecdotes: [
       { title: '电磁波之证', body: '1887 年发出与接收电磁波。' },
       { title: '早逝之憾', body: '37 岁病逝，留下未竟之业。' },
@@ -280,7 +344,11 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
     signature: '电子之舞，分阶而列。',
     bio: '丹麦人。1885 年生于哥本哈根。1913 年提出原子结构量子化模型，1922 年诺物理学奖。',
     portrait: 'portraits/west-scientist/bohr.svg',
-    matchBlurb: '汝与 {{name}} 同，能于微小之间见结构之序。',
+    matchBlurb: [
+      '汝与 {{name}} 同，学求深耕，以精为归。',
+      '汝与 {{name}} 同，逆风而行，不改其步。',
+      '汝与 {{name}} 同，放眼千秋，不囿于朝夕。',
+    ],
     anecdotes: [
       { title: '互补原理', body: '波与粒二象性互补。' },
       { title: '逃出丹麦', body: '二战时德占丹麦，避难瑞典，携「重水」逃脱。' },
@@ -296,7 +364,11 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
     signature: '反馈者，万物之通律也。',
     bio: '美国人。1894 年生于哥伦比亚。12 岁上大学，14 岁博士。创控制论，著《控制论》。',
     portrait: 'portraits/west-scientist/wiener.svg',
-    matchBlurb: '汝与 {{name}} 同，能于因果之环中见其律动。',
+    matchBlurb: [
+      '汝与 {{name}} 同，于书山学海中自得其乐。',
+      '汝与 {{name}} 同，虽九死其犹未悔。',
+      '汝与 {{name}} 同，不为一时之计，而谋百代。',
+    ],
     anecdotes: [
       { title: '控制论', body: '1948 年出版《控制论》，开跨学科新域。' },
       { title: '神童', body: '11 岁入大学，18 岁哈佛博士。' },
@@ -314,7 +386,11 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
     signature: '电者，宇宙之火也。',
     bio: '美国人。1706 年生于波士顿。证雷电为电，发明避雷针，制《穷理查年鉴》。参与起草《独立宣言》。',
     portrait: 'portraits/west-scientist/franklin.svg',
-    matchBlurb: '汝与 {{name}} 同，能以一线风筝引天电，济世民。',
+    matchBlurb: [
+      '汝与 {{name}} 同，行事果决，不以三思自误。',
+      '汝与 {{name}} 同，于书山学海中自得其乐。',
+      '汝与 {{name}} 同，虽九死其犹未悔。',
+    ],
     anecdotes: [
       { title: '风筝引电', body: '1752 年雷雨天放风筝引电，证天电与地电同质。' },
       { title: '公共人', body: '兼为科学家、外交官、出版家、邮政总长。' },
@@ -330,7 +406,11 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
     signature: '天才是百分之一的灵感，百分之九十九的汗水。',
     bio: '美国人。1847 年生于俄亥俄。发明留声机、实用白炽灯、电影机等，获 1093 项专利。',
     portrait: 'portraits/west-scientist/edison.svg',
-    matchBlurb: '汝与 {{name}} 同，能以一灯之微照千家之暗。',
+    matchBlurb: [
+      '汝与 {{name}} 同，见义则行，不为迟疑所误。',
+      '汝与 {{name}} 同，虽九死其犹未悔。',
+      '汝与 {{name}} 同，行险而徼幸，非安坐者可同。',
+    ],
     anecdotes: [
       { title: '千次试灯', body: '试用 6000 余种材料作灯丝。' },
       { title: '直流 vs 交流', body: '与特斯拉之争，最终交流胜出。' },
@@ -346,7 +426,11 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
     signature: '以炸为器，可利万民。',
     bio: '瑞典人。1833 年生于斯德哥尔摩。发明达纳炸药、胶质炸药、无烟炸药。临终以遗产设诺贝尔奖。',
     portrait: 'portraits/west-scientist/nobel.svg',
-    matchBlurb: '汝与 {{name}} 同，能于爆裂之危中求一灯之利。',
+    matchBlurb: [
+      '汝与 {{name}} 同，能于爆裂之危中求一灯之利。',
+      '汝与 {{name}} 同，虽九死其犹未悔。',
+      '汝与 {{name}} 同，不为一时之计，而谋百代。',
+    ],
     anecdotes: [
       { title: '炸药之父', body: '1867 年发明达纳炸药。' },
       { title: '诺贝尔奖', body: '遗嘱 920 万美元设物理、化学、生医、文学、和平五奖。' },
@@ -362,7 +446,11 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
     signature: '可计算者，乃数也。',
     bio: '英国人。1912 年生于伦敦。1936 年提出「图灵机」，二战破德 Enigma 密码。人工智能之父。',
     portrait: 'portraits/west-scientist/turing.svg',
-    matchBlurb: '汝与 {{name}} 同，能以一机之理测天下之算。',
+    matchBlurb: [
+      '汝与 {{name}} 同，以学为日课，终身不厌。',
+      '汝与 {{name}} 同，临机立断，有雷霆之气。',
+      '汝与 {{name}} 同，心志刚毅，以执为骨。',
+    ],
     anecdotes: [
       { title: '图灵测试', body: '1950 年提出判断机器是否思考之测试。' },
       { title: '苹果之遗', body: '苹果公司 logo 据传为纪念其咬毒苹果之死。' },
@@ -378,7 +466,11 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
     signature: '信息者，去芜存菁。',
     bio: '美国人。1916 年生于密歇根。1948 年发表《通信的数学理论》，创立信息论。',
     portrait: 'portraits/west-scientist/shannon.svg',
-    matchBlurb: '汝与 {{name}} 同，能于喧杂之中析其序。',
+    matchBlurb: [
+      '汝与 {{name}} 同，以学为日课，终身不厌。',
+      '汝与 {{name}} 同，百折而不回，守其志如一。',
+      '汝与 {{name}} 同，行事果决，不以三思自误。',
+    ],
     anecdotes: [
       { title: '信息论', body: '以比特度量信息，立通信之数学基。' },
       { title: '杂耍之癖', body: '业余酷爱独轮车与杂耍。' },
@@ -394,7 +486,11 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
     signature: '存与算，相与而成。',
     bio: '匈牙利人。1903 年生于布达佩斯。创存储程序计算机结构（冯·诺依曼架构），为现代计算机之祖。',
     portrait: 'portraits/west-scientist/vonneumann.svg',
-    matchBlurb: '汝与 {{name}} 同，能以一架构奠万代之基。',
+    matchBlurb: [
+      '汝与 {{name}} 同，以学为日课，终身不厌。',
+      '汝与 {{name}} 同，百折而不回，守其志如一。',
+      '汝与 {{name}} 同，行事果决，不以三思自误。',
+    ],
     anecdotes: [
       { title: '神童', body: '6 岁心算八位数除法，8 岁掌握微积分。' },
       { title: '博弈论', body: '与摩根斯特恩合著《博弈论与经济行为》。' },
@@ -412,7 +508,11 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
     signature: '勿动吾圆。',
     bio: '叙拉古人。公元前 287 年生。发现浮力定律、杠杆原理，求出圆周率与球体积公式，奠定静力学。',
     portrait: 'portraits/west-scientist/archimedes.svg',
-    matchBlurb: '汝与 {{name}} 同，能于浴缸水纹中见万物之理。',
+    matchBlurb: [
+      '汝与 {{name}} 同，学求深耕，以精为归。',
+      '汝与 {{name}} 同，以长远为念，不以眼前得失动心。',
+      '汝与 {{name}} 同，虽九死其犹未悔。',
+    ],
     anecdotes: [
       { title: '尤里卡', body: '浴缸中悟浮力定律，赤奔叙拉古街喊「尤里卡」。' },
       { title: '守城', body: '以镜聚光焚敌船（一说），设投石机、滑轮抓钩守城。' },
@@ -428,7 +528,11 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
     signature: '吾之心算，强于笔算。',
     bio: '瑞士人。1707 年生于巴塞尔。18 世纪最伟大数学家，著《无穷小分析引论》。',
     portrait: 'portraits/west-scientist/euler.svg',
-    matchBlurb: '汝与 {{name}} 同，能于冥想之间穷万物之数。',
+    matchBlurb: [
+      '汝与 {{name}} 同，学求深耕，以精为归。',
+      '汝与 {{name}} 同，逆风而行，不改其步。',
+      '汝与 {{name}} 同，放眼千秋，不囿于朝夕。',
+    ],
     anecdotes: [
       { title: '失明之业', body: '晚年双目失明，仍口述论文。' },
       { title: '欧拉公式', body: 'e^{iπ}+1=0，五常数之联，被誉为最美公式。' },
@@ -444,7 +548,11 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
     signature: '少言，多思。',
     bio: '德国人。1777 年生于不伦瑞克。九岁求等差数列和，十九岁以正十七边形作图震惊数学界。',
     portrait: 'portraits/west-scientist/gauss.svg',
-    matchBlurb: '汝与 {{name}} 同，能于数之幽深处见其对称。',
+    matchBlurb: [
+      '汝与 {{name}} 同，以学为日课，终身不厌。',
+      '汝与 {{name}} 同，百折而不回，守其志如一。',
+      '汝与 {{name}} 同，思千载之下，以永恒为尺度。',
+    ],
     anecdotes: [
       { title: '九岁求和', body: '「1+2+...+100=5050」之著名传说。' },
       { title: '正十七边形', body: '1796 年以尺规作出，破解两千年难题。' },
@@ -460,7 +568,11 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
     signature: '彗星有期，吾已算之。',
     bio: '英国人。1656 年生于伦敦。计算预言哈雷彗星回归周期约 76 年。推动出版牛顿《原理》。',
     portrait: 'portraits/west-scientist/halley.svg',
-    matchBlurb: '汝与 {{name}} 同，能于长天之客上见其期。',
+    matchBlurb: [
+      '汝与 {{name}} 同，以学为日课，终身不厌。',
+      '汝与 {{name}} 同，不为一时之计，而谋百代。',
+      '汝与 {{name}} 同，行事果决，不以三思自误。',
+    ],
     anecdotes: [
       { title: '彗星归期', body: '1705 年预言 1758 年回归，身后验之。' },
       { title: '《原理》之成', body: '自费出版牛顿《自然哲学之数学原理》。' },
@@ -476,7 +588,11 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
     signature: '万物之重，皆可观之。',
     bio: '英国人。1731 年生于伦敦。扭秤实验测万有引力常数 G，被誉为「称量地球之人」。',
     portrait: 'portraits/west-scientist/cavendish.svg',
-    matchBlurb: '汝与 {{name}} 同，能于微丝之动中见天地之重。',
+    matchBlurb: [
+      '汝与 {{name}} 同，以学为日课，终身不厌。',
+      '汝与 {{name}} 同，不竞奔竞，以退为进。',
+      '汝与 {{name}} 同，心志刚毅，以执为骨。',
+    ],
     anecdotes: [
       { title: '称量地球', body: '以扭秤测引力 G，进而得地球质量。' },
       { title: '孤僻之富', body: '富且孤，不喜与人语，常留字条。' },
@@ -492,7 +608,11 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
     signature: '猫之生死，取决于观者。',
     bio: '奥地利人。1887 年生于维也纳。1926 年建立薛定谔方程，量子力学奠基人之一。1933 年诺物理学奖。',
     portrait: 'portraits/west-scientist/schrodinger.svg',
-    matchBlurb: '汝与 {{name}} 同，能于生死之间立方程之问。',
+    matchBlurb: [
+      '汝与 {{name}} 同，博而能约，厚积薄发。',
+      '汝与 {{name}} 同，心志刚毅，以执为骨。',
+      '汝与 {{name}} 同，知进退之机，能全身而远害。',
+    ],
     anecdotes: [
       { title: '薛定谔方程', body: '以波函数描述微观粒子，奠基量子力学。' },
       { title: '生命是什么', body: '1944 年《生命是什么》启分子生物学之先。' },
