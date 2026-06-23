@@ -14,17 +14,28 @@
   --ash: #6a6a6a;
   --rice-translucent: rgba(245, 239, 224, 0.85);
 
+  /* ── 水墨光晕 ── */
+  --glow-cinnabar: rgba(168, 50, 46, 0.22);
+  --glow-jade: rgba(74, 107, 84, 0.22);
+  --glow-ink: rgba(26, 26, 26, 0.12);
+  --shadow-soft: 0 2px 8px rgba(26, 26, 26, 0.06);
+  --shadow-medium: 0 8px 24px rgba(26, 26, 26, 0.1);
+  --shadow-heavy: 0 18px 48px rgba(26, 26, 26, 0.14);
+
   /* ── 字 ── 加大加粗，古风感 ── */
   --font-display: '华文行楷', 'STXingkai', '楷体', 'KaiTi', 'STKaiti', '华文楷体', serif;
   --font-body: '华文宋体', 'STSong', '宋体', 'SimSun', 'Songti SC', serif;
   --font-accent: '华文隶书', 'STLiti', '隶书', 'LiSu', '华文行楷', serif;
 
   /* ── 节奏 ── 加长停顿 ── */
-  --t-fast: 400ms;
-  --t-base: 800ms;
-  --t-slow: 1500ms;
+  --t-fast: 300ms;
+  --t-base: 600ms;
+  --t-slow: 1200ms;
+  --t-dramatic: 1800ms;
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-ink: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
 
   /* ── 间距 ── */
   --sp-1: 0.25rem;
@@ -57,20 +68,22 @@ html {
 }
 
 /* 防止溢出 - 全局约束 */
+/* 注意：overflow-x 不能放在 html/body，否则某些浏览器会把 <html>/<body> 当作 fixed 元素的 containing block，
+   导致弹层（人物详情、分享卡）随文档高度偏移而离开视口。水平溢出由 #root 与页面容器负责裁剪。 */
 html,
 body {
-  overflow-x: hidden;
-  max-width: 100vw;
-  width: 100%;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  word-break: break-word;
+  overflow-x: visible;
 }
 
 html,
 body,
 #root {
-  height: 100%;
+  min-height: 100%;
+  max-width: 100vw;
+  width: 100%;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 body {
@@ -87,12 +100,9 @@ body {
 }
 
 #root {
-  max-width: 100vw;
+  position: relative;
+  z-index: 1;
   overflow-x: hidden;
-  width: 100%;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  word-break: break-word;
 }
 
 /* 宣纸纹理 */
@@ -255,6 +265,17 @@ p {
   font-size: 1rem;
   color: var(--ink-soft);
   line-height: 1.6;
+}
+
+/* 诗句逐字晕染（仅在有 reveal 类时触发） */
+.cp-verse-reveal .ancient,
+.cp-verse-reveal .gloss {
+  opacity: 0;
+  animation: cp-ink-wash-in 800ms var(--ease-ink) forwards;
+}
+
+.cp-verse-reveal .gloss {
+  animation-delay: 200ms;
 }
 
 /* 容器 */
@@ -671,6 +692,7 @@ button:focus:not(:focus-visible) {
 /* 仅答题页禁止 body 滚动，其他页面不受影响 */
 body.cp-way-no-scroll {
   overflow: hidden;
+  height: 100vh;
 }
 
 body.cp-way-no-scroll #root {
@@ -696,6 +718,15 @@ body.cp-way-no-scroll #root {
   background: var(--rice);
   text-align: center;
   box-sizing: border-box;
+}
+
+.cp-way-loading,
+.cp-ref-loading {
+  margin: auto;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--ink-soft);
+  letter-spacing: 0.2em;
 }
 
 /* 顶部：进度条 + 题号 */
@@ -871,12 +902,16 @@ body.cp-way-no-scroll #root {
   font-family: inherit;
   font-size: 0.9rem;
   line-height: 1.35;
+  position: relative;
+  overflow: hidden;
 }
 
 .cp-way-option--selected {
   background: var(--rice-warm);
   border-color: var(--cinnabar);
-  box-shadow: 0 3px 10px rgba(168, 50, 46, 0.12);
+  box-shadow:
+    0 3px 10px rgba(168, 50, 46, 0.12),
+    inset 0 0 0 1px rgba(168, 50, 46, 0.08);
   transform: translateY(-1px);
 }
 
@@ -884,6 +919,29 @@ body.cp-way-no-scroll #root {
   border-color: var(--ink);
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(26, 26, 26, 0.1);
+}
+
+/* 选项选中时朱砂印章涟漪 */
+.cp-way-option::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at var(--opt-ripple-x, 50%) var(--opt-ripple-y, 50%),
+    rgba(168, 50, 46, 0.12) 0%,
+    transparent 50%
+  );
+  opacity: 0;
+  transform: scale(0.6);
+  transition:
+    opacity 300ms,
+    transform 500ms var(--ease-out);
+  pointer-events: none;
+}
+
+.cp-way-option--selected::after {
+  opacity: 1;
+  transform: scale(1.5);
 }
 
 .cp-way-letter {
@@ -932,6 +990,96 @@ body.cp-way-no-scroll #root {
   font-size: 0.8rem;
   color: var(--ink-soft);
   line-height: 1.4;
+}
+
+/* 桌面端：提高答题页选项密度，让更多选项进入首屏 */
+@media (min-width: 1024px) {
+  .cp-way-shell {
+    padding: 0.5rem clamp(1rem, 3vw, 2rem) 0.35rem;
+  }
+
+  .cp-way-header {
+    padding-bottom: 0.25rem;
+  }
+
+  .cp-way-topbar {
+    margin-top: 0.25rem;
+  }
+
+  .cp-way-meta {
+    font-size: 0.7rem;
+  }
+
+  .cp-way-backtrack {
+    margin-top: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.65rem;
+  }
+
+  .cp-way-prompt {
+    font-size: clamp(1.15rem, 2.8vw, 1.6rem);
+    line-height: 1.2;
+    margin-bottom: 0.15rem;
+  }
+
+  .cp-way-gloss {
+    font-size: 0.8rem;
+    line-height: 1.35;
+    margin-bottom: 0.4rem;
+  }
+
+  .cp-way-options {
+    gap: 0.2rem;
+    margin-top: 0.5rem;
+    padding-bottom: 0.2rem;
+  }
+
+  .cp-way-option {
+    padding: 0.3rem 0.5rem;
+    font-size: 0.8rem;
+    gap: 0.4rem;
+    line-height: 1.25;
+  }
+
+  .cp-way-letter {
+    width: 1.35rem;
+    height: 1.35rem;
+    min-width: 1.35rem;
+    font-size: 0.75rem;
+  }
+
+  .cp-way-ancient {
+    font-size: 0.9rem;
+  }
+
+  .cp-way-gloss-inline {
+    font-size: 0.7rem;
+    line-height: 1.25;
+  }
+
+  .cp-way-footer {
+    padding-top: 0.25rem;
+  }
+
+  .cp-way-nav {
+    gap: 0.3rem;
+  }
+
+  .cp-way-nav .cp-btn {
+    min-width: 4.2rem;
+    padding: 0.3rem 0.6rem;
+    font-size: 0.8rem;
+  }
+
+  .cp-way-hint {
+    margin-top: 0.15rem;
+    font-size: 0.6rem;
+  }
+
+  .cp-way-reset {
+    margin-top: 0.05rem;
+    font-size: 0.6rem;
+  }
 }
 
 /* 底部导航 */
@@ -1147,7 +1295,13 @@ body.cp-way-no-scroll #root {
 .cp-seal-large {
   display: inline-block;
   font-size: clamp(4rem, 12vw, 8rem);
+  white-space: nowrap;
   animation: cp-seal-print 800ms var(--ease-out) both;
+}
+
+.cp-prologue-title {
+  white-space: nowrap;
+  font-size: clamp(2.2rem, 8vw, 3.5rem);
 }
 
 @keyframes cp-seal-print {
@@ -1348,6 +1502,19 @@ main:focus {
   outline: none;
 }
 
+/* 顶部导航玻璃水墨 */
+.cp-topbar {
+  transition: box-shadow 300ms var(--ease-out);
+}
+
+.cp-topbar::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 10% 100%, rgba(168, 50, 46, 0.04) 0%, transparent 40%);
+}
+
 /* 可聚焦元素轮廓 */
 :focus-visible {
   outline: 2px solid var(--cinnabar);
@@ -1377,6 +1544,35 @@ main:focus {
   box-shadow: 0 6px 16px rgba(168, 50, 46, 0.2);
 }
 
+.cp-alt-card {
+  transition:
+    transform 300ms var(--ease-out),
+    box-shadow 300ms var(--ease-out),
+    border-color 300ms var(--ease-out);
+}
+
+.cp-alt-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: var(--shadow-medium);
+}
+
+.cp-trait-card {
+  transition:
+    transform 250ms var(--ease-out),
+    box-shadow 250ms var(--ease-out),
+    border-color 250ms var(--ease-out);
+}
+
+.cp-trait-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-soft);
+}
+
+/* 结果页暗色模式人像 */
+:root[data-theme='dark'] .cp-portrait-frame {
+  background: linear-gradient(135deg, var(--rice-warm) 0%, var(--rice-deep) 100%);
+}
+
 /* ─── 跳过按钮样式 ─── */
 .cp-btn-skip {
   font-size: 0.875rem;
@@ -1402,6 +1598,485 @@ main:focus {
   50% {
     opacity: 0.5;
   }
+}
+
+/* ─── 水墨强化：通用浮动与呼吸 ─── */
+@keyframes cp-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.cp-float {
+  animation: cp-float 6s var(--ease-in-out) infinite;
+}
+
+.cp-float-slow {
+  animation: cp-float 9s var(--ease-in-out) infinite;
+}
+
+@keyframes cp-breathe {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+.cp-breathe {
+  animation: cp-breathe 5s var(--ease-in-out) infinite;
+}
+
+/* 水墨晕染入场 */
+@keyframes cp-ink-wash-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.96);
+    filter: blur(8px);
+  }
+  40% {
+    opacity: 0.5;
+    filter: blur(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
+}
+
+/* 从下往上淡入 */
+@keyframes cp-rise-in {
+  0% {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 印章盖印 */
+@keyframes cp-seal-stamp {
+  0% {
+    transform: scale(2.4) rotate(-10deg);
+    opacity: 0;
+  }
+  55% {
+    transform: scale(0.92) rotate(2deg);
+    opacity: 1;
+  }
+  75% {
+    transform: scale(1.05) rotate(-1deg);
+  }
+  100% {
+    transform: scale(1) rotate(0);
+  }
+}
+
+.cp-seal-stamp {
+  animation: cp-seal-stamp 700ms var(--ease-bounce) both;
+}
+
+/* 闪烁微光 */
+@keyframes cp-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.cp-shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(245, 239, 224, 0.35) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: cp-shimmer 2.5s var(--ease-in-out) infinite;
+}
+
+/* 按钮水墨涟漪效果 */
+.cp-btn {
+  overflow: hidden;
+}
+
+.cp-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at var(--ripple-x, 50%) var(--ripple-y, 50%),
+    rgba(245, 239, 224, 0.35) 0%,
+    transparent 60%
+  );
+  opacity: 0;
+  transform: scale(0.5);
+  transition:
+    opacity 300ms,
+    transform 500ms var(--ease-out);
+  pointer-events: none;
+}
+
+.cp-btn:active::after {
+  opacity: 1;
+  transform: scale(2);
+  transition:
+    opacity 100ms,
+    transform 0ms;
+}
+
+/* 人像装裱边框 */
+.cp-portrait-frame {
+  position: relative;
+  padding: 0.5rem;
+  background: linear-gradient(135deg, var(--rice-warm) 0%, var(--rice-deep) 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.2),
+    var(--shadow-medium);
+}
+
+.cp-portrait-frame::before,
+.cp-portrait-frame::after {
+  content: '';
+  position: absolute;
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid var(--cinnabar);
+  pointer-events: none;
+}
+
+.cp-portrait-frame::before {
+  top: 0.25rem;
+  left: 0.25rem;
+  border-right: none;
+  border-bottom: none;
+}
+
+.cp-portrait-frame::after {
+  bottom: 0.25rem;
+  right: 0.25rem;
+  border-left: none;
+  border-top: none;
+}
+
+/* 卡片悬浮阴影 */
+.cp-card-hover {
+  transition:
+    transform 300ms var(--ease-out),
+    box-shadow 300ms var(--ease-out),
+    border-color 300ms var(--ease-out);
+}
+
+.cp-card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-medium);
+}
+
+.cp-domain-card.cp-selected-corner {
+  box-shadow: 0 4px 14px var(--glow-cinnabar);
+}
+
+/* 选域页 */
+.cp-path-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.cp-path-tabs {
+  margin-bottom: 2rem;
+}
+
+.cp-domain-grid {
+  display: grid;
+  gap: 1.25rem;
+  margin-bottom: 2.5rem;
+  max-width: 36rem;
+  margin-left: auto;
+  margin-right: auto;
+  grid-template-columns: 1fr;
+}
+
+.cp-domain-card {
+  padding: 1.5rem 1.25rem;
+  text-align: center;
+  background: transparent;
+  border: 2px solid var(--rice-deep);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 11rem;
+}
+
+/* 结果页十二维特质卡片 */
+.cp-trait-card {
+  padding: 0.85rem 0.8rem;
+  text-align: center;
+  font-family: var(--font-display);
+  border: 1px solid var(--rice-deep);
+  background: transparent;
+  transition: all 250ms var(--ease-out);
+}
+
+.cp-trait-card-label {
+  margin-bottom: 0.4rem;
+  font-size: 0.8rem;
+}
+
+.cp-trait-card-glyph {
+  font-size: 1.35rem;
+  color: var(--ink);
+  margin-bottom: 0.25rem;
+}
+
+.cp-trait-card-name {
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+  margin-bottom: 0.4rem;
+}
+
+.cp-trait-card-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 0.4rem;
+}
+
+.cp-trait-card-bar {
+  gap: 6px;
+  font-size: 0.75rem;
+}
+
+.cp-trait-card-track {
+  flex: 1;
+  height: 6px;
+  background: var(--rice-deep);
+  position: relative;
+}
+
+.cp-trait-card-comment {
+  margin-top: 0.55rem;
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  font-family: var(--font-body);
+  line-height: 1.5;
+}
+
+.cp-trait-card-tag {
+  margin-top: 0.4rem;
+  font-size: 0.75rem;
+  opacity: 0.85;
+  letter-spacing: 0.1em;
+}
+
+@media (min-width: 1024px) {
+  .cp-trait-card {
+    padding: 1rem;
+  }
+
+  .cp-trait-card-label {
+    font-size: 0.9rem;
+  }
+
+  .cp-trait-card-glyph {
+    font-size: 1.5rem;
+  }
+
+  .cp-trait-card-name {
+    font-size: 1rem;
+  }
+
+  .cp-trait-card-bar {
+    font-size: 0.85rem;
+  }
+
+  .cp-trait-card-comment {
+    font-size: 0.9rem;
+  }
+
+  .cp-trait-card-tag {
+    font-size: 0.8rem;
+  }
+}
+
+/* 结果页操作按钮 */
+.cp-ref-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  align-items: center;
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--rice-deep);
+}
+
+.cp-ref-actions-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+/* 主要操作：强化 */
+.cp-ref-actions-primary .cp-btn {
+  min-width: 10rem;
+  min-height: 3rem;
+  font-size: 1.1rem;
+  padding: var(--sp-3) var(--sp-8);
+}
+
+/* 次要操作：弱化 */
+.cp-ref-actions-secondary .cp-btn {
+  min-height: 2.5rem;
+  padding: var(--sp-2) var(--sp-6);
+  font-size: 0.95rem;
+}
+
+/* 数据操作：更淡 */
+.cp-ref-actions-data .cp-btn {
+  min-height: 2.25rem;
+  padding: var(--sp-1) var(--sp-4);
+  font-size: 0.85rem;
+  border-color: var(--rice-deep);
+  color: var(--ink-soft);
+}
+
+.cp-ref-actions-data .cp-btn:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+@media (max-width: 640px) {
+  .cp-ref-actions-group {
+    flex-direction: column;
+  }
+
+  .cp-ref-actions .cp-btn {
+    width: 100%;
+    min-width: unset;
+  }
+
+  .cp-ref-actions-primary .cp-btn {
+    min-height: 3rem;
+  }
+}
+
+/* 平板：双列 */
+@media (min-width: 640px) {
+  .cp-domain-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* 桌面：三列并排，降低卡片高度 */
+@media (min-width: 1024px) {
+  .cp-domain-grid {
+    max-width: 52rem;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .cp-domain-card {
+    min-height: 10rem;
+    padding: 1.25rem;
+  }
+}
+
+/* 选中态印章角标 */
+.cp-selected-corner {
+  position: relative;
+}
+
+.cp-selected-corner::after {
+  content: attr(data-selected-label);
+  position: absolute;
+  top: -0.5rem;
+  right: -0.5rem;
+  min-width: 1.6rem;
+  height: 1.6rem;
+  padding: 0 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--cinnabar);
+  color: var(--rice);
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  border-radius: 2px;
+  box-shadow: 0 2px 6px var(--glow-cinnabar);
+  animation: cp-seal-stamp 400ms var(--ease-bounce) both;
+}
+
+/* Toast 滑入 */
+@keyframes cp-toast-in {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.cp-toast-animate {
+  animation: cp-toast-in 300ms var(--ease-out) both;
+}
+
+/* 进度条光晕 */
+.cp-progress-glow {
+  box-shadow: 0 0 8px var(--glow-cinnabar);
+}
+
+/* 宣纸暗角 */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, transparent 0%, rgba(26, 26, 26, 0.04) 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 选中文字颜色 */
+::selection {
+  background: rgba(168, 50, 46, 0.2);
+  color: var(--ink);
+}
+
+/* 滚动条美化 */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--rice-deep);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ash);
+}
+
+/* 暗色模式滚动条 */
+:root[data-theme='dark'] ::-webkit-scrollbar-thumb {
+  background: var(--rice-deep);
 }
 
 /* ─── 键盘导航提示 ─── */
@@ -1448,6 +2123,387 @@ a:focus-visible {
 
   [data-role='option'] {
     min-height: 56px;
+  }
+}
+
+/* ─── 人物详情卷轴 ─── */
+.cp-figure-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(26, 22, 18, 0.78);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.cp-figure-scroll {
+  width: 100%;
+  max-width: 880px;
+  max-height: 92vh;
+  overflow-y: auto;
+  background: var(--rice);
+  border: 1px solid var(--rice-deep);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
+  position: relative;
+}
+
+.cp-figure-scroll::before,
+.cp-figure-scroll::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--cinnabar) 20%,
+    var(--cinnabar) 80%,
+    transparent
+  );
+  opacity: 0.5;
+}
+
+.cp-figure-scroll::before {
+  top: 0;
+}
+
+.cp-figure-scroll::after {
+  bottom: 0;
+}
+
+.cp-figure-content {
+  padding: 2rem 2.5rem 3rem;
+}
+
+.cp-figure-header {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 1.5rem;
+}
+
+.cp-figure-close {
+  font-size: 0.95rem;
+  letter-spacing: 0.15em;
+  min-height: 2.75rem;
+  min-width: 6rem;
+  padding: 0.5rem 1rem;
+}
+
+@media (max-width: 640px) {
+  .cp-figure-close {
+    min-height: 3rem;
+    min-width: 7rem;
+    font-size: 1rem;
+  }
+}
+
+.cp-figure-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+  gap: 2.5rem;
+}
+
+.cp-figure-portrait {
+  position: relative;
+}
+
+.cp-figure-seal {
+  position: absolute;
+  right: -0.5rem;
+  bottom: -0.5rem;
+  width: 2.6rem;
+  height: 2.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--cinnabar);
+  color: var(--rice);
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  border-radius: 2px;
+  box-shadow: 0 2px 8px var(--glow-cinnabar);
+}
+
+.cp-figure-body {
+  text-align: left;
+}
+
+.cp-figure-meta {
+  margin: 0 0 0.5rem;
+  color: var(--ink-soft);
+  font-family: var(--font-accent);
+  font-size: 0.9rem;
+  letter-spacing: 0.1em;
+}
+
+.cp-figure-name {
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+  margin: 0 0 1rem;
+  letter-spacing: 0.12em;
+}
+
+.cp-figure-quote {
+  margin-bottom: 1.5rem;
+}
+
+.cp-figure-section {
+  margin-bottom: 1.75rem;
+}
+
+.cp-figure-section h2 {
+  font-size: 1rem;
+  color: var(--cinnabar);
+  letter-spacing: 0.2em;
+  margin-bottom: 0.75rem;
+  font-family: var(--font-display);
+}
+
+.cp-figure-bio {
+  line-height: 1.9;
+  color: var(--ink);
+  margin: 0;
+}
+
+.cp-figure-anecdotes {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.cp-figure-anecdotes li {
+  padding: 0.75rem 0;
+  border-bottom: 1px dashed var(--rice-deep);
+}
+
+.cp-figure-anecdotes li:last-child {
+  border-bottom: none;
+}
+
+.cp-figure-anecdotes strong {
+  display: block;
+  color: var(--ink);
+  font-family: var(--font-display);
+  margin-bottom: 0.25rem;
+  letter-spacing: 0.05em;
+}
+
+.cp-figure-anecdotes span {
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.cp-figure-related {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(8rem, 100%), 1fr));
+  gap: 0.75rem;
+}
+
+.cp-figure-related-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 0.5rem;
+  background: transparent;
+  border: 1px solid var(--rice-deep);
+  cursor: pointer;
+  transition: all 250ms var(--ease-out);
+}
+
+.cp-figure-related-card:hover {
+  border-color: var(--cinnabar);
+  background: var(--rice-warm);
+}
+
+.cp-figure-related-name {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+  color: var(--ink);
+}
+
+.cp-figure-related-era {
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+  margin-top: 0.25rem;
+}
+
+.cp-figure-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 2.5rem;
+  flex-wrap: wrap;
+}
+
+/* 结果页人物入口可点击 */
+.cp-ref-portrait-btn {
+  transition: transform 300ms var(--ease-out);
+}
+
+.cp-ref-portrait-btn:hover {
+  transform: scale(1.02);
+}
+
+.cp-alt-card {
+  background: transparent;
+  font-family: inherit;
+  text-align: center;
+}
+
+.cp-alt-card:hover {
+  border-color: var(--cinnabar);
+}
+
+@media (max-width: 640px) {
+  .cp-figure-content {
+    padding: 1.25rem 1.25rem 2rem;
+  }
+
+  .cp-figure-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .cp-figure-portrait {
+    max-width: 220px;
+    margin: 0 auto;
+  }
+
+  .cp-figure-actions {
+    justify-content: center;
+  }
+}
+
+/* ─── 分享卡 ─── */
+.cp-share-card-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1001;
+  background: rgba(26, 22, 18, 0.78);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.cp-share-card-scroll {
+  width: 100%;
+  max-width: 980px;
+  max-height: 96vh;
+  overflow-y: auto;
+  background: var(--rice);
+  border: 1px solid var(--rice-deep);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
+  position: relative;
+}
+
+.cp-share-card-scroll::before,
+.cp-share-card-scroll::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--cinnabar) 20%,
+    var(--cinnabar) 80%,
+    transparent
+  );
+  opacity: 0.5;
+}
+
+.cp-share-card-scroll::before {
+  top: 0;
+}
+
+.cp-share-card-scroll::after {
+  bottom: 0;
+}
+
+.cp-share-card-content {
+  padding: 1.5rem 2rem 2.5rem;
+}
+
+.cp-share-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+  gap: 1rem;
+}
+
+.cp-share-card-header h2 {
+  font-size: 1.25rem;
+  margin: 0;
+  letter-spacing: 0.2em;
+}
+
+.cp-share-card-close {
+  font-size: 0.9rem;
+  letter-spacing: 0.15em;
+}
+
+.cp-share-card-preview {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px dashed var(--rice-deep);
+  margin-bottom: 1.5rem;
+  overflow: auto;
+}
+
+.cp-share-card-canvas {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  box-shadow: var(--shadow-medium);
+}
+
+.cp-share-card-canvas--loading {
+  opacity: 0.3;
+}
+
+.cp-share-card-loading {
+  position: absolute;
+  color: var(--ink-soft);
+  font-family: var(--font-display);
+  letter-spacing: 0.1em;
+}
+
+.cp-share-card-actions {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 640px) {
+  .cp-share-card-content {
+    padding: 1.25rem 1.25rem 2rem;
+  }
+
+  .cp-share-card-preview {
+    min-height: 140px;
+  }
+
+  .cp-share-card-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .cp-share-card-actions .cp-btn {
+    width: 100%;
   }
 }
 

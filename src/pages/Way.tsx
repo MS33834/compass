@@ -6,10 +6,13 @@
 // 3. 选项紧凑、题面清晰、底部导航始终可见。
 // 4. 键盘导航保留：1-6 选答、← → 翻题、↑ ↓ 在未答时定位首/末项。
 
-import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { gsap } from 'gsap';
 import { useStore } from '../store';
 import { itemsForDomain } from '../domain/items/items.index';
 import { figuresForDomain } from '../domain/figures/figures.index';
+import type { Item } from '../domain/items/item.types';
+import type { Figure } from '../domain/figures/figure.types';
 import { computeUserVector } from '../domain/matching/vector';
 import { buildReport } from '../domain/matching/report';
 import { BrushButton } from '../components/BrushButton';
@@ -43,15 +46,39 @@ export function Way() {
     if (!domain) goPhase('path');
   }, [domain, goPhase]);
 
-  const items = useMemo(() => itemsForDomain(domain ?? 'east-literati'), [domain]);
+  const [items, setItems] = useState<readonly Item[]>([]);
+  const [figures, setFigures] = useState<readonly Figure[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (!domain) {
+      setItems([]);
+      setFigures([]);
+      setLoading(false);
+      return;
+    }
+    let cancelled = false;
+    setLoading(true);
+    Promise.all([itemsForDomain(domain), figuresForDomain(domain)]).then(
+      ([loadedItems, loadedFigures]) => {
+        if (cancelled) return;
+        setItems(loadedItems);
+        setFigures(loadedFigures);
+        setLoading(false);
+      }
+    );
+    return () => {
+      cancelled = true;
+    };
+  }, [domain]);
+
   const total = items.length;
   const item = items[currentIndex];
-  const figures = useMemo(() => (domain ? figuresForDomain(domain) : []), [domain]);
 
   // 越界保护：重定向到选域页（而非 prologue，避免丢失进度）
   useEffect(() => {
-    if (domain && !item) goPhase('path');
-  }, [domain, item, goPhase]);
+    if (domain && !loading && !item) goPhase('path');
+  }, [domain, loading, item, goPhase]);
 
   // 回溯提示
   const [showBacktrack, setShowBacktrack] = useState(false);
@@ -63,29 +90,52 @@ export function Way() {
   }, [currentIndex, answers, items]);
 
   const scrollRef = useRef<HTMLDivElement | null>(null);
+  const questionRef = useRef<HTMLElement | null>(null);
 
-  // 切题时内部滚动区回到顶部
+  // 切题时内部滚动区回到顶部 + 水墨翻页动效
   useLayoutEffect(() => {
     scrollRef.current?.scrollTo(0, 0);
   }, [currentIndex]);
 
-  if (!domain || !item) return null;
+  useEffect(() => {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced || !questionRef.current) return;
 
-  const current = answers[item.id];
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        questionRef.current,
+        { opacity: 0, x: 24, filter: 'blur(4px)' },
+        { opacity: 1, x: 0, filter: 'blur(0px)', duration: 0.45, ease: 'power2.out' }
+      );
+      gsap.fromTo(
+        '.cp-way-option',
+        { opacity: 0, x: 12 },
+        { opacity: 1, x: 0, duration: 0.35, stagger: 0.04, ease: 'power2.out', delay: 0.1 }
+      );
+    }, questionRef);
+
+    return () => ctx.revert();
+  }, [currentIndex]);
+
+  // 越界保护：重定向到选域页（而非 prologue，避免丢失进度）
+  // 注意：必须在所有 hooks 之前 return，否则违反 Rules of Hooks
+  const current = item ? answers[item.id] : undefined;
   const answeredCount = Object.keys(answers).length;
   const canFinish = answeredCount >= 30;
 
   const handleFinish = useCallback(() => {
+    if (!item) return;
     const r = buildReport(computeUserVector(answers, items), figures, answers, items);
-    setReport(r);
-  }, [answers, items, figures, setReport]);
+    if (r) setReport(r);
+  }, [answers, items, figures, setReport, item]);
 
   const handleSkip = () => {
     if (currentIndex < total - 1) goNext();
   };
 
-  // 键盘导航
+  // 键盘导航（必须在 return null 之前注册，遵守 Rules of Hooks）
   useEffect(() => {
+    if (!item) return;
     const handleKeyDown = (e: KeyboardEvent) => {
       const target = e.target as HTMLElement;
       if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA')) return;
@@ -111,10 +161,11 @@ export function Way() {
           answer(item.id, optIndex);
         }
       } else if (e.key === 'Enter') {
-        e.preventDefault();
         if (currentIndex < total - 1 && current !== undefined) {
+          e.preventDefault();
           goNext();
         } else if (canFinish) {
+          e.preventDefault();
           handleFinish();
         }
       }
@@ -124,14 +175,22 @@ export function Way() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [currentIndex, total, current, item, answer, goPrev, goNext, canFinish, handleFinish]);
 
+  if (!domain || loading || !item) {
+    return (
+      <section className="cp-way-shell" aria-live="polite">
+        <div className="cp-way-loading">{t.ui.loading}</div>
+      </section>
+    );
+  }
+
   const progressPct = Math.round((answeredCount / total) * 100);
   const currentProgressPct = Math.round(((currentIndex + 1) / total) * 100);
 
   return (
-    <section className="cp-way-shell cp-page-enter" aria-labelledby="way-title">
+    <section className="cp-way-shell" aria-labelledby="way-title">
       {/* 顶部：进度 + 题号 + 回溯提示 + 主题/语言切换 */}
       <header className="cp-way-header">
-        <div className="cp-way-progress" aria-hidden>
+        <div className="cp-way-progress cp-progress-glow" aria-hidden>
           <div className="cp-way-progress-current" style={{ width: `${currentProgressPct}%` }} />
           <div className="cp-way-progress-answered" style={{ width: `${progressPct}%` }} />
         </div>
@@ -171,8 +230,9 @@ export function Way() {
       {/* 中间：题目 + 选项，内容过多时可内部滚动 */}
       <div ref={scrollRef} className="cp-way-scroll">
         <article
+          ref={questionRef}
           key={item.id}
-          className="cp-way-question cp-fade-enter"
+          className="cp-way-question"
           aria-labelledby="way-title"
         >
           <h2 id="way-title" data-testid="way-prompt" className="cp-way-prompt">
@@ -195,7 +255,15 @@ export function Way() {
                   data-role="option"
                   data-opt-index={i}
                   data-testid={`option-${i}`}
-                  onClick={() => answer(item.id, i)}
+                  onClick={e => {
+                    const btn = e.currentTarget;
+                    const rect = btn.getBoundingClientRect();
+                    const x = ((e.clientX - rect.left) / rect.width) * 100;
+                    const y = ((e.clientY - rect.top) / rect.height) * 100;
+                    btn.style.setProperty('--opt-ripple-x', `${x}%`);
+                    btn.style.setProperty('--opt-ripple-y', `${y}%`);
+                    answer(item.id, i);
+                  }}
                 >
                   <span className="cp-way-letter" aria-hidden>
                     {letter}

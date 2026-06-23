@@ -1,5 +1,6 @@
 // 指南 · 入门 · 题
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
 import { useStore } from '../store';
 import { BrushButton } from '../components/BrushButton';
 import { Verse } from '../components/Verse';
@@ -8,6 +9,7 @@ import { useT } from '../i18n';
 export function Prologue() {
   const goPhase = useStore(s => s.goPhase);
   const t = useT();
+  const sectionRef = useRef<HTMLElement>(null);
   // 用 useRef 缓存随机选择，懒初始化避免每次渲染都计算
   const pickRef = useRef<number | null>(null);
   if (pickRef.current === null) {
@@ -16,11 +18,46 @@ export function Prologue() {
   const pick = pickRef.current;
   const lines = t.prologue.verses[pick];
 
+  useEffect(() => {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) return;
+
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+      tl.fromTo(
+        '.cp-prologue-seal',
+        { scale: 2.2, opacity: 0, rotate: -8 },
+        { scale: 1, opacity: 1, rotate: 0, duration: 0.8, ease: 'back.out(1.7)' }
+      )
+        .fromTo(
+          '.cp-prologue-title',
+          { opacity: 0, y: 20, filter: 'blur(6px)' },
+          { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.8 },
+          '-=0.4'
+        )
+        .fromTo(
+          '.cp-prologue-verse',
+          { opacity: 0, y: 16 },
+          { opacity: 1, y: 0, duration: 0.6, stagger: 0.12 },
+          '-=0.4'
+        )
+        .fromTo(
+          '.cp-prologue-cta',
+          { opacity: 0, y: 12 },
+          { opacity: 1, y: 0, duration: 0.6 },
+          '-=0.3'
+        );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="cp-container-narrow cp-page-enter" aria-labelledby="prologue-title">
+    <section ref={sectionRef} className="cp-container-narrow" aria-labelledby="prologue-title">
       {/* 顶部装饰 */}
       <div
         aria-hidden
+        className="cp-breathe"
         style={{
           textAlign: 'center',
           color: 'var(--ink-soft)',
@@ -28,7 +65,6 @@ export function Prologue() {
           fontFamily: 'var(--font-accent)',
           letterSpacing: '0.5em',
           marginBottom: '1rem',
-          opacity: 0.4,
         }}
       >
         ✦ ─── ◆ ─── ✦
@@ -37,7 +73,7 @@ export function Prologue() {
       <div style={{ textAlign: 'center', padding: '3rem 0 2rem' }}>
         <div
           aria-hidden
-          className="cp-seal-large cp-stamp-in"
+          className="cp-prologue-seal cp-seal-large"
           style={{
             color: 'var(--cinnabar)',
             fontFamily: 'var(--font-display)',
@@ -48,16 +84,13 @@ export function Prologue() {
         >
           {t.prologue.seal}
         </div>
-        <h1
-          id="prologue-title"
-          className="cp-ink-spread"
-          style={{ marginBottom: '1rem', animationDelay: '400ms' }}
-        >
+        <h1 id="prologue-title" className="cp-prologue-title" style={{ marginBottom: '1rem' }}>
           {t.prologue.title}
         </h1>
         {/* 装饰分隔 */}
         <div
           aria-hidden
+          className="cp-float"
           style={{
             color: 'var(--cinnabar)',
             fontSize: '1.2rem',
@@ -70,22 +103,24 @@ export function Prologue() {
         </div>
       </div>
 
-      <div style={{ marginBottom: '3rem' }} className="cp-bamboo-unfold">
+      <div style={{ marginBottom: '3rem' }}>
         {lines.map((l, i) => (
-          <Verse key={i} text={l.text} gloss={l.gloss} />
+          <div key={i} className="cp-prologue-verse">
+            <Verse text={l.text} gloss={l.gloss} reveal />
+          </div>
         ))}
       </div>
 
       {/* 中部装饰符号 */}
       <div
         aria-hidden
+        className="cp-breathe"
         style={{
           textAlign: 'center',
           color: 'var(--ink-soft)',
           fontSize: '0.8rem',
           letterSpacing: '0.3em',
           margin: '2rem 0',
-          opacity: 0.3,
           fontFamily: 'var(--font-accent)',
         }}
       >
@@ -93,6 +128,7 @@ export function Prologue() {
       </div>
 
       <div
+        className="cp-prologue-cta"
         style={{
           display: 'flex',
           justifyContent: 'center',
@@ -106,6 +142,7 @@ export function Prologue() {
       </div>
 
       <p
+        className="cp-prologue-cta"
         style={{
           textAlign: 'center',
           color: 'var(--ink-soft)',
@@ -120,13 +157,13 @@ export function Prologue() {
       {/* 底部装饰 */}
       <div
         aria-hidden
+        className="cp-float-slow"
         style={{
           textAlign: 'center',
           color: 'var(--ink-soft)',
           fontSize: '0.75rem',
           letterSpacing: '0.4em',
           marginTop: '2rem',
-          opacity: 0.25,
         }}
       >
         ✧ · · ✧ · · ✧

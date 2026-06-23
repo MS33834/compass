@@ -14,14 +14,20 @@ type Props = { figure: Figure };
 
 export function Portrait({ figure }: Props) {
   const [err, setErr] = useState(false);
+  const [loaded, setLoaded] = useState(false);
 
   // figure 变化时重置错误状态，避免复用组件实例时残留旧图的降级态
   useEffect(() => {
     setErr(false);
+    setLoaded(false);
   }, [figure.id]);
 
   if (err) {
-    return <Placeholder figure={figure} />;
+    return (
+      <Frame>
+        <Placeholder figure={figure} />
+      </Frame>
+    );
   }
 
   // 确保子路径下 portrait 路径解析正确
@@ -30,27 +36,63 @@ export function Portrait({ figure }: Props) {
     : `${BASE}${figure.portrait}`;
 
   return (
-    <div
-      className="cp-portrait"
-      style={{
-        width: '100%',
-        aspectRatio: '3 / 4',
-        background: 'var(--rice-warm)',
-        border: '1px solid var(--rice-deep)',
-        position: 'relative',
-        overflow: 'hidden',
-      }}
-    >
+    <Frame>
+      {!loaded && <Skeleton />}
       <img
         src={portraitSrc}
         alt={`${figure.name} (${figure.era})`}
         loading="lazy"
         onError={() => setErr(true)}
+        onLoad={() => setLoaded(true)}
         style={{
           width: '100%',
           height: '100%',
           objectFit: 'cover',
           display: 'block',
+          opacity: loaded ? 1 : 0,
+          transform: loaded ? 'scale(1)' : 'scale(1.03)',
+          transition: 'opacity 800ms var(--ease-out), transform 1200ms var(--ease-out)',
+        }}
+      />
+    </Frame>
+  );
+}
+
+function Frame({ children }: { children: React.ReactNode }) {
+  return (
+    <div
+      className="cp-portrait cp-portrait-frame"
+      style={{
+        width: '100%',
+        aspectRatio: '3 / 4',
+        position: 'relative',
+        overflow: 'hidden',
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+
+function Skeleton() {
+  return (
+    <div
+      aria-hidden
+      style={{
+        position: 'absolute',
+        inset: '0.5rem',
+        background: 'var(--rice-warm)',
+        overflow: 'hidden',
+      }}
+    >
+      <div
+        className="cp-shimmer"
+        style={{
+          position: 'absolute',
+          inset: 0,
+          background:
+            'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.25) 50%, transparent 100%)',
+          backgroundSize: '200% 100%',
         }}
       />
     </div>
@@ -63,9 +105,8 @@ function Placeholder({ figure }: Props) {
       className="cp-portrait"
       style={{
         width: '100%',
-        aspectRatio: '3 / 4',
+        height: '100%',
         background: 'var(--rice-warm)',
-        border: '1px solid var(--rice-deep)',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -87,6 +128,7 @@ function Placeholder({ figure }: Props) {
       </div>
       <div
         aria-hidden
+        className="cp-seal-stamp"
         style={{
           fontSize: '5rem',
           color: 'var(--ink)',

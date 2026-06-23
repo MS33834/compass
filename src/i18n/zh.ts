@@ -15,6 +15,7 @@ export const zh = {
     themeDark: '☾',
     themeLabelLight: '切换至亮色',
     themeLabelDark: '切换至暗色',
+    loading: '正在映照…',
     phase: {
       prologue: '开篇',
       path: '选域',
@@ -62,6 +63,7 @@ export const zh = {
     start: '开始',
     pending: '待补',
     picked: '既已择定，便入其问。',
+    selected: '选',
     peopleCount: (n: number) => `${n} 人`,
   },
   way: {
@@ -103,6 +105,25 @@ export const zh = {
     shareCopied: '已复制',
     imported: '已导入',
     importFail: '导入失败：非有效文件',
+  },
+  figureDetail: {
+    era: '时代',
+    domain: '所属',
+    signature: '其言',
+    bio: '生平',
+    anecdotes: '轶事',
+    related: '同光之人',
+    close: '返回',
+    startQuiz: '入此域一照',
+  },
+  shareCard: {
+    title: '分享卡',
+    download: '下载图片',
+    share: '系统分享',
+    close: '收起',
+    rendering: '正在渲染…',
+    renderError: '渲染失败，请关闭后重试。',
+    alt: (name: string) => `指南分享卡：${name}`,
   },
   share: {
     title: '一座心内之指南',

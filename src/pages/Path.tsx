@@ -1,10 +1,11 @@
 // 指南 · 选域 · 路
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { gsap } from 'gsap';
 import { useStore } from '../store';
 import { BrushButton } from '../components/BrushButton';
 import { Verse } from '../components/Verse';
-import { figuresForDomain } from '../domain/figures/figures.index';
+import { figuresCountForDomain } from '../domain/figures/figures.index';
 import type { DomainId } from '../domain/figures/figure.types';
 import { useT } from '../i18n';
 
@@ -31,11 +32,58 @@ const REGIONS: readonly Region[] = ['east', 'west'];
 export function Path() {
   const selectDomain = useStore(s => s.selectDomain);
   const t = useT();
+  const sectionRef = useRef<HTMLElement>(null);
+  const cardsRef = useRef<HTMLDivElement>(null);
   const [region, setRegion] = useState<Region>('east');
   const [picked, setPicked] = useState<DomainId | null>(null);
 
-  const chosen = picked ? figuresForDomain(picked).length : 0;
+  const chosen = picked ? figuresCountForDomain(picked) : 0;
   const ready = picked !== null && chosen > 0;
+
+  // 入场动画
+  useEffect(() => {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) return;
+
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+      tl.fromTo(
+        '.cp-path-header',
+        { opacity: 0, y: 18, filter: 'blur(4px)' },
+        { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.7 }
+      )
+        .fromTo(
+          '.cp-path-tab',
+          { opacity: 0, y: 12 },
+          { opacity: 1, y: 0, duration: 0.5, stagger: 0.08 },
+          '-=0.4'
+        )
+        .fromTo(
+          '.cp-domain-card',
+          { opacity: 0, y: 24, scale: 0.97 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.6, stagger: 0.1 },
+          '-=0.3'
+        );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  // 切换 region 时卡片重排动画
+  useEffect(() => {
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced || !cardsRef.current) return;
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        '.cp-domain-card',
+        { opacity: 0, y: 16, scale: 0.98 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.5, stagger: 0.08, ease: 'power2.out' }
+      );
+    }, cardsRef);
+
+    return () => ctx.revert();
+  }, [region]);
 
   const handleTabKeyDown = (e: React.KeyboardEvent, current: Region) => {
     if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
@@ -49,27 +97,25 @@ export function Path() {
   };
 
   return (
-    <section className="cp-container cp-page-enter" aria-labelledby="path-title">
+    <section ref={sectionRef} className="cp-container" aria-labelledby="path-title">
       {/* 顶部装饰 */}
       <div
         aria-hidden
+        className="cp-breathe"
         style={{
           textAlign: 'center',
           color: 'var(--ink-soft)',
           fontSize: '0.8rem',
           letterSpacing: '0.6em',
           marginBottom: '1.5rem',
-          opacity: 0.35,
           fontFamily: 'var(--font-accent)',
         }}
       >
         ✦ ─── ◆ ─── ✦
       </div>
 
-      <header style={{ textAlign: 'center', marginBottom: '3rem' }}>
-        <h1 id="path-title" className="cp-ink-spread">
-          {t.path.title}
-        </h1>
+      <header className="cp-path-header">
+        <h1 id="path-title">{t.path.title}</h1>
         <p
           style={{
             color: 'var(--ink-soft)',
@@ -84,18 +130,20 @@ export function Path() {
       {/* 东西方切换按钮 */}
       <div
         role="tablist"
+        className="cp-path-tabs"
         style={{
           display: 'flex',
           justifyContent: 'center',
           gap: '1rem',
-          marginBottom: '2.5rem',
           flexWrap: 'wrap',
+          position: 'relative',
         }}
       >
         {REGIONS.map(r => (
           <button
             key={r}
             role="tab"
+            className="cp-path-tab"
             aria-selected={region === r}
             tabIndex={region === r ? 0 : -1}
             onKeyDown={e => handleTabKeyDown(e, r)}
@@ -105,7 +153,7 @@ export function Path() {
             }}
             style={{
               padding: '0.6rem 2rem',
-              background: region === r ? 'var(--ink)' : 'var(--rice-deep)',
+              background: region === r ? 'var(--ink)' : 'transparent',
               color: region === r ? 'var(--rice)' : 'var(--ink)',
               border: '1.5px solid var(--ink)',
               fontFamily: 'var(--font-display)',
@@ -113,6 +161,7 @@ export function Path() {
               letterSpacing: '0.25em',
               cursor: 'pointer',
               transition: 'all 300ms var(--ease-out)',
+              boxShadow: region === r ? 'var(--shadow-soft)' : 'none',
             }}
           >
             {t.path.region[r]}
@@ -121,19 +170,9 @@ export function Path() {
       </div>
 
       {/* 域卡片网格 */}
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(min(14rem, 100%), 1fr))',
-          gap: '1.5rem',
-          marginBottom: '3rem',
-          maxWidth: '36rem',
-          marginLeft: 'auto',
-          marginRight: 'auto',
-        }}
-      >
+      <div ref={cardsRef} className="cp-domain-grid">
         {REGION_KEYS.filter(d => DOMAIN_REGION[d] === region).map(d => {
-          const count = figuresForDomain(d).length;
+          const count = figuresCountForDomain(d);
           const meta = t.path.domains[d];
           const readyFlag = count > 0;
           const active = picked === d;
@@ -148,19 +187,13 @@ export function Path() {
               disabled={!readyFlag}
               aria-pressed={active}
               aria-label={`${meta.name} · ${meta.sub}`}
+              className={`cp-domain-card cp-card-hover${active ? ' cp-selected-corner' : ''}`}
+              data-selected-label={active ? t.path.selected : undefined}
               style={{
-                padding: '1.75rem 1.25rem',
-                textAlign: 'center',
                 background: active ? 'var(--rice-warm)' : 'transparent',
-                border: `2px solid ${active ? 'var(--cinnabar)' : 'var(--rice-deep)'}`,
+                borderColor: active ? 'var(--cinnabar)' : 'var(--rice-deep)',
                 cursor: readyFlag ? 'pointer' : 'not-allowed',
                 opacity: readyFlag ? 1 : 0.5,
-                transition: 'all 300ms var(--ease-out)',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                minHeight: '13rem',
               }}
             >
               <h2
@@ -182,6 +215,8 @@ export function Path() {
                   wordBreak: 'keep-all',
                   overflowWrap: 'break-word',
                   maxWidth: '100%',
+                  alignSelf: 'stretch',
+                  textAlign: 'center',
                 }}
               >
                 {meta.sub}
@@ -203,10 +238,11 @@ export function Path() {
       </div>
 
       {picked && (
-        <div className="cp-fade-enter" style={{ textAlign: 'center' }}>
+        <div className="cp-fade-enter cp-path-picked" style={{ textAlign: 'center' }}>
           {/* 装饰分隔 */}
           <div
             aria-hidden
+            className="cp-float"
             style={{
               color: 'var(--cinnabar)',
               fontSize: '0.9rem',
@@ -220,6 +256,7 @@ export function Path() {
           <Verse
             text={`${t.path.region[DOMAIN_REGION[picked]]} · ${t.path.domains[picked].name}`}
             gloss={t.path.picked}
+            reveal
           />
           <div style={{ marginTop: '2rem' }}>
             <BrushButton
@@ -237,13 +274,13 @@ export function Path() {
       {/* 底部装饰 */}
       <div
         aria-hidden
+        className="cp-float-slow"
         style={{
           textAlign: 'center',
           color: 'var(--ink-soft)',
           fontSize: '0.7rem',
           letterSpacing: '0.4em',
           marginTop: '3rem',
-          opacity: 0.25,
         }}
       >
         ✧ · · ✧ · · ✧

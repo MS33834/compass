@@ -7,7 +7,7 @@ import type { Dict } from './zh';
 export const en: Dict = {
   ui: {
     appName: 'Compass',
-    sealChar: 'Compass',
+    sealChar: '指',
     returnHome: 'Home',
     returnHomeConfirm: 'Return to home will clear all answers. Continue?',
     resetConfirm: 'Starting over will clear all answers. Continue?',
@@ -17,6 +17,7 @@ export const en: Dict = {
     themeDark: '☾',
     themeLabelLight: 'Switch to light theme',
     themeLabelDark: 'Switch to dark theme',
+    loading: 'Reflecting…',
     phase: {
       prologue: 'Entry',
       path: 'Domain',
@@ -26,7 +27,7 @@ export const en: Dict = {
   },
   prologue: {
     title: 'Compass',
-    seal: 'Compass',
+    seal: '指',
     enter: 'Begin',
     privacy: 'Your answers stay on your device. Compass never goes online.',
     verses: [
@@ -79,6 +80,7 @@ export const en: Dict = {
     start: 'Begin',
     pending: 'Forthcoming',
     picked: 'Once chosen, walk into its questions.',
+    selected: 'Picked',
     peopleCount: (n: number) => `${n} figures`,
   },
   way: {
@@ -121,6 +123,25 @@ export const en: Dict = {
     shareCopied: 'Copied',
     imported: 'Imported',
     importFail: 'Import failed: invalid file',
+  },
+  figureDetail: {
+    era: 'Era',
+    domain: 'Domain',
+    signature: 'Their Words',
+    bio: 'Life',
+    anecdotes: 'Anecdotes',
+    related: 'Kindred Lights',
+    close: 'Back',
+    startQuiz: 'Take this domain',
+  },
+  shareCard: {
+    title: 'Share Card',
+    download: 'Download Image',
+    share: 'System Share',
+    close: 'Close',
+    rendering: 'Rendering…',
+    renderError: 'Rendering failed. Please close and try again.',
+    alt: (name: string) => `Compass share card: ${name}`,
   },
   share: {
     title: 'A quiet compass for the inner self',

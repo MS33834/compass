@@ -150,6 +150,7 @@ export function TraitRadar({ user, figure, size = 400, ariaLabel }: Props) {
         style={{
           strokeDasharray: 2000,
           strokeDashoffset: 2000,
+          filter: 'drop-shadow(0 0 3px rgba(26,26,26,0.15))',
           animation:
             'cp-radar-draw 1600ms cubic-bezier(0.2, 0.9, 0.3, 1) 200ms forwards, cp-radar-glow 4000ms ease-in-out 1800ms infinite',
         }}

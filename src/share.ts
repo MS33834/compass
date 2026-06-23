@@ -1,6 +1,7 @@
 // 指南 · 报告 / 答 序列化
 // 仅含 answers + domain + currentIndex + locale + theme，不含任何指纹字段
 
+import { DOMAINS } from './domain/figures/domains';
 import type { DomainId } from './domain/figures/figure.types';
 
 export type ExportShape = {
@@ -13,13 +14,7 @@ export type ExportShape = {
   theme: 'light' | 'dark';
 };
 
-const VALID_DOMAINS: readonly DomainId[] = [
-  'east-literati',
-  'east-statesman',
-  'east-scientist',
-  'west-philosopher',
-  'west-scientist',
-];
+const VALID_DOMAINS: readonly DomainId[] = DOMAINS;
 
 /** 校验导入数据结构，防止非法数据崩溃应用 */
 function isValidShape(obj: unknown): obj is ExportShape {
@@ -27,7 +22,8 @@ function isValidShape(obj: unknown): obj is ExportShape {
   const o = obj as Record<string, unknown>;
   if (o.v !== 1) return false;
   // domain 可为 null 或合法 DomainId
-  if (o.domain !== null && !VALID_DOMAINS.includes(o.domain as DomainId)) return false;
+  if (o.domain !== null && !(VALID_DOMAINS as readonly string[]).includes(o.domain as string))
+    return false;
   if (typeof o.currentIndex !== 'number' || !Number.isInteger(o.currentIndex) || o.currentIndex < 0)
     return false;
   if (!o.answers || typeof o.answers !== 'object') return false;

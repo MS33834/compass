@@ -105,16 +105,25 @@ export function Reflection() {
 
   // 刷新后报告丢失：可由 domain + answers 重新计算
   useEffect(() => {
-    if (!report) {
-      if (domain && Object.keys(answers).length >= 30) {
-        const items = itemsForDomain(domain);
-        const figures = figuresForDomain(domain);
-        const r = buildReport(computeUserVector(answers, items), figures, answers, items);
-        setReport(r);
-      } else {
-        goPhaseRef.current('prologue');
-      }
+    if (report) return;
+    if (!domain || Object.keys(answers).length < 30) {
+      goPhaseRef.current('prologue');
+      return;
     }
+    let cancelled = false;
+    (async () => {
+      const [items, figures] = await Promise.all([
+        itemsForDomain(domain),
+        figuresForDomain(domain),
+      ]);
+      if (cancelled) return;
+      const r = buildReport(computeUserVector(answers, items), figures, answers, items);
+      if (r) setReport(r);
+      else goPhaseRef.current('prologue');
+    })();
+    return () => {
+      cancelled = true;
+    };
   }, [report, domain, answers, setReport]);
 
   // 同道 3 维高亮（必须在任何条件 return 之前）
@@ -156,7 +165,13 @@ export function Reflection() {
     [report]
   );
 
-  if (!report) return null;
+  if (!report) {
+    return (
+      <section className="cp-ref-shell" aria-live="polite">
+        <div className="cp-ref-loading">{t.ui.loading}</div>
+      </section>
+    );
+  }
 
   const { primary, alternates, confidence: confVal } = report;
 
@@ -180,8 +195,8 @@ export function Reflection() {
   };
 
   // 导出 JSON
-  const handleExport = () => {
-    const items = domain ? itemsForDomain(domain) : [];
+  const handleExport = async () => {
+    const items = domain ? await itemsForDomain(domain) : [];
     const maxIdx = Math.max(0, items.length - 1);
     const s = exportState({
       domain,
@@ -195,7 +210,7 @@ export function Reflection() {
 
   // 复制续答 URL
   const handleCopyResume = async () => {
-    const items = domain ? itemsForDomain(domain) : [];
+    const items = domain ? await itemsForDomain(domain) : [];
     const maxIdx = Math.max(0, items.length - 1);
     const s = exportState({
       domain,
@@ -636,52 +651,49 @@ export function Reflection() {
       </section>
 
       {/* ── 页脚操作 ── */}
-      <footer
-        style={{
-          display: 'flex',
-          gap: '0.75rem',
-          justifyContent: 'center',
-          marginTop: '3rem',
-          paddingTop: '2rem',
-          borderTop: '1px solid var(--rice-deep)',
-          flexWrap: 'wrap',
-        }}
-      >
-        <BrushButton variant="primary" onClick={handleShare} data-testid="btn-share">
-          {t.reflection.share}
-        </BrushButton>
-        <BrushButton onClick={handleCopyResume} data-testid="btn-copy-resume">
-          {t.reflection.copyResume}
-        </BrushButton>
-        <BrushButton onClick={handleExport} data-testid="btn-export">
-          {t.reflection.exportJSON}
-        </BrushButton>
-        <BrushButton onClick={() => fileRef.current?.click()} data-testid="btn-import">
-          {t.reflection.importJSON}
-        </BrushButton>
-        <input
-          ref={fileRef}
-          type="file"
-          accept="application/json"
-          onChange={handleImport}
-          style={{ display: 'none' }}
-          aria-hidden
-        />
-        <BrushButton
-          variant="primary"
-          onClick={() => goPhase('path')}
-          data-testid="btn-change-domain"
-        >
-          {t.reflection.changeDomain}
-        </BrushButton>
-        <BrushButton
-          onClick={() => {
-            if (confirm(t.ui.resetConfirm)) reset();
-          }}
-          data-testid="btn-reset"
-        >
-          {t.reflection.reset}
-        </BrushButton>
+      <footer className="cp-ref-section cp-ref-actions">
+        <div className="cp-ref-actions-group cp-ref-actions-primary">
+          <BrushButton variant="primary" onClick={handleShare} data-testid="btn-share">
+            {t.reflection.share}
+          </BrushButton>
+          <BrushButton
+            variant="primary"
+            onClick={() => {
+              if (confirm(t.ui.resetConfirm)) reset();
+            }}
+            data-testid="btn-reset"
+          >
+            {t.reflection.reset}
+          </BrushButton>
+        </div>
+        <div className="cp-ref-actions-group cp-ref-actions-secondary">
+          <BrushButton onClick={handleCopyResume} data-testid="btn-copy-resume">
+            {t.reflection.copyResume}
+          </BrushButton>
+          <BrushButton
+            variant="ghost"
+            onClick={() => goPhase('path')}
+            data-testid="btn-change-domain"
+          >
+            {t.reflection.changeDomain}
+          </BrushButton>
+        </div>
+        <div className="cp-ref-actions-group cp-ref-actions-data">
+          <BrushButton onClick={handleExport} data-testid="btn-export">
+            {t.reflection.exportJSON}
+          </BrushButton>
+          <BrushButton onClick={() => fileRef.current?.click()} data-testid="btn-import">
+            {t.reflection.importJSON}
+          </BrushButton>
+          <input
+            ref={fileRef}
+            type="file"
+            accept="application/json"
+            onChange={handleImport}
+            style={{ display: 'none' }}
+            aria-hidden
+          />
+        </div>
       </footer>
 
       {/* Toast */}

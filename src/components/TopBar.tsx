@@ -17,6 +17,7 @@ export function TopBar() {
   const label = t.ui.phase[phase];
   return (
     <header
+      className="cp-topbar"
       style={{
         display: 'flex',
         alignItems: 'center',
@@ -25,11 +26,13 @@ export function TopBar() {
         position: 'sticky',
         top: 0,
         background: 'var(--rice-translucent)',
-        backdropFilter: 'blur(8px)',
+        backdropFilter: 'blur(10px) saturate(1.2)',
+        WebkitBackdropFilter: 'blur(10px) saturate(1.2)',
         zIndex: 10,
         borderBottom: '1px solid var(--rice-deep)',
         minHeight: '3.5rem',
         gap: '0.5rem',
+        boxShadow: 'var(--shadow-soft)',
       }}
     >
       <button

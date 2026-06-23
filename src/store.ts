@@ -7,11 +7,38 @@
 
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
+import { DOMAINS } from './domain/figures/domains';
 import type { DomainId } from './domain/figures/figure.types';
 import type { MatchReport } from './domain/matching/report';
 import type { ExportShape } from './share';
 
 type Phase = 'prologue' | 'path' | 'way' | 'reflection';
+
+// localStorage 写入保护：配额溢出时静默降级，避免整站崩溃
+const safeLocalStorage = {
+  getItem: (name: string): string | null => {
+    try {
+      return localStorage.getItem(name);
+    } catch {
+      return null;
+    }
+  },
+  setItem: (name: string, value: string): void => {
+    try {
+      localStorage.setItem(name, value);
+    } catch (e) {
+      // QuotaExceededError 等静默降级，用户仍可继续使用当前会话
+      console.warn('Compass: failed to persist state', e);
+    }
+  },
+  removeItem: (name: string): void => {
+    try {
+      localStorage.removeItem(name);
+    } catch {
+      /* noop */
+    }
+  },
+};
 type Locale = 'zh' | 'en';
 type Theme = 'light' | 'dark';
 
@@ -24,6 +51,7 @@ type State = {
   theme: Theme;
   report: MatchReport | null;
   version: number; // 用于数据迁移
+  viewingFigure: string | null; // 当前查看的人物详情 id
 };
 
 type Actions = {
@@ -37,6 +65,7 @@ type Actions = {
   setLocale: (l: Locale) => void;
   setTheme: (th: Theme) => void;
   importState: (s: ExportShape) => void;
+  viewFigure: (id: string | null) => void;
 };
 
 const STORAGE_KEY = 'compass-v2';
@@ -55,8 +84,11 @@ const applyTheme = (th: Theme) => {
   document.documentElement.setAttribute('data-theme', th);
 };
 
+const isRecord = (v: unknown): v is Record<string, unknown> =>
+  typeof v === 'object' && v !== null && !Array.isArray(v);
+
 // 数据迁移与校验
-const migrateState = (persistedState: any): State => {
+const migrateState = (persistedState: unknown): State => {
   const fallback: State = {
     phase: 'prologue',
     domain: null,
@@ -66,17 +98,18 @@ const migrateState = (persistedState: any): State => {
     theme: 'light',
     report: null,
     version: CURRENT_VERSION,
+    viewingFigure: null,
   };
-  if (!persistedState || typeof persistedState !== 'object') return fallback;
+  if (!isRecord(persistedState)) return fallback;
 
   // 校验 answers 为普通对象
   const rawAnswers = persistedState.answers;
-  const answers =
-    rawAnswers && typeof rawAnswers === 'object' && !Array.isArray(rawAnswers)
-      ? Object.fromEntries(
-          Object.entries(rawAnswers).filter(([, v]) => typeof v === 'number' && Number.isFinite(v))
-        )
-      : {};
+  const answers: Record<string, number> = {};
+  if (isRecord(rawAnswers)) {
+    for (const [k, v] of Object.entries(rawAnswers)) {
+      if (typeof v === 'number' && Number.isFinite(v)) answers[k] = v;
+    }
+  }
 
   // 校验 theme 枚举
   const theme: Theme = persistedState.theme === 'dark' ? 'dark' : 'light';
@@ -87,7 +120,16 @@ const migrateState = (persistedState: any): State => {
   // 校验 currentIndex 非负整数
   const rawIdx = persistedState.currentIndex;
   const currentIndex =
-    typeof rawIdx === 'number' && Number.isInteger(rawIdx) && rawIdx >= 0 ? rawIdx : 0;
+    typeof rawIdx === 'number' && Number.isInteger(rawIdx) && rawIdx >= 0 && rawIdx < 1000
+      ? rawIdx
+      : 0;
+
+  // 校验 domain 枚举
+  const rawDomain = persistedState.domain;
+  const domain =
+    typeof rawDomain === 'string' && (DOMAINS as readonly string[]).includes(rawDomain)
+      ? (rawDomain as DomainId)
+      : null;
 
   return {
     ...fallback,
@@ -96,6 +138,7 @@ const migrateState = (persistedState: any): State => {
     theme,
     locale,
     currentIndex,
+    domain,
     version: CURRENT_VERSION,
   };
 };
@@ -111,6 +154,7 @@ export const useStore = create<State & Actions>()(
       theme: detectInitialTheme(),
       report: null,
       version: CURRENT_VERSION,
+      viewingFigure: null,
 
       goPhase: (p: Phase) => set({ phase: p }),
       selectDomain: (d: DomainId) =>
@@ -130,6 +174,7 @@ export const useStore = create<State & Actions>()(
           report: null,
           phase: 'prologue',
           domain: null,
+          viewingFigure: null,
         }),
       setLocale: (l: Locale) => {
         if (typeof document !== 'undefined') document.documentElement.lang = l;
@@ -153,12 +198,14 @@ export const useStore = create<State & Actions>()(
           theme: s.theme,
           phase: s.domain && Object.keys(s.answers).length > 0 ? 'way' : 'prologue',
           report: null,
+          viewingFigure: null,
         });
       },
+      viewFigure: (id: string | null) => set({ viewingFigure: id }),
     }),
     {
       name: STORAGE_KEY,
-      storage: createJSONStorage(() => localStorage),
+      storage: createJSONStorage(() => safeLocalStorage),
       partialize: (s: State & Actions) => ({
         answers: s.answers,
         locale: s.locale,
