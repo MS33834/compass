@@ -5,6 +5,7 @@ import { useStore } from '../store';
 import { TraitRadar } from '../components/TraitRadar';
 import { Portrait } from '../components/Portrait';
 import { BrushButton } from '../components/BrushButton';
+import { ConfirmModal } from '../components/ConfirmModal';
 import { Verse } from '../components/Verse';
 import { TRAITS } from '../domain/traits/trait.dimensions';
 import type { TraitVector } from '../domain/traits/trait.types';
@@ -87,6 +88,7 @@ export function Reflection() {
   const theme = useStore(s => s.theme);
   const t = useT();
   const [toast, setToast] = useState<string | null>(null);
+  const [showResetConfirm, setShowResetConfirm] = useState(false);
   const fileRef = useRef<HTMLInputElement | null>(null);
   const goPhaseRef = useRef(goPhase);
   goPhaseRef.current = goPhase;
@@ -698,9 +700,7 @@ export function Reflection() {
           </BrushButton>
           <BrushButton
             variant="primary"
-            onClick={() => {
-              if (confirm(t.ui.resetConfirm)) reset();
-            }}
+            onClick={() => setShowResetConfirm(true)}
             data-testid="btn-reset"
           >
             {t.reflection.reset}
@@ -788,6 +788,19 @@ export function Reflection() {
           box-shadow: 0 6px 14px rgba(26,26,26,0.08);
         }
       `}</style>
+
+      <ConfirmModal
+        open={showResetConfirm}
+        title={t.reflection.reset}
+        message={t.ui.resetConfirm}
+        confirmLabel={t.ui.confirmYes}
+        cancelLabel={t.ui.confirmNo}
+        onConfirm={() => {
+          setShowResetConfirm(false);
+          reset();
+        }}
+        onCancel={() => setShowResetConfirm(false)}
+      />
     </article>
   );
 }

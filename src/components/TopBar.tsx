@@ -1,6 +1,8 @@
 // 指南 · 顶部导航
+import { useState } from 'react';
 import { useStore } from '../store';
 import { BrushButton } from './BrushButton';
+import { ConfirmModal } from './ConfirmModal';
 import { useT } from '../i18n';
 
 export function TopBar() {
@@ -11,9 +13,8 @@ export function TopBar() {
   const setLocale = useStore(s => s.setLocale);
   const setTheme = useStore(s => s.setTheme);
   const t = useT();
-  const onLogo = () => {
-    if (confirm(t.ui.returnHomeConfirm)) reset();
-  };
+  const [showConfirm, setShowConfirm] = useState(false);
+  const onLogo = () => setShowConfirm(true);
   const label = t.ui.phase[phase];
   return (
     <header
@@ -103,6 +104,18 @@ export function TopBar() {
           {t.ui.toggleLang}
         </BrushButton>
       </nav>
+      <ConfirmModal
+        open={showConfirm}
+        title={t.ui.returnHome}
+        message={t.ui.returnHomeConfirm}
+        confirmLabel={t.ui.confirmYes}
+        cancelLabel={t.ui.confirmNo}
+        onConfirm={() => {
+          setShowConfirm(false);
+          reset();
+        }}
+        onCancel={() => setShowConfirm(false)}
+      />
     </header>
   );
 }

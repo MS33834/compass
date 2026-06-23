@@ -11,6 +11,8 @@ export const en: Dict = {
     returnHome: 'Home',
     returnHomeConfirm: 'Return to home will clear all answers. Continue?',
     resetConfirm: 'Starting over will clear all answers. Continue?',
+    confirmYes: 'Continue',
+    confirmNo: 'Cancel',
     toggleLang: '中文',
     skipToContent: 'Skip to content',
     themeLight: '☼',

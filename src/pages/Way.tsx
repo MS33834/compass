@@ -16,11 +16,13 @@ import type { Figure } from '../domain/figures/figure.types';
 import { computeUserVector } from '../domain/matching/vector';
 import { buildReport } from '../domain/matching/report';
 import { BrushButton } from '../components/BrushButton';
+import { ConfirmModal } from '../components/ConfirmModal';
 import { useT } from '../i18n';
 
 const NO_SCROLL_CLASS = 'cp-way-no-scroll';
 
 export function Way() {
+  const phase = useStore(s => s.phase);
   const domain = useStore(s => s.domain);
   const currentIndex = useStore(s => s.currentIndex);
   const answers = useStore(s => s.answers);
@@ -43,14 +45,18 @@ export function Way() {
     return () => document.body.classList.remove(NO_SCROLL_CLASS);
   }, []);
 
+  // 只在真正处于 way 阶段时做无 domain 回跳，避免 reset() 切到 prologue 时被覆盖回 path
   useEffect(() => {
+    if (phase !== 'way') return;
     if (!domain) goPhase('path');
-  }, [domain, goPhase]);
+  }, [phase, domain, goPhase]);
 
   const [items, setItems] = useState<readonly Item[]>([]);
   const [figures, setFigures] = useState<readonly Figure[]>([]);
   const [loading, setLoading] = useState(false);
   const [loadAttempted, setLoadAttempted] = useState(false);
+  const [showResetConfirm, setShowResetConfirm] = useState(false);
+  const [showHomeConfirm, setShowHomeConfirm] = useState(false);
 
   useEffect(() => {
     if (!domain) {
@@ -240,6 +246,15 @@ export function Way() {
             >
               {t.ui.toggleLang}
             </button>
+            <button
+              type="button"
+              className="cp-way-control"
+              onClick={() => setShowHomeConfirm(true)}
+              aria-label={t.ui.returnHome}
+              data-testid="way-btn-home"
+            >
+              {t.ui.returnHome}
+            </button>
           </div>
         </div>
 
@@ -348,13 +363,36 @@ export function Way() {
         <button
           type="button"
           className="cp-way-reset"
-          onClick={() => {
-            if (confirm(t.ui.resetConfirm)) reset();
-          }}
+          onClick={() => setShowResetConfirm(true)}
         >
           {t.way.resetLabel}
         </button>
       </footer>
+
+      <ConfirmModal
+        open={showResetConfirm}
+        title={t.way.resetLabel}
+        message={t.ui.resetConfirm}
+        confirmLabel={t.ui.confirmYes}
+        cancelLabel={t.ui.confirmNo}
+        onConfirm={() => {
+          setShowResetConfirm(false);
+          reset();
+        }}
+        onCancel={() => setShowResetConfirm(false)}
+      />
+      <ConfirmModal
+        open={showHomeConfirm}
+        title={t.ui.returnHome}
+        message={t.ui.returnHomeConfirm}
+        confirmLabel={t.ui.confirmYes}
+        cancelLabel={t.ui.confirmNo}
+        onConfirm={() => {
+          setShowHomeConfirm(false);
+          reset();
+        }}
+        onCancel={() => setShowHomeConfirm(false)}
+      />
     </section>
   );
 }

@@ -22,7 +22,7 @@ export function App() {
     if (phase === currentPhase) return;
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    if (prefersReduced) {
+    if (prefersReduced || phase === 'prologue') {
       window.scrollTo(0, 0);
       setCurrentPhase(phase);
       return;

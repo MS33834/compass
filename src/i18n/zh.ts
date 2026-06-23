@@ -9,6 +9,8 @@ export const zh = {
     returnHome: '返首页',
     returnHomeConfirm: '返首页将清空所答，确定？',
     resetConfirm: '再来一次将清空所答，确定？',
+    confirmYes: '确定',
+    confirmNo: '取消',
     toggleLang: 'EN',
     skipToContent: '跳至正文',
     themeLight: '☼',
