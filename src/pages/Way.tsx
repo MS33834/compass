@@ -27,6 +27,7 @@ export function Way() {
   const answer = useStore(s => s.answer);
   const goPrev = useStore(s => s.goPrev);
   const goNext = useStore(s => s.goNext);
+  const clampIndex = useStore(s => s.clampIndex);
   const goPhase = useStore(s => s.goPhase);
   const setReport = useStore(s => s.setReport);
   const reset = useStore(s => s.reset);
@@ -49,24 +50,35 @@ export function Way() {
   const [items, setItems] = useState<readonly Item[]>([]);
   const [figures, setFigures] = useState<readonly Figure[]>([]);
   const [loading, setLoading] = useState(false);
+  const [loadAttempted, setLoadAttempted] = useState(false);
 
   useEffect(() => {
     if (!domain) {
       setItems([]);
       setFigures([]);
       setLoading(false);
+      setLoadAttempted(false);
       return;
     }
     let cancelled = false;
     setLoading(true);
-    Promise.all([itemsForDomain(domain), figuresForDomain(domain)]).then(
-      ([loadedItems, loadedFigures]) => {
+    setLoadAttempted(false);
+    Promise.all([itemsForDomain(domain), figuresForDomain(domain)])
+      .then(([loadedItems, loadedFigures]) => {
         if (cancelled) return;
         setItems(loadedItems);
         setFigures(loadedFigures);
         setLoading(false);
-      }
-    );
+        setLoadAttempted(true);
+      })
+      .catch(err => {
+        if (cancelled) return;
+        console.error('Compass: failed to load domain data', err);
+        setItems([]);
+        setFigures([]);
+        setLoading(false);
+        setLoadAttempted(true);
+      });
     return () => {
       cancelled = true;
     };
@@ -75,10 +87,17 @@ export function Way() {
   const total = items.length;
   const item = items[currentIndex];
 
-  // 越界保护：重定向到选域页（而非 prologue，避免丢失进度）
+  // 加载完成后若下标越界，则回 Clamp 到合法范围，避免白屏或误跳转
   useEffect(() => {
-    if (domain && !loading && !item) goPhase('path');
-  }, [domain, loading, item, goPhase]);
+    if (loadAttempted && !loading && total > 0 && currentIndex >= total) {
+      clampIndex(total - 1);
+    }
+  }, [loadAttempted, loading, total, currentIndex, clampIndex]);
+
+  // 越界保护：加载已完成但仍无题目时，重定向到选域页（而非 prologue，避免丢失进度）
+  useEffect(() => {
+    if (domain && loadAttempted && !loading && !item) goPhase('path');
+  }, [domain, loadAttempted, loading, item, goPhase]);
 
   // 回溯提示
   const [showBacktrack, setShowBacktrack] = useState(false);

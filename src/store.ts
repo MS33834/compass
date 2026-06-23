@@ -60,6 +60,7 @@ type Actions = {
   answer: (itemId: string, optIdx: number) => void;
   goPrev: () => void;
   goNext: () => void;
+  clampIndex: (maxIndex: number) => void;
   setReport: (r: MatchReport) => void;
   reset: () => void;
   setLocale: (l: Locale) => void;
@@ -166,6 +167,10 @@ export const useStore = create<State & Actions>()(
       goPrev: () =>
         set((s: State & Actions) => ({ currentIndex: Math.max(0, s.currentIndex - 1) })),
       goNext: () => set((s: State & Actions) => ({ currentIndex: s.currentIndex + 1 })),
+      clampIndex: (maxIndex: number) =>
+        set((s: State & Actions) => ({
+          currentIndex: Math.max(0, Math.min(s.currentIndex, maxIndex)),
+        })),
       setReport: (r: MatchReport) => set({ report: r, phase: 'reflection' }),
       reset: () =>
         set({
