@@ -14,6 +14,8 @@ export const en: Dict = {
     confirmYes: 'Continue',
     confirmNo: 'Cancel',
     toggleLang: '中文',
+    langLabelZh: '切换至中文',
+    langLabelEn: 'Switch to English',
     skipToContent: 'Skip to content',
     themeLight: '☼',
     themeDark: '☾',

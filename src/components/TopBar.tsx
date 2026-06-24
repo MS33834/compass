@@ -99,6 +99,7 @@ export function TopBar() {
           variant="ghost"
           onClick={() => setLocale(locale === 'zh' ? 'en' : 'zh')}
           data-testid="btn-lang"
+          aria-label={locale === 'zh' ? t.ui.langLabelEn : t.ui.langLabelZh}
           style={{ minWidth: '2.5rem', padding: '0.25rem 0.6rem' }}
         >
           {t.ui.toggleLang}
