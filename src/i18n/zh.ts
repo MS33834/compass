@@ -12,6 +12,8 @@ export const zh = {
     confirmYes: '确定',
     confirmNo: '取消',
     toggleLang: 'EN',
+    langLabelZh: '切换至中文',
+    langLabelEn: 'Switch to English',
     skipToContent: '跳至正文',
     themeLight: '☼',
     themeDark: '☾',

@@ -241,7 +241,7 @@ export function Way() {
               type="button"
               className="cp-way-control"
               onClick={() => setLocale(locale === 'zh' ? 'en' : 'zh')}
-              aria-label={t.ui.toggleLang}
+              aria-label={locale === 'zh' ? t.ui.langLabelEn : t.ui.langLabelZh}
               data-testid="way-btn-lang"
             >
               {t.ui.toggleLang}
