@@ -1,7 +1,7 @@
 // Compass · Service Worker (v2 - 离线可用)
 // 策略：
 // - 导航请求（HTML）：网络优先，离线回退缓存的 index.html（预缓存 + 运行时缓存）
-// - 带 hash 的 JS/CSS：浏览器自身缓存，SW 不干预
+// - 带 hash 的 JS/CSS：缓存优先，后台更新（hash 变则文件名变，可长期缓存）
 // - 静态资源（图片/字体/SVG）：网络优先，离线降级缓存
 
 const CACHE = 'compass-v2';
@@ -21,7 +21,11 @@ self.addEventListener('install', e => {
   e.waitUntil(
     caches
       .open(CACHE)
-      .then(c => c.addAll(PRECACHE_URLS).catch(() => {}))
+      .then(c => c.addAll(PRECACHE_URLS))
+      .catch(err => {
+        // 预缓存失败时继续安装，避免单个资源问题阻塞整个 SW
+        console.warn('[Compass SW] precache failed:', err);
+      })
       .then(() => self.skipWaiting())
   );
 });
@@ -68,8 +72,8 @@ self.addEventListener('fetch', e => {
           // 先尝试精确匹配
           const cached = await caches.match(e.request);
           if (cached) return cached;
-          // 再尝试预缓存的 index.html
-          for (const fallback of [`${BASE}index.html`, `${BASE}`, './index.html', '/index.html']) {
+          // 再尝试预缓存的 index.html（严格使用 BASE，避免子路径部署时绝对路径失效）
+          for (const fallback of [`${BASE}index.html`, `${BASE}`]) {
             const r = await caches.match(fallback);
             if (r) return r;
           }
@@ -79,8 +83,24 @@ self.addEventListener('fetch', e => {
     return;
   }
 
-  // 带 hash 的 JS/CSS：浏览器自身缓存，SW 不拦截
-  if (url.pathname.endsWith('.js') || url.pathname.endsWith('.css')) {
+  const path = url.pathname;
+
+  // 带 hash 的 JS/CSS：缓存优先，后台更新，保证离线可用
+  if (path.endsWith('.js') || path.endsWith('.css')) {
+    e.respondWith(
+      caches.match(e.request).then(cached => {
+        const fetchPromise = fetch(e.request)
+          .then(resp => {
+            if (resp.ok) {
+              const clone = resp.clone();
+              caches.open(CACHE).then(c => c.put(e.request, clone)).catch(() => {});
+            }
+            return resp;
+          })
+          .catch(() => cached || Response.error());
+        return cached || fetchPromise;
+      })
+    );
     return;
   }
 

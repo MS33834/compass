@@ -128,6 +128,7 @@ export const zh = {
     rendering: '正在渲染…',
     renderError: '渲染失败，请关闭后重试。',
     alt: (name: string) => `指南分享卡：${name}`,
+    affinity: (pct: number) => `同道 ${pct}%`,
   },
   share: {
     title: '一座心内之指南',
