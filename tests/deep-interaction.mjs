@@ -57,9 +57,11 @@ async function clearStorage(page) {
 
 async function answerAllQuestions(page) {
   // 使用 JS 直接点击选项和导航，绕过 Playwright 动画稳定性检查
+  // 循环上限 55 略大于实际 48 题，用于吸收导航回退/越界保护的开销
   for (let i = 0; i < 55; i++) {
     // 先回到最前
     if (i === 0) {
+      // 回退循环同样留余量，确保从任意位置回到第 1 题
       for (let j = 0; j < 55; j++) {
         const prevDisabled = await page.evaluate(() => {
           const btn = document.querySelector('[data-testid="btn-prev"]');

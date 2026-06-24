@@ -226,8 +226,8 @@ async function testWay(page) {
     log(`返回第 1 题: ${promptBack?.slice(0, 50)}`);
   }
 
-  // 快速答完 30 题（每题选选项 0）
-  log('开始快速答题（30题，每题选 A）...');
+  // 快速答完 48 题（每题选选项 0，达到 30 题即可出照）
+  log('开始快速答题（48题，每题选 A）...');
   for (let i = 0; i < 48; i++) {
     const opts = await page.$$('[data-testid^="option-"]');
     if (opts.length > 0) {
@@ -376,7 +376,6 @@ async function run() {
   for (const vp of VIEWPORTS) {
     log(`\n=== 视口: ${vp.name} (${vp.width}x${vp.height}) ===`);
     const browser = await chromium.launch({
-      executablePath: '/usr/bin/google-chrome-stable',
       args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'],
     });
     const context = await browser.newContext({

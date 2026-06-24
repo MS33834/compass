@@ -12,7 +12,7 @@
 
 **Compass** is a **local-first, privacy-first** tool for self-discovery through history.
 
-Answer 60 questions across a 12-dimensional trait space. Compass maps your responses to a historical counterpart — using a blend of weighted Euclidean, cosine, and shape-agreement similarity — and reveals your bearing among 150 figures from East and West.
+Answer 48 questions across a 12-dimensional trait space. Compass maps your responses to a historical counterpart — using a blend of weighted Euclidean, cosine, and shape-agreement similarity — and reveals your bearing among 150 figures from East and West.
 
 - 🧭 **East Literati** · 30 poets, lyricists, essayists, thinkers
 - 🧭 **East Statesmen** · 30 chancellors, generals, reformers

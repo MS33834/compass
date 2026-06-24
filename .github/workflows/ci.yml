@@ -23,3 +23,26 @@ jobs:
         env:
           VITE_BASE_PATH: /
       - run: npm run test:all
+
+  e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      # 用 pages 构建（base=/compass/），与测试默认 BASE 一致
+      - run: npm run build:pages
+      # 启动 preview 服务器（后台），--base 需与构建 base 匹配
+      - run: nohup npx vite preview --port 4173 --base /compass/ &
+      - run: npx wait-on http://127.0.0.1:4173/compass/ -t 30000
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:e2e
+        env:
+          E2E_BASE: http://127.0.0.1:4173/compass/
+      - run: npm run test:axe
+        env:
+          AXE_BASE: http://127.0.0.1:4173/compass/

@@ -4,7 +4,7 @@
 // - 带 hash 的 JS/CSS：浏览器自身缓存，SW 不干预
 // - 静态资源（图片/字体/SVG）：网络优先，离线降级缓存
 
-const CACHE = 'compass-v1';
+const CACHE = 'compass-v2';
 const BASE = self.registration ? new URL('.', self.registration.scope).pathname : '/';
 
 // 预缓存 app shell 核心文件
@@ -13,6 +13,8 @@ const PRECACHE_URLS = [
   `${BASE}index.html`,
   `${BASE}favicon.svg`,
   `${BASE}manifest.webmanifest`,
+  `${BASE}icons/icon-192.png`,
+  `${BASE}icons/icon-512.png`,
 ];
 
 self.addEventListener('install', e => {

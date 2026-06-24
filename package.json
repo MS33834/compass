@@ -2,7 +2,7 @@
   "name": "compass",
   "version": "0.3.0",
   "private": true,
-  "description": "Compass · a quiet compass for the inner self. Answer 60 questions across a 12-dimensional trait space to find your historical counterpart across 5 domains, 150 figures, 240 items. Local-first, no server, no tracking.",
+  "description": "Compass · a quiet compass for the inner self. Answer 48 questions across a 12-dimensional trait space to find your historical counterpart across 5 domains, 150 figures, 240 items. Local-first, no server, no tracking.",
   "type": "module",
   "engines": {
     "node": ">=20.0.0",
@@ -19,9 +19,15 @@
     "test:all": "tsx tests/golden.spec.mjs && tsx tests/unit.spec.mjs",
     "test:e2e": "node tests/e2e.mjs",
     "test:axe": "node tests/axe.mjs",
+    "test:full": "node tests/full-interaction.mjs",
+    "test:deep": "node tests/deep-interaction.mjs",
+    "test:figure": "node tests/figure-detail-check.mjs",
+    "test:share": "node tests/share-card-check.mjs",
+    "test:ui": "node tests/ui-audit.mjs",
     "format": "prettier --write \"src/**/*.{ts,tsx,css,md}\" \"*.{json,js,mjs,md,yml,yaml}\" \"tests/**/*.mjs\" \"scripts/**/*.mjs\"",
     "format:check": "prettier --check \"src/**/*.{ts,tsx,css,md}\" \"*.{json,js,mjs,md,yml,yaml}\" \"tests/**/*.mjs\" \"scripts/**/*.mjs\"",
-    "gen:portraits": "node scripts/gen-portraits.mjs"
+    "gen:portraits": "node scripts/gen-portraits.mjs",
+    "gen:icons": "node scripts/gen-icons.mjs"
   },
   "repository": {
     "type": "git",
@@ -67,6 +73,7 @@
     "prettier": "^3.3.3",
     "tsx": "^4.22.4",
     "typescript": "~5.5.3",
-    "vite": "^8.0.16"
+    "vite": "^8.0.16",
+    "wait-on": "^8.0.0"
   }
 }
