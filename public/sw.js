@@ -1,4 +1,4 @@
-// Compass · Service Worker (v1 - 离线可用)
+// Compass · Service Worker (v2 - 离线可用)
 // 策略：
 // - 导航请求（HTML）：网络优先，离线回退缓存的 index.html（预缓存 + 运行时缓存）
 // - 带 hash 的 JS/CSS：浏览器自身缓存，SW 不干预

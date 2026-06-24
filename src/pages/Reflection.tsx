@@ -416,20 +416,13 @@ export function Reflection() {
             const diff = Math.abs(a.score - primary.score);
             const isClose = diff < 0.05;
             return (
-              <article
+              <button
+                type="button"
                 key={a.figure.id}
                 data-figure="alternate"
                 data-figure-id={a.figure.id}
-                role="button"
-                tabIndex={0}
                 aria-label={`${a.figure.name} · ${a.figure.era}`}
                 onClick={() => viewFigure(a.figure.id)}
-                onKeyDown={e => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    viewFigure(a.figure.id);
-                  }
-                }}
                 className={`cp-alt-card${isClose ? ' cp-alt-close' : ''}`}
                 style={{
                   padding: '1.25rem 1rem',
@@ -439,6 +432,9 @@ export function Reflection() {
                   transition: 'all 300ms var(--ease-out)',
                   textAlign: 'center',
                   cursor: 'pointer',
+                  width: '100%',
+                  fontFamily: 'inherit',
+                  color: 'inherit',
                 }}
               >
                 {idx === 0 && (
@@ -471,7 +467,7 @@ export function Reflection() {
                 >
                   {t.reflection.score(Math.round(a.score * 100))}
                 </p>
-              </article>
+              </button>
             );
           })}
         </div>
@@ -566,7 +562,7 @@ export function Reflection() {
                     >
                       {label.text}
                     </span>
-                    <span aria-hidden style={{ color: 'var(--ink-soft)', opacity: 0.5 }}>
+                    <span aria-hidden style={{ color: 'var(--ink-soft)', opacity: 0.75 }}>
                       #{idx + 1}
                     </span>
                   </div>

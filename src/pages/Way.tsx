@@ -262,7 +262,7 @@ export function Way() {
       </header>
 
       {/* 中间：题目 + 选项，内容过多时可内部滚动 */}
-      <div ref={scrollRef} className="cp-way-scroll">
+      <div ref={scrollRef} className="cp-way-scroll" tabIndex={0}>
         <article
           ref={questionRef}
           key={item.id}
