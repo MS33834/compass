@@ -13,6 +13,7 @@ import { itemsForDomain } from '../domain/items/items.index';
 import { figuresForDomain } from '../domain/figures/figures.index';
 import { computeUserVector } from '../domain/matching/vector';
 import { buildReport } from '../domain/matching/report';
+import { pickLang } from '../domain/i18n';
 import { useT } from '../i18n';
 import { ShareCard } from '../components/ShareCard';
 import { exportState, encodeResume, downloadJSON, readJSONFile } from '../share';
@@ -125,7 +126,7 @@ export function Reflection() {
           figuresForDomain(domain),
         ]);
         if (cancelled) return;
-        const r = buildReport(computeUserVector(answers, items), figures, answers, items);
+        const r = buildReport(computeUserVector(answers, items), figures, answers, items, locale);
         if (r) setReport(r);
         else goPhaseRef.current('prologue');
       } catch (err) {
@@ -137,7 +138,7 @@ export function Reflection() {
     return () => {
       cancelled = true;
     };
-  }, [phase, report, domain, answers, setReport]);
+  }, [phase, report, domain, answers, setReport, locale]);
 
   // 同道 3 维高亮（必须在任何条件 return 之前）
   const top3 = useMemo<number[]>(() => {
@@ -192,7 +193,7 @@ export function Reflection() {
   const handleShare = async () => {
     const shareData = {
       title: t.share.title,
-      text: `${t.share.text} — ${primary.figure.name} (${primary.figure.era})`,
+      text: `${t.share.text} — ${pickLang(primary.figure.name, locale)} (${pickLang(primary.figure.era, locale)})`,
       url: window.location.href,
     };
     try {
@@ -299,10 +300,10 @@ export function Reflection() {
           data-figure="primary"
           style={{ marginBottom: '0.5rem', fontSize: 'clamp(2rem, 6vw, 3.5rem)' }}
         >
-          {primary.figure.name}
+          {pickLang(primary.figure.name, locale)}
         </h1>
         <p style={{ color: 'var(--ink-soft)', fontSize: '1.05rem' }}>
-          {primary.figure.era} ·{' '}
+          {pickLang(primary.figure.era, locale)} ·{' '}
           <AnimatedNumber target={primary.score * 100} durationMs={1600} startMs={200}>
             {v => t.reflection.score(Math.round(v))}
           </AnimatedNumber>
@@ -325,7 +326,7 @@ export function Reflection() {
             type="button"
             data-figure-portrait
             onClick={() => viewFigure(primary.figure.id)}
-            aria-label={`${primary.figure.name} · ${t.figureDetail.bio}`}
+            aria-label={`${pickLang(primary.figure.name, locale)} · ${t.figureDetail.bio}`}
             style={{
               maxWidth: '220px',
               width: '100%',
@@ -340,7 +341,10 @@ export function Reflection() {
         </div>
         <div>
           <div style={{ textAlign: 'left' }}>
-            <Verse text={primary.figure.signature} gloss={primary.figure.bio} />
+            <Verse
+              text={pickLang(primary.figure.signature, locale)}
+              gloss={pickLang(primary.figure.bio, locale)}
+            />
           </div>
           <div
             className="cp-blurb"
@@ -394,7 +398,8 @@ export function Reflection() {
               <ul style={{ marginTop: '0.5rem', paddingLeft: '1.25rem', textAlign: 'left' }}>
                 {primary.figure.anecdotes.map((a, i) => (
                   <li key={i} style={{ marginBottom: '0.5rem' }}>
-                    <strong style={{ color: 'var(--ink)' }}>{a.title}</strong>：{a.body}
+                    <strong style={{ color: 'var(--ink)' }}>{pickLang(a.title, locale)}</strong>：
+                    {pickLang(a.body, locale)}
                   </li>
                 ))}
               </ul>
@@ -424,7 +429,7 @@ export function Reflection() {
                 key={a.figure.id}
                 data-figure="alternate"
                 data-figure-id={a.figure.id}
-                aria-label={`${a.figure.name} · ${a.figure.era}`}
+                aria-label={`${pickLang(a.figure.name, locale)} · ${pickLang(a.figure.era, locale)}`}
                 onClick={() => viewFigure(a.figure.id)}
                 className={`cp-alt-card${isClose ? ' cp-alt-close' : ''}`}
                 style={{
@@ -454,9 +459,11 @@ export function Reflection() {
                     {t.reflection.mostSimilar}
                   </span>
                 )}
-                <h3 style={{ marginBottom: '0.3rem', fontSize: '1.25rem' }}>{a.figure.name}</h3>
+                <h3 style={{ marginBottom: '0.3rem', fontSize: '1.25rem' }}>
+                  {pickLang(a.figure.name, locale)}
+                </h3>
                 <p style={{ fontSize: '0.875rem', color: 'var(--ink-soft)', margin: 0 }}>
-                  {a.figure.era}
+                  {pickLang(a.figure.era, locale)}
                 </p>
                 <p
                   style={{
@@ -700,7 +707,7 @@ export function Reflection() {
           <BrushButton
             variant="primary"
             onClick={() => setShowShareCard(true)}
-            data-testid="btn-share-card"
+            data-testid="btn-open-share-card"
           >
             {t.shareCard.title}
           </BrushButton>

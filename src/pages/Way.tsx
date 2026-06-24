@@ -15,6 +15,7 @@ import type { Item } from '../domain/items/item.types';
 import type { Figure } from '../domain/figures/figure.types';
 import { computeUserVector } from '../domain/matching/vector';
 import { buildReport } from '../domain/matching/report';
+import { pickLang } from '../domain/i18n';
 import { BrushButton } from '../components/BrushButton';
 import { ConfirmModal } from '../components/ConfirmModal';
 import { useT } from '../i18n';
@@ -150,9 +151,9 @@ export function Way() {
 
   const handleFinish = useCallback(() => {
     if (!item) return;
-    const r = buildReport(computeUserVector(answers, items), figures, answers, items);
+    const r = buildReport(computeUserVector(answers, items), figures, answers, items, locale);
     if (r) setReport(r);
-  }, [answers, items, figures, setReport, item]);
+  }, [answers, items, figures, setReport, item, locale]);
 
   const handleSkip = () => {
     if (currentIndex < total - 1) goNext();
@@ -270,9 +271,9 @@ export function Way() {
           aria-labelledby="way-title"
         >
           <h2 id="way-title" data-testid="way-prompt" className="cp-way-prompt">
-            {item.prompt}
+            {pickLang(item.prompt, locale)}
           </h2>
-          {item.promptGloss && <p className="cp-way-gloss">{item.promptGloss}</p>}
+          {item.promptGloss && <p className="cp-way-gloss">{pickLang(item.promptGloss, locale)}</p>}
 
           <div role="radiogroup" aria-label={t.way.optionsLabel} className="cp-way-options">
             {item.options.map((opt, i) => {
@@ -303,8 +304,10 @@ export function Way() {
                     {letter}
                   </span>
                   <span className="cp-way-option-text">
-                    <span className="cp-way-ancient">{opt.text}</span>
-                    {opt.gloss && <span className="cp-way-gloss-inline">{opt.gloss}</span>}
+                    <span className="cp-way-ancient">{pickLang(opt.text, locale)}</span>
+                    {opt.gloss && (
+                      <span className="cp-way-gloss-inline">{pickLang(opt.gloss, locale)}</span>
+                    )}
                   </span>
                 </button>
               );

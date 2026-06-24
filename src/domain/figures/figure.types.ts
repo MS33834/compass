@@ -2,20 +2,21 @@
 
 import type { TraitVector } from '../traits/trait.types';
 import type { DOMAINS } from './domains';
+import type { LocalString } from '../i18n';
 
 export type DomainId = (typeof DOMAINS)[number];
 
 export type Figure = {
   id: string;
-  name: string;
-  era: string;
+  name: LocalString;
+  era: LocalString;
   domain: DomainId;
   vector: TraitVector;
-  signature: string;
-  bio: string;
+  signature: LocalString;
+  bio: LocalString;
   portrait: string;
   /** 开篇导语；可传单条字符串保持兼容，也可传多条模板供动态选择 */
-  matchBlurb: string | string[];
-  anecdotes: { title: string; body: string }[];
+  matchBlurb: LocalString | LocalString[];
+  anecdotes: { title: LocalString; body: LocalString }[];
   echoes: string[];
 };

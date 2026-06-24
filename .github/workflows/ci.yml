@@ -22,11 +22,12 @@ jobs:
       - run: npm run build
         env:
           VITE_BASE_PATH: /
+      - run: npx size-limit
       - run: npm run test:all
 
   e2e:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -46,3 +47,18 @@ jobs:
       - run: npm run test:axe
         env:
           AXE_BASE: http://127.0.0.1:4173/compass/
+      # 以下深度/全交互/UI 测试较脆弱，先以 continue-on-error 运行，不阻塞 CI
+      - run: npm run test:full
+        continue-on-error: true
+      - run: npm run test:deep
+        continue-on-error: true
+      - run: npm run test:figure
+        continue-on-error: true
+      - run: npm run test:share
+        env:
+          BASE_URL: http://127.0.0.1:4173/compass/
+        continue-on-error: true
+      - run: npm run test:ui
+        env:
+          BASE_URL: http://127.0.0.1:4173/compass/
+        continue-on-error: true

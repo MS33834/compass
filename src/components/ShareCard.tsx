@@ -9,6 +9,8 @@ import { gsap } from 'gsap';
 import { BrushButton } from './BrushButton';
 import { OverlayPortal } from './OverlayPortal';
 import { useT } from '../i18n';
+import { useStore } from '../store';
+import { pickLang } from '../domain/i18n';
 import type { MatchReport } from '../domain/matching/report';
 
 const CARD_WIDTH = 900;
@@ -27,7 +29,8 @@ function loadImage(src: string): Promise<HTMLImageElement | null> {
 async function drawShareCard(
   canvas: HTMLCanvasElement,
   report: MatchReport,
-  t: ReturnType<typeof useT>
+  t: ReturnType<typeof useT>,
+  locale: 'zh' | 'en'
 ): Promise<void> {
   const ctx = canvas.getContext('2d');
   if (!ctx) return;
@@ -42,6 +45,9 @@ async function drawShareCard(
   const { primary } = report;
   const domainName = t.path.domains[primary.figure.domain]?.name ?? primary.figure.domain;
   const scorePct = Math.round(primary.score * 100);
+  const figureName = pickLang(primary.figure.name, locale);
+  const figureEra = pickLang(primary.figure.era, locale);
+  const figureSignature = pickLang(primary.figure.signature, locale);
 
   // ── 底色：宣纸 ──
   ctx.fillStyle = '#f5efe0';
@@ -91,7 +97,7 @@ async function drawShareCard(
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   ctx.font = `bold ${sealSize * 0.55}px "STXingkai", "KaiTi", "SimKai", serif`;
-  ctx.fillText(primary.figure.name.slice(0, 1), sealX + sealSize / 2, sealY + sealSize / 2 + 6);
+  ctx.fillText(figureName.slice(0, 1), sealX + sealSize / 2, sealY + sealSize / 2 + 6);
 
   // ── 右侧主信息 ──
   let y = 130;
@@ -100,12 +106,12 @@ async function drawShareCard(
   ctx.textAlign = 'left';
   ctx.fillStyle = '#6a6a6a';
   ctx.font = `24px "STKaiti", "KaiTi", "SimKai", serif`;
-  ctx.fillText(`${domainName} · ${primary.figure.era}`, leftX, y);
+  ctx.fillText(`${domainName} · ${figureEra}`, leftX, y);
 
   y += 72;
   ctx.fillStyle = '#1a1a1a';
   ctx.font = `bold 72px "STXingkai", "KaiTi", "SimKai", serif`;
-  ctx.fillText(primary.figure.name, leftX, y);
+  ctx.fillText(figureName, leftX, y);
 
   y += 52;
   ctx.fillStyle = '#a8322e';
@@ -126,9 +132,7 @@ async function drawShareCard(
   ctx.fillStyle = '#252525';
   ctx.font = `italic 28px "STKaiti", "KaiTi", "SimKai", serif`;
   const signature =
-    primary.figure.signature.length > 28
-      ? primary.figure.signature.slice(0, 27) + '…'
-      : primary.figure.signature;
+    figureSignature.length > 28 ? figureSignature.slice(0, 27) + '…' : figureSignature;
   ctx.fillText(`“${signature}”`, leftX, y);
 
   // ── 底部品牌 ──
@@ -186,6 +190,7 @@ type Props = { report: MatchReport; onClose: () => void };
 
 export function ShareCard({ report, onClose }: Props) {
   const t = useT();
+  const locale = useStore(s => s.locale);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
   const [ready, setReady] = useState(false);
@@ -196,10 +201,10 @@ export function ShareCard({ report, onClose }: Props) {
     if (!canvasRef.current) return;
     setReady(false);
     setRenderError(false);
-    drawShareCard(canvasRef.current, report, t)
+    drawShareCard(canvasRef.current, report, t, locale)
       .then(() => setReady(true))
       .catch(() => setRenderError(true));
-  }, [report, t]);
+  }, [report, t, locale]);
 
   // ESC 关闭 + 禁止背景滚动
   useEffect(() => {
@@ -267,7 +272,7 @@ export function ShareCard({ report, onClose }: Props) {
       });
       const shareData: ShareData = {
         title: t.share.title,
-        text: `${t.share.text} — ${report.primary.figure.name}`,
+        text: `${t.share.text} — ${pickLang(report.primary.figure.name, locale)}`,
         files: [file],
       };
       if (navigator.canShare?.(shareData)) {
@@ -310,7 +315,7 @@ export function ShareCard({ report, onClose }: Props) {
             <div className="cp-share-card-preview">
               <canvas
                 ref={canvasRef}
-                aria-label={t.shareCard.alt(report.primary.figure.name)}
+                aria-label={t.shareCard.alt(pickLang(report.primary.figure.name, locale))}
                 className={
                   ready
                     ? 'cp-share-card-canvas'
@@ -341,7 +346,7 @@ export function ShareCard({ report, onClose }: Props) {
               <BrushButton
                 onClick={handleSystemShare}
                 disabled={!ready || busy}
-                data-testid="btn-share-card"
+                data-testid="btn-system-share"
               >
                 {t.shareCard.share}
               </BrushButton>

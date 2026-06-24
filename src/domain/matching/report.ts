@@ -4,6 +4,7 @@ import { TRAITS } from '../traits/trait.dimensions';
 import { topN } from './matching';
 import { renderBlurb, pickPolarity, BLURB, selectBlurb } from './blurb';
 import { confidence } from './confidence';
+import { pickLang } from '../i18n';
 import type { TraitVector } from '../traits/trait.types';
 import type { Figure } from '../figures/figure.types';
 import type { Item } from '../items/item.types';
@@ -26,7 +27,8 @@ export function buildReport(
   user: TraitVector,
   pool: readonly Figure[],
   answers: Record<string, number>,
-  itemPool: readonly Item[]
+  itemPool: readonly Item[],
+  lang: 'zh' | 'en'
 ): MatchReport | null {
   if (pool.length === 0 || itemPool.length === 0) return null;
 
@@ -39,17 +41,20 @@ export function buildReport(
     primary: {
       figure: primary.figure,
       score: primary.score,
-      blurb: renderBlurb(selectBlurb(primary.figure.matchBlurb, user, primary.figure.vector), {
-        name: primary.figure.name,
-        era: primary.figure.era,
-      }),
+      blurb: renderBlurb(
+        pickLang(selectBlurb(primary.figure.matchBlurb, user, primary.figure.vector), lang),
+        {
+          name: pickLang(primary.figure.name, lang),
+          era: pickLang(primary.figure.era, lang),
+        }
+      ),
     },
     alternates: rest.map(a => ({
       figure: a.figure,
       score: a.score,
-      blurb: renderBlurb(selectBlurb(a.figure.matchBlurb, user, a.figure.vector), {
-        name: a.figure.name,
-        era: a.figure.era,
+      blurb: renderBlurb(pickLang(selectBlurb(a.figure.matchBlurb, user, a.figure.vector), lang), {
+        name: pickLang(a.figure.name, lang),
+        era: pickLang(a.figure.era, lang),
       }),
     })),
     traitBreakdown: TRAITS.map((t, i) => {
@@ -57,9 +62,9 @@ export function buildReport(
       const f = primary.figure.vector[i];
       const diff = u - f;
       const pol = pickPolarity(diff);
-      const comment = renderBlurb(BLURB[t.id][pol], {
-        name: primary.figure.name,
-        era: primary.figure.era,
+      const comment = renderBlurb(pickLang(BLURB[t.id][pol], lang), {
+        name: pickLang(primary.figure.name, lang),
+        era: pickLang(primary.figure.era, lang),
       });
       return {
         traitId: t.id,

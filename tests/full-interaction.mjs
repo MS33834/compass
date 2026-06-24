@@ -2,7 +2,7 @@
 // 模拟人类点击所有页面、所有按钮，收集控制台错误与中间结果
 import { chromium } from 'playwright';
 
-const BASE = 'http://127.0.0.1:4173/';
+const BASE = 'http://127.0.0.1:4173/compass/';
 const VIEWPORTS = [
   { name: 'mobile-375', width: 375, height: 812 },
   { name: 'desktop-1280', width: 1280, height: 800 },

@@ -9,12 +9,14 @@ import { Portrait } from './Portrait';
 import { BrushButton } from './BrushButton';
 import { OverlayPortal } from './OverlayPortal';
 import { Verse } from './Verse';
+import { pickLang } from '../domain/i18n';
 import { useT } from '../i18n';
 
 export function FigureDetail() {
   const viewingFigure = useStore(s => s.viewingFigure);
   const viewFigure = useStore(s => s.viewFigure);
   const selectDomain = useStore(s => s.selectDomain);
+  const locale = useStore(s => s.locale);
   const closeFigure = () => viewFigure(null);
   const t = useT();
   const overlayRef = useRef<HTMLDivElement>(null);
@@ -181,21 +183,21 @@ export function FigureDetail() {
                   <span>{t.path.domains[figure.domain].name}</span>
                   <span aria-hidden> · </span>
                   <span>
-                    {t.figureDetail.era}: {figure.era}
+                    {t.figureDetail.era}: {pickLang(figure.era, locale)}
                   </span>
                 </p>
 
                 <h1 id="figure-detail-title" className="cp-figure-name">
-                  {figure.name}
+                  {pickLang(figure.name, locale)}
                 </h1>
 
                 <div className="cp-figure-quote">
-                  <Verse text={figure.signature} reveal />
+                  <Verse text={pickLang(figure.signature, locale)} reveal />
                 </div>
 
                 <section className="cp-figure-section">
                   <h2>{t.figureDetail.bio}</h2>
-                  <p className="cp-figure-bio">{figure.bio}</p>
+                  <p className="cp-figure-bio">{pickLang(figure.bio, locale)}</p>
                 </section>
 
                 {figure.anecdotes.length > 0 && (
@@ -204,8 +206,8 @@ export function FigureDetail() {
                     <ul className="cp-figure-anecdotes">
                       {figure.anecdotes.map((a, i) => (
                         <li key={i}>
-                          <strong>{a.title}</strong>
-                          <span>{a.body}</span>
+                          <strong>{pickLang(a.title, locale)}</strong>
+                          <span>{pickLang(a.body, locale)}</span>
                         </li>
                       ))}
                     </ul>
@@ -221,11 +223,11 @@ export function FigureDetail() {
                           key={f.id}
                           type="button"
                           className="cp-figure-related-card"
-                          aria-label={`${f.name} · ${f.era}`}
+                          aria-label={`${pickLang(f.name, locale)} · ${pickLang(f.era, locale)}`}
                           onClick={() => handleRelatedClick(f.id)}
                         >
-                          <span className="cp-figure-related-name">{f.name}</span>
-                          <span className="cp-figure-related-era">{f.era}</span>
+                          <span className="cp-figure-related-name">{pickLang(f.name, locale)}</span>
+                          <span className="cp-figure-related-era">{pickLang(f.era, locale)}</span>
                         </button>
                       ))}
                     </div>

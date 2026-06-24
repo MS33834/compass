@@ -9,8 +9,9 @@
 
 import { TRAITS } from '../traits/trait.dimensions';
 import type { TraitVector } from '../traits/trait.types';
+import type { LocalString } from '../i18n';
 
-export const BLURB: Record<number, { lo: string; mid: string; hi: string }> = {
+export const BLURB: Record<number, { lo: LocalString; mid: LocalString; hi: LocalString }> = {
   1: {
     lo: '汝与 {{name}} 同，行事不滞于玄谈，握今即握道。',
     mid: '汝与 {{name}} 之思，半在云端半在泥，各有归处。',
@@ -91,10 +92,10 @@ export function pickPolarity(diff: number): 'lo' | 'mid' | 'hi' {
  * 差异最大的一项，返回对应下标的 blurb；若差异均较小，则默认返回第一条。
  */
 export function selectBlurb(
-  matchBlurb: string | string[],
+  matchBlurb: LocalString | LocalString[],
   user: TraitVector,
   figure: TraitVector
-): string {
+): LocalString {
   const templates = Array.isArray(matchBlurb) ? matchBlurb : [matchBlurb];
   if (templates.length === 1) return templates[0];
 

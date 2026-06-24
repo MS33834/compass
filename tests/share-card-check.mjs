@@ -40,7 +40,7 @@ async function run() {
   await page.waitForTimeout(1200);
 
   // 打开分享卡
-  await page.click('[data-testid="btn-share-card"]');
+  await page.click('[data-testid="btn-open-share-card"]');
   await page.waitForSelector('.cp-share-card-overlay', { timeout: 5000 });
   await page.waitForSelector('.cp-share-card-canvas:not(.cp-share-card-canvas--loading)', {
     timeout: 5000,

@@ -57,6 +57,14 @@
     "url": "https://github.com/MS33834/compass/issues"
   },
   "homepage": "https://badhope.gitcode.host/compass/",
+  "size-limit": [
+    {
+      "name": "JS bundle (gzip)",
+      "path": "dist/assets/*.js",
+      "limit": "280 KB",
+      "gzip": true
+    }
+  ],
   "dependencies": {
     "gsap": "^3.15.0",
     "react": "^18.3.1",
@@ -64,6 +72,7 @@
     "zustand": "^4.5.5"
   },
   "devDependencies": {
+    "@size-limit/file": "^11.0.0",
     "@types/node": "^20.14.10",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
@@ -71,6 +80,7 @@
     "axe-core": "^4.12.1",
     "playwright": "^1.49.0",
     "prettier": "^3.3.3",
+    "size-limit": "^11.0.0",
     "tsx": "^4.22.4",
     "typescript": "~5.5.3",
     "vite": "^8.0.16",

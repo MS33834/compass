@@ -7,6 +7,8 @@
 
 import type { Figure } from '../domain/figures/figure.types';
 import { useEffect, useState } from 'react';
+import { useStore } from '../store';
+import { pickLang } from '../domain/i18n';
 
 const BASE = import.meta.env.BASE_URL;
 
@@ -15,6 +17,7 @@ type Props = { figure: Figure };
 export function Portrait({ figure }: Props) {
   const [err, setErr] = useState(false);
   const [loaded, setLoaded] = useState(false);
+  const locale = useStore(s => s.locale);
 
   // figure 变化时重置错误状态，避免复用组件实例时残留旧图的降级态
   useEffect(() => {
@@ -25,7 +28,7 @@ export function Portrait({ figure }: Props) {
   if (err) {
     return (
       <Frame>
-        <Placeholder figure={figure} />
+        <Placeholder figure={figure} locale={locale} />
       </Frame>
     );
   }
@@ -40,7 +43,7 @@ export function Portrait({ figure }: Props) {
       {!loaded && <Skeleton />}
       <img
         src={portraitSrc}
-        alt={`${figure.name} (${figure.era})`}
+        alt={`${pickLang(figure.name, locale)} (${pickLang(figure.era, locale)})`}
         loading="lazy"
         onError={() => setErr(true)}
         onLoad={() => setLoaded(true)}
@@ -99,7 +102,8 @@ function Skeleton() {
   );
 }
 
-function Placeholder({ figure }: Props) {
+function Placeholder({ figure, locale }: Props & { locale: 'zh' | 'en' }) {
+  const name = pickLang(figure.name, locale);
   return (
     <div
       className="cp-portrait"
@@ -124,7 +128,7 @@ function Placeholder({ figure }: Props) {
           letterSpacing: '0.2em',
         }}
       >
-        {figure.era}
+        {pickLang(figure.era, locale)}
       </div>
       <div
         aria-hidden
@@ -138,7 +142,7 @@ function Placeholder({ figure }: Props) {
           textAlign: 'center',
         }}
       >
-        {figure.name.slice(0, 1)}
+        {name.slice(0, 1)}
       </div>
       <div
         style={{
@@ -148,14 +152,14 @@ function Placeholder({ figure }: Props) {
           letterSpacing: '0.2em',
         }}
       >
-        {figure.name}
+        {name}
       </div>
       <div
         style={{ position: 'absolute', right: '0.75rem', bottom: '0.75rem' }}
         className="cp-seal"
         aria-hidden
       >
-        {figure.name.slice(0, 1)}
+        {name.slice(0, 1)}
       </div>
     </div>
   );
