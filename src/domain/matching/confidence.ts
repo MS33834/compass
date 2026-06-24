@@ -25,8 +25,8 @@ export function confidence(answers: Record<string, number>, pool: readonly Item[
   // 0.02 以上视为有明显倾向（对应 ~±0.14 偏离）
   const decisiveness = Math.min(1, variance / 0.025);
 
-  // 3. 一致性：逐维答案的方向一致性
-  const dimensionRaw = new Array(12).fill(null).map(() => [] as number[]);
+  // 3. 一致性：逐维答案的方向一致性（仅统计有≥2个信号的维度）
+  const dimensionRaw = new Map<number, number[]>();
 
   for (const item of pool) {
     const optIdx = answers[item.id];
@@ -34,17 +34,19 @@ export function confidence(answers: Record<string, number>, pool: readonly Item[
     const opt = item.options[optIdx];
     if (!opt) continue;
 
-    dimensionRaw[opt.primary.traitId - 1].push(opt.primary.delta);
-    for (const s of opt.secondary ?? []) {
-      dimensionRaw[s.traitId - 1].push(s.delta);
-    }
+    const push = (traitId: number, delta: number) => {
+      const arr = dimensionRaw.get(traitId);
+      if (arr) arr.push(delta);
+      else dimensionRaw.set(traitId, [delta]);
+    };
+    push(opt.primary.traitId, opt.primary.delta);
+    for (const s of opt.secondary ?? []) push(s.traitId, s.delta);
   }
 
   let consistencySum = 0;
   let consistencyCount = 0;
 
-  for (let i = 0; i < 12; i++) {
-    const dimAns = dimensionRaw[i];
+  for (const dimAns of dimensionRaw.values()) {
     if (dimAns.length < 2) continue;
 
     // 3a. 方向一致性（正负号的同正或同负比例）

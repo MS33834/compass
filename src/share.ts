@@ -94,6 +94,8 @@ export function downloadJSON(s: ExportShape, filename = 'compass.json') {
 }
 
 export async function readJSONFile(file: File): Promise<ExportShape | null> {
+  // 防护：拒绝超大文件（> 2MB），避免内存占用与解析耗时
+  if (file.size > 2 * 1024 * 1024) return null;
   const text = await file.text();
   try {
     const obj = JSON.parse(text);

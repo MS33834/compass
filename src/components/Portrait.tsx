@@ -30,10 +30,10 @@ export function Portrait({ figure }: Props) {
     );
   }
 
-  // 确保子路径下 portrait 路径解析正确
+  // 确保子路径下 portrait 路径解析正确，避免 BASE 与相对路径拼接产生重复斜杠
   const portraitSrc = figure.portrait.startsWith('/')
     ? figure.portrait
-    : `${BASE}${figure.portrait}`;
+    : `${BASE.replace(/\/$/, '')}/${figure.portrait}`;
 
   return (
     <Frame>

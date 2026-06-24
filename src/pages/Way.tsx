@@ -360,11 +360,7 @@ export function Way() {
 
         <p className="cp-way-hint">{t.way.keyboardHint}</p>
 
-        <button
-          type="button"
-          className="cp-way-reset"
-          onClick={() => setShowResetConfirm(true)}
-        >
+        <button type="button" className="cp-way-reset" onClick={() => setShowResetConfirm(true)}>
           {t.way.resetLabel}
         </button>
       </footer>

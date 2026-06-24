@@ -51,6 +51,8 @@ export function computeUserVector(
 
   // 整体答题比例：越低越收敛到中性
   const answerRatio = totalItems > 0 ? answeredCount / totalItems : 0;
+  // 未答题时统一收敛强度，避免 floor/ceil 与 pullToNeutral 双重收敛导致过度中性化
+  const neutralPull = Math.max(0.5, 1 - answerRatio);
 
   // 第二遍：逐维归一化
   return raw.map((s, i) => {
@@ -60,9 +62,7 @@ export function computeUserVector(
       // 本维未被主维度覆盖 → 用副维度信号 + 全局均值混合
       const secondarySignal = secondaryCoverage[i] > 0 ? s / secondaryCoverage[i] : globalMean;
       const blended = secondarySignal * 0.5 + globalMean * 0.5;
-      // 整体覆盖越低越倾向 0.5（中性）—— 未答题不应过度自信
-      const pullToNeutral = Math.max(0.5, 1 - answerRatio);
-      return 0.5 + (1 / (1 + Math.exp(-blended * 1.5)) - 0.5) * (1 - pullToNeutral);
+      return 0.5 + (1 / (1 + Math.exp(-blended * 1.5)) - 0.5) * (1 - neutralPull);
     }
 
     const mean = s / cov;
@@ -76,10 +76,7 @@ export function computeUserVector(
 
     const sigmoid = 1 / (1 + Math.exp(-mean * adaptiveK));
 
-    // 边界处理：确保不会过于极端，保留"余量"以体现不确定性
-    const floor = 0.08 + (1 - answerRatio) * 0.15;
-    const ceil = 0.92 - (1 - answerRatio) * 0.15;
-
-    return Math.max(floor, Math.min(ceil, sigmoid));
+    // 边界处理：保留"余量"以体现不确定性，但不再随 answerRatio 双重收敛
+    return Math.max(0.08, Math.min(0.92, sigmoid));
   }) as TraitVector;
 }
