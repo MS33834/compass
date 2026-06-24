@@ -168,7 +168,7 @@ class GlobalErrorBoundary extends Component<{ children: ReactNode }, { error: Er
               marginTop: '8px',
             }}
           >
-            重新加载
+            Reload
           </button>
         </div>
       );

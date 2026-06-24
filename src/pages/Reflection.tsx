@@ -14,6 +14,7 @@ import { figuresForDomain } from '../domain/figures/figures.index';
 import { computeUserVector } from '../domain/matching/vector';
 import { buildReport } from '../domain/matching/report';
 import { useT } from '../i18n';
+import { ShareCard } from '../components/ShareCard';
 import { exportState, encodeResume, downloadJSON, readJSONFile } from '../share';
 
 // ── 工具：数字滚动动画 Hook ──
@@ -89,6 +90,7 @@ export function Reflection() {
   const t = useT();
   const [toast, setToast] = useState<string | null>(null);
   const [showResetConfirm, setShowResetConfirm] = useState(false);
+  const [showShareCard, setShowShareCard] = useState(false);
   const fileRef = useRef<HTMLInputElement | null>(null);
   const goPhaseRef = useRef(goPhase);
   goPhaseRef.current = goPhase;
@@ -321,6 +323,7 @@ export function Reflection() {
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start' }}>
           <button
             type="button"
+            data-figure-portrait
             onClick={() => viewFigure(primary.figure.id)}
             aria-label={`${primary.figure.name} · ${t.figureDetail.bio}`}
             style={{
@@ -696,6 +699,13 @@ export function Reflection() {
           </BrushButton>
           <BrushButton
             variant="primary"
+            onClick={() => setShowShareCard(true)}
+            data-testid="btn-share-card"
+          >
+            {t.shareCard.title}
+          </BrushButton>
+          <BrushButton
+            variant="primary"
             onClick={() => setShowResetConfirm(true)}
             data-testid="btn-reset"
           >
@@ -797,6 +807,7 @@ export function Reflection() {
         }}
         onCancel={() => setShowResetConfirm(false)}
       />
+      {showShareCard && <ShareCard report={report} onClose={() => setShowShareCard(false)} />}
     </article>
   );
 }

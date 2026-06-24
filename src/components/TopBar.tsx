@@ -37,6 +37,7 @@ export function TopBar() {
       }}
     >
       <button
+        type="button"
         onClick={onLogo}
         title={t.ui.returnHome}
         style={{

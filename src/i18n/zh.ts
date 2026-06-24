@@ -13,7 +13,7 @@ export const zh = {
     confirmNo: '取消',
     toggleLang: 'EN',
     langLabelZh: '切换至中文',
-    langLabelEn: 'Switch to English',
+    langLabelEn: '切换至英文',
     skipToContent: '跳至正文',
     themeLight: '☼',
     themeDark: '☾',

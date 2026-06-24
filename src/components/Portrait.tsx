@@ -155,7 +155,7 @@ function Placeholder({ figure }: Props) {
         className="cp-seal"
         aria-hidden
       >
-        指
+        {figure.name.slice(0, 1)}
       </div>
     </div>
   );

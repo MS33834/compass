@@ -20,13 +20,28 @@
       try {
         var l = window.location;
         var path = l.pathname;
-        // 匹配 /compass/ 或 /compass/index.html 或 /compass（无尾斜杠）
-        var base = '/compass';
-        if (path === base || path === base + '/' || path === base + '/index.html') {
+        // 自动推断 base：优先检测 /compass/ 子路径部署，回退到根路径
+        var base = '/';
+        var compassBase = '/compass';
+        if (path === compassBase || path.indexOf(compassBase + '/') === 0) {
+          base = compassBase + '/';
+        }
+        var baseNoTrailing = base.replace(/\/$/, '') || '/';
+        if (
+          path === baseNoTrailing ||
+          path === base ||
+          path === baseNoTrailing + '/index.html' ||
+          path === base + 'index.html'
+        ) {
           // 已在首页，无需重定向
-        } else if (path.indexOf(base + '/') === 0 && !path.match(/\.(js|css|svg|png|jpg|jpeg|gif|webp|ico|woff|woff2|ttf|eot|otf|json|xml|txt|map|webmanifest)$/i)) {
+        } else if (
+          path.indexOf(base) === 0 &&
+          !path.match(
+            /\.(js|css|svg|png|jpg|jpeg|gif|webp|ico|woff|woff2|ttf|eot|otf|json|xml|txt|map|webmanifest)$/i
+          )
+        ) {
           // 仅对非资源请求重定向到 SPA
-          l.replace(base + '/' + l.search + l.hash);
+          l.replace(base + l.search + l.hash);
         } else {
           // 不匹配任何规则：3 秒后显示 404 提示，避免无限转圈
           setTimeout(function () {
@@ -35,7 +50,7 @@
               boot.innerHTML =
                 '<div><div class="seal">404</div><h1>Page Not Found</h1><p>The page you seek is not here.</p><a href="' +
                 base +
-                '/" style="display:inline-block;padding:12px 24px;background:#a8322e;color:#f5efe0;text-decoration:none;border-radius:4px;font-size:16px;">Return to Compass</a></div>';
+                '" style="display:inline-block;padding:12px 24px;background:#a8322e;color:#f5efe0;text-decoration:none;border-radius:4px;font-size:16px;">Return to Compass</a></div>';
             }
           }, 3000);
         }
@@ -126,7 +141,7 @@
   <body>
     <div id="cp-boot">
       <div>
-        <div class="seal">指</div>
+        <div class="seal" aria-hidden>指</div>
         <h1 data-en="Compass" data-zh="指南">Compass</h1>
         <p data-en="A quiet compass for the inner self." data-zh="一座心内之指南。三分钟，三千年。">
           A quiet compass for the inner self.

@@ -24,8 +24,8 @@
     "test:figure": "node tests/figure-detail-check.mjs",
     "test:share": "node tests/share-card-check.mjs",
     "test:ui": "node tests/ui-audit.mjs",
-    "format": "prettier --write \"src/**/*.{ts,tsx,css,md}\" \"*.{json,js,mjs,md,yml,yaml}\" \"tests/**/*.mjs\" \"scripts/**/*.mjs\"",
-    "format:check": "prettier --check \"src/**/*.{ts,tsx,css,md}\" \"*.{json,js,mjs,md,yml,yaml}\" \"tests/**/*.mjs\" \"scripts/**/*.mjs\"",
+    "format": "prettier --write \"src/**/*.{ts,tsx,css,md}\" \"public/**/*.{html,js}\" \"*.{json,js,mjs,md,yml,yaml}\" \"tests/**/*.mjs\" \"scripts/**/*.mjs\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,css,md}\" \"public/**/*.{html,js}\" \"*.{json,js,mjs,md,yml,yaml}\" \"tests/**/*.mjs\" \"scripts/**/*.mjs\"",
     "gen:portraits": "node scripts/gen-portraits.mjs",
     "gen:icons": "node scripts/gen-icons.mjs"
   },
