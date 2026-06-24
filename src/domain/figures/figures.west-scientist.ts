@@ -14,7 +14,7 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
   {
     id: 'ws-copernicus',
     name: '哥白尼',
-    era: 'modernEarly',
+    era: '近代早期',
     domain: 'west-scientist',
     vector: [0.92, 0.4, 0.55, 0.92, 0.45, 0.5, 0.8, 0.95, 0.4, 0.7, 0.75, 0.5],
     signature: '天动还是地动，唯观测以决。',
@@ -34,7 +34,7 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
   {
     id: 'ws-galileo',
     name: '伽利略',
-    era: 'modernEarly',
+    era: '近代早期',
     domain: 'west-scientist',
     vector: [0.95, 0.5, 0.85, 0.95, 0.5, 0.55, 0.92, 0.95, 0.5, 0.7, 0.92, 0.7],
     signature: '然其所以然，必以实验为据。',
@@ -54,7 +54,7 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
   {
     id: 'ws-newton',
     name: '牛顿',
-    era: 'modernEarly',
+    era: '近代早期',
     domain: 'west-scientist',
     vector: [0.98, 0.4, 0.6, 0.95, 0.4, 0.5, 0.9, 0.98, 0.4, 0.85, 0.65, 0.5],
     signature: '若我有所见，立于巨人之肩。',
@@ -74,7 +74,7 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
   {
     id: 'ws-einstein',
     name: '爱因斯坦',
-    era: 'modernLate',
+    era: '近代晚期',
     domain: 'west-scientist',
     vector: [0.98, 0.7, 0.55, 0.98, 0.55, 0.85, 0.85, 0.95, 0.35, 0.85, 0.85, 0.9],
     signature: 'E = mc²。',
@@ -94,7 +94,7 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
   {
     id: 'ws-curie',
     name: '居里夫人',
-    era: 'modernLate',
+    era: '近代晚期',
     domain: 'west-scientist',
     vector: [0.95, 0.6, 0.85, 0.92, 0.4, 0.55, 0.95, 0.95, 0.4, 0.7, 0.85, 0.5],
     signature: '于万物中，拾其微光。',
@@ -114,7 +114,7 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
   {
     id: 'ws-feynman',
     name: '费曼',
-    era: 'modernLate',
+    era: '近代晚期',
     domain: 'west-scientist',
     vector: [0.92, 0.8, 0.7, 0.95, 0.65, 0.85, 0.8, 0.95, 0.4, 0.6, 0.8, 0.95],
     signature: '我不能创造之物，我即不能理解。',
@@ -136,7 +136,7 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
   {
     id: 'ws-kepler',
     name: '开普勒',
-    era: 'modernEarly',
+    era: '近代早期',
     domain: 'west-scientist',
     vector: [0.85, 0.5, 0.7, 0.8, 0.4, 0.7, 0.8, 0.95, 0.5, 0.7, 0.6, 0.6],
     signature: '几何之美者，宇宙所用也。',
@@ -156,7 +156,7 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
   {
     id: 'ws-leibniz',
     name: '莱布尼茨',
-    era: 'modernEarly',
+    era: '近代早期',
     domain: 'west-scientist',
     vector: [0.92, 0.4, 0.55, 0.85, 0.5, 0.5, 0.8, 0.98, 0.5, 0.7, 0.55, 0.65],
     signature: '此岸所见，足以概然。',
@@ -176,7 +176,7 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
   {
     id: 'ws-darwin',
     name: '达尔文',
-    era: 'modernLate',
+    era: '近代晚期',
     domain: 'west-scientist',
     vector: [0.85, 0.5, 0.7, 0.8, 0.4, 0.7, 0.8, 0.95, 0.4, 0.85, 0.7, 0.7],
     signature: '最适者存，非最强者。',
@@ -196,7 +196,7 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
   {
     id: 'ws-faraday',
     name: '法拉第',
-    era: 'modernLate',
+    era: '近代晚期',
     domain: 'west-scientist',
     vector: [0.8, 0.5, 0.75, 0.75, 0.4, 0.45, 0.85, 0.92, 0.4, 0.65, 0.7, 0.55],
     signature: '磁可生电，电亦可磁。',
@@ -216,7 +216,7 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
   {
     id: 'ws-planck',
     name: '普朗克',
-    era: 'modernLate',
+    era: '近代晚期',
     domain: 'west-scientist',
     vector: [0.9, 0.4, 0.55, 0.8, 0.4, 0.5, 0.85, 0.98, 0.5, 0.7, 0.65, 0.6],
     signature: '能量之发，乃以粒也。',
@@ -236,7 +236,7 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
   {
     id: 'ws-heisenberg',
     name: '海森堡',
-    era: 'modernLate',
+    era: '近代晚期',
     domain: 'west-scientist',
     vector: [0.88, 0.5, 0.55, 0.85, 0.4, 0.55, 0.8, 0.95, 0.4, 0.7, 0.7, 0.55],
     signature: '所测愈精，所知愈昧。',
@@ -258,7 +258,7 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
   {
     id: 'ws-lavoisier',
     name: '拉瓦锡',
-    era: 'modernEarly',
+    era: '近代早期',
     domain: 'west-scientist',
     vector: [0.6, 0.4, 0.7, 0.55, 0.5, 0.4, 0.75, 0.95, 0.5, 0.7, 0.6, 0.5],
     signature: '物不生灭，唯相变耳。',
@@ -278,7 +278,7 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
   {
     id: 'ws-maxwell',
     name: '麦克斯韦',
-    era: 'modernLate',
+    era: '近代晚期',
     domain: 'west-scientist',
     vector: [0.6, 0.4, 0.5, 0.6, 0.4, 0.55, 0.7, 0.98, 0.5, 0.7, 0.55, 0.6],
     signature: '光、热、电、磁，皆波也。',
@@ -298,7 +298,7 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
   {
     id: 'ws-mendel',
     name: '孟德尔',
-    era: 'modernLate',
+    era: '近代晚期',
     domain: 'west-scientist',
     vector: [0.55, 0.4, 0.6, 0.6, 0.4, 0.5, 0.7, 0.9, 0.4, 0.7, 0.55, 0.5],
     signature: '形之所现，必有因焉。',
@@ -318,7 +318,7 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
   {
     id: 'ws-hertz',
     name: '赫兹',
-    era: 'modernLate',
+    era: '近代晚期',
     domain: 'west-scientist',
     vector: [0.55, 0.4, 0.6, 0.5, 0.45, 0.45, 0.7, 0.92, 0.4, 0.6, 0.5, 0.45],
     signature: '电波之有，吾已验之。',
@@ -338,7 +338,7 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
   {
     id: 'ws-bohr',
     name: '玻尔',
-    era: 'modernLate',
+    era: '近代晚期',
     domain: 'west-scientist',
     vector: [0.5, 0.5, 0.5, 0.55, 0.5, 0.5, 0.7, 0.95, 0.5, 0.65, 0.6, 0.55],
     signature: '电子之舞，分阶而列。',
@@ -358,7 +358,7 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
   {
     id: 'ws-wiener',
     name: '维纳',
-    era: 'modernLate',
+    era: '近代晚期',
     domain: 'west-scientist',
     vector: [0.5, 0.4, 0.5, 0.55, 0.4, 0.45, 0.7, 0.95, 0.4, 0.6, 0.5, 0.5],
     signature: '反馈者，万物之通律也。',
@@ -380,7 +380,7 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
   {
     id: 'ws-franklin',
     name: '富兰克林',
-    era: 'modernEarly',
+    era: '近代早期',
     domain: 'west-scientist',
     vector: [0.4, 0.5, 0.85, 0.4, 0.7, 0.4, 0.8, 0.85, 0.7, 0.7, 0.75, 0.65],
     signature: '电者，宇宙之火也。',
@@ -400,7 +400,7 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
   {
     id: 'ws-edison',
     name: '爱迪生',
-    era: 'modernLate',
+    era: '近代晚期',
     domain: 'west-scientist',
     vector: [0.35, 0.4, 0.95, 0.5, 0.7, 0.4, 0.9, 0.7, 0.7, 0.7, 0.85, 0.5],
     signature: '天才是百分之一的灵感，百分之九十九的汗水。',
@@ -420,7 +420,7 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
   {
     id: 'ws-nobel',
     name: '诺贝尔',
-    era: 'modernLate',
+    era: '近代晚期',
     domain: 'west-scientist',
     vector: [0.4, 0.5, 0.8, 0.5, 0.55, 0.5, 0.85, 0.8, 0.7, 0.85, 0.9, 0.5],
     signature: '以炸为器，可利万民。',
@@ -440,7 +440,7 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
   {
     id: 'ws-turing',
     name: '图灵',
-    era: 'modernLate',
+    era: '近代晚期',
     domain: 'west-scientist',
     vector: [0.4, 0.4, 0.7, 0.55, 0.4, 0.5, 0.7, 0.9, 0.4, 0.6, 0.6, 0.4],
     signature: '可计算者，乃数也。',
@@ -460,7 +460,7 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
   {
     id: 'ws-shannon',
     name: '香农',
-    era: 'modernLate',
+    era: '近代晚期',
     domain: 'west-scientist',
     vector: [0.4, 0.4, 0.6, 0.55, 0.5, 0.5, 0.7, 0.92, 0.4, 0.6, 0.55, 0.5],
     signature: '信息者，去芜存菁。',
@@ -480,7 +480,7 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
   {
     id: 'ws-vonneumann',
     name: '冯·诺依曼',
-    era: 'modernLate',
+    era: '近代晚期',
     domain: 'west-scientist',
     vector: [0.4, 0.4, 0.6, 0.5, 0.5, 0.45, 0.7, 0.98, 0.5, 0.6, 0.55, 0.5],
     signature: '存与算，相与而成。',
@@ -502,7 +502,7 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
   {
     id: 'ws-archimedes',
     name: '阿基米德',
-    era: 'classical',
+    era: '古典',
     domain: 'west-scientist',
     vector: [0.2, 0.4, 0.6, 0.6, 0.4, 0.5, 0.7, 0.95, 0.7, 0.85, 0.55, 0.45],
     signature: '勿动吾圆。',
@@ -522,7 +522,7 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
   {
     id: 'ws-euler',
     name: '欧拉',
-    era: 'modernEarly',
+    era: '近代早期',
     domain: 'west-scientist',
     vector: [0.2, 0.4, 0.5, 0.4, 0.4, 0.5, 0.7, 0.98, 0.5, 0.7, 0.45, 0.6],
     signature: '吾之心算，强于笔算。',
@@ -542,7 +542,7 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
   {
     id: 'ws-gauss',
     name: '高斯',
-    era: 'modernLate',
+    era: '近代晚期',
     domain: 'west-scientist',
     vector: [0.2, 0.4, 0.5, 0.45, 0.4, 0.5, 0.7, 0.98, 0.5, 0.7, 0.5, 0.4],
     signature: '少言，多思。',
@@ -562,7 +562,7 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
   {
     id: 'ws-halley',
     name: '哈雷',
-    era: 'modernEarly',
+    era: '近代早期',
     domain: 'west-scientist',
     vector: [0.2, 0.5, 0.7, 0.4, 0.5, 0.5, 0.7, 0.9, 0.7, 0.85, 0.7, 0.5],
     signature: '彗星有期，吾已算之。',
@@ -582,7 +582,7 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
   {
     id: 'ws-cavendish',
     name: '卡文迪许',
-    era: 'modernEarly',
+    era: '近代早期',
     domain: 'west-scientist',
     vector: [0.2, 0.4, 0.55, 0.4, 0.4, 0.4, 0.7, 0.92, 0.85, 0.7, 0.5, 0.4],
     signature: '万物之重，皆可观之。',
@@ -602,7 +602,7 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
   {
     id: 'ws-schrodinger',
     name: '薛定谔',
-    era: 'modernLate',
+    era: '近代晚期',
     domain: 'west-scientist',
     vector: [0.2, 0.5, 0.5, 0.5, 0.4, 0.6, 0.7, 0.95, 0.7, 0.7, 0.55, 0.55],
     signature: '猫之生死，取决于观者。',

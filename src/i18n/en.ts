@@ -75,8 +75,8 @@ export const en: Dict = {
         sub: 'Greek, continental, Anglo-American thought',
       },
       'west-scientist': {
-        name: 'Scientists & Ideas',
-        sub: 'Founders of modern science and thought',
+        name: 'Scientists',
+        sub: 'Founders of modern science',
       },
     },
     start: 'Begin',

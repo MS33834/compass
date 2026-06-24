@@ -1,5 +1,6 @@
-// 指南 · 科技巨擘（西方）· 48 题
-// 12 维 × 4 题；半文言 / 科学语感，侧重思辨 / 革新 / 学识 / 风险
+// 指南 · 西方科学家 · 48 题
+// 12 维 × 4 题；侧重思辨 / 革新 / 学识 / 风险
+// 注：每题设 1 个 primary delta = 0 的中性锚点选项，代表不偏不倚，属有意设计
 
 import type { Item } from './item.types';
 
@@ -80,8 +81,8 @@ export const ITEMS_WEST_SCIENTIST: readonly Item[] = [
   {
     id: 'ws-006',
     format: 'situational',
-    prompt: '同道之讥',
-    promptGloss: '同辈讥汝痴，汝何以应？',
+    prompt: '同行之讥',
+    promptGloss: '同行讥汝妄，汝何以应？',
     options: [
       { text: '怒而争之', gloss: '以怒应讥', primary: { traitId: 2, delta: -1.0 } },
       { text: '不答不理', gloss: '以默应讥', primary: { traitId: 2, delta: 0.0 } },
@@ -152,8 +153,8 @@ export const ITEMS_WEST_SCIENTIST: readonly Item[] = [
   {
     id: 'ws-011',
     format: 'imagery',
-    prompt: '纸上与器间',
-    promptGloss: '汝之所得，归于何处？',
+    prompt: '方程与器',
+    promptGloss: '理论与实验，汝更重哪一端？',
     options: [
       { text: '纸上', gloss: '止于笔端', primary: { traitId: 3, delta: -1.2 } },
       { text: '图中', gloss: '以图为归', primary: { traitId: 3, delta: -0.4 } },
@@ -166,8 +167,8 @@ export const ITEMS_WEST_SCIENTIST: readonly Item[] = [
   {
     id: 'ws-012',
     format: 'situational',
-    prompt: '屡挫屡战',
-    promptGloss: '试而不成、复试复败，汝当如何？',
+    prompt: '屡败屡试',
+    promptGloss: '实验屡败，汝何以处？',
     options: [
       { text: '沮丧而止', gloss: '以止为度', primary: { traitId: 3, delta: -1.5 } },
       { text: '暂歇再试', gloss: '以暂为度', primary: { traitId: 3, delta: -0.4 } },
@@ -268,8 +269,8 @@ export const ITEMS_WEST_SCIENTIST: readonly Item[] = [
   {
     id: 'ws-019',
     format: 'imagery',
-    prompt: '一灯与千灯',
-    promptGloss: '汝之灯，欲照几隅？',
+    prompt: '一灯万灯',
+    promptGloss: '独研与传承，汝如何选择？',
     options: [
       { text: '一隅', gloss: '以一为度', primary: { traitId: 5, delta: -1.0 } },
       { text: '一室', gloss: '以室为度', primary: { traitId: 5, delta: -0.4 } },
@@ -312,8 +313,8 @@ export const ITEMS_WEST_SCIENTIST: readonly Item[] = [
   {
     id: 'ws-022',
     format: 'situational',
-    prompt: '器之形',
-    promptGloss: '一器之形，汝以何为上？',
+    prompt: '仪器之形',
+    promptGloss: '仪器外形与功能，汝更重哪端？',
     options: [
       { text: '唯用', gloss: '以用为度', primary: { traitId: 6, delta: -1.0 } },
       { text: '朴', gloss: '以朴为度', primary: { traitId: 6, delta: -0.4 } },
@@ -326,8 +327,8 @@ export const ITEMS_WEST_SCIENTIST: readonly Item[] = [
   {
     id: 'ws-023',
     format: 'situational',
-    prompt: '图样之饰',
-    promptGloss: '一图之绘，繁简如何？',
+    prompt: '图表之美',
+    promptGloss: '科学图表，美观与准确孰先？',
     options: [
       { text: '极简', gloss: '以简为度', primary: { traitId: 6, delta: -1.0 } },
       { text: '简', gloss: '以简为度', primary: { traitId: 6, delta: -0.4 } },
@@ -356,8 +357,8 @@ export const ITEMS_WEST_SCIENTIST: readonly Item[] = [
   {
     id: 'ws-025',
     format: 'situational',
-    prompt: '千试不成',
-    promptGloss: '千试而不成，汝当如何？',
+    prompt: '千试不中',
+    promptGloss: '实验千次未得，汝何以处？',
     options: [
       { text: '止而不试', gloss: '以止为度', primary: { traitId: 7, delta: -1.5 } },
       { text: '改途以试', gloss: '以变为度', primary: { traitId: 7, delta: -0.4 } },
@@ -398,8 +399,8 @@ export const ITEMS_WEST_SCIENTIST: readonly Item[] = [
   {
     id: 'ws-028',
     format: 'situational',
-    prompt: '穷途之叹',
-    promptGloss: '穷途而道不行，汝何以自处？',
+    prompt: '理论之穷',
+    promptGloss: '研究走入绝境，汝何以自处？',
     options: [
       { text: '改道', gloss: '以变为度', primary: { traitId: 7, delta: -0.8 } },
       { text: '独行', gloss: '以独为度', primary: { traitId: 7, delta: 0.4 } },
@@ -414,8 +415,8 @@ export const ITEMS_WEST_SCIENTIST: readonly Item[] = [
   {
     id: 'ws-029',
     format: 'situational',
-    prompt: '学之博约',
-    promptGloss: '学当博，抑或约？',
+    prompt: '博专之间',
+    promptGloss: '广博与专精，汝如何取舍？',
     options: [
       { text: '唯约', gloss: '以约为度', primary: { traitId: 8, delta: -0.4 } },
       { text: '半约半博', gloss: '以中为度', primary: { traitId: 8, delta: 0.0 } },
@@ -442,8 +443,8 @@ export const ITEMS_WEST_SCIENTIST: readonly Item[] = [
   {
     id: 'ws-031',
     format: 'imagery',
-    prompt: '井与海',
-    promptGloss: '汝欲为井，抑或海？',
+    prompt: '井与星海',
+    promptGloss: '已知与未知，汝更愿居哪一端？',
     options: [
       { text: '井', gloss: '以井为度', primary: { traitId: 8, delta: -0.6 } },
       { text: '池', gloss: '以池为度', primary: { traitId: 8, delta: -0.2 } },
@@ -456,8 +457,8 @@ export const ITEMS_WEST_SCIENTIST: readonly Item[] = [
   {
     id: 'ws-032',
     format: 'situational',
-    prompt: '通才与专才',
-    promptGloss: '为学当通才，抑或专才？',
+    prompt: '通专之间',
+    promptGloss: '通才与专才，汝愿为何？',
     options: [
       { text: '唯专', gloss: '以专为度', primary: { traitId: 8, delta: -0.4 } },
       { text: '半专半通', gloss: '以中为度', primary: { traitId: 8, delta: 0.0 } },
@@ -472,8 +473,8 @@ export const ITEMS_WEST_SCIENTIST: readonly Item[] = [
   {
     id: 'ws-033',
     format: 'situational',
-    prompt: '仕与隐',
-    promptGloss: '才成之后，汝欲何往？',
+    prompt: '学界世外',
+    promptGloss: '投身学界与远离喧嚣，汝何从？',
     options: [
       { text: '出仕', gloss: '以进为度', primary: { traitId: 9, delta: -1.2 } },
       { text: '半仕半隐', gloss: '以中为度', primary: { traitId: 9, delta: -0.4 } },
@@ -486,8 +487,8 @@ export const ITEMS_WEST_SCIENTIST: readonly Item[] = [
   {
     id: 'ws-034',
     format: 'situational',
-    prompt: '得志与失意',
-    promptGloss: '得志则行，失意则隐，汝取何为？',
+    prompt: '见用见弃',
+    promptGloss: '理论被接受与被忽视，汝何以处？',
     options: [
       { text: '得志则行', gloss: '以得为度', primary: { traitId: 9, delta: -0.6 } },
       { text: '得志亦止', gloss: '以止为度', primary: { traitId: 9, delta: 0.4 } },
@@ -514,8 +515,8 @@ export const ITEMS_WEST_SCIENTIST: readonly Item[] = [
   {
     id: 'ws-036',
     format: 'situational',
-    prompt: '身后之名',
-    promptGloss: '身后之名，汝欲何为？',
+    prompt: '发现之名',
+    promptGloss: '发现传世与无名，汝何所求？',
     options: [
       { text: '不计', gloss: '以不名为度', primary: { traitId: 9, delta: -0.4 } },
       { text: '求当世名', gloss: '以当世为度', primary: { traitId: 9, delta: -0.2 } },
@@ -530,8 +531,8 @@ export const ITEMS_WEST_SCIENTIST: readonly Item[] = [
   {
     id: 'ws-037',
     format: 'situational',
-    prompt: '百代之功',
-    promptGloss: '一理之成，可传百代，汝欲何用？',
+    prompt: '眼前久远',
+    promptGloss: '功在当代与利在千秋，孰重？',
     options: [
       { text: '急功', gloss: '以急为度', primary: { traitId: 10, delta: -1.2 } },
       { text: '十年', gloss: '以十为度', primary: { traitId: 10, delta: -0.4 } },
@@ -544,8 +545,8 @@ export const ITEMS_WEST_SCIENTIST: readonly Item[] = [
   {
     id: 'ws-038',
     format: 'situational',
-    prompt: '一器与千代',
-    promptGloss: '一器可传千代，汝欲为之乎？',
+    prompt: '一理千秋',
+    promptGloss: '一件发现与千代传承，汝更看重哪端？',
     options: [
       { text: '不传', gloss: '以一身为度', primary: { traitId: 10, delta: -1.2 } },
       { text: '传于子孙', gloss: '以家为度', primary: { traitId: 10, delta: -0.4 } },
@@ -558,8 +559,8 @@ export const ITEMS_WEST_SCIENTIST: readonly Item[] = [
   {
     id: 'ws-039',
     format: 'imagery',
-    prompt: '寸阴与尺璧',
-    promptGloss: '寸阴与尺璧，汝取何为贵？',
+    prompt: '光阴真理',
+    promptGloss: '一寸光阴与一尺真理，孰重？',
     options: [
       { text: '寸阴', gloss: '以寸阴为度', primary: { traitId: 10, delta: -0.6 } },
       { text: '兼取', gloss: '以兼为度', primary: { traitId: 10, delta: 0.0 } },
@@ -572,8 +573,8 @@ export const ITEMS_WEST_SCIENTIST: readonly Item[] = [
   {
     id: 'ws-040',
     format: 'situational',
-    prompt: '今与古',
-    promptGloss: '今人之术，胜于古人乎？',
+    prompt: '旧说新知',
+    promptGloss: '旧说与新证，何从？',
     options: [
       { text: '今胜古', gloss: '以今为度', primary: { traitId: 10, delta: 0.4 } },
       { text: '古胜今', gloss: '以古为度', primary: { traitId: 10, delta: -0.4 } },
@@ -588,8 +589,8 @@ export const ITEMS_WEST_SCIENTIST: readonly Item[] = [
   {
     id: 'ws-041',
     format: 'situational',
-    prompt: '未验之器',
-    promptGloss: '一器未验，汝敢用之乎？',
+    prompt: '未证假说',
+    promptGloss: '一假说未证，汝敢用之乎？',
     options: [
       { text: '不敢', gloss: '以不为度', primary: { traitId: 11, delta: -1.5 } },
       { text: '小试之', gloss: '以试为度', primary: { traitId: 11, delta: -0.6 } },
@@ -602,8 +603,8 @@ export const ITEMS_WEST_SCIENTIST: readonly Item[] = [
   {
     id: 'ws-042',
     format: 'situational',
-    prompt: '以身为验',
-    promptGloss: '欲验新理，汝以何为试？',
+    prompt: '以身试法',
+    promptGloss: '以自身为实验对象，汝可愿？',
     options: [
       { text: '不敢试', gloss: '不涉险', primary: { traitId: 11, delta: -1.5 } },
       { text: '以物试', gloss: '以物为度', primary: { traitId: 11, delta: -0.8 } },
@@ -616,8 +617,8 @@ export const ITEMS_WEST_SCIENTIST: readonly Item[] = [
   {
     id: 'ws-043',
     format: 'imagery',
-    prompt: '孤舟与巨浪',
-    promptGloss: '新理如孤舟入海，汝何以对？',
+    prompt: '孤理狂澜',
+    promptGloss: '个人发现面对时代洪流，汝何以处？',
     options: [
       { text: '不渡', gloss: '以不渡为度', primary: { traitId: 11, delta: -1.5 } },
       { text: '近岸行', gloss: '以近为度', primary: { traitId: 11, delta: -0.6 } },
@@ -646,8 +647,8 @@ export const ITEMS_WEST_SCIENTIST: readonly Item[] = [
   {
     id: 'ws-045',
     format: 'situational',
-    prompt: '一理之传',
-    promptGloss: '一理已成，汝欲何传？',
+    prompt: '一理之承',
+    promptGloss: '一条原理的传承与改写，汝何从？',
     options: [
       { text: '默而不宣', gloss: '以默为度', primary: { traitId: 12, delta: -1.2 } },
       { text: '口传', gloss: '以口为度', primary: { traitId: 12, delta: -0.6 } },
@@ -660,8 +661,8 @@ export const ITEMS_WEST_SCIENTIST: readonly Item[] = [
   {
     id: 'ws-046',
     format: 'situational',
-    prompt: '著书之辞',
-    promptGloss: '著书之辞，汝取何格？',
+    prompt: '论文之辞',
+    promptGloss: '科学论文中，文采与准确孰重？',
     options: [
       { text: '极简', gloss: '以简为度', primary: { traitId: 12, delta: -0.8 } },
       { text: '简', gloss: '以简为度', primary: { traitId: 12, delta: -0.4 } },
@@ -674,8 +675,8 @@ export const ITEMS_WEST_SCIENTIST: readonly Item[] = [
   {
     id: 'ws-047',
     format: 'imagery',
-    prompt: '言之器',
-    promptGloss: '传理之器，汝欲何为？',
+    prompt: '公式文字',
+    promptGloss: '数学公式与文字解释，孰能载道？',
     options: [
       { text: '口耳', gloss: '以口为度', primary: { traitId: 12, delta: -1.2 } },
       { text: '册页', gloss: '以册为度', primary: { traitId: 12, delta: -0.4 } },
@@ -688,8 +689,8 @@ export const ITEMS_WEST_SCIENTIST: readonly Item[] = [
   {
     id: 'ws-048',
     format: 'situational',
-    prompt: '万言之传',
-    promptGloss: '一理之传，汝欲万言以传，抑或千言以传？',
+    prompt: '万语方程',
+    promptGloss: '千言万语与一条方程，何者传世？',
     options: [
       { text: '千言', gloss: '以千为度', primary: { traitId: 12, delta: -0.4 } },
       { text: '半千', gloss: '以半为度', primary: { traitId: 12, delta: -0.6 } },

@@ -1,5 +1,6 @@
 // 指南 · 文哲巨擘（西方）· 48 题
 // 12 维 × 4 题；侧重思辨 / 表达 / 意志 / 革新的哲学语感
+// 注：每题设 1 个 primary delta = 0 的中性锚点选项，代表不偏不倚，属有意设计
 
 import type { Item } from './item.types';
 
@@ -232,8 +233,8 @@ export const ITEMS_WEST_PHILOSOPHER: readonly Item[] = [
   {
     id: 'wp-011',
     format: 'imagery',
-    prompt: '雷厉风行',
-    promptGloss: '思想者之于行动，更近何象？',
+    prompt: '思想之锋',
+    promptGloss: '传播哲思，汝倾锋刃抑或润物？',
     options: [
       { text: '静水', gloss: '以静为深', primary: { traitId: 3, delta: -0.8 } },
       { text: '缓流', gloss: '以缓为度', primary: { traitId: 3, delta: -0.2 } },
@@ -358,8 +359,8 @@ export const ITEMS_WEST_PHILOSOPHER: readonly Item[] = [
   {
     id: 'wp-019',
     format: 'imagery',
-    prompt: '独木与森林',
-    promptGloss: '哲学者于世，更近何象？',
+    prompt: '独思与统',
+    promptGloss: '哲学立言，更重独出己意或承继道统？',
     options: [
       { text: '独木', gloss: '以一为度', primary: { traitId: 5, delta: -1.2 } },
       { text: '双木', gloss: '以友为度', primary: { traitId: 5, delta: -0.4 } },
@@ -546,8 +547,8 @@ export const ITEMS_WEST_PHILOSOPHER: readonly Item[] = [
   {
     id: 'wp-032',
     format: 'situational',
-    prompt: '学以致用',
-    promptGloss: '学问为天下，抑为个人？',
+    prompt: '哲学之用',
+    promptGloss: '思辨之道，汝取无用之用抑或经世致用？',
     options: [
       { text: '不求用', gloss: '以知为足', primary: { traitId: 8, delta: -0.8 } },
       { text: '自修而已', gloss: '以己为度', primary: { traitId: 8, delta: -0.4 } },
@@ -604,8 +605,8 @@ export const ITEMS_WEST_PHILOSOPHER: readonly Item[] = [
   {
     id: 'wp-036',
     format: 'situational',
-    prompt: '盛年与暮年',
-    promptGloss: '盛年已过，汝欲何为？',
+    prompt: '思想之秋',
+    promptGloss: '思想生命，汝更重早岁锋芒抑或暮秋深沉？',
     options: [
       { text: '老骥伏枥', gloss: '以志为老', primary: { traitId: 9, delta: -1.0 } },
       { text: '仍有所为', gloss: '以行为老', primary: { traitId: 9, delta: -0.4 } },
@@ -662,8 +663,8 @@ export const ITEMS_WEST_PHILOSOPHER: readonly Item[] = [
   {
     id: 'wp-040',
     format: 'situational',
-    prompt: '身后之名',
-    promptGloss: '身后之名，汝欲何为？',
+    prompt: '思想之嗣',
+    promptGloss: '汝之哲思，愿传世为嗣抑或不求身后之名？',
     options: [
       { text: '不计身后', gloss: '以生为度', primary: { traitId: 10, delta: -1.2 } },
       { text: '随其自至', gloss: '不求之', primary: { traitId: 10, delta: -0.4 } },
@@ -778,8 +779,8 @@ export const ITEMS_WEST_PHILOSOPHER: readonly Item[] = [
   {
     id: 'wp-048',
     format: 'situational',
-    prompt: '言之轻重',
-    promptGloss: '汝之立言，更重何种？',
+    prompt: '言辞之度',
+    promptGloss: '著书立说，汝如何权衡言辞之轻重？',
     options: [
       { text: '寡言', gloss: '以寡为慎', primary: { traitId: 12, delta: -1.2 } },
       { text: '言简意赅', gloss: '以简为慎', primary: { traitId: 12, delta: -0.6 } },

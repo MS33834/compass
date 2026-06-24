@@ -3,6 +3,7 @@
 // 分布：12 维 × 4 题 = 48 题
 // 每题 6 选项，主测一维，副影响 1-2 维
 // delta 范围：主 ±1.5，副 ±0.5
+// 注：每题设 1 个 primary delta = 0 的中性锚点选项，代表不偏不倚，属有意设计
 
 import type { Item } from './item.types';
 
@@ -1521,8 +1522,8 @@ export const ITEMS_EAST_LITERATI: readonly Item[] = [
   {
     id: 'el-035',
     format: 'imagery',
-    prompt: '舟与岸',
-    promptGloss: '船和岸，你更喜欢哪个？',
+    prompt: '诗舟与岸',
+    promptGloss: '诗舟行于江湖，岸泊于归心，汝更契哪一方？',
     options: [
       {
         text: '舟',
@@ -1789,8 +1790,8 @@ export const ITEMS_EAST_LITERATI: readonly Item[] = [
   {
     id: 'el-041',
     format: 'situational',
-    prompt: '机不可失',
-    promptGloss: '良机一闪即逝，你会怎么做？',
+    prompt: '诗兴忽至',
+    promptGloss: '诗兴忽至如灵感一闪，汝将如何迎之？',
     options: [
       {
         text: '即下决断',

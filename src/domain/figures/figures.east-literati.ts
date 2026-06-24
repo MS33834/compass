@@ -313,7 +313,7 @@ export const FIGURES_EAST_LITERATI: readonly Figure[] = [
   {
     id: 'el-taoyuanming',
     name: '陶渊明',
-    era: '东晋',
+    era: '晋',
     domain: 'east-literati',
     vector: [0.5, 0.5, 0.4, 0.5, 0.45, 0.7, 0.55, 0.45, 0.85, 0.65, 0.4, 0.55],
     signature: '采菊东篱下，悠然见南山。',
@@ -401,7 +401,7 @@ export const FIGURES_EAST_LITERATI: readonly Figure[] = [
   {
     id: 'el-simaqian',
     name: '司马迁',
-    era: '西汉',
+    era: '汉',
     domain: 'east-literati',
     vector: [0.4, 0.45, 0.55, 0.45, 0.55, 0.45, 0.65, 0.9, 0.5, 0.85, 0.4, 0.6],
     signature: '人固有一死，或重于泰山，或轻于鸿毛。',
@@ -448,7 +448,7 @@ export const FIGURES_EAST_LITERATI: readonly Figure[] = [
     domain: 'east-literati',
     vector: [0.3, 0.65, 0.45, 0.4, 0.75, 0.65, 0.4, 0.55, 0.5, 0.55, 0.3, 0.75],
     signature: '野火烧不尽，春风吹又生。',
-    bio: '字乐天，号香山居士。太原人。贞元进士。倡「新乐府」，以诗反映民生。',
+    bio: '字乐天，号香山居士。唐代诗人，贞元进士。倡「文章合为时而著，歌诗合为事而作」，新乐府运动领袖，诗风平易通俗。',
     portrait: 'portraits/east-literati/baijuyi.svg',
     matchBlurb: [
       '汝与 {{name}} 同，以诗为时，以民为本。',

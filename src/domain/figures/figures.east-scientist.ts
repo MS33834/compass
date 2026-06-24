@@ -222,7 +222,7 @@ export const FIGURES_EAST_SCIENTIST: readonly Figure[] = [
     domain: 'east-scientist',
     vector: [0.78, 0.5, 0.7, 0.8, 0.5, 0.4, 0.8, 0.95, 0.4, 0.7, 0.7, 0.5],
     signature: '顺天时，量地利，则用力少而成功多。',
-    bio: '山东益都人。北魏农学家。著《齐民要术》，中国现存最完整农书。',
+    bio: '北魏农学家，曾任高阳太守。著《齐民要术》，系统总结六世纪前黄河流域农艺、畜牧、食品加工之法，为中国现存最完整农书。',
     portrait: 'portraits/east-scientist/jia.svg',
     matchBlurb: [
       '汝与 {{name}} 同，博而能约，厚积薄发。',
@@ -528,7 +528,7 @@ export const FIGURES_EAST_SCIENTIST: readonly Figure[] = [
     domain: 'east-scientist',
     vector: [0.4, 0.5, 0.6, 0.6, 0.4, 0.6, 0.7, 0.85, 0.85, 0.85, 0.55, 0.45],
     signature: '身既死兮神以灵，魂魄毅兮为鬼雄。',
-    bio: '吴人。铸剑名家，与妻莫邪同铸雌雄二剑。',
+    bio: '春秋末期吴人，铸剑名师。与妻莫邪采五山之铁精、六合之金英，历时三年铸成雌雄二剑。传说莫邪投身炉中，剑乃成。',
     portrait: 'portraits/east-scientist/ganjiang.svg',
     matchBlurb: [
       '汝与 {{name}} 同，学求深耕，以精为归。',

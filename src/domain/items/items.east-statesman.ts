@@ -1,5 +1,6 @@
 // 指南 · 治国能臣 · 48 题
 // 12 维 × 4 题；侧重思辨 / 行动 / 意志 / 风险 / 处世
+// 注：每题设 1 个 primary delta = 0 的中性锚点选项，代表不偏不倚，属有意设计
 
 import type { Item } from './item.types';
 
@@ -283,8 +284,8 @@ export const ITEMS_EAST_STATESMAN: readonly Item[] = [
   {
     id: 'es-009',
     format: 'situational',
-    prompt: '机不可失',
-    promptGloss: '时局千载难逢，汝当如何？',
+    prompt: '战机已至',
+    promptGloss: '战机已至，当速断否？',
     options: [
       { text: '坐而论道', gloss: '谋定后动', primary: { traitId: 3, delta: -1.0 } },
       { text: '徐徐待时', gloss: '待其至', primary: { traitId: 3, delta: -0.6 } },
@@ -336,8 +337,8 @@ export const ITEMS_EAST_STATESMAN: readonly Item[] = [
   {
     id: 'es-011',
     format: 'imagery',
-    prompt: '雷厉风行',
-    promptGloss: '为政当行何风？',
+    prompt: '政令之行',
+    promptGloss: '政令推行，汝主何风？',
     options: [
       {
         text: '春雨',
@@ -527,8 +528,8 @@ export const ITEMS_EAST_STATESMAN: readonly Item[] = [
   {
     id: 'es-019',
     format: 'imagery',
-    prompt: '独木与森林',
-    promptGloss: '为政当如何借力？',
+    prompt: '孤臣与群僚',
+    promptGloss: '朝堂之上，凭孤力还是合群势？',
     options: [
       { text: '独木', gloss: '以一己之力', primary: { traitId: 5, delta: -0.8 } },
       { text: '双木', gloss: '以一己之辅', primary: { traitId: 5, delta: -0.2 } },
@@ -625,8 +626,8 @@ export const ITEMS_EAST_STATESMAN: readonly Item[] = [
   {
     id: 'es-025',
     format: 'situational',
-    prompt: '屡挫屡战',
-    promptGloss: '事经屡挫，汝当如何？',
+    prompt: '屡仆屡起',
+    promptGloss: '国是屡仆，汝何以自处？',
     options: [
       { text: '知难而退', gloss: '不争', primary: { traitId: 7, delta: -1.4 } },
       { text: '暂退待时', gloss: '不争于一时', primary: { traitId: 7, delta: -0.6 } },
@@ -730,8 +731,8 @@ export const ITEMS_EAST_STATESMAN: readonly Item[] = [
   {
     id: 'es-032',
     format: 'situational',
-    prompt: '学以致用',
-    promptGloss: '满腹经纶而百无一用，汝何以自处？',
+    prompt: '经世致用',
+    promptGloss: '所学当如何经世济民？',
     options: [
       { text: '藏之名山', gloss: '以学为高', primary: { traitId: 8, delta: -0.6 } },
       { text: '以学为隐', gloss: '不求闻达', primary: { traitId: 8, delta: -0.4 } },
@@ -793,8 +794,8 @@ export const ITEMS_EAST_STATESMAN: readonly Item[] = [
   {
     id: 'es-036',
     format: 'situational',
-    prompt: '盛年与暮年',
-    promptGloss: '盛年已过，汝欲何为？',
+    prompt: '少壮与元老',
+    promptGloss: '年少新进与宿暮元老，汝何从？',
     options: [
       { text: '老骥伏枥', gloss: '以志为老', primary: { traitId: 9, delta: -0.8 } },
       { text: '守成而已', gloss: '以守为终', primary: { traitId: 9, delta: 0.4 } },
@@ -823,8 +824,8 @@ export const ITEMS_EAST_STATESMAN: readonly Item[] = [
   {
     id: 'es-038',
     format: 'situational',
-    prompt: '今与古',
-    promptGloss: '为政当法古，抑或师今？',
+    prompt: '法古与变今',
+    promptGloss: '治国当法古，抑或变今？',
     options: [
       {
         text: '法古',
@@ -856,8 +857,8 @@ export const ITEMS_EAST_STATESMAN: readonly Item[] = [
   {
     id: 'es-040',
     format: 'situational',
-    prompt: '身后之名',
-    promptGloss: '身后之名，汝欲何为？',
+    prompt: '功名之念',
+    promptGloss: '青史功名，汝念几何？',
     options: [
       { text: '不计身后', gloss: '以生为要', primary: { traitId: 10, delta: -1.0 } },
       { text: '求当世名', gloss: '以名为生', primary: { traitId: 10, delta: -0.4 } },
@@ -958,8 +959,8 @@ export const ITEMS_EAST_STATESMAN: readonly Item[] = [
   {
     id: 'es-047',
     format: 'imagery',
-    prompt: '言之器',
-    promptGloss: '为政之言，汝取何器？',
+    prompt: '政令与实绩',
+    promptGloss: '政令文书与实绩事功，孰重？',
     options: [
       { text: '瓦缶', gloss: '以朴为器', primary: { traitId: 12, delta: -0.8 } },
       { text: '木铎', gloss: '以朴为用', primary: { traitId: 12, delta: -0.4 } },
@@ -972,8 +973,8 @@ export const ITEMS_EAST_STATESMAN: readonly Item[] = [
   {
     id: 'es-048',
     format: 'situational',
-    prompt: '言之轻重',
-    promptGloss: '一言之失，社稷随之，汝何以谨言？',
+    prompt: '谏言之度',
+    promptGloss: '谏言奏对，当如何衡其轻重？',
     options: [
       { text: '寡言', gloss: '以寡为慎', primary: { traitId: 12, delta: -1.2 } },
       { text: '言简意赅', gloss: '以简为慎', primary: { traitId: 12, delta: -0.6 } },

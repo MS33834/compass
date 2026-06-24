@@ -60,7 +60,7 @@ export const zh = {
       'east-statesman': { name: '治国能臣', sub: '宰相、将相、变法、孤忠' },
       'east-scientist': { name: '科技先贤', sub: '天文、算学、医药、工学' },
       'west-philosopher': { name: '文哲巨擘', sub: '希腊、欧陆、英美思想家' },
-      'west-scientist': { name: '科学与思想', sub: '近代科学奠基人与思想者' },
+      'west-scientist': { name: '西方科学家', sub: '近代科学奠基人' },
     },
     start: '开始',
     pending: '待补',

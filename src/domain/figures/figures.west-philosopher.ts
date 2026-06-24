@@ -14,7 +14,7 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
   {
     id: 'wp-socrates',
     name: '苏格拉底',
-    era: 'classical',
+    era: '古典',
     domain: 'west-philosopher',
     vector: [0.98, 0.45, 0.7, 0.92, 0.55, 0.4, 0.92, 0.85, 0.5, 0.75, 0.85, 0.95],
     signature: 'ἓν οἶδα ὅτι οὐδὲν οἶδα.',
@@ -34,7 +34,7 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
   {
     id: 'wp-plato',
     name: '柏拉图',
-    era: 'classical',
+    era: '古典',
     domain: 'west-philosopher',
     vector: [0.96, 0.5, 0.6, 0.95, 0.5, 0.7, 0.85, 0.95, 0.5, 0.85, 0.7, 0.95],
     signature: 'Ideārum mundi.',
@@ -54,7 +54,7 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
   {
     id: 'wp-aristotle',
     name: '亚里士多德',
-    era: 'classical',
+    era: '古典',
     domain: 'west-philosopher',
     vector: [0.95, 0.4, 0.75, 0.9, 0.55, 0.5, 0.85, 0.98, 0.5, 0.7, 0.7, 0.9],
     signature: 'Amicus Plato, sed magis amica veritas.',
@@ -74,7 +74,7 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
   {
     id: 'wp-voltaire',
     name: '伏尔泰',
-    era: 'modernEarly',
+    era: '近代早期',
     domain: 'west-philosopher',
     vector: [0.9, 0.7, 0.85, 0.95, 0.7, 0.7, 0.9, 0.9, 0.55, 0.65, 0.92, 0.98],
     signature: "Écrasez l'infâme.",
@@ -94,7 +94,7 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
   {
     id: 'wp-nietzsche',
     name: '尼采',
-    era: 'modernLate',
+    era: '近代晚期',
     domain: 'west-philosopher',
     vector: [0.92, 0.85, 0.7, 0.98, 0.35, 0.9, 0.95, 0.9, 0.3, 0.7, 0.95, 0.98],
     signature: 'Gott ist tot.',
@@ -114,7 +114,7 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
   {
     id: 'wp-sartre',
     name: '萨特',
-    era: 'modernLate',
+    era: '近代晚期',
     domain: 'west-philosopher',
     vector: [0.92, 0.7, 0.8, 0.95, 0.65, 0.7, 0.85, 0.85, 0.4, 0.7, 0.92, 0.98],
     signature: "L'existence précède l'essence.",
@@ -136,7 +136,7 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
   {
     id: 'wp-descartes',
     name: '笛卡尔',
-    era: 'modernEarly',
+    era: '近代早期',
     domain: 'west-philosopher',
     vector: [0.92, 0.4, 0.6, 0.85, 0.5, 0.5, 0.8, 0.95, 0.4, 0.75, 0.65, 0.85],
     signature: 'Cogito, ergo sum.',
@@ -156,7 +156,7 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
   {
     id: 'wp-kant',
     name: '康德',
-    era: 'modernEarly',
+    era: '近代早期',
     domain: 'west-philosopher',
     vector: [0.95, 0.4, 0.5, 0.7, 0.5, 0.55, 0.85, 0.95, 0.6, 0.85, 0.55, 0.85],
     signature: 'Sapere aude.',
@@ -176,11 +176,11 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
   {
     id: 'wp-hegel',
     name: '黑格尔',
-    era: 'modernEarly',
+    era: '近代早期',
     domain: 'west-philosopher',
     vector: [0.92, 0.4, 0.55, 0.7, 0.5, 0.5, 0.85, 0.95, 0.55, 0.85, 0.6, 0.8],
     signature: 'Was vernünftig ist, das ist wirklich.',
-    bio: '斯图加特人。德国古典哲学集大成者。倡「绝对精神」「辩证法」。',
+    bio: '德国古典哲学集大成者。创辩证法体系，以「绝对精神」贯通逻辑、自然与精神。著《精神现象学》《逻辑学》《法哲学原理》。',
     portrait: 'portraits/west-philosopher/hegel.svg',
     matchBlurb: [
       '汝与 {{name}} 同，能于历史之流中见精神之旅，思至宏大。',
@@ -196,7 +196,7 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
   {
     id: 'wp-marx',
     name: '马克思',
-    era: 'modernLate',
+    era: '近代晚期',
     domain: 'west-philosopher',
     vector: [0.88, 0.5, 0.85, 0.95, 0.85, 0.4, 0.92, 0.92, 0.4, 0.75, 0.95, 0.9],
     signature:
@@ -220,7 +220,7 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
   {
     id: 'wp-wittgenstein',
     name: '维特根斯坦',
-    era: 'modernLate',
+    era: '近代晚期',
     domain: 'west-philosopher',
     vector: [0.95, 0.4, 0.5, 0.9, 0.3, 0.55, 0.85, 0.95, 0.4, 0.8, 0.7, 0.7],
     signature: 'Wovon man nicht sprechen kann, darüber muss man schweigen.',
@@ -240,7 +240,7 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
   {
     id: 'wp-camus',
     name: '加缪',
-    era: 'modernLate',
+    era: '近代晚期',
     domain: 'west-philosopher',
     vector: [0.85, 0.75, 0.7, 0.8, 0.55, 0.75, 0.8, 0.8, 0.4, 0.7, 0.8, 0.95],
     signature: 'Il faut imaginer Sisyphe heureux.',
@@ -262,7 +262,7 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
   {
     id: 'wp-bacon',
     name: '培根',
-    era: 'modernEarly',
+    era: '近代早期',
     domain: 'west-philosopher',
     vector: [0.65, 0.4, 0.7, 0.85, 0.65, 0.4, 0.7, 0.9, 0.5, 0.7, 0.7, 0.75],
     signature: 'Knowledge is power.',
@@ -282,7 +282,7 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
   {
     id: 'wp-locke',
     name: '洛克',
-    era: 'modernEarly',
+    era: '近代早期',
     domain: 'west-philosopher',
     vector: [0.55, 0.4, 0.6, 0.65, 0.6, 0.4, 0.7, 0.85, 0.6, 0.6, 0.6, 0.75],
     signature: 'Tabula rasa.',
@@ -302,11 +302,11 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
   {
     id: 'wp-hume',
     name: '休谟',
-    era: 'modernEarly',
+    era: '近代早期',
     domain: 'west-philosopher',
     vector: [0.6, 0.4, 0.4, 0.5, 0.5, 0.4, 0.65, 0.9, 0.6, 0.6, 0.5, 0.85],
     signature: 'Miracles are violations of laws of nature.',
-    bio: '苏格兰人。经验主义高峰，怀疑论巨擘。著《人性论》《人类理解研究》。',
+    bio: '苏格兰哲学家、历史学家。经验主义与怀疑论高峰，质疑因果必然性与自我同一性。著《人性论》《人类理解研究》。',
     portrait: 'portraits/west-philosopher/hume.svg',
     matchBlurb: [
       '汝与 {{name}} 同，博而能约，厚积薄发。',
@@ -325,7 +325,7 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
   {
     id: 'wp-heidegger',
     name: '海德格尔',
-    era: 'modernLate',
+    era: '近代晚期',
     domain: 'west-philosopher',
     vector: [0.65, 0.5, 0.4, 0.7, 0.3, 0.7, 0.7, 0.92, 0.7, 0.8, 0.4, 0.7],
     signature: 'Die Sprache ist das Haus des Seins.',
@@ -345,7 +345,7 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
   {
     id: 'wp-habermas',
     name: '哈贝马斯',
-    era: 'modernLate',
+    era: '近代晚期',
     domain: 'west-philosopher',
     vector: [0.6, 0.4, 0.5, 0.55, 0.85, 0.4, 0.7, 0.9, 0.6, 0.6, 0.5, 0.85],
     signature: 'Verständigung.',
@@ -365,7 +365,7 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
   {
     id: 'wp-rawls',
     name: '罗尔斯',
-    era: 'modernLate',
+    era: '近代晚期',
     domain: 'west-philosopher',
     vector: [0.65, 0.4, 0.5, 0.55, 0.8, 0.4, 0.7, 0.92, 0.6, 0.7, 0.5, 0.7],
     signature: 'Justice as fairness.',
@@ -387,11 +387,11 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
   {
     id: 'wp-seneca',
     name: '塞涅卡',
-    era: 'classical',
+    era: '古典',
     domain: 'west-philosopher',
     vector: [0.4, 0.5, 0.4, 0.3, 0.55, 0.4, 0.7, 0.85, 0.85, 0.85, 0.3, 0.7],
     signature: 'Quid est enim vita, nisi continua meditatio mortis?',
-    bio: '罗马人。斯多葛派哲学家，尼禄之师。著《论生命之短促》《论幸福》。',
+    bio: '古罗马斯多葛派哲学家、政治家，曾任尼禄太师。主张节制情欲、顺应自然。著《论生命之短促》《论心灵的宁静》。',
     portrait: 'portraits/west-philosopher/seneca.svg',
     matchBlurb: [
       '汝与 {{name}} 同，于书山学海中自得其乐。',
@@ -407,11 +407,11 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
   {
     id: 'wp-augustine',
     name: '奥古斯丁',
-    era: 'medieval',
+    era: '中世纪',
     domain: 'west-philosopher',
     vector: [0.45, 0.6, 0.4, 0.35, 0.6, 0.5, 0.8, 0.95, 0.85, 0.9, 0.4, 0.85],
     signature: 'Credo ut intelligam.',
-    bio: '北非人。基督教神学与西方哲学之父。著《忏悔录》《上帝之城》。',
+    bio: '北非希波主教，基督教神学奠基人。青年耽于情欲，后皈依基督。著《忏悔录》《上帝之城》，影响中世纪思想千年。',
     portrait: 'portraits/west-philosopher/augustine.svg',
     matchBlurb: [
       '汝与 {{name}} 同，博而能约，厚积薄发。',
@@ -427,11 +427,11 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
   {
     id: 'wp-pascal',
     name: '帕斯卡',
-    era: 'modernEarly',
+    era: '近代早期',
     domain: 'west-philosopher',
     vector: [0.5, 0.7, 0.4, 0.5, 0.4, 0.4, 0.7, 0.95, 0.7, 0.85, 0.4, 0.8],
     signature: "L'homme n'est qu'un roseau, le plus faible de la nature.",
-    bio: '法国人。数学家、物理学家、哲学家。著《思想录》。',
+    bio: '法国数学家、物理学家、宗教哲学家。少年时发明机械计算器，后转向神学沉思。著《思想录》，以「帕斯卡赌注」闻名于世。',
     portrait: 'portraits/west-philosopher/pascal.svg',
     matchBlurb: [
       '汝与 {{name}} 同，学求深耕，以精为归。',
@@ -447,7 +447,7 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
   {
     id: 'wp-kierkegaard',
     name: '克尔凯郭尔',
-    era: 'modernEarly',
+    era: '近代早期',
     domain: 'west-philosopher',
     vector: [0.45, 0.75, 0.3, 0.5, 0.3, 0.5, 0.7, 0.85, 0.85, 0.85, 0.5, 0.85],
     signature: 'Leap of faith.',
@@ -467,7 +467,7 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
   {
     id: 'wp-bergson',
     name: '柏格森',
-    era: 'modernLate',
+    era: '近代晚期',
     domain: 'west-philosopher',
     vector: [0.4, 0.5, 0.4, 0.5, 0.45, 0.7, 0.7, 0.85, 0.7, 0.85, 0.4, 0.75],
     signature: 'La durée.',
@@ -487,11 +487,11 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
   {
     id: 'wp-levinas',
     name: '列维纳斯',
-    era: 'modernLate',
+    era: '近代晚期',
     domain: 'west-philosopher',
     vector: [0.4, 0.6, 0.3, 0.4, 0.4, 0.4, 0.7, 0.9, 0.9, 0.85, 0.3, 0.7],
     signature: "L'autrui.",
-    bio: '立陶宛人。法籍犹太裔哲学家。著《整体与无限》。倡「他者哲学」。',
+    bio: '立陶宛出生，法籍犹太裔哲学家。二战经历深刻影响其思想，倡「他者伦理」，著《整体与无限》《异于存在》。',
     portrait: 'portraits/west-philosopher/levinas.svg',
     matchBlurb: [
       '汝与 {{name}} 同，学求深耕，以精为归。',
@@ -509,11 +509,11 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
   {
     id: 'wp-epicurus',
     name: '伊壁鸠鲁',
-    era: 'classical',
+    era: '古典',
     domain: 'west-philosopher',
     vector: [0.2, 0.5, 0.2, 0.15, 0.35, 0.4, 0.5, 0.7, 0.95, 0.85, 0.15, 0.55],
     signature: 'Ἀταραξία.',
-    bio: '雅典人。伊壁鸠鲁学派创始人。倡「快乐」即无痛苦，著《主要格言》。',
+    bio: '古希腊哲学家，伊壁鸠鲁学派创始人。主张快乐即无痛苦与恐惧，在雅典花园讲学，影响罗马卢克莱修。',
     portrait: 'portraits/west-philosopher/epicurus.svg',
     matchBlurb: [
       '汝与 {{name}} 同，能于静园之中养心，思至安宁。',
@@ -529,11 +529,11 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
   {
     id: 'wp-machiavelli',
     name: '马基雅维利',
-    era: 'medieval',
+    era: '中世纪',
     domain: 'west-philosopher',
     vector: [0.4, 0.4, 0.6, 0.5, 0.55, 0.3, 0.7, 0.85, 0.85, 0.7, 0.6, 0.85],
     signature: 'Virtù contro fortuna.',
-    bio: '佛罗伦萨人。意大利政治哲学家。著《君主论》《论李维》。',
+    bio: '佛罗伦萨政治家、思想家。曾任佛罗伦萨共和国国务秘书，失势后隐居乡间，著《君主论》《论李维》，以现实主义政治观震撼后世。',
     portrait: 'portraits/west-philosopher/machiavelli.svg',
     matchBlurb: [
       '汝与 {{name}} 同，于书山学海中自得其乐。',
@@ -549,11 +549,11 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
   {
     id: 'wp-hobbes',
     name: '霍布斯',
-    era: 'modernEarly',
+    era: '近代早期',
     domain: 'west-philosopher',
     vector: [0.35, 0.3, 0.4, 0.3, 0.4, 0.3, 0.6, 0.85, 0.7, 0.65, 0.4, 0.7],
     signature: 'Bellum omnium contra omnes.',
-    bio: '英格兰人。政治哲学奠基者。著《利维坦》。',
+    bio: '英格兰哲学家。亲历英国内战，深感人性之脆弱。著《利维坦》，倡社会契约与君权至上，奠定近代政治哲学之基。',
     portrait: 'portraits/west-philosopher/hobbes.svg',
     matchBlurb: [
       '汝与 {{name}} 同，博而能约，厚积薄发。',
@@ -569,7 +569,7 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
   {
     id: 'wp-schopenhauer',
     name: '叔本华',
-    era: 'modernLate',
+    era: '近代晚期',
     domain: 'west-philosopher',
     vector: [0.3, 0.7, 0.25, 0.4, 0.25, 0.7, 0.6, 0.92, 0.85, 0.85, 0.2, 0.85],
     signature: 'Die Welt als Wille und Vorstellung.',
@@ -589,7 +589,7 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
   {
     id: 'wp-benjamin',
     name: '本雅明',
-    era: 'modernLate',
+    era: '近代晚期',
     domain: 'west-philosopher',
     vector: [0.35, 0.7, 0.3, 0.55, 0.4, 0.85, 0.6, 0.95, 0.8, 0.9, 0.3, 0.95],
     signature: 'Es gibt kein Dokument der Kultur, das nicht zugleich ein solches der Barbarei ist.',
@@ -609,11 +609,11 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
   {
     id: 'wp-foucault',
     name: '福柯',
-    era: 'modernLate',
+    era: '近代晚期',
     domain: 'west-philosopher',
     vector: [0.4, 0.5, 0.4, 0.7, 0.4, 0.55, 0.7, 0.92, 0.6, 0.75, 0.5, 0.85],
     signature: 'Pouvoir/savoir.',
-    bio: '普瓦捷人。法国哲学家。著《疯癫与文明》《规训与惩罚》《性史》。',
+    bio: '法国哲学家、思想史家。关注权力、知识、规训与主体，著《疯癫与文明》《规训与惩罚》《性史》，深刻影响后现代思潮。',
     portrait: 'portraits/west-philosopher/foucault.svg',
     matchBlurb: [
       '汝与 {{name}} 同，于书山学海中自得其乐。',

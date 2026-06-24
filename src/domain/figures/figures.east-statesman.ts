@@ -268,11 +268,11 @@ export const FIGURES_EAST_STATESMAN: readonly Figure[] = [
   {
     id: 'es-xiaohe',
     name: '萧何',
-    era: '西汉',
+    era: '汉',
     domain: 'east-statesman',
     vector: [0.6, 0.5, 0.6, 0.5, 0.7, 0.4, 0.65, 0.8, 0.5, 0.55, 0.55, 0.4],
     signature: '月下追韩信。',
-    bio: '沛县人。初为沛吏，从刘邦起义。荐韩信、举贤才、治关中补给。',
+    bio: '沛县人，汉初丞相。从刘邦起兵，留守关中，转漕调兵，荐韩信于微时，与张良、韩信并称「汉初三杰」。',
     portrait: 'portraits/east-statesman/xiaohe.svg',
     matchBlurb: [
       '汝与 {{name}} 同，能识人用人，幕后安定。',
@@ -390,7 +390,7 @@ export const FIGURES_EAST_STATESMAN: readonly Figure[] = [
   {
     id: 'es-zhangliang',
     name: '张良',
-    era: '西汉',
+    era: '汉',
     domain: 'east-statesman',
     vector: [0.7, 0.5, 0.4, 0.5, 0.6, 0.5, 0.6, 0.9, 0.7, 0.7, 0.4, 0.5],
     signature: '愿弃人间事，欲从赤松子游。',
@@ -490,11 +490,11 @@ export const FIGURES_EAST_STATESMAN: readonly Figure[] = [
   {
     id: 'es-zhou',
     name: '周公',
-    era: '西周',
+    era: '周',
     domain: 'east-statesman',
     vector: [0.7, 0.6, 0.5, 0.55, 0.8, 0.5, 0.85, 0.95, 0.6, 0.75, 0.5, 0.7],
     signature: '周监于二代，郁郁乎文哉！',
-    bio: '姬旦，文王之子，武王之弟。辅武王伐纣。制礼作乐，分封诸侯，天下归心。',
+    bio: '姬旦，文王之子，武王之弟。辅武王伐纣，成王年幼时摄政，平定三监之乱，制礼作乐，分封诸侯，奠定周代礼乐文明。',
     portrait: 'portraits/east-statesman/zhou.svg',
     matchBlurb: [
       '汝与 {{name}} 同，博而能约，厚积薄发。',
