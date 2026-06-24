@@ -8,6 +8,7 @@ type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
 
 export function BrushButton({
   variant = 'default',
+  type = 'button',
   children,
   className = '',
   onMouseDown,
@@ -30,7 +31,7 @@ export function BrushButton({
   };
 
   return (
-    <button className={cls} onMouseDown={handleMouseDown} {...rest}>
+    <button type={type} className={cls} onMouseDown={handleMouseDown} {...rest}>
       {children}
     </button>
   );

@@ -146,6 +146,7 @@ export const en: Dict = {
     rendering: 'Rendering…',
     renderError: 'Rendering failed. Please close and try again.',
     alt: (name: string) => `Compass share card: ${name}`,
+    affinity: (pct: number) => `Affinity ${pct}%`,
   },
   share: {
     title: 'A quiet compass for the inner self',

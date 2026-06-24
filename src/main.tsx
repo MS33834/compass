@@ -68,7 +68,7 @@ function renderErrorUI(container: HTMLElement, title: string, message: string, s
   wrap.appendChild(h2);
 
   const p = document.createElement('p');
-  p.textContent = message || '(无错误信息)';
+  p.textContent = message || '(No error message)';
   p.style.cssText = 'margin:0 0 8px;color:#555;font-size:0.95rem;word-break:break-all;';
   wrap.appendChild(p);
 
@@ -81,7 +81,7 @@ function renderErrorUI(container: HTMLElement, title: string, message: string, s
   }
 
   const btn = document.createElement('button');
-  btn.textContent = '重新加载';
+  btn.textContent = 'Reload';
   btn.onclick = () => location.reload();
   btn.style.cssText =
     'padding:10px 24px;background:#a8322e;color:#fff;border:none;border-radius:4px;cursor:pointer;font-size:1rem;margin-top:8px;';
@@ -123,7 +123,9 @@ class GlobalErrorBoundary extends Component<{ children: ReactNode }, { error: Er
             borderRadius: '8px',
           }}
         >
-          <h2 style={{ margin: '0 0 16px', color: '#a8322e', fontSize: '1.4rem' }}>加载异常</h2>
+          <h2 style={{ margin: '0 0 16px', color: '#a8322e', fontSize: '1.4rem' }}>
+            Loading Error
+          </h2>
           <p
             style={{
               margin: '0 0 8px',
@@ -132,7 +134,7 @@ class GlobalErrorBoundary extends Component<{ children: ReactNode }, { error: Er
               wordBreak: 'break-all',
             }}
           >
-            {e.message || '(无错误信息)'}
+            {e.message || '(No error message)'}
           </p>
           {e.stack && (
             <pre
@@ -184,7 +186,7 @@ try {
 } catch (e) {
   const boot = document.getElementById('cp-boot');
   if (boot) boot.remove();
-  renderErrorUI(root, '加载失败', (e as Error)?.message || String(e), (e as Error)?.stack);
+  renderErrorUI(root, 'Loading Failed', (e as Error)?.message || String(e), (e as Error)?.stack);
   throw e;
 }
 

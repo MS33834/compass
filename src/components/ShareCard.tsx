@@ -9,7 +9,6 @@ import { gsap } from 'gsap';
 import { BrushButton } from './BrushButton';
 import { OverlayPortal } from './OverlayPortal';
 import { useT } from '../i18n';
-import { useStore } from '../store';
 import type { MatchReport } from '../domain/matching/report';
 
 const CARD_WIDTH = 900;
@@ -28,8 +27,7 @@ function loadImage(src: string): Promise<HTMLImageElement | null> {
 async function drawShareCard(
   canvas: HTMLCanvasElement,
   report: MatchReport,
-  t: ReturnType<typeof useT>,
-  locale: 'zh' | 'en'
+  t: ReturnType<typeof useT>
 ): Promise<void> {
   const ctx = canvas.getContext('2d');
   if (!ctx) return;
@@ -112,8 +110,7 @@ async function drawShareCard(
   y += 52;
   ctx.fillStyle = '#a8322e';
   ctx.font = `32px "STXingkai", "KaiTi", "SimKai", serif`;
-  const affinity = locale === 'zh' ? `同道 ${scorePct}%` : `Affinity ${scorePct}%`;
-  ctx.fillText(affinity, leftX, y);
+  ctx.fillText(t.shareCard.affinity(scorePct), leftX, y);
 
   // ── 分隔墨线 ──
   y += 40;
@@ -138,8 +135,7 @@ async function drawShareCard(
   ctx.textAlign = 'right';
   ctx.fillStyle = '#6a6a6a';
   ctx.font = `20px "STKaiti", "KaiTi", "SimKai", serif`;
-  const appName = locale === 'zh' ? t.ui.appName : 'Compass';
-  ctx.fillText(appName, CARD_WIDTH - 80, CARD_HEIGHT - 70);
+  ctx.fillText(t.ui.appName, CARD_WIDTH - 80, CARD_HEIGHT - 70);
 
   ctx.font = `16px "STKaiti", "KaiTi", "SimKai", serif`;
   ctx.fillText(window.location.href, CARD_WIDTH - 80, CARD_HEIGHT - 44);
@@ -190,7 +186,6 @@ type Props = { report: MatchReport; onClose: () => void };
 
 export function ShareCard({ report, onClose }: Props) {
   const t = useT();
-  const locale = useStore(s => s.locale);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
   const [ready, setReady] = useState(false);
@@ -201,10 +196,10 @@ export function ShareCard({ report, onClose }: Props) {
     if (!canvasRef.current) return;
     setReady(false);
     setRenderError(false);
-    drawShareCard(canvasRef.current, report, t, locale)
+    drawShareCard(canvasRef.current, report, t)
       .then(() => setReady(true))
       .catch(() => setRenderError(true));
-  }, [report, t, locale]);
+  }, [report, t]);
 
   // ESC 关闭 + 禁止背景滚动
   useEffect(() => {
