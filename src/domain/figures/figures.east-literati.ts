@@ -30,6 +30,7 @@ export const FIGURES_EAST_LITERATI: readonly Figure[] = [
       { title: '骑青牛西去', body: '老子出关时骑青牛，后世以青牛为老子之象。' },
     ],
     echoes: ['el-zhuangzi', 'el-lizhi'],
+    archetype: 'sage',
   },
   {
     id: 'el-zhuangzi',
@@ -53,6 +54,7 @@ export const FIGURES_EAST_LITERATI: readonly Figure[] = [
       { title: '濠梁观鱼', body: '庄子与惠子游于濠梁之上，论鱼之乐，为千古名辩。' },
     ],
     echoes: ['el-laozi', 'el-taoyuanming', 'el-liushao'],
+    archetype: 'thinker',
   },
   {
     id: 'el-mozi',
@@ -76,6 +78,7 @@ export const FIGURES_EAST_LITERATI: readonly Figure[] = [
       { title: '墨守成规', body: '后以「墨守」为固执之典，实则墨子之守，乃兼爱之守。' },
     ],
     echoes: ['el-kongzi', 'el-xunzi', 'el-wanganshi'],
+    archetype: 'doer',
   },
   {
     id: 'el-hanfeizi',
@@ -96,6 +99,7 @@ export const FIGURES_EAST_LITERATI: readonly Figure[] = [
       { title: '说难孤愤', body: '作《说难》《孤愤》，皆为韩之削弱而发。' },
     ],
     echoes: ['el-lizhi', 'el-wanganshi'],
+    archetype: 'leader',
   },
   {
     id: 'el-lizhi',
@@ -116,6 +120,7 @@ export const FIGURES_EAST_LITERATI: readonly Figure[] = [
       { title: '狱中自刎', body: '以剃刀自割其喉，两日始死。其骨气凛然如此。' },
     ],
     echoes: ['el-hanfeizi', 'el-zhuangzi'],
+    archetype: 'rebel',
   },
   {
     id: 'el-wanganshi',
@@ -136,6 +141,7 @@ export const FIGURES_EAST_LITERATI: readonly Figure[] = [
       { title: '三不足之说', body: '倡「天变不足畏，人言不足恤，祖宗之法不足守」，为革新之宣言。' },
     ],
     echoes: ['el-zhuangzi', 'el-hanfeizi', 'el-lizhi'],
+    archetype: 'doer',
   },
 
   // ── B 偏外：思辨 0.65-0.85 ──

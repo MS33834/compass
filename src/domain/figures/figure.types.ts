@@ -6,6 +6,8 @@ import type { LocalString } from '../i18n';
 
 export type DomainId = (typeof DOMAINS)[number];
 
+export type FigureArchetype = 'thinker' | 'doer' | 'creator' | 'leader' | 'rebel' | 'sage';
+
 export type Figure = {
   id: string;
   name: LocalString;
@@ -19,4 +21,6 @@ export type Figure = {
   matchBlurb: LocalString | LocalString[];
   anecdotes: { title: LocalString; body: LocalString }[];
   echoes: string[];
+  /** 人物原型分类，用于多样性采样 */
+  archetype?: FigureArchetype;
 };
