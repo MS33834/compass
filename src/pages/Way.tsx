@@ -147,7 +147,9 @@ export function Way() {
   // 注意：必须在所有 hooks 之前 return，否则违反 Rules of Hooks
   const current = item ? answers[item.id] : undefined;
   const answeredCount = Object.keys(answers).length;
-  const canFinish = answeredCount >= 30;
+  // 题目总数为 48 道，至少需要回答 30 道才能出照（保持灵活性）
+  const CAN_FINISH_THRESHOLD = 30;
+  const canFinish = answeredCount >= CAN_FINISH_THRESHOLD;
 
   const handleFinish = useCallback(() => {
     if (!item) return;
@@ -345,7 +347,7 @@ export function Way() {
               data-testid="btn-finish"
               disabled={!canFinish}
               onClick={handleFinish}
-              title={!canFinish ? t.way.finishTitle(30 - answeredCount) : undefined}
+              title={!canFinish ? t.way.finishTitle(CAN_FINISH_THRESHOLD - answeredCount) : undefined}
             >
               {t.way.finish}
             </BrushButton>

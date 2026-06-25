@@ -193,6 +193,7 @@ export function Path() {
                 background: active ? 'var(--rice-warm)' : 'transparent',
                 borderColor: active ? 'var(--cinnabar)' : 'var(--rice-deep)',
                 cursor: readyFlag ? 'pointer' : 'not-allowed',
+              transition: 'all 300ms var(--ease-out), transform 300ms var(--ease-out)',
                 opacity: readyFlag ? 1 : 0.5,
               }}
             >

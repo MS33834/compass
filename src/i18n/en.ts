@@ -97,7 +97,7 @@ export const en: Dict = {
     skipThis: 'Skip this',
     finish: 'Reveal',
     finishTitle: (n: number) => `Answer ${n} more to reveal`,
-    backtrackHint: 'Some questions ahead remain unanswered — go back with ←',
+    backtrackHint: 'Unanswered questions ahead — press ← to return',
     keyboardHint: 'Keyboard: ← → navigate · 1-6 select · Enter confirm',
     resetLabel: '· Clear & Restart ·',
   },
@@ -112,7 +112,7 @@ export const en: Dict = {
     reset: 'Begin Anew',
     lowConfidence:
       '(Few answers given — this is but a faint bearing. Answer more for a clearer compass.)',
-    confidenceHint: (pct: number) => `Confidence ~${pct}% · Early answers, compass still forming`,
+    confidenceHint: (pct: number) => `Confidence ~${pct}% · Few answers given — the compass is still finding its bearing`,
     mostSimilar: 'Closest',
     youExceed: 'You exceed',
     youFallShort: 'You fall short',

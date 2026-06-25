@@ -97,11 +97,14 @@ export function Reflection() {
   goPhaseRef.current = goPhase;
 
   // flash 定时器：每次调用清除上一个，组件卸载时也清除
+  // 根据消息长度动态调整显示时间
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const flash = useCallback((msg: string) => {
     if (toastTimer.current) clearTimeout(toastTimer.current);
     setToast(msg);
-    toastTimer.current = setTimeout(() => setToast(null), 1500);
+    // 基础 1500ms + 额外 50ms 每字符，最长 4000ms
+    const duration = Math.min(1500 + msg.length * 50, 4000);
+    toastTimer.current = setTimeout(() => setToast(null), duration);
   }, []);
   useEffect(
     () => () => {

@@ -12,9 +12,22 @@ export function TopBar() {
   const reset = useStore(s => s.reset);
   const setLocale = useStore(s => s.setLocale);
   const setTheme = useStore(s => s.setTheme);
+  const answers = useStore(s => s.answers);
   const t = useT();
   const [showConfirm, setShowConfirm] = useState(false);
-  const onLogo = () => setShowConfirm(true);
+  
+  // 检查是否有答题记录
+  const hasAnswers = Object.keys(answers).length > 0;
+  
+  // 未答题时直接返回，已答题时弹出确认
+  const onLogo = () => {
+    if (hasAnswers) {
+      setShowConfirm(true);
+    } else {
+      reset();
+    }
+  };
+  
   const label = t.ui.phase[phase];
   return (
     <header

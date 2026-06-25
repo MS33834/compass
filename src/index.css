@@ -649,7 +649,8 @@ p {
     font-size: 0.82rem;
   }
   .cp-way-hint {
-    font-size: 0.6rem;
+    font-size: 0.7rem;
+    min-height: 1rem;
   }
 
   /* 强制防止溢出 */
@@ -664,7 +665,14 @@ button:focus-visible,
 [role='tab']:focus-visible {
   outline: 2px solid var(--cinnabar);
   outline-offset: 2px;
-  box-shadow: 0 0 0 4px rgba(168, 50, 46, 0.15);
+  box-shadow: 0 0 0 4px rgba(168, 50, 46, 0.25);
+}
+
+/* 暗色模式下的聚焦指示器更醒目 */
+[data-theme='dark'] button:focus-visible,
+[data-theme='dark'] [role='radio']:focus-visible,
+[data-theme='dark'] [role='tab']:focus-visible {
+  box-shadow: 0 0 0 4px rgba(168, 50, 46, 0.35);
 }
 
 button:focus:not(:focus-visible) {
