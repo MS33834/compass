@@ -187,6 +187,7 @@ export function Path() {
               disabled={!readyFlag}
               aria-pressed={active}
               aria-label={`${meta.name} · ${meta.sub}`}
+              title={!readyFlag ? t.path.domainUnderDev : undefined}
               className={`cp-domain-card cp-card-hover${active ? ' cp-selected-corner' : ''}`}
               data-selected-label={active ? t.path.selected : undefined}
               style={{

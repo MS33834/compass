@@ -66,6 +66,7 @@ export const zh = {
     },
     start: '开始',
     pending: '待补',
+    domainUnderDev: '该领域正在开发中，敬请期待',
     picked: '既已择定，便入其问。',
     selected: '选',
     peopleCount: (n: number) => `${n} 人`,

@@ -121,7 +121,6 @@ export function FigureDetail() {
           className="cp-figure-overlay"
           role="dialog"
           aria-modal="true"
-          aria-live="polite"
           onClick={e => {
             if (e.target === overlayRef.current) closeFigure();
           }}

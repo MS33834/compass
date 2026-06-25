@@ -87,7 +87,7 @@ export function ConfirmModal({
           >
             {message}
           </p>
-          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
+          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
             <BrushButton variant="ghost" onClick={onCancel}>
               {cancelLabel}
             </BrushButton>

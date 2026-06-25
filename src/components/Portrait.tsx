@@ -26,11 +26,7 @@ export function Portrait({ figure }: Props) {
   }, [figure.id]);
 
   if (err) {
-    return (
-      <Frame>
-        <Placeholder figure={figure} locale={locale} />
-      </Frame>
-    );
+    return <Placeholder figure={figure} locale={locale} />;
   }
 
   // 确保子路径下 portrait 路径解析正确，避免 BASE 与相对路径拼接产生重复斜杠
@@ -39,25 +35,27 @@ export function Portrait({ figure }: Props) {
     : `${BASE.replace(/\/$/, '')}/${figure.portrait}`;
 
   return (
-    <Frame>
-      {!loaded && <Skeleton />}
-      <img
-        src={portraitSrc}
-        alt={`${pickLang(figure.name, locale)} (${pickLang(figure.era, locale)})`}
-        loading="lazy"
-        onError={() => setErr(true)}
-        onLoad={() => setLoaded(true)}
-        style={{
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover',
-          display: 'block',
-          opacity: loaded ? 1 : 0,
-          transform: loaded ? 'scale(1)' : 'scale(1.03)',
-          transition: 'opacity 800ms var(--ease-out), transform 1200ms var(--ease-out)',
-        }}
-      />
-    </Frame>
+    <>
+      {!loaded && <LoadingSkeleton />}
+      <Frame>
+        <img
+          src={portraitSrc}
+          alt={`${pickLang(figure.name, locale)} (${pickLang(figure.era, locale)})`}
+          loading="lazy"
+          onError={() => setErr(true)}
+          onLoad={() => setLoaded(true)}
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            display: 'block',
+            opacity: loaded ? 1 : 0,
+            transform: loaded ? 'scale(1)' : 'scale(1.03)',
+            transition: 'opacity 800ms var(--ease-out), transform 1200ms var(--ease-out)',
+          }}
+        />
+      </Frame>
+    </>
   );
 }
 
@@ -77,15 +75,17 @@ function Frame({ children }: { children: React.ReactNode }) {
   );
 }
 
-function Skeleton() {
+function LoadingSkeleton() {
   return (
     <div
       aria-hidden
       style={{
-        position: 'absolute',
-        inset: '0.5rem',
+        width: '100%',
+        aspectRatio: '3 / 4',
         background: 'var(--rice-warm)',
         overflow: 'hidden',
+        marginBottom: '0.5rem',
+        position: 'relative',
       }}
     >
       <div
@@ -106,10 +106,10 @@ function Placeholder({ figure, locale }: Props & { locale: 'zh' | 'en' }) {
   const name = pickLang(figure.name, locale);
   return (
     <div
-      className="cp-portrait"
+      className="cp-portrait cp-portrait-frame"
       style={{
         width: '100%',
-        height: '100%',
+        aspectRatio: '3 / 4',
         background: 'var(--rice-warm)',
         display: 'flex',
         flexDirection: 'column',

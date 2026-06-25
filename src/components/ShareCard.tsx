@@ -96,7 +96,7 @@ async function drawShareCard(
   ctx.fillStyle = '#a8322e';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.font = `bold ${sealSize * 0.55}px "STXingkai", "KaiTi", "SimKai", serif`;
+  ctx.font = `bold ${sealSize * 0.55}px "STXingkai", "STKaiti", "KaiTi", "SimKai", "Noto Serif SC", "Source Han Serif SC", "WenQuanYi Bitmap Song", "AR PL UMing HK", serif`;
   ctx.fillText(figureName.slice(0, 1), sealX + sealSize / 2, sealY + sealSize / 2 + 6);
 
   // ── 右侧主信息 ──
@@ -105,17 +105,17 @@ async function drawShareCard(
 
   ctx.textAlign = 'left';
   ctx.fillStyle = '#6a6a6a';
-  ctx.font = `24px "STKaiti", "KaiTi", "SimKai", serif`;
+  ctx.font = `24px "STKaiti", "STSong", "KaiTi", "SimKai", "Noto Serif SC", "Source Han Serif SC", "WenQuanYi Bitmap Song", "AR PL UMing HK", serif`;
   ctx.fillText(`${domainName} · ${figureEra}`, leftX, y);
 
   y += 72;
   ctx.fillStyle = '#1a1a1a';
-  ctx.font = `bold 72px "STXingkai", "KaiTi", "SimKai", serif`;
+  ctx.font = `bold 72px "STXingkai", "STKaiti", "KaiTi", "SimKai", "Noto Serif SC", "Source Han Serif SC", "WenQuanYi Bitmap Song", "AR PL UMing HK", serif`;
   ctx.fillText(figureName, leftX, y);
 
   y += 52;
   ctx.fillStyle = '#a8322e';
-  ctx.font = `32px "STXingkai", "KaiTi", "SimKai", serif`;
+  ctx.font = `32px "STXingkai", "STKaiti", "KaiTi", "SimKai", "Noto Serif SC", "Source Han Serif SC", "WenQuanYi Bitmap Song", "AR PL UMing HK", serif`;
   ctx.fillText(t.shareCard.affinity(scorePct), leftX, y);
 
   // ── 分隔墨线 ──
@@ -130,7 +130,7 @@ async function drawShareCard(
   // ── 签名 ──
   y += 56;
   ctx.fillStyle = '#252525';
-  ctx.font = `italic 28px "STKaiti", "KaiTi", "SimKai", serif`;
+  ctx.font = `italic 28px "STKaiti", "STSong", "KaiTi", "SimKai", "Noto Serif SC", "Source Han Serif SC", "WenQuanYi Bitmap Song", "AR PL UMing HK", serif`;
   const signature =
     figureSignature.length > 28 ? figureSignature.slice(0, 27) + '…' : figureSignature;
   ctx.fillText(`“${signature}”`, leftX, y);
@@ -138,10 +138,10 @@ async function drawShareCard(
   // ── 底部品牌 ──
   ctx.textAlign = 'right';
   ctx.fillStyle = '#6a6a6a';
-  ctx.font = `20px "STKaiti", "KaiTi", "SimKai", serif`;
+  ctx.font = `20px "STKaiti", "STSong", "KaiTi", "SimKai", "Noto Serif SC", "Source Han Serif SC", "WenQuanYi Bitmap Song", "AR PL UMing HK", serif`;
   ctx.fillText(t.ui.appName, CARD_WIDTH - 80, CARD_HEIGHT - 70);
 
-  ctx.font = `16px "STKaiti", "KaiTi", "SimKai", serif`;
+  ctx.font = `16px "STKaiti", "STSong", "KaiTi", "SimKai", "Noto Serif SC", "Source Han Serif SC", "WenQuanYi Bitmap Song", "AR PL UMing HK", serif`;
   ctx.fillText(window.location.href, CARD_WIDTH - 80, CARD_HEIGHT - 44);
 
   // ── 右下角小印章 ──
@@ -152,7 +152,7 @@ async function drawShareCard(
   ctx.fillRect(csx, csy, cornerSealSize, cornerSealSize);
   ctx.fillStyle = '#f5efe0';
   ctx.textAlign = 'center';
-  ctx.font = `bold 28px "STXingkai", "KaiTi", "SimKai", serif`;
+  ctx.font = `bold 28px "STXingkai", "STKaiti", "KaiTi", "SimKai", "Noto Serif SC", "Source Han Serif SC", "WenQuanYi Bitmap Song", "AR PL UMing HK", serif`;
   ctx.fillText(t.ui.sealChar, csx + cornerSealSize / 2, csy + cornerSealSize / 2 + 4);
 
   // 尝试把真实肖像叠到左侧印章之上（同域资源通常可加载）

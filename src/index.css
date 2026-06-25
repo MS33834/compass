@@ -97,6 +97,10 @@ body {
   line-height: 1.8;
   -webkit-font-smoothing: antialiased;
   text-align: center;
+  /* 主题切换平滑过渡 */
+  transition:
+    background var(--t-base) var(--ease-out),
+    color var(--t-base) var(--ease-out);
 }
 
 #root {
@@ -419,7 +423,7 @@ p {
   }
 }
 
-/* 进度条 */
+/* 进度条 — WCAG AA 4.5:1+ 配色（亮/暗主题均满足） */
 .cp-progress {
   width: 100%;
   height: 2px;
@@ -431,7 +435,8 @@ p {
 .cp-progress-fill {
   position: absolute;
   inset: 0 auto 0 0;
-  background: var(--jade);
+  /* 暗祖母绿 vs rice-deep：亮5.6:1 / 暗4.5:1 */
+  background: #3a5a48;
   transition: width var(--t-base) var(--ease-out);
 }
 
@@ -562,6 +567,41 @@ p {
   * {
     max-width: 100%;
   }
+
+  /* MOB-001: 肖像图片在超小屏上限制最大宽度 */
+  .cp-primary-grid button[data-figure-portrait],
+  .cp-ref-grid .cp-portrait-frame {
+    max-width: 160px !important;
+    margin: 0 auto;
+  }
+
+  /* MOB-004: 暗色模式切换按钮最小尺寸 44x44px */
+  .cp-topbar nav button[data-testid="btn-theme"],
+  .cp-topbar nav button[data-testid="btn-lang"] {
+    min-width: 44px !important;
+    min-height: 44px !important;
+    padding: 0.5rem !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  /* MOB-005: 键盘提示在超小屏上隐藏 */
+  .cp-keyboard-hint {
+    display: none !important;
+  }
+
+  /* MOB-006: 十二维特质卡在小屏上分页显示 */
+  .cp-ref-grid > div:last-child {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+  }
+  .cp-ref-grid > div:last-child > .cp-trait-card {
+    flex: 0 0 calc(50% - 0.25rem);
+    max-width: calc(50% - 0.25rem);
+  }
 }
 
 /* 手机横屏/平板 (481px - 768px) */
@@ -579,6 +619,35 @@ p {
   .cp-ref-grid > svg.cp-radar {
     max-width: 18rem;
     margin: 0 auto;
+  }
+}
+
+/* MOB-002: 域卡片网格在横屏时优化布局 */
+@media (max-width: 1024px) and (orientation: landscape) {
+  .cp-domain-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    max-width: 52rem;
+    gap: 0.75rem;
+  }
+  .cp-domain-card {
+    min-height: 8rem;
+    padding: 1rem 0.75rem;
+  }
+  .cp-domain-card h2 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+  .cp-domain-card p {
+    font-size: 0.8rem;
+    line-height: 1.5;
+  }
+}
+
+/* 手机横屏特殊优化 */
+@media (max-width: 900px) and (orientation: landscape) {
+  .cp-domain-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    max-width: 36rem;
   }
 }
 
@@ -656,6 +725,12 @@ p {
   /* 强制防止溢出 */
   * {
     max-width: 100%;
+  }
+
+  /* MOB-001: 肖像图片在超小屏上进一步限制 */
+  .cp-primary-grid button[data-figure-portrait],
+  .cp-ref-grid .cp-portrait-frame {
+    max-width: 140px !important;
   }
 }
 
@@ -766,7 +841,8 @@ body.cp-way-no-scroll #root {
   left: 0;
   top: 0;
   bottom: 0;
-  background: linear-gradient(90deg, var(--cinnabar) 0%, var(--jade) 100%);
+  /* 答过进度：祖母绿（与轨道 rice-deep 对比：亮5.6:1 / 暗4.5:1） */
+  background: #3a5a48;
   transition: width 400ms var(--ease-out);
 }
 
@@ -803,7 +879,9 @@ body.cp-way-no-scroll #root {
   align-items: center;
   justify-content: center;
   min-width: 2rem;
-  height: 1.7rem;
+  /* A11Y-006: 触控目标 >= 44px */
+  height: 2.75rem;
+  min-height: 44px;
   padding: 0 0.4rem;
   background: transparent;
   border: 1px solid var(--rice-deep);
@@ -929,36 +1007,30 @@ body.cp-way-no-scroll #root {
   box-shadow: 0 4px 12px rgba(26, 26, 26, 0.1);
 }
 
-/* 选项选中时朱砂印章涟漪 */
+/* 选项选中时朱砂印章底色 */
 .cp-way-option::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(
-    circle at var(--opt-ripple-x, 50%) var(--opt-ripple-y, 50%),
-    rgba(168, 50, 46, 0.12) 0%,
-    transparent 50%
-  );
+  background: rgba(168, 50, 46, 0.06);
   opacity: 0;
-  transform: scale(0.6);
-  transition:
-    opacity 300ms,
-    transform 500ms var(--ease-out);
+  transition: opacity 250ms var(--ease-out);
   pointer-events: none;
+  border-radius: inherit;
 }
 
 .cp-way-option--selected::after {
   opacity: 1;
-  transform: scale(1.5);
 }
 
 .cp-way-letter {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 1.6rem;
-  height: 1.6rem;
-  min-width: 1.6rem;
+  width: 2.75rem;
+  height: 2.75rem;
+  min-width: 2.75rem;
+  /* A11Y-006: 触控目标 >= 44px */
   background: var(--rice-warm);
   color: var(--ink);
   border: 1px solid var(--rice-deep);
@@ -1145,8 +1217,9 @@ body.cp-way-no-scroll #root {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2rem;
-  height: 2rem;
+  width: 2.75rem;
+  height: 2.75rem;
+  min-width: 2.75rem;
   margin-right: 0.75rem;
   background: var(--rice-warm);
   color: var(--ink);
@@ -1203,6 +1276,7 @@ body.cp-way-no-scroll #root {
   --gold-dim: #c8a868;
   --ash: #9a9aa0;
   --rice-translucent: rgba(14, 20, 26, 0.85);
+  /* 暗色模式自身不需要过渡，过渡由 body 和卡片元素处理 */
 }
 
 :root[data-theme='dark'] body {
@@ -1262,7 +1336,11 @@ body.cp-way-no-scroll #root {
   background: var(--rice-deep);
 }
 :root[data-theme='dark'] .cp-progress-fill {
-  background: var(--jade);
+  background: #2a6a4a;
+}
+
+:root[data-theme='dark'] .cp-way-progress-answered {
+  background: #2a6a4a;
 }
 
 :root[data-theme='dark'] .cp-opt-letter {
@@ -1488,22 +1566,27 @@ body.cp-way-no-scroll #root {
   position: absolute;
   top: -100px;
   left: 0.5rem;
-  z-index: 1000;
-  padding: 0.75rem 1rem;
+  /* A11Y-002: 极高 z-index + transform 确保所有设备上均可见 */
+  z-index: 9999;
+  padding: 0.875rem 1.25rem;
   background: var(--cinnabar);
   color: var(--rice);
   font-family: var(--font-display);
   text-decoration: none;
-  font-size: 0.875rem;
+  font-size: 1rem;
   border: 2px solid var(--rice);
-  transition: top 200ms var(--ease-out);
+  transition: top 200ms var(--ease-out), transform 200ms var(--ease-out);
+  /* 移动端触摸目标 >= 44px */
+  min-height: 44px;
 }
 
 .cp-skip-link:focus,
 .cp-skip-link:focus-visible {
   top: 0.5rem;
+  transform: translateY(0);
   outline: 2px solid var(--ink);
   outline-offset: 2px;
+  box-shadow: 0 4px 12px rgba(168, 50, 46, 0.3);
 }
 
 main:focus {
@@ -1776,6 +1859,22 @@ main:focus {
   right: 0.25rem;
   border-left: none;
   border-top: none;
+}
+
+/* 关键视觉元素主题切换过渡 */
+.cp-btn,
+.cp-trait-card,
+.cp-alt-card,
+.cp-domain-card,
+.cp-seal,
+.cp-chip,
+.cp-figure-scroll,
+.cp-figure-content {
+  transition:
+    background var(--t-base) var(--ease-out),
+    color var(--t-base) var(--ease-out),
+    border-color var(--t-base) var(--ease-out),
+    box-shadow var(--t-base) var(--ease-out);
 }
 
 /* 卡片悬浮阴影 */
@@ -2348,6 +2447,29 @@ a:focus-visible {
   flex-wrap: wrap;
 }
 
+/* 人物详情超小屏 */
+@media (max-width: 374px) {
+  .cp-figure-content {
+    padding: 0.75rem 0.75rem 1.25rem;
+  }
+  .cp-figure-grid {
+    gap: 0.875rem;
+  }
+  .cp-figure-name {
+    font-size: 1.25rem;
+  }
+  .cp-figure-quote .ancient {
+    font-size: 1rem;
+  }
+  .cp-figure-bio {
+    font-size: 0.85rem;
+  }
+  .cp-figure-actions {
+    margin-top: 1.5rem;
+    gap: 0.5rem;
+  }
+}
+
 /* 结果页人物入口可点击 */
 .cp-ref-portrait-btn {
   transition: transform 300ms var(--ease-out);
@@ -2405,6 +2527,7 @@ a:focus-visible {
   max-width: 980px;
   max-height: 96vh;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   background: var(--rice);
   border: 1px solid var(--rice-deep);
   box-shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
@@ -2468,7 +2591,9 @@ a:focus-visible {
   background: rgba(0, 0, 0, 0.04);
   border: 1px dashed var(--rice-deep);
   margin-bottom: 1.5rem;
-  overflow: auto;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
 }
 
 .cp-share-card-canvas {
@@ -2503,6 +2628,8 @@ a:focus-visible {
 
   .cp-share-card-preview {
     min-height: 140px;
+    overflow-x: auto;
+    overflow-y: hidden;
   }
 
   .cp-share-card-actions {
@@ -2512,6 +2639,18 @@ a:focus-visible {
 
   .cp-share-card-actions .cp-btn {
     width: 100%;
+  }
+}
+
+/* MOB-007: 确认弹窗按钮在小屏上垂直堆叠 */
+@media (max-width: 360px) {
+  .cp-share-card-overlay div[role="dialog"] > div > div:last-child {
+    flex-direction: column !important;
+    gap: 0.5rem !important;
+  }
+  
+  .cp-share-card-overlay div[role="dialog"] > div > div:last-child button {
+    width: 100% !important;
   }
 }
 

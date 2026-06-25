@@ -81,7 +81,13 @@ export function decodeResume(s: string): ExportShape | null {
   }
 }
 
-export function downloadJSON(s: ExportShape, filename = 'compass.json') {
+export function downloadJSON(s: ExportShape) {
+  const date = new Date(s.ts);
+  const yyyy = date.getFullYear();
+  const mm = String(date.getMonth() + 1).padStart(2, '0');
+  const dd = String(date.getDate()).padStart(2, '0');
+  const domain = s.domain ?? 'unknown';
+  const filename = `compass-${domain}-${s.locale}-${yyyy}-${mm}-${dd}.json`;
   const blob = new Blob([JSON.stringify(s, null, 2)], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');

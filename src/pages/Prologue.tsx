@@ -6,6 +6,27 @@ import { BrushButton } from '../components/BrushButton';
 import { Verse } from '../components/Verse';
 import { useT } from '../i18n';
 
+const PROLOGUE_SHOWN_KEY = 'cp_prologue_shown';
+
+function getNextVerseIndex(total: number): number {
+  try {
+    const raw = localStorage.getItem(PROLOGUE_SHOWN_KEY);
+    const shown: number[] = raw ? JSON.parse(raw) : [];
+    const remaining = Array.from({ length: total }, (_, i) => i).filter(i => !shown.includes(i));
+    if (remaining.length === 0) {
+      // 所有诗句均已显示，重置记录
+      localStorage.removeItem(PROLOGUE_SHOWN_KEY);
+      return Math.floor(Math.random() * total);
+    }
+    const pick = remaining[Math.floor(Math.random() * remaining.length)];
+    shown.push(pick);
+    localStorage.setItem(PROLOGUE_SHOWN_KEY, JSON.stringify(shown));
+    return pick;
+  } catch {
+    return Math.floor(Math.random() * total);
+  }
+}
+
 export function Prologue() {
   const goPhase = useStore(s => s.goPhase);
   const t = useT();
@@ -13,7 +34,7 @@ export function Prologue() {
   // 用 useRef 缓存随机选择，懒初始化避免每次渲染都计算
   const pickRef = useRef<number | null>(null);
   if (pickRef.current === null) {
-    pickRef.current = Math.floor(Math.random() * t.prologue.verses.length);
+    pickRef.current = getNextVerseIndex(t.prologue.verses.length);
   }
   const pick = pickRef.current;
   const lines = t.prologue.verses[pick];

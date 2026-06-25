@@ -2,6 +2,16 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { useStore } from '../store';
+
+// Toast 动态时长常量
+const TOAST_BASE_MS = 1500;
+const TOAST_PER_CHAR_MS = 50;
+const TOAST_MAX_MS = 4000;
+// 分数数字动画常量
+const PRIMARY_SCORE_DURATION_MS = 1600;
+const PRIMARY_SCORE_START_MS = 200;
+const CONF_VAL_DURATION_MS = 1400;
+const CONF_VAL_START_MS = 500;
 import { TraitRadar } from '../components/TraitRadar';
 import { Portrait } from '../components/Portrait';
 import { BrushButton } from '../components/BrushButton';
@@ -102,8 +112,10 @@ export function Reflection() {
   const flash = useCallback((msg: string) => {
     if (toastTimer.current) clearTimeout(toastTimer.current);
     setToast(msg);
-    // 基础 1500ms + 额外 50ms 每字符，最长 4000ms
-    const duration = Math.min(1500 + msg.length * 50, 4000);
+    const duration = Math.min(
+      TOAST_BASE_MS + msg.length * TOAST_PER_CHAR_MS,
+      TOAST_MAX_MS
+    );
     toastTimer.current = setTimeout(() => setToast(null), duration);
   }, []);
   useEffect(
@@ -307,11 +319,37 @@ export function Reflection() {
         </h1>
         <p style={{ color: 'var(--ink-soft)', fontSize: '1.05rem' }}>
           {pickLang(primary.figure.era, locale)} ·{' '}
-          <AnimatedNumber target={primary.score * 100} durationMs={1600} startMs={200}>
+          <AnimatedNumber target={primary.score * 100} durationMs={PRIMARY_SCORE_DURATION_MS} startMs={PRIMARY_SCORE_START_MS}>
             {v => t.reflection.score(Math.round(v))}
           </AnimatedNumber>
         </p>
       </header>
+
+      {/* ── 置信度提示（顶部醒目位置） ── */}
+      {confVal < 0.7 && (
+        <div
+          style={{
+            textAlign: 'center',
+            marginBottom: '2rem',
+            padding: '0.625rem 1rem',
+            background: 'var(--rice-warm)',
+            border: '1px solid var(--gold-dim)',
+            borderRadius: '2px',
+            fontSize: '0.9rem',
+            color: 'var(--ink-soft)',
+            fontFamily: 'var(--font-display)',
+            letterSpacing: '0.08em',
+          }}
+        >
+          <AnimatedNumber target={confVal * 100} durationMs={CONF_VAL_DURATION_MS} startMs={CONF_VAL_START_MS}>
+            {v =>
+              v > 50
+                ? t.reflection.confidenceHint(Math.round(v))
+                : t.reflection.lowConfidence
+            }
+          </AnimatedNumber>
+        </div>
+      )}
 
       {/* ─ 主区：人像 + 诗赋 ─ */}
       <section
@@ -364,25 +402,6 @@ export function Reflection() {
           >
             {primary.blurb}
           </div>
-
-          {/* 置信度指示 */}
-          {confVal < 0.7 && (
-            <div
-              style={{
-                marginTop: '1rem',
-                padding: '0.75rem 1rem',
-                border: '1px dashed var(--gold-dim)',
-                fontSize: '0.9rem',
-                color: 'var(--ink-soft)',
-                textAlign: 'center',
-                fontFamily: 'var(--font-display)',
-              }}
-            >
-              <AnimatedNumber target={confVal * 100} durationMs={1400} startMs={800}>
-                {v => t.reflection.confidenceHint(Math.round(v))}
-              </AnimatedNumber>
-            </div>
-          )}
 
           {primary.figure.anecdotes && primary.figure.anecdotes.length > 0 && (
             <details
@@ -511,8 +530,8 @@ export function Reflection() {
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(min(140px, 100%), 1fr))',
-              gap: '0.6rem',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(min(170px, 100%), 1fr))',
+              gap: '0.8rem',
             }}
             className="cp-stagger"
           >
@@ -756,7 +775,6 @@ export function Reflection() {
       {toast && (
         <div
           role="status"
-          aria-live="polite"
           className="cp-toast"
           style={{
             position: 'fixed',
