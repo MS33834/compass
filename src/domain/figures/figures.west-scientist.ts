@@ -50,6 +50,7 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
       { title: '仍地动也', body: '受宗教裁判所审讯，被迫认罪后低语：「但它确实在动。」' },
     ],
     echoes: ['ws-copernicus', 'ws-newton', 'ws-feynman'],
+    archetype: 'doer',,
   },
   {
     id: 'ws-newton',
@@ -70,6 +71,7 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
       { title: '炼金术士', body: '其实终身沉于炼金术与神学，物理学只是其业余之一。' },
     ],
     echoes: ['ws-galileo', 'ws-kepler', 'ws-einstein'],
+    archetype: 'thinker',,
   },
   {
     id: 'ws-einstein',
@@ -90,6 +92,7 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
       { title: '诺贝尔奖', body: '1921 年以光电效应（而非相对论）获诺奖。' },
     ],
     echoes: ['ws-newton', 'ws-planck', 'ws-bohr'],
+    archetype: 'thinker',,
   },
   {
     id: 'ws-curie',
@@ -110,6 +113,7 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
       { title: '双诺奖', body: '科学史唯一于两不同领域获诺奖者。' },
     ],
     echoes: ['ws-faraday', 'ws-einstein', 'ws-feynman'],
+    archetype: 'doer',,
   },
   {
     id: 'ws-feynman',
@@ -130,6 +134,7 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
       { title: '邦戈鼓手', body: '业余为邦戈鼓手，参与加州理工学院舞会。' },
     ],
     echoes: ['ws-einstein', 'ws-heisenberg', 'ws-bohr'],
+    archetype: 'doer',,
   },
 
   // ── B 偏外 ──
@@ -192,6 +197,7 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
       { title: '迟迟不发表', body: '与华莱士同时得自然选择理论，犹豫廿年方发表。' },
     ],
     echoes: ['ws-mendel', 'ws-faraday', 'ws-newton'],
+    archetype: 'thinker',,
   },
   {
     id: 'ws-faraday',
@@ -232,6 +238,7 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
       { title: '丧子之痛', body: '长子一战殁于凡尔登，次子被纳粹处决。' },
     ],
     echoes: ['ws-einstein', 'ws-bohr', 'ws-heisenberg'],
+    archetype: 'thinker',,
   },
   {
     id: 'ws-heisenberg',
@@ -252,6 +259,7 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
       { title: '哥本哈根', body: '与玻尔在哥本哈根学派中数度激辩。' },
     ],
     echoes: ['ws-bohr', 'ws-schrodinger', 'ws-feynman'],
+    archetype: 'thinker',,
   },
 
   // ── C 中段 ──
@@ -294,6 +302,7 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
       { title: '色觉之解', body: '幼年即对色彩理论有研究。' },
     ],
     echoes: ['ws-faraday', 'ws-hertz', 'ws-newton'],
+    archetype: 'thinker',,
   },
   {
     id: 'ws-mendel',
@@ -314,6 +323,7 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
       { title: '身后之荣', body: '1900 年被三位植物学家重新发现。' },
     ],
     echoes: ['ws-darwin', 'ws-newton', 'ws-faraday'],
+    archetype: 'thinker',,
   },
   {
     id: 'ws-hertz',
@@ -354,6 +364,7 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
       { title: '逃出丹麦', body: '二战时德占丹麦，避难瑞典，携「重水」逃脱。' },
     ],
     echoes: ['ws-heisenberg', 'ws-planck', 'ws-schrodinger'],
+    archetype: 'thinker',,
   },
   {
     id: 'ws-wiener',
@@ -416,6 +427,7 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
       { title: '直流 vs 交流', body: '与特斯拉之争，最终交流胜出。' },
     ],
     echoes: ['ws-franklin', 'ws-nobel', 'ws-turing'],
+    archetype: 'inventor',,
   },
   {
     id: 'ws-nobel',
@@ -456,6 +468,7 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
       { title: '苹果之遗', body: '苹果公司 logo 据传为纪念其咬毒苹果之死。' },
     ],
     echoes: ['ws-vonneumann', 'ws-shannon', 'ws-wiener'],
+    archetype: 'thinker',,
   },
   {
     id: 'ws-shannon',
@@ -496,6 +509,7 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
       { title: '博弈论', body: '与摩根斯特恩合著《博弈论与经济行为》。' },
     ],
     echoes: ['ws-turing', 'ws-shannon', 'ws-gauss'],
+    archetype: 'thinker',,
   },
 
   // ── E 极端内 ──
@@ -618,5 +632,6 @@ export const FIGURES_WEST_SCIENTIST: readonly Figure[] = [
       { title: '生命是什么', body: '1944 年《生命是什么》启分子生物学之先。' },
     ],
     echoes: ['ws-heisenberg', 'ws-bohr', 'ws-feynman'],
+    archetype: 'thinker',,
   },
 ];

@@ -32,6 +32,7 @@ export const FIGURES_EAST_SCIENTIST: readonly Figure[] = [
       { title: '封侯', body: '造纸有功，封龙亭侯。' },
     ],
     echoes: ['esci-bi', 'esci-huang', 'esci-song'],
+    archetype: 'doer',,
   },
   {
     id: 'esci-zhangheng',
@@ -52,6 +53,7 @@ export const FIGURES_EAST_SCIENTIST: readonly Figure[] = [
       { title: '浑天仪', body: '以水力驱动，模拟天体运行。' },
     ],
     echoes: ['esci-cailun', 'esci-zu', 'esci-shen'],
+    archetype: 'thinker',,
   },
   {
     id: 'esci-zu',
@@ -72,6 +74,7 @@ export const FIGURES_EAST_SCIENTIST: readonly Figure[] = [
       { title: '大明历', body: '编《大明历》，首次引入「岁差」。' },
     ],
     echoes: ['esci-zhangheng', 'esci-qin', 'esci-shen'],
+    archetype: 'thinker',,
   },
   {
     id: 'esci-bi',
@@ -92,6 +95,7 @@ export const FIGURES_EAST_SCIENTIST: readonly Figure[] = [
       { title: '未受重赏', body: '生平不详，活字术至元代才广泛应用。' },
     ],
     echoes: ['esci-cailun', 'esci-song', 'esci-li'],
+    archetype: 'doer',,
   },
   {
     id: 'esci-song',
@@ -112,6 +116,7 @@ export const FIGURES_EAST_SCIENTIST: readonly Figure[] = [
       { title: '海外流传', body: '传入日本、朝鲜、欧洲，影响深远。' },
     ],
     echoes: ['esci-xu', 'esci-jia', 'esci-li'],
+    archetype: 'doer',,
   },
   {
     id: 'esci-xu',
@@ -154,6 +159,7 @@ export const FIGURES_EAST_SCIENTIST: readonly Figure[] = [
       { title: '活字印刷', body: '《笔谈》详记毕昇泥活字术。' },
     ],
     echoes: ['esci-bi', 'esci-song', 'esci-guo'],
+    archetype: 'thinker',,
   },
   {
     id: 'esci-guo',
@@ -194,6 +200,7 @@ export const FIGURES_EAST_SCIENTIST: readonly Figure[] = [
       { title: '衣被天下', body: '松江棉布「被服天下」，黄道婆被尊为「先棉」。' },
     ],
     echoes: ['esci-cailun', 'esci-bi', 'esci-jia'],
+    archetype: 'doer',,
   },
   {
     id: 'esci-li',
@@ -234,6 +241,7 @@ export const FIGURES_EAST_SCIENTIST: readonly Figure[] = [
       { title: '酒醋酿造', body: '详述 30 余种酿造法。' },
     ],
     echoes: ['esci-xu', 'esci-li', 'esci-song'],
+    archetype: 'doer',,
   },
   {
     id: 'esci-xuxiake',
@@ -254,6 +262,7 @@ export const FIGURES_EAST_SCIENTIST: readonly Figure[] = [
       { title: '探溶洞', body: '对喀斯特地貌记述领先欧洲近 300 年。' },
     ],
     echoes: ['esci-pei', 'esci-li'],
+    archetype: 'explorer',,
   },
 
   // ── C 中段 ──
@@ -296,6 +305,7 @@ export const FIGURES_EAST_SCIENTIST: readonly Figure[] = [
       { title: '五禽戏', body: '创编导引术，仿虎鹿熊猿鸟。' },
     ],
     echoes: ['esci-zhang', 'esci-sun', 'esci-bianque'],
+    archetype: 'doer',,
   },
   {
     id: 'esci-sun',
@@ -336,6 +346,7 @@ export const FIGURES_EAST_SCIENTIST: readonly Figure[] = [
       { title: '禹贡地域图', body: '18 幅，详载九州地理。' },
     ],
     echoes: ['esci-guo', 'esci-xuxiake', 'esci-li'],
+    archetype: 'thinker',,
   },
   {
     id: 'esci-su',
@@ -398,6 +409,7 @@ export const FIGURES_EAST_SCIENTIST: readonly Figure[] = [
       { title: '起死回生', body: '针刺三阳五会，救活「死人」虢太子。' },
     ],
     echoes: ['esci-zhang', 'esci-sun', 'esci-huatuo'],
+    archetype: 'doer',,
   },
   {
     id: 'esci-ge',
@@ -478,6 +490,7 @@ export const FIGURES_EAST_SCIENTIST: readonly Figure[] = [
       { title: '数书九章', body: '18 卷 81 题，含高次方程数值解。' },
     ],
     echoes: ['esci-zu', 'esci-shen', 'esci-guo'],
+    archetype: 'thinker',,
   },
   {
     id: 'esci-luban',
@@ -498,6 +511,7 @@ export const FIGURES_EAST_SCIENTIST: readonly Figure[] = [
       { title: '攻与守', body: '公输般为楚造云梯，墨子九拒之。' },
     ],
     echoes: ['esci-cailun', 'esci-huang', 'esci-ouye'],
+    archetype: 'doer',,
   },
 
   // ── E 极端内 ──
@@ -540,6 +554,7 @@ export const FIGURES_EAST_SCIENTIST: readonly Figure[] = [
       { title: '剑成而人亡', body: '「以身为剑」千古传。' },
     ],
     echoes: ['esci-ouye', 'esci-luban', 'esci-ge'],
+    archetype: 'doer',,
   },
   {
     id: 'esci-ma',
