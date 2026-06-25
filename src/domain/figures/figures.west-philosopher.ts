@@ -30,7 +30,7 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
       { title: '产婆术', body: '自称不教人知识，只帮人「生出」自己的见解。' },
     ],
     echoes: ['wp-plato', 'wp-aristotle', 'wp-voltaire'],
-    archetype: 'thinker',,
+    archetype: 'thinker',
   },
   {
     id: 'wp-plato',
@@ -51,7 +51,7 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
       { title: '洞喻', body: '以洞穴之喻论可知世界与可知理念之别。' },
     ],
     echoes: ['wp-socrates', 'wp-aristotle', 'wp-kant'],
-    archetype: 'thinker',,
+    archetype: 'thinker',
   },
   {
     id: 'wp-aristotle',
@@ -72,7 +72,7 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
       { title: '吾爱吾师', body: '「吾爱吾师，吾尤爱真理」—— 真理高于师承。' },
     ],
     echoes: ['wp-plato', 'wp-bacon'],
-    archetype: 'thinker',,
+    archetype: 'thinker',
   },
   {
     id: 'wp-voltaire',
@@ -113,7 +113,7 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
       { title: '查拉图斯特拉', body: '以波斯先知查拉图斯特拉之口，言「超人」之教。' },
     ],
     echoes: ['wp-socrates', 'wp-sartre', 'wp-foucault'],
-    archetype: 'rebel',,
+    archetype: 'rebel',
   },
   {
     id: 'wp-sartre',
@@ -134,7 +134,7 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
       { title: '五月风暴', body: '1968 年五月风暴中现身街头，支持学生运动。' },
     ],
     echoes: ['wp-nietzsche', 'wp-camus', 'wp-marx'],
-    archetype: 'rebel',,
+    archetype: 'rebel',
   },
 
   // ── B 偏外：思辨 + 守正 + 中度风险 ──
@@ -157,7 +157,7 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
       { title: '坐标几何', body: '发明解析几何，以数与形通联。' },
     ],
     echoes: ['wp-kant', 'wp-hume', 'wp-plato'],
-    archetype: 'thinker',,
+    archetype: 'thinker',
   },
   {
     id: 'wp-kant',
@@ -178,7 +178,7 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
       { title: '敢于认知', body: '「Sapere aude」（敢于运用你自己的理智）—— 启蒙之格言。' },
     ],
     echoes: ['wp-hegel', 'wp-hume', 'wp-aristotle'],
-    archetype: 'thinker',,
+    archetype: 'thinker',
   },
   {
     id: 'wp-hegel',
@@ -199,7 +199,7 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
       { title: '主奴辩证', body: '以主人与奴隶之关系开「自我意识」之辩证。' },
     ],
     echoes: ['wp-kant', 'wp-marx', 'wp-heidegger'],
-    archetype: 'thinker',,
+    archetype: 'thinker',
   },
   {
     id: 'wp-marx',
@@ -244,7 +244,7 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
       { title: '小学教师', body: '放弃遗产，下乡做小学教师，又做园丁助手。' },
     ],
     echoes: ['wp-socrates', 'wp-kant', 'wp-foucault'],
-    archetype: 'thinker',,
+    archetype: 'thinker',
   },
   {
     id: 'wp-camus',
@@ -287,7 +287,7 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
       { title: '冻鸡实验', body: '传说其因雪地冷冻鸡肉感染肺炎而逝，以身殉「冷」之研究。' },
     ],
     echoes: ['wp-locke', 'wp-hume', 'wp-descartes'],
-    archetype: 'thinker',,
+    archetype: 'thinker',
   },
   {
     id: 'wp-locke',
@@ -308,7 +308,7 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
       { title: '生命权', body: '提出「生命、自由、财产」三大自然权利，影响美国独立宣言。' },
     ],
     echoes: ['wp-hume', 'wp-bacon', 'wp-hobbes'],
-    archetype: 'thinker',,
+    archetype: 'thinker',
   },
   {
     id: 'wp-hume',
@@ -332,7 +332,7 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
       },
     ],
     echoes: ['wp-kant', 'wp-bacon'],
-    archetype: 'thinker',,
+    archetype: 'thinker',
   },
   {
     id: 'wp-heidegger',
@@ -353,7 +353,7 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
       { title: '向死而生', body: '「向死存在」（Sein-zum-Tode）—— 在直面死亡处本真地活。' },
     ],
     echoes: ['wp-levinas', 'wp-socrates', 'wp-sartre'],
-    archetype: 'thinker',,
+    archetype: 'thinker',
   },
   {
     id: 'wp-habermas',
@@ -394,7 +394,7 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
       { title: '差异原则', body: '「社会之不平等，须对最不利者最有利」—— 平等之辩证。' },
     ],
     echoes: ['wp-locke', 'wp-habermas', 'wp-aristotle'],
-    archetype: 'thinker',,
+    archetype: 'thinker',
   },
 
   // ── D 偏内：内省 + 处世 + 慎思 ──
@@ -417,7 +417,7 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
       { title: '为师', body: '尼禄幼年即受其教，后尼禄反令其自尽。' },
     ],
     echoes: ['wp-augustine', 'wp-epicurus', 'wp-camus'],
-    archetype: 'sage',,
+    archetype: 'sage',
   },
   {
     id: 'wp-augustine',
@@ -540,7 +540,7 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
       { title: '友第一', body: '「朋友之在场即幸福之全部」—— 友谊至上。' },
     ],
     echoes: ['wp-seneca', 'wp-augustine', 'wp-marx'],
-    archetype: 'sage',,
+    archetype: 'sage',
   },
   {
     id: 'wp-machiavelli',
@@ -561,7 +561,7 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
       { title: '被放逐', body: '因美第奇复辟被逐，隐居乡间写就《君主论》。' },
     ],
     echoes: ['wp-hobbes', 'wp-marx'],
-    archetype: 'doer',,
+    archetype: 'doer',
   },
   {
     id: 'wp-hobbes',
@@ -582,7 +582,7 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
       { title: '怕死', body: '「人之本性使其求利避险，故需契约让渡。」' },
     ],
     echoes: ['wp-machiavelli', 'wp-locke'],
-    archetype: 'thinker',,
+    archetype: 'thinker',
   },
   {
     id: 'wp-schopenhauer',
@@ -603,7 +603,7 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
       { title: '迟来之誉', body: '著作初版无人问津，暮年因《附录与补遗》而声名大噪。' },
     ],
     echoes: ['wp-nietzsche', 'wp-seneca'],
-    archetype: 'thinker',,
+    archetype: 'thinker',
   },
   {
     id: 'wp-benjamin',
@@ -644,6 +644,6 @@ export const FIGURES_WEST_PHILOSOPHER: readonly Figure[] = [
       { title: '圆桌监狱', body: '以「全景敞视监狱」（Panopticon）喻现代规训社会。' },
     ],
     echoes: ['wp-marx', 'wp-nietzsche', 'wp-benjamin'],
-    archetype: 'rebel',,
+    archetype: 'rebel',
   },
 ];

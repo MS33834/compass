@@ -15,7 +15,7 @@ export const FIGURES_EAST_SCIENTIST: readonly Figure[] = [
     name: '蔡伦',
     era: '汉',
     domain: 'east-scientist',
-    vector: [0.92, 0.4, 0.88, 0.95, 0.5, 0.35, 0.85, 0.95, 0.4, 0.6, 0.85, 0.4],
+    vector: [0.78, 0.4, 0.88, 0.95, 0.5, 0.35, 0.85, 0.95, 0.4, 0.6, 0.85, 0.4],
     signature: '蔡侯纸，千年利。',
     bio: '字敬仲，桂阳人。东汉宦官。公元 105 年改进造纸术，废缣帛，以树皮麻头破布造纸，号「蔡侯纸」。',
     portrait: 'portraits/east-scientist/cailun.svg',
@@ -32,14 +32,14 @@ export const FIGURES_EAST_SCIENTIST: readonly Figure[] = [
       { title: '封侯', body: '造纸有功，封龙亭侯。' },
     ],
     echoes: ['esci-bi', 'esci-huang', 'esci-song'],
-    archetype: 'doer',,
+    archetype: 'doer',
   },
   {
     id: 'esci-zhangheng',
     name: '张衡',
     era: '汉',
     domain: 'east-scientist',
-    vector: [0.95, 0.45, 0.85, 0.9, 0.45, 0.55, 0.8, 0.98, 0.4, 0.65, 0.8, 0.65],
+    vector: [0.80, 0.45, 0.85, 0.9, 0.45, 0.55, 0.8, 0.98, 0.4, 0.65, 0.8, 0.65],
     signature: '候风地动，万里无差。',
     bio: '字平子，南阳人。东汉太史令。制浑天仪、地动仪、候风仪。著《灵宪》《西京赋》。',
     portrait: 'portraits/east-scientist/zhangheng.svg',
@@ -53,14 +53,14 @@ export const FIGURES_EAST_SCIENTIST: readonly Figure[] = [
       { title: '浑天仪', body: '以水力驱动，模拟天体运行。' },
     ],
     echoes: ['esci-cailun', 'esci-zu', 'esci-shen'],
-    archetype: 'thinker',,
+    archetype: 'thinker',
   },
   {
     id: 'esci-zu',
     name: '祖冲之',
     era: '南北朝',
     domain: 'east-scientist',
-    vector: [0.95, 0.4, 0.8, 0.9, 0.4, 0.5, 0.85, 0.98, 0.35, 0.7, 0.8, 0.55],
+    vector: [0.78, 0.4, 0.8, 0.9, 0.4, 0.5, 0.85, 0.98, 0.35, 0.7, 0.8, 0.55],
     signature: '圆率三五四一五九二。',
     bio: '字文远，范阳人。南北朝数学家、天文学家。算出圆周率 3.1415926-3.1415927 之间，领先欧洲千年。',
     portrait: 'portraits/east-scientist/zu.svg',
@@ -74,7 +74,7 @@ export const FIGURES_EAST_SCIENTIST: readonly Figure[] = [
       { title: '大明历', body: '编《大明历》，首次引入「岁差」。' },
     ],
     echoes: ['esci-zhangheng', 'esci-qin', 'esci-shen'],
-    archetype: 'thinker',,
+    archetype: 'thinker',
   },
   {
     id: 'esci-bi',
@@ -95,14 +95,14 @@ export const FIGURES_EAST_SCIENTIST: readonly Figure[] = [
       { title: '未受重赏', body: '生平不详，活字术至元代才广泛应用。' },
     ],
     echoes: ['esci-cailun', 'esci-song', 'esci-li'],
-    archetype: 'doer',,
+    archetype: 'doer',
   },
   {
     id: 'esci-song',
     name: '宋应星',
     era: '明',
     domain: 'east-scientist',
-    vector: [0.92, 0.4, 0.85, 0.92, 0.5, 0.4, 0.85, 0.98, 0.4, 0.7, 0.8, 0.55],
+    vector: [0.76, 0.4, 0.85, 0.92, 0.5, 0.4, 0.85, 0.98, 0.4, 0.7, 0.8, 0.55],
     signature: '天覆地载，物穷其理。',
     bio: '字长庚，江西奉新人。明万历举人。著《天工开物》，系统记述农业、手工业技术，被誉为「中国 17 世纪工艺百科全书」。',
     portrait: 'portraits/east-scientist/song.svg',
@@ -116,7 +116,7 @@ export const FIGURES_EAST_SCIENTIST: readonly Figure[] = [
       { title: '海外流传', body: '传入日本、朝鲜、欧洲，影响深远。' },
     ],
     echoes: ['esci-xu', 'esci-jia', 'esci-li'],
-    archetype: 'doer',,
+    archetype: 'doer',
   },
   {
     id: 'esci-xu',
@@ -159,7 +159,7 @@ export const FIGURES_EAST_SCIENTIST: readonly Figure[] = [
       { title: '活字印刷', body: '《笔谈》详记毕昇泥活字术。' },
     ],
     echoes: ['esci-bi', 'esci-song', 'esci-guo'],
-    archetype: 'thinker',,
+    archetype: 'thinker',
   },
   {
     id: 'esci-guo',
@@ -200,7 +200,7 @@ export const FIGURES_EAST_SCIENTIST: readonly Figure[] = [
       { title: '衣被天下', body: '松江棉布「被服天下」，黄道婆被尊为「先棉」。' },
     ],
     echoes: ['esci-cailun', 'esci-bi', 'esci-jia'],
-    archetype: 'doer',,
+    archetype: 'doer',
   },
   {
     id: 'esci-li',
@@ -241,7 +241,7 @@ export const FIGURES_EAST_SCIENTIST: readonly Figure[] = [
       { title: '酒醋酿造', body: '详述 30 余种酿造法。' },
     ],
     echoes: ['esci-xu', 'esci-li', 'esci-song'],
-    archetype: 'doer',,
+    archetype: 'doer',
   },
   {
     id: 'esci-xuxiake',
@@ -262,7 +262,7 @@ export const FIGURES_EAST_SCIENTIST: readonly Figure[] = [
       { title: '探溶洞', body: '对喀斯特地貌记述领先欧洲近 300 年。' },
     ],
     echoes: ['esci-pei', 'esci-li'],
-    archetype: 'explorer',,
+    archetype: 'explorer',
   },
 
   // ── C 中段 ──
@@ -305,7 +305,7 @@ export const FIGURES_EAST_SCIENTIST: readonly Figure[] = [
       { title: '五禽戏', body: '创编导引术，仿虎鹿熊猿鸟。' },
     ],
     echoes: ['esci-zhang', 'esci-sun', 'esci-bianque'],
-    archetype: 'doer',,
+    archetype: 'doer',
   },
   {
     id: 'esci-sun',
@@ -346,7 +346,7 @@ export const FIGURES_EAST_SCIENTIST: readonly Figure[] = [
       { title: '禹贡地域图', body: '18 幅，详载九州地理。' },
     ],
     echoes: ['esci-guo', 'esci-xuxiake', 'esci-li'],
-    archetype: 'thinker',,
+    archetype: 'thinker',
   },
   {
     id: 'esci-su',
@@ -409,7 +409,7 @@ export const FIGURES_EAST_SCIENTIST: readonly Figure[] = [
       { title: '起死回生', body: '针刺三阳五会，救活「死人」虢太子。' },
     ],
     echoes: ['esci-zhang', 'esci-sun', 'esci-huatuo'],
-    archetype: 'doer',,
+    archetype: 'doer',
   },
   {
     id: 'esci-ge',
@@ -490,7 +490,7 @@ export const FIGURES_EAST_SCIENTIST: readonly Figure[] = [
       { title: '数书九章', body: '18 卷 81 题，含高次方程数值解。' },
     ],
     echoes: ['esci-zu', 'esci-shen', 'esci-guo'],
-    archetype: 'thinker',,
+    archetype: 'thinker',
   },
   {
     id: 'esci-luban',
@@ -511,7 +511,7 @@ export const FIGURES_EAST_SCIENTIST: readonly Figure[] = [
       { title: '攻与守', body: '公输般为楚造云梯，墨子九拒之。' },
     ],
     echoes: ['esci-cailun', 'esci-huang', 'esci-ouye'],
-    archetype: 'doer',,
+    archetype: 'doer',
   },
 
   // ── E 极端内 ──
@@ -554,7 +554,7 @@ export const FIGURES_EAST_SCIENTIST: readonly Figure[] = [
       { title: '剑成而人亡', body: '「以身为剑」千古传。' },
     ],
     echoes: ['esci-ouye', 'esci-luban', 'esci-ge'],
-    archetype: 'doer',,
+    archetype: 'doer',
   },
   {
     id: 'esci-ma',
