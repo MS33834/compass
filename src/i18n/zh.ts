@@ -106,6 +106,10 @@ export const zh = {
     exportJSON: '导出 JSON',
     importJSON: '导入 JSON',
     copyResume: '复制续答链接',
+    copyResumeWithProgress: (n: number) => `已答 ${n} 题，确定复制链接？`,
+    // FR-006: 答题统计
+    statsTitle: '答题统计',
+    statsOptionCount: (letter: string, count: number) => `选 ${letter} · ${count} 次`,
     anecdote: '其人小传',
     shareCopied: '已复制',
     imported: '已导入',

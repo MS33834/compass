@@ -246,20 +246,23 @@ export function Reflection() {
     try {
       const items = domain ? await itemsForDomain(domain) : [];
       const maxIdx = Math.max(0, items.length - 1);
+      const answerCount = Object.keys(answers).length;
       const s = exportState({
         domain,
-        currentIndex: Math.min(Object.keys(answers).length, maxIdx),
+        currentIndex: Math.min(answerCount, maxIdx),
         answers,
         locale,
         theme,
       });
       const enc = encodeResume(s);
       const url = `${window.location.origin}${window.location.pathname}?resume=${enc}`;
+      // P2-007: 显示带有进度的提示
+      const progressMsg = t.reflection.copyResumeWithProgress(answerCount);
       try {
         await navigator.clipboard.writeText(url);
-        flash(t.reflection.shareCopied);
+        flash(`${progressMsg} ✓`);
       } catch {
-        flash(url);
+        flash(`${progressMsg}:\n${url}`);
       }
     } catch (err) {
       console.error('Compass: failed to copy resume link', err);
@@ -505,6 +508,50 @@ export function Reflection() {
           })}
         </div>
       </section>
+
+      {/* ── 答题统计 ── */}
+      {(() => {
+        const optionCounts: Record<string, number> = { A: 0, B: 0, C: 0, D: 0, E: 0, F: 0 };
+        Object.values(answers).forEach(opt => {
+          const letter = String.fromCharCode(65 + opt); // 0=A, 1=B, etc.
+          if (letter in optionCounts) optionCounts[letter]++;
+        });
+        const entries = Object.entries(optionCounts).filter(([, c]) => c > 0);
+        if (entries.length === 0) return null;
+        return (
+          <section style={{ marginBottom: '2.5rem', textAlign: 'center' }}>
+            <div style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              justifyContent: 'center',
+              gap: '0.75rem',
+              padding: '1rem 1.5rem',
+              background: 'var(--rice-warm)',
+              borderRadius: '8px',
+              maxWidth: '500px',
+              margin: '0 auto',
+            }}>
+              <span style={{ fontSize: '0.85rem', color: 'var(--ink-soft)', alignSelf: 'center' }}>
+                {t.reflection.statsTitle}
+              </span>
+              {entries.map(([letter, count]) => (
+                <span
+                  key={letter}
+                  style={{
+                    padding: '0.3rem 0.6rem',
+                    background: 'var(--rice-deep)',
+                    borderRadius: '4px',
+                    fontSize: '0.8rem',
+                    color: 'var(--ink)',
+                  }}
+                >
+                  {t.reflection.statsOptionCount(letter, count)}
+                </span>
+              ))}
+            </div>
+          </section>
+        );
+      })()}
 
       {/* ── 十二维 + 雷达 ── */}
       <section style={{ marginBottom: '4rem' }}>

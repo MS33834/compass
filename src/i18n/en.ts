@@ -124,6 +124,10 @@ export const en: Dict = {
     exportJSON: 'Export JSON',
     importJSON: 'Import JSON',
     copyResume: 'Copy Resume Link',
+    copyResumeWithProgress: (n: number) => `${n} answered — copy resume link?`,
+    // FR-006: 答题统计
+    statsTitle: 'Answer Stats',
+    statsOptionCount: (letter: string, count: number) => `${letter} · ${count}x`,
     anecdote: 'Anecdotes',
     shareCopied: 'Copied',
     imported: 'Imported',
