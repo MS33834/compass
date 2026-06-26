@@ -1,6 +1,6 @@
 // 指南 · 笔触按钮
 import { memo } from 'react';
-type { ButtonHTMLAttributes, MouseEvent, ReactNode } from 'react';
+import type { ButtonHTMLAttributes, MouseEvent, ReactNode } from 'react';
 
 type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: 'default' | 'primary' | 'ghost';
@@ -36,4 +36,4 @@ export const BrushButton = memo(function BrushButton({
       {children}
     </button>
   );
-}
+});
