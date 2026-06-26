@@ -22,6 +22,12 @@
   --shadow-medium: 0 8px 24px rgba(26, 26, 26, 0.1);
   --shadow-heavy: 0 18px 48px rgba(26, 26, 26, 0.14);
 
+  /* ── 朱砂阴影（按钮、卡片悬停）── */
+  --shadow-cinnabar-sm: 0 4px 12px rgba(168, 50, 46, 0.2);
+  --shadow-cinnabar-md: 0 4px 12px rgba(168, 50, 46, 0.3);
+  --shadow-cinnabar-lg: 0 6px 16px rgba(168, 50, 46, 0.2);
+  --ring-cinnabar: 0 0 0 4px rgba(168, 50, 46, 0.25);
+
   /* ── 字 ── 加大加粗，古风感 ── */
   --font-display: '华文行楷', 'STXingkai', '楷体', 'KaiTi', 'STKaiti', '华文楷体', serif;
   --font-body: '华文宋体', 'STSong', '宋体', 'SimSun', 'Songti SC', serif;
@@ -197,7 +203,7 @@ p {
   color: var(--rice);
   border-color: var(--cinnabar);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(168, 50, 46, 0.2);
+  box-shadow: var(--shadow-cinnabar-sm);
 }
 
 .cp-btn:active {
@@ -1606,7 +1612,7 @@ body.cp-way-no-scroll #root {
   transform: translateY(0);
   outline: 2px solid var(--ink);
   outline-offset: 2px;
-  box-shadow: 0 4px 12px rgba(168, 50, 46, 0.3);
+  box-shadow: var(--shadow-cinnabar-md);
 }
 
 main:focus {
