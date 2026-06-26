@@ -6,7 +6,7 @@ import type { LocalString } from '../i18n';
 
 export type DomainId = (typeof DOMAINS)[number];
 
-export type FigureArchetype = 'thinker' | 'doer' | 'creator' | 'leader' | 'rebel' | 'sage';
+export type FigureArchetype = 'thinker' | 'doer' | 'creator' | 'leader' | 'rebel' | 'sage' | 'explorer' | 'inventor';
 
 export type Figure = {
   id: string;
