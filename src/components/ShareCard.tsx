@@ -249,7 +249,7 @@ export function ShareCard({ report, onClose }: Props) {
       );
       gsap.fromTo(
         '.cp-share-card-scroll',
-        { opacity: 0, y: ANIMATION.SLIDE_DISTANCE, scale: ANIMATION.SCALE_SHRINK },
+        { opacity: 0, y: ANIMATION.SLIDE_DISTANCE_Y, scale: ANIMATION.SCALE_SHRINK },
         { opacity: 1, y: 0, scale: 1, duration: ANIMATION.DURATION_STANDARD, ease: 'power3.out', delay: 0.1 }
       );
     }, overlayRef);

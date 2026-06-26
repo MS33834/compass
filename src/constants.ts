@@ -6,8 +6,10 @@ export const ANIMATION = {
   DURATION_FAST: 0.35,
   /** Standard animation duration in seconds */
   DURATION_STANDARD: 0.5,
-  /** Slide/fade animation distance in pixels */
-  SLIDE_DISTANCE: 30,
+  /** Slide/fade animation distance in pixels (y-axis) */
+  SLIDE_DISTANCE_Y: 30,
+  /** Slide/fade animation distance in pixels (x-axis) */
+  SLIDE_DISTANCE_X: 40,
   /** Scale value for subtle shrink effect */
   SCALE_SHRINK: 0.98,
 } as const;

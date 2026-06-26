@@ -11,6 +11,7 @@ import { OverlayPortal } from './OverlayPortal';
 import { Verse } from './Verse';
 import { pickLang } from '../domain/i18n';
 import { useT } from '../i18n';
+import { ANIMATION } from '../constants';
 
 export function FigureDetail() {
   const viewingFigure = useStore(s => s.viewingFigure);
@@ -100,12 +101,12 @@ export function FigureDetail() {
       gsap.fromTo(
         overlayRef.current,
         { opacity: 0 },
-        { opacity: 1, duration: 0.35, ease: 'power2.out' }
+        { opacity: 1, duration: ANIMATION.DURATION_FAST, ease: 'power2.out' }
       );
       gsap.fromTo(
         '.cp-figure-scroll',
-        { opacity: 0, x: 40, scale: 0.98 },
-        { opacity: 1, x: 0, scale: 1, duration: 0.5, ease: 'power3.out', delay: 0.1 }
+        { opacity: 0, x: ANIMATION.SLIDE_DISTANCE_X, scale: ANIMATION.SCALE_SHRINK },
+        { opacity: 1, x: 0, scale: 1, duration: ANIMATION.DURATION_STANDARD, ease: 'power3.out', delay: 0.1 }
       );
     }, overlayRef);
 
