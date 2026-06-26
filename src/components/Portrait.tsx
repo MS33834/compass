@@ -112,7 +112,6 @@ function LoadingSkeleton() {
 
 function Placeholder({ figure, locale }: Props & { locale: 'zh' | 'en' }) {
   const name = pickLang(figure.name, locale);
-  const accessibleName = `${name} — ${pickLang(figure.era, locale)}`;
   return (
     // A11Y-005: 当 img 加载失败时，fallback 也必须有 role="img" + aria-label
     <div
@@ -129,6 +128,8 @@ function Placeholder({ figure, locale }: Props & { locale: 'zh' | 'en' }) {
         position: 'relative',
         overflow: 'hidden',
       }}
+      role="img"
+      aria-label={`${name} — ${pickLang(figure.era, locale)}`}
     >
       <div
         style={{
