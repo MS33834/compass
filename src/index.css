@@ -1098,10 +1098,11 @@ body.cp-way-no-scroll #root {
     font-size: 0.7rem;
   }
 
+  /* P1-002/P1-003: 回溯提示字体最小 0.7rem，保持可读性 */
   .cp-way-backtrack {
     margin-top: 0.25rem;
     padding: 0.25rem 0.5rem;
-    font-size: 0.65rem;
+    font-size: 0.7rem;
   }
 
   .cp-way-prompt {
@@ -1212,9 +1213,13 @@ body.cp-way-no-scroll #root {
   font-size: 0.65rem;
   font-family: var(--font-display);
   cursor: pointer;
-  padding: 0.1rem 0.3rem;
+  padding: 0.55rem 0.75rem;
   letter-spacing: 0.12em;
   transition: color 200ms;
+  /* A11Y-006: 触控目标 >= 44px */
+  min-height: 44px;
+  min-width: 80px;
+  text-align: center;
 }
 
 .cp-way-reset:hover {
@@ -1683,6 +1688,9 @@ main:focus {
 .cp-btn-skip {
   font-size: 0.875rem;
   padding: var(--sp-2) var(--sp-4);
+  /* A11Y-006: 触控目标 >= 44px */
+  min-height: 44px;
+  min-width: 88px;
   opacity: 0.7;
 }
 
