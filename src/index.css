@@ -1826,9 +1826,25 @@ main:focus {
   animation: cp-shimmer 2.5s var(--ease-in-out) infinite;
 }
 
+/* P2-005: 暗色模式骨架屏优化 */
+:root[data-theme='dark'] .cp-shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(232, 226, 208, 0.15) 50%,
+    transparent 100%
+  );
+}
+
+:root[data-theme='dark'] .cp-loading {
+  border-color: var(--rice-deep);
+  border-top-color: var(--cinnabar);
+}
+
 /* 按钮水墨涟漪效果 */
 .cp-btn {
   overflow: hidden;
+  /* P2-003: 简化涟漪，使用更轻量的扩散效果 */
 }
 
 .cp-btn::after {
@@ -1837,23 +1853,33 @@ main:focus {
   inset: 0;
   background: radial-gradient(
     circle at var(--ripple-x, 50%) var(--ripple-y, 50%),
-    rgba(245, 239, 224, 0.35) 0%,
-    transparent 60%
+    rgba(245, 239, 224, 0.4) 0%,
+    transparent 70%
   );
   opacity: 0;
-  transform: scale(0.5);
+  transform: scale(0);
   transition:
-    opacity 300ms,
-    transform 500ms var(--ease-out);
+    opacity 200ms ease-out,
+    transform 400ms cubic-bezier(0.22, 0.61, 0.36, 1);
   pointer-events: none;
+  border-radius: inherit;
 }
 
 .cp-btn:active::after {
   opacity: 1;
-  transform: scale(2);
+  transform: scale(1.8);
   transition:
-    opacity 100ms,
+    opacity 80ms ease-out,
     transform 0ms;
+}
+
+/* 暗色模式涟漪优化 */
+:root[data-theme='dark'] .cp-btn::after {
+  background: radial-gradient(
+    circle at var(--ripple-x, 50%) var(--ripple-y, 50%),
+    rgba(232, 226, 208, 0.3) 0%,
+    transparent 70%
+  );
 }
 
 /* 人像装裱边框 */
@@ -1941,6 +1967,7 @@ main:focus {
   margin-left: auto;
   margin-right: auto;
   grid-template-columns: 1fr;
+  animation: cp-fade-in 250ms var(--ease-out);
 }
 
 .cp-domain-card {
