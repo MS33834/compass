@@ -98,7 +98,7 @@ export const en: Dict = {
     skipThis: 'Skip this',
     finish: 'Reveal',
     finishTitle: (n: number) => `Answer ${n} more to reveal`,
-    backtrackHint: 'Unanswered questions ahead — press ← to return',
+    backtrackHint: 'Unanswered questions remain ahead — press ← to return',
     keyboardHint: 'Keyboard: ← → navigate · 1-6 select · Enter confirm',
     resetLabel: '· Clear & Restart ·',
   },
