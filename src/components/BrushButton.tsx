@@ -1,12 +1,13 @@
 // 指南 · 笔触按钮
-import type { ButtonHTMLAttributes, MouseEvent, ReactNode } from 'react';
+import { memo } from 'react';
+type { ButtonHTMLAttributes, MouseEvent, ReactNode } from 'react';
 
 type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: 'default' | 'primary' | 'ghost';
   children: ReactNode;
 };
 
-export function BrushButton({
+export const BrushButton = memo(function BrushButton({
   variant = 'default',
   type = 'button',
   children,
