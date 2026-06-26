@@ -4,6 +4,7 @@
 import { useEffect } from 'react';
 import { BrushButton } from './BrushButton';
 import { OverlayPortal } from './OverlayPortal';
+import { OVERLAY } from '../constants';
 
 type Props = {
   open: boolean;
@@ -46,11 +47,11 @@ export function ConfirmModal({
         style={{
           position: 'fixed',
           inset: 0,
-          background: 'rgba(26, 26, 26, 0.45)',
+          background: OVERLAY.BACKDROP_BG,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          zIndex: 200,
+          zIndex: OVERLAY.Z_INDEX_MODAL,
           padding: '1rem',
         }}
       >
@@ -87,7 +88,8 @@ export function ConfirmModal({
           >
             {message}
           </p>
-          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+          {/* MOB-007: 小屏垂直堆叠，增大触控区域 */}
+          <div className="cp-confirm-actions">
             <BrushButton variant="ghost" onClick={onCancel}>
               {cancelLabel}
             </BrushButton>

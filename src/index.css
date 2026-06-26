@@ -170,6 +170,8 @@ p {
   justify-content: center;
   gap: var(--sp-2);
   min-width: 10rem;
+  /* A11Y-006: 全局最小触控高度 */
+  min-height: 44px;
   padding: var(--sp-4) var(--sp-8);
   background: transparent;
   border: 2px solid var(--ink);
@@ -595,14 +597,14 @@ p {
     display: none !important;
   }
 
-  /* MOB-006: 十二维特质卡在小屏上分页显示 */
-  .cp-ref-grid > div:last-child {
+  /* MOB-006: 十二维特质卡在小屏上 2×6 双列显示，避免过长滚动 */
+  .cp-trait-grid {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
     justify-content: center;
   }
-  .cp-ref-grid > div:last-child > .cp-trait-card {
+  .cp-trait-grid > .cp-trait-card {
     flex: 0 0 calc(50% - 0.25rem);
     max-width: calc(50% - 0.25rem);
   }
@@ -2639,10 +2641,21 @@ a:focus-visible {
     padding: 1.25rem 1.25rem 2rem;
   }
 
+  /* MOB-003: 移动端预览区域横向滚动，支持惯性滚动 */
   .cp-share-card-preview {
     min-height: 140px;
     overflow-x: auto;
     overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+
+  .cp-share-card-canvas {
+    max-width: 100%;
+    /* 限制最大宽度，避免 canvas 固定 900px 撑破布局 */
+    max-height: 280px;
+    width: auto;
+    height: auto;
   }
 
   .cp-share-card-actions {
@@ -2656,14 +2669,22 @@ a:focus-visible {
 }
 
 /* MOB-007: 确认弹窗按钮在小屏上垂直堆叠 */
+.cp-confirm-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
 @media (max-width: 360px) {
-  .cp-share-card-overlay div[role="dialog"] > div > div:last-child {
-    flex-direction: column !important;
-    gap: 0.5rem !important;
+  .cp-confirm-actions {
+    flex-direction: column;
+    gap: 0.5rem;
   }
-  
-  .cp-share-card-overlay div[role="dialog"] > div > div:last-child button {
-    width: 100% !important;
+
+  .cp-confirm-actions .cp-btn {
+    width: 100%;
+    min-height: 44px;
   }
 }
 

@@ -148,7 +148,8 @@ export function Way() {
   const current = item ? answers[item.id] : undefined;
   const answeredCount = Object.keys(answers).length;
   // 题目总数为 48 道，至少需要回答 30 道才能出照（保持灵活性）
-  const CAN_FINISH_THRESHOLD = 30;
+  // 题目总数为 48 道，至少需要回答 48 道才能出照（保证全部完成）
+  const CAN_FINISH_THRESHOLD = 48;
   const canFinish = answeredCount >= CAN_FINISH_THRESHOLD;
 
   const handleFinish = useCallback(() => {
@@ -205,7 +206,7 @@ export function Way() {
 
   if (!domain || loading || !item) {
     return (
-      <section className="cp-way-shell" aria-live="polite">
+      <section className="cp-way-shell" aria-live="polite" aria-label={t.ui.loading}>
         <div className="cp-way-loading">{t.ui.loading}</div>
       </section>
     );
@@ -224,7 +225,8 @@ export function Way() {
         </div>
 
         <div className="cp-way-topbar">
-          <p className="cp-way-meta" data-testid="way-progress-text">
+          {/* A11Y-004: aria-live 仅包裹动态进度文本，不影响整节内容 */}
+          <p className="cp-way-meta" data-testid="way-progress-text" aria-live="polite" aria-atomic="true">
             <span>{t.way.question(currentIndex + 1, total)}</span>
             <span>{t.way.answered(answeredCount, total)}</span>
           </p>
@@ -292,15 +294,7 @@ export function Way() {
                   data-role="option"
                   data-opt-index={i}
                   data-testid={`option-${i}`}
-                  onClick={e => {
-                    const btn = e.currentTarget;
-                    const rect = btn.getBoundingClientRect();
-                    const x = ((e.clientX - rect.left) / rect.width) * 100;
-                    const y = ((e.clientY - rect.top) / rect.height) * 100;
-                    btn.style.setProperty('--opt-ripple-x', `${x}%`);
-                    btn.style.setProperty('--opt-ripple-y', `${y}%`);
-                    answer(item.id, i);
-                  }}
+                  onClick={() => answer(item.id, i)}
                 >
                   <span className="cp-way-letter" aria-hidden>
                     {letter}

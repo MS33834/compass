@@ -34,13 +34,16 @@ export function Portrait({ figure }: Props) {
     ? figure.portrait
     : `${BASE.replace(/\/$/, '')}/${figure.portrait}`;
 
+  // A11Y-005: compute accessible name once, reuse for both <img alt> and wrapper aria-label
+  const accessibleName = `${pickLang(figure.name, locale)} — ${pickLang(figure.era, locale)}`;
+
   return (
     <>
       {!loaded && <LoadingSkeleton />}
-      <Frame>
+      <Frame accessibleName={accessibleName}>
         <img
           src={portraitSrc}
-          alt={`${pickLang(figure.name, locale)} (${pickLang(figure.era, locale)})`}
+          alt={accessibleName}
           loading="lazy"
           onError={() => setErr(true)}
           onLoad={() => setLoaded(true)}
@@ -59,7 +62,10 @@ export function Portrait({ figure }: Props) {
   );
 }
 
-function Frame({ children }: { children: React.ReactNode }) {
+function Frame({ children, accessibleName }: { children: React.ReactNode; accessibleName: string }) {
+  // A11Y-005: wrapper div has role="img" + aria-label so screen readers
+  // treat the portrait as a single image landmark; the inner <img> also
+  // carries alt (both are fine — redundancy doesn't hurt).
   return (
     <div
       className="cp-portrait cp-portrait-frame"
@@ -69,6 +75,8 @@ function Frame({ children }: { children: React.ReactNode }) {
         position: 'relative',
         overflow: 'hidden',
       }}
+      role="img"
+      aria-label={accessibleName}
     >
       {children}
     </div>

@@ -369,8 +369,9 @@ export function Reflection() {
             onClick={() => viewFigure(primary.figure.id)}
             aria-label={`${pickLang(primary.figure.name, locale)} · ${t.figureDetail.bio}`}
             style={{
-              maxWidth: '220px',
+              /* MOB-001: 移除 inline maxWidth，让 CSS @media 规则在各种断点生效 */
               width: '100%',
+              maxWidth: '220px',
               background: 'none',
               border: 'none',
               padding: 0,
@@ -533,7 +534,7 @@ export function Reflection() {
               gridTemplateColumns: 'repeat(auto-fill, minmax(min(170px, 100%), 1fr))',
               gap: '0.8rem',
             }}
-            className="cp-stagger"
+            className="cp-stagger cp-trait-grid"
           >
             {sortedBreakdown.map((b, idx) => {
               const trait = TRAITS.find(tt => tt.id === b.traitId);

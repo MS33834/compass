@@ -75,6 +75,8 @@ export function Path() {
     if (prefersReduced || !cardsRef.current) return;
 
     const ctx = gsap.context(() => {
+      // P2-002: 先停掉旧动画，防止叠加抖动
+      gsap.killTweensOf('.cp-domain-card');
       gsap.fromTo(
         '.cp-domain-card',
         { opacity: 0, y: 16, scale: 0.98 },
@@ -188,7 +190,7 @@ export function Path() {
               aria-pressed={active}
               aria-label={`${meta.name} · ${meta.sub}`}
               title={!readyFlag ? t.path.domainUnderDev : undefined}
-              className={`cp-domain-card cp-card-hover${active ? ' cp-selected-corner' : ''}`}
+              className={`cp-domain-card cp-card-hover${active ? ' cp-selected-corner' : ''}${!readyFlag ? ' cp-domain-card--disabled' : ''}`}
               data-selected-label={active ? t.path.selected : undefined}
               style={{
                 background: active ? 'var(--rice-warm)' : 'transparent',

@@ -12,9 +12,10 @@ import { useT } from '../i18n';
 import { useStore } from '../store';
 import { pickLang } from '../domain/i18n';
 import type { MatchReport } from '../domain/matching/report';
+import { SHARE_CARD, SHARE_CARD_LAYOUT, ANIMATION } from '../constants';
 
-const CARD_WIDTH = 900;
-const CARD_HEIGHT = 500;
+const CARD_WIDTH = SHARE_CARD.WIDTH;
+const CARD_HEIGHT = SHARE_CARD.HEIGHT;
 
 function loadImage(src: string): Promise<HTMLImageElement | null> {
   return new Promise(resolve => {
@@ -26,6 +27,13 @@ function loadImage(src: string): Promise<HTMLImageElement | null> {
   });
 }
 
+// CSS font stack for Chinese calligraphy-style display (used for names, titles, seals)
+const CALLIGRAPHY_FONTS =
+  '"STXingkai","STKaiti","KaiTi","SimKai","Noto Serif SC","Source Han Serif SC","Noto Serif CJK SC","WenQuanYi Bitmap Song","AR PL UMing HK","AR PL UMing CN","AR PL KaitiM GB","PingFang SC","Microsoft YaHei",serif';
+// CSS font stack for Chinese body text (used for descriptions, labels)
+const REGULAR_FONTS =
+  '"STKaiti","STSong","KaiTi","SimKai","SimSun","FangSong","Noto Serif SC","Source Han Serif SC","Noto Serif CJK SC","WenQuanYi Bitmap Song","AR PL UMing HK","AR PL UMing CN","AR PL SungtiL GB","PingFang SC","Microsoft YaHei",serif';
+
 async function drawShareCard(
   canvas: HTMLCanvasElement,
   report: MatchReport,
@@ -36,10 +44,10 @@ async function drawShareCard(
   if (!ctx) return;
 
   const dpr = Math.min(window.devicePixelRatio || 1, 2);
-  canvas.width = CARD_WIDTH * dpr;
-  canvas.height = CARD_HEIGHT * dpr;
-  canvas.style.width = `${CARD_WIDTH}px`;
-  canvas.style.height = `${CARD_HEIGHT}px`;
+  canvas.width = SHARE_CARD.WIDTH * dpr;
+  canvas.height = SHARE_CARD.HEIGHT * dpr;
+  canvas.style.width = `${SHARE_CARD.WIDTH}px`;
+  canvas.style.height = `${SHARE_CARD.HEIGHT}px`;
   ctx.scale(dpr, dpr);
 
   const { primary } = report;
@@ -51,14 +59,14 @@ async function drawShareCard(
 
   // ── 底色：宣纸 ──
   ctx.fillStyle = '#f5efe0';
-  ctx.fillRect(0, 0, CARD_WIDTH, CARD_HEIGHT);
+  ctx.fillRect(0, 0, SHARE_CARD.WIDTH, SHARE_CARD.HEIGHT);
 
   // 轻微纹理噪点
   ctx.save();
   ctx.globalAlpha = 0.04;
   for (let i = 0; i < 6000; i++) {
-    const x = Math.random() * CARD_WIDTH;
-    const y = Math.random() * CARD_HEIGHT;
+    const x = Math.random() * SHARE_CARD.WIDTH;
+    const y = Math.random() * SHARE_CARD.HEIGHT;
     ctx.fillStyle = Math.random() > 0.5 ? '#1a1a1a' : '#a8322e';
     ctx.fillRect(x, y, 1.5, 1.5);
   }
@@ -67,20 +75,30 @@ async function drawShareCard(
   // ── 水墨边框 ──
   ctx.strokeStyle = '#1a1a1a';
   ctx.lineWidth = 3;
-  ctx.strokeRect(24, 24, CARD_WIDTH - 48, CARD_HEIGHT - 48);
+  ctx.strokeRect(
+    SHARE_CARD.BORDER_OFFSET,
+    SHARE_CARD.BORDER_OFFSET,
+    SHARE_CARD_LAYOUT.OUTER_BORDER_INNER_WIDTH,
+    SHARE_CARD_LAYOUT.OUTER_BORDER_INNER_HEIGHT
+  );
   ctx.lineWidth = 1;
-  ctx.strokeRect(32, 32, CARD_WIDTH - 64, CARD_HEIGHT - 64);
+  ctx.strokeRect(
+    SHARE_CARD.INNER_BORDER_OFFSET,
+    SHARE_CARD.INNER_BORDER_OFFSET,
+    SHARE_CARD_LAYOUT.INNER_BORDER_INNER_WIDTH,
+    SHARE_CARD_LAYOUT.INNER_BORDER_INNER_HEIGHT
+  );
 
   // ── 边角装饰线 ──
   ctx.beginPath();
-  ctx.moveTo(24, 120);
+  ctx.moveTo(SHARE_CARD.BORDER_OFFSET, 120);
   ctx.lineTo(120, 120);
-  ctx.lineTo(120, 24);
+  ctx.lineTo(120, SHARE_CARD.BORDER_OFFSET);
   ctx.stroke();
   ctx.beginPath();
-  ctx.moveTo(CARD_WIDTH - 24, CARD_HEIGHT - 120);
-  ctx.lineTo(CARD_WIDTH - 120, CARD_HEIGHT - 120);
-  ctx.lineTo(CARD_WIDTH - 120, CARD_HEIGHT - 24);
+  ctx.moveTo(SHARE_CARD.WIDTH - SHARE_CARD.BORDER_OFFSET, SHARE_CARD.HEIGHT - 120);
+  ctx.lineTo(SHARE_CARD.WIDTH - 120, SHARE_CARD.HEIGHT - 120);
+  ctx.lineTo(SHARE_CARD.WIDTH - 120, SHARE_CARD.HEIGHT - SHARE_CARD.BORDER_OFFSET);
   ctx.stroke();
 
   // ── 左侧印章肖像 ──
@@ -96,7 +114,7 @@ async function drawShareCard(
   ctx.fillStyle = '#a8322e';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.font = `bold ${sealSize * 0.55}px "STXingkai", "STKaiti", "KaiTi", "SimKai", "Noto Serif SC", "Source Han Serif SC", "WenQuanYi Bitmap Song", "AR PL UMing HK", serif`;
+  ctx.font = `bold ${sealSize * 0.55}px ${CALLIGRAPHY_FONTS}`;
   ctx.fillText(figureName.slice(0, 1), sealX + sealSize / 2, sealY + sealSize / 2 + 6);
 
   // ── 右侧主信息 ──
@@ -105,17 +123,17 @@ async function drawShareCard(
 
   ctx.textAlign = 'left';
   ctx.fillStyle = '#6a6a6a';
-  ctx.font = `24px "STKaiti", "STSong", "KaiTi", "SimKai", "Noto Serif SC", "Source Han Serif SC", "WenQuanYi Bitmap Song", "AR PL UMing HK", serif`;
+  ctx.font = `24px ${REGULAR_FONTS}`;
   ctx.fillText(`${domainName} · ${figureEra}`, leftX, y);
 
   y += 72;
   ctx.fillStyle = '#1a1a1a';
-  ctx.font = `bold 72px "STXingkai", "STKaiti", "KaiTi", "SimKai", "Noto Serif SC", "Source Han Serif SC", "WenQuanYi Bitmap Song", "AR PL UMing HK", serif`;
+  ctx.font = `bold 72px ${CALLIGRAPHY_FONTS}`;
   ctx.fillText(figureName, leftX, y);
 
   y += 52;
   ctx.fillStyle = '#a8322e';
-  ctx.font = `32px "STXingkai", "STKaiti", "KaiTi", "SimKai", "Noto Serif SC", "Source Han Serif SC", "WenQuanYi Bitmap Song", "AR PL UMing HK", serif`;
+  ctx.font = `32px ${CALLIGRAPHY_FONTS}`;
   ctx.fillText(t.shareCard.affinity(scorePct), leftX, y);
 
   // ── 分隔墨线 ──
@@ -130,7 +148,7 @@ async function drawShareCard(
   // ── 签名 ──
   y += 56;
   ctx.fillStyle = '#252525';
-  ctx.font = `italic 28px "STKaiti", "STSong", "KaiTi", "SimKai", "Noto Serif SC", "Source Han Serif SC", "WenQuanYi Bitmap Song", "AR PL UMing HK", serif`;
+  ctx.font = `italic 28px ${REGULAR_FONTS}`;
   const signature =
     figureSignature.length > 28 ? figureSignature.slice(0, 27) + '…' : figureSignature;
   ctx.fillText(`“${signature}”`, leftX, y);
@@ -138,10 +156,10 @@ async function drawShareCard(
   // ── 底部品牌 ──
   ctx.textAlign = 'right';
   ctx.fillStyle = '#6a6a6a';
-  ctx.font = `20px "STKaiti", "STSong", "KaiTi", "SimKai", "Noto Serif SC", "Source Han Serif SC", "WenQuanYi Bitmap Song", "AR PL UMing HK", serif`;
+  ctx.font = `20px ${REGULAR_FONTS}`;
   ctx.fillText(t.ui.appName, CARD_WIDTH - 80, CARD_HEIGHT - 70);
 
-  ctx.font = `16px "STKaiti", "STSong", "KaiTi", "SimKai", "Noto Serif SC", "Source Han Serif SC", "WenQuanYi Bitmap Song", "AR PL UMing HK", serif`;
+  ctx.font = `16px ${REGULAR_FONTS}`;
   ctx.fillText(window.location.href, CARD_WIDTH - 80, CARD_HEIGHT - 44);
 
   // ── 右下角小印章 ──
@@ -152,7 +170,7 @@ async function drawShareCard(
   ctx.fillRect(csx, csy, cornerSealSize, cornerSealSize);
   ctx.fillStyle = '#f5efe0';
   ctx.textAlign = 'center';
-  ctx.font = `bold 28px "STXingkai", "STKaiti", "KaiTi", "SimKai", "Noto Serif SC", "Source Han Serif SC", "WenQuanYi Bitmap Song", "AR PL UMing HK", serif`;
+  ctx.font = `bold 28px ${CALLIGRAPHY_FONTS}`;
   ctx.fillText(t.ui.sealChar, csx + cornerSealSize / 2, csy + cornerSealSize / 2 + 4);
 
   // 尝试把真实肖像叠到左侧印章之上（同域资源通常可加载）
@@ -227,12 +245,12 @@ export function ShareCard({ report, onClose }: Props) {
       gsap.fromTo(
         overlayRef.current,
         { opacity: 0 },
-        { opacity: 1, duration: 0.35, ease: 'power2.out' }
+        { opacity: 1, duration: ANIMATION.DURATION_FAST, ease: 'power2.out' }
       );
       gsap.fromTo(
         '.cp-share-card-scroll',
-        { opacity: 0, y: 30, scale: 0.98 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: 'power3.out', delay: 0.1 }
+        { opacity: 0, y: ANIMATION.SLIDE_DISTANCE, scale: ANIMATION.SCALE_SHRINK },
+        { opacity: 1, y: 0, scale: 1, duration: ANIMATION.DURATION_STANDARD, ease: 'power3.out', delay: 0.1 }
       );
     }, overlayRef);
     return () => ctx.revert();
