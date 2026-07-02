@@ -45,21 +45,25 @@ flowchart TB
 - **图标库**：Lucide React
 - **状态管理**：React useState/useContext（局部状态）+ Server Actions（服务端状态）
 - **后端框架**：Next.js API Routes / Server Actions
-- **认证方案**：NextAuth.js（Credentials + OAuth：GitHub、Google）
+- **认证方案**：NextAuth.js（Credentials Provider 为主，JWT Session 策略；OAuth 为可选，未配置密钥时前端自动隐藏入口）
 - **ORM**：Prisma 5
 - **数据库**：PostgreSQL 14+
+- **邮件服务**：Nodemailer（SMTP），用于密码重置
+- **限流**：基于内存 / Redis 的令牌桶限流（登录、注册、密码重置接口）
 - **字体**：Cormorant Garamond、Source Sans 3、JetBrains Mono（通过 next/font）
 - **包管理器**：pnpm
 - **代码规范**：TypeScript 严格模式、ESLint、Prettier
-- **部署目标**：Vercel / 自建 Node.js 服务器
+- **部署目标**：自建 Linux 服务器（Docker Compose 一键部署）
 
 ## 3. 路由定义
 
 | 路由 | 用途 | 类型 |
 |------|------|------|
 | `/` | 落地页 | 页面 |
-| `/login` | 登录页 | 页面 |
+| `/login` | 登录页（含「忘记密码」入口） | 页面 |
 | `/register` | 注册页 | 页面 |
+| `/forgot-password` | 申请密码重置：输入邮箱 | 页面 |
+| `/reset-password` | 重置密码：通过邮件令牌设置新密码 | 页面 |
 | `/onboarding` | 首次引导：创建第一个目标 | 页面（需登录） |
 | `/dashboard` | 仪表盘 | 页面（需登录） |
 | `/compass` | 罗盘画布：目标可视化 | 页面（需登录） |
@@ -68,7 +72,9 @@ flowchart TB
 | `/logbook` | 日志与复盘 | 页面（需登录） |
 | `/profile` | 个人中心 | 页面（需登录） |
 | `/api/auth/[...nextauth]` | NextAuth.js 认证接口 | API 路由 |
-| `/api/health` | 服务健康检查 | API 路由 |
+| `/api/auth/forgot-password` | 发送密码重置邮件 | API 路由（限流） |
+| `/api/auth/reset-password` | 校验令牌并重置密码 | API 路由（限流） |
+| `/api/health` | 服务健康检查（返回 DB 连通状态） | API 路由 |
 
 ## 4. API 定义
 
@@ -238,6 +244,7 @@ flowchart LR
 erDiagram
     USER ||--o{ GOAL : owns
     USER ||--o{ LOG : writes
+    USER ||--o{ PASSWORD_RESET : requests
     GOAL ||--o{ MILESTONE : contains
     MILESTONE ||--o{ TASK : contains
     GOAL ||--o{ GOAL_LOGS : linked
@@ -297,6 +304,7 @@ erDiagram
         text content
         int mood "1-5"
         int energy "1-5"
+        string tags "PostgreSQL text array"
         datetime createdAt
         datetime updatedAt
     }
@@ -305,9 +313,21 @@ erDiagram
         string goalId FK
         string logId FK
     }
+
+    PASSWORD_RESET {
+        string id PK
+        string userId FK
+        string token UK
+        datetime expiresAt
+        boolean used
+        datetime createdAt
+    }
 ```
 
 ### 6.2 数据定义语言
+
+> 注：实际由 Prisma migration 生成并管理。Prisma 使用 `@default(uuid())` 在应用层生成 UUID，
+> DDL 中的 `gen_random_uuid()` 仅供手动建库参考。`updatedAt` 由 Prisma `@updatedAt` 自动维护。
 
 ```sql
 -- 用户表
@@ -366,13 +386,14 @@ CREATE TABLE "Task" (
 );
 CREATE INDEX "Task_milestoneId_idx" ON "Task"("milestoneId");
 
--- 日志表
+-- 日志表（tags 使用 PostgreSQL 原生数组类型，对应 Prisma String[]）
 CREATE TABLE "Log" (
     "id" TEXT PRIMARY KEY DEFAULT gen_random_uuid()::TEXT,
     "userId" TEXT NOT NULL REFERENCES "User"("id") ON DELETE CASCADE,
     "content" TEXT NOT NULL,
     "mood" INTEGER NOT NULL CHECK ("mood" BETWEEN 1 AND 5),
     "energy" INTEGER NOT NULL CHECK ("energy" BETWEEN 1 AND 5),
+    "tags" TEXT[] NOT NULL DEFAULT '{}',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
@@ -387,14 +408,186 @@ CREATE TABLE "GoalLogs" (
 );
 CREATE INDEX "GoalLogs_logId_idx" ON "GoalLogs"("logId");
 
--- 更新时间触发器（由 Prisma 处理，这里展示逻辑）
--- 实际使用 Prisma @updatedAt 装饰器自动维护
+-- 密码重置令牌表
+CREATE TABLE "PasswordReset" (
+    "id" TEXT PRIMARY KEY DEFAULT gen_random_uuid()::TEXT,
+    "userId" TEXT NOT NULL REFERENCES "User"("id") ON DELETE CASCADE,
+    "token" TEXT UNIQUE NOT NULL,
+    "expiresAt" TIMESTAMP(3) NOT NULL,
+    "used" BOOLEAN NOT NULL DEFAULT FALSE,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+CREATE INDEX "PasswordReset_userId_idx" ON "PasswordReset"("userId");
+CREATE INDEX "PasswordReset_token_idx" ON "PasswordReset"("token");
 ```
 
 ## 7. 安全与性能
 
-- **认证安全**：密码使用 bcrypt 哈希，OAuth 回调地址白名单校验，Session JWT 加密。
+- **认证安全**：密码使用 bcrypt 哈希（cost ≥ 12），NextAuth.js 使用 JWT Session 策略（无需 Adapter 表），`NEXTAUTH_SECRET` 必须配置为强随机值；OAuth 回调地址白名单校验。
+- **限流**：登录、注册、密码重置接口限流（如每 IP 每 15 分钟 5 次），使用内存令牌桶或 Redis 实现，防止暴力破解。
+- **安全头**：通过 `next.config.js` 的 `headers()` 配置 CSP、X-Frame-Options、X-Content-Type-Options、Referrer-Policy、HSTS。
 - **数据隔离**：所有数据查询必须携带 `userId` 过滤，确保用户只能访问自己的数据。
 - **输入校验**：所有 API 入参使用 Zod 严格校验，防止注入与非法状态。
-- **性能**：为高频查询字段建立索引；仪表盘数据通过 Server Components 直接查询，减少客户端请求。
+- **性能**：为高频查询字段建立索引；仪表盘数据通过 Server Components 直接查询，减少客户端请求；Next.js 配置 `output: 'standalone'` 减小部署体积。
 - **错误处理**：统一错误响应格式 `{ error: string, code: string }`，前端根据 code 进行友好提示。
+
+## 8. 部署方案
+
+### 8.1 容器化架构
+
+使用 Docker Compose 一键部署，包含三个服务：Next.js 应用、PostgreSQL、Nginx 反向代理。
+
+```mermaid
+flowchart LR
+    A["用户浏览器 HTTPS"] --> B["Nginx :443"]
+    B --> C["Next.js :3000"]
+    C --> D["PostgreSQL :5432"]
+    B --> E["静态资源 /_next/static"]
+```
+
+### 8.2 Dockerfile（Next.js standalone）
+
+```dockerfile
+FROM node:20-alpine AS deps
+WORKDIR /app
+RUN corepack enable
+COPY package.json pnpm-lock.yaml ./
+COPY prisma ./prisma
+RUN pnpm install --frozen-lockfile
+
+FROM node:20-alpine AS builder
+WORKDIR /app
+RUN corepack enable
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+RUN pnpm prisma generate && pnpm build
+
+FROM node:20-alpine AS runner
+WORKDIR /app
+ENV NODE_ENV=production
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/prisma ./prisma
+COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
+EXPOSE 3000
+CMD ["node", "server.js"]
+```
+
+### 8.3 docker-compose.yml
+
+```yaml
+version: "3.9"
+services:
+  db:
+    image: postgres:16-alpine
+    restart: always
+    environment:
+      POSTGRES_DB: compass
+      POSTGRES_USER: compass
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U compass"]
+      interval: 5s
+      retries: 5
+
+  app:
+    build: .
+    restart: always
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://compass:${POSTGRES_PASSWORD}@db:5432/compass
+      NEXTAUTH_URL: ${NEXTAUTH_URL}
+      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
+      SMTP_HOST: ${SMTP_HOST}
+      SMTP_PORT: ${SMTP_PORT}
+      SMTP_USER: ${SMTP_USER}
+      SMTP_PASS: ${SMTP_PASS}
+      SMTP_FROM: ${SMTP_FROM}
+    expose:
+      - "3000"
+
+  nginx:
+    image: nginx:alpine
+    restart: always
+    depends_on:
+      - app
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./certs:/etc/nginx/certs:ro
+
+volumes:
+  pgdata:
+```
+
+### 8.4 Nginx 反向代理配置
+
+```nginx
+server {
+    listen 80;
+    server_name _;
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    server_name your-domain.com;
+
+    ssl_certificate     /etc/nginx/certs/fullchain.pem;
+    ssl_certificate_key /etc/nginx/certs/privkey.pem;
+
+    # 安全头
+    add_header X-Frame-Options DENY;
+    add_header X-Content-Type-Options nosniff;
+    add_header Strict-Transport-Security "max-age=63072000" always;
+
+    location / {
+        proxy_pass http://app:3000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+```
+
+### 8.5 环境变量（.env.example）
+
+```env
+# 数据库
+POSTGRES_PASSWORD=change-me-to-strong-password
+DATABASE_URL=postgresql://compass:change-me-to-strong-password@db:5432/compass
+
+# NextAuth
+NEXTAUTH_URL=https://your-domain.com
+NEXTAUTH_SECRET=generate-with-openssl-rand-base64-32
+
+# SMTP 邮件（密码重置用）
+SMTP_HOST=smtp.example.com
+SMTP_PORT=587
+SMTP_USER=postmaster@example.com
+SMTP_PASS=your-smtp-password
+SMTP_FROM=Compass <postmaster@example.com>
+
+# OAuth（可选，不填则前端隐藏 OAuth 入口）
+GITHUB_CLIENT_ID=
+GITHUB_CLIENT_SECRET=
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+```
+
+### 8.6 部署步骤
+
+1. 服务器安装 Docker + Docker Compose
+2. 克隆仓库，复制 `.env.example` 为 `.env` 并填写真实值
+3. 将 SSL 证书放入 `./certs/` 目录（或使用 Let's Encrypt 自动签发）
+4. 执行 `docker compose up -d --build`
+5. 首次启动后执行 `docker compose exec app pnpm prisma migrate deploy` 初始化数据库
+6. 配置域名 DNS 解析到服务器 IP
