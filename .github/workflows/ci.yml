@@ -1,0 +1,50 @@
+# Compass CI 流水线
+# 每次 push 到 main 或提交 PR 时自动执行：类型检查 + Lint + 构建
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  quality:
+    name: Type-check · Lint · Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 安装 pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: 配置 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: 安装依赖
+        run: pnpm install --frozen-lockfile
+
+      - name: 生成 Prisma Client
+        run: pnpm db:generate
+
+      - name: TypeScript 类型检查
+        run: pnpm typecheck
+
+      - name: ESLint 检查
+        run: pnpm lint
+
+      - name: 构建
+        run: pnpm build
+        env:
+          DATABASE_URL: postgresql://dummy:dummy@localhost:5432/dummy
+          NEXTAUTH_SECRET: ci-dummy-secret-for-build-only
+          NEXTAUTH_URL: http://localhost:3000

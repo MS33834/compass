@@ -55,21 +55,21 @@ User ─┬─ Goal ── Milestone ── Task
 
 > 为所有前端页面提供数据接口，是后续所有功能的地基。
 
-- [ ] **1.1** 创建 `src/lib/services/goal-service.ts` — 目标 CRUD + 进度计算 + 状态机
-- [ ] **1.2** 创建 `src/lib/services/milestone-service.ts` — 里程碑 CRUD + 排序
-- [ ] **1.3** 创建 `src/lib/services/task-service.ts` — 任务 CRUD + 状态切换
-- [ ] **1.4** 创建 `src/lib/services/log-service.ts` — 日志 CRUD + 标签管理
-- [ ] **1.5** 创建 `src/app/api/goals/route.ts` — GET 列表 / POST 创建
-- [ ] **1.6** 创建 `src/app/api/goals/[id]/route.ts` — GET / PATCH / DELETE
-- [ ] **1.7** 创建 `src/app/api/goals/[goalId]/milestones/route.ts` — GET / POST
-- [ ] **1.8** 创建 `src/app/api/milestones/[id]/route.ts` — PATCH / DELETE
-- [ ] **1.9** 创建 `src/app/api/milestones/[id]/tasks/route.ts` — POST
-- [ ] **1.10** 创建 `src/app/api/tasks/[id]/route.ts` — PATCH / DELETE
-- [ ] **1.11** 创建 `src/app/api/logs/route.ts` — GET (分页/筛选) / POST
-- [ ] **1.12** 创建 `src/app/api/logs/[id]/route.ts` — PATCH / DELETE
-- [ ] **1.13** 创建 `src/app/api/stats/route.ts` — 仪表盘聚合统计
-- [ ] **1.14** 编写 Zod 校验 schema 扩展（goal/milestone/task/log）
-- [ ] **1.15** 类型检查 + 构建验证通过
+- [x] **1.1** 创建 `src/lib/services/goal-service.ts` — 目标 CRUD + 进度计算 + 状态机
+- [x] **1.2** 创建 `src/lib/services/milestone-service.ts` — 里程碑 CRUD + 排序
+- [x] **1.3** 创建 `src/lib/services/task-service.ts` — 任务 CRUD + 状态切换
+- [x] **1.4** 创建 `src/lib/services/log-service.ts` — 日志 CRUD + 标签管理
+- [x] **1.5** 创建 `src/app/api/goals/route.ts` — GET 列表 / POST 创建
+- [x] **1.6** 创建 `src/app/api/goals/[id]/route.ts` — GET / PATCH / DELETE
+- [x] **1.7** 创建 `src/app/api/goals/[id]/milestones/route.ts` — GET / POST
+- [x] **1.8** 创建 `src/app/api/milestones/[id]/route.ts` — PATCH / DELETE
+- [x] **1.9** 创建 `src/app/api/milestones/[id]/tasks/route.ts` — GET / POST
+- [x] **1.10** 创建 `src/app/api/tasks/[id]/route.ts` — PATCH / DELETE
+- [x] **1.11** 创建 `src/app/api/logs/route.ts` — GET (分页/筛选) / POST
+- [x] **1.12** 创建 `src/app/api/logs/[id]/route.ts` — PATCH / DELETE
+- [x] **1.13** 创建 `src/app/api/stats/route.ts` — 仪表盘聚合统计
+- [x] **1.14** 编写 Zod 校验 schema 扩展（goal/milestone/task/log）+ session.ts 认证工具
+- [x] **1.15** 类型检查 + 构建验证通过（含安全审查修复：IDOR goalIds 校验 + null 返回 404 + limit/offset 校验）
 
 ### Phase 2：仪表盘页面（Dashboard）
 
@@ -207,7 +207,7 @@ User ─┬─ Goal ── Milestone ── Task
 | 阶段 | 总任务数 | 已完成 | 进度 |
 |------|----------|--------|------|
 | Phase 0 · 基础工程 | 42 文件 | 42 | ████████████████████ 100% |
-| Phase 1 · 核心 API | 15 | 0 | ░░░░░░░░░░░░░░░░░░░░ 0% |
+| Phase 1 · 核心 API | 15 | 15 | ████████████████████ 100% |
 | Phase 2 · 仪表盘 | 8 | 0 | ░░░░░░░░░░░░░░░░░░░░ 0% |
 | Phase 3 · 罗盘页 | 9 | 0 | ░░░░░░░░░░░░░░░░░░░░ 0% |
 | Phase 4 · 航程页 | 11 | 0 | ░░░░░░░░░░░░░░░░░░░░ 0% |
@@ -218,7 +218,7 @@ User ─┬─ Goal ── Milestone ── Task
 | Phase 9 · 生产部署 | 10 | 0 | ░░░░░░░░░░░░░░░░░░░░ 0% |
 | Phase 10 · 迭代增强 | 7 | 0 | ░░░░░░░░░░░░░░░░░░░░ 0% |
 
-**总体进度：Phase 0 完成，Phase 1-10 待启动**
+**总体进度：Phase 0-1 完成，Phase 2-10 待启动**
 
 ---
 
