@@ -1,0 +1,109 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* 深海航海仪器色板 —— CSS 变量定义，与 tailwind.config.ts 色板对齐 */
+  --abyss: #0b1426;
+  --abyss-deep: #060b15;
+  --ivory: #f5f1e8;
+  --brass: #c9a227;
+  --brass-light: #e0bc3e;
+  --brass-dark: #a3851c;
+  --tide: #4a7c82;
+  --coral: #d97757;
+  --starlight: #a8b4c4;
+}
+
+@layer base {
+  body {
+    @apply bg-abyss text-ivory font-sans antialiased;
+    /* 星图背景纹理：多层 radial-gradient 模拟深海星点 + 黄铜/潮汐光晕 */
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(201, 162, 39, 0.05) 0%, transparent 40%),
+      radial-gradient(circle at 80% 70%, rgba(74, 124, 130, 0.06) 0%, transparent 45%),
+      radial-gradient(circle at 50% 50%, rgba(168, 180, 196, 0.03) 0%, transparent 60%),
+      radial-gradient(2px 2px at 15% 25%, rgba(245, 241, 232, 0.5), transparent),
+      radial-gradient(1px 1px at 65% 15%, rgba(245, 241, 232, 0.4), transparent),
+      radial-gradient(1.5px 1.5px at 35% 75%, rgba(245, 241, 232, 0.3), transparent),
+      radial-gradient(1px 1px at 85% 85%, rgba(245, 241, 232, 0.4), transparent),
+      radial-gradient(1px 1px at 50% 10%, rgba(245, 241, 232, 0.3), transparent),
+      radial-gradient(1.5px 1.5px at 25% 60%, rgba(245, 241, 232, 0.35), transparent),
+      radial-gradient(1px 1px at 90% 40%, rgba(245, 241, 232, 0.3), transparent);
+    background-attachment: fixed;
+    min-height: 100vh;
+  }
+
+  /* focus-visible 全局样式：黄铜描边，强化键盘可达性 */
+  *:focus-visible {
+    @apply outline-none ring-2 ring-brass ring-offset-2 ring-offset-abyss;
+  }
+}
+
+@layer components {
+  /* 玻璃面板：半透明深色 + 模糊 + 黄铜边框 */
+  .glass-panel {
+    @apply rounded-lg border border-brass/30 bg-abyss-300/60 backdrop-blur-md;
+  }
+
+  /* 黄铜微光：外发光阴影 */
+  .brass-glow {
+    box-shadow:
+      0 0 20px rgba(201, 162, 39, 0.15),
+      0 0 40px rgba(201, 162, 39, 0.08);
+  }
+
+  /* 罗盘网格背景：细密黄铜经纬线 */
+  .compass-grid {
+    background-image:
+      linear-gradient(rgba(201, 162, 39, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201, 162, 39, 0.06) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  /* 象牙白到星光银渐变文字 */
+  .text-gradient-ivory {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, #f5f1e8 0%, #a8b4c4 100%);
+  }
+}
+
+/* 自定义滚动条：深色轨道 + 黄铜滑块 */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--abyss-deep);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--brass);
+  border-radius: 5px;
+  border: 2px solid var(--abyss-deep);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--brass-light);
+}
+
+/* Firefox 滚动条 */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--brass) var(--abyss-deep);
+}
+
+/* 罗盘玫瑰旋转动画：缓慢匀速一圈，供罗盘指针/玫瑰图使用 */
+@keyframes compass-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-compass-spin {
+  animation: compass-spin 60s linear infinite;
+}

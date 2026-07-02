@@ -2,6 +2,11 @@
 node_modules/
 .pnp
 .pnp.js
+.pnpm-store/
+
+# Build artifacts
+.next/
+out/
 
 # Next.js build output
 .next/
@@ -41,6 +46,9 @@ Thumbs.db
 *.swp
 *.swo
 *~
+
+# TypeScript build info
+*.tsbuildinfo
 
 # Vercel
 .vercel

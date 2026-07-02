@@ -1,0 +1,52 @@
+version: "3.9"
+
+services:
+  # ===== PostgreSQL 数据库 =====
+  db:
+    image: postgres:16-alpine
+    container_name: compass-db
+    restart: always
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    expose:
+      - "5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ===== Next.js 应用（standalone） =====
+  app:
+    build: .
+    container_name: compass-app
+    restart: always
+    depends_on:
+      db:
+        condition: service_healthy
+    # 所有环境变量从 .env 读取（DATABASE_URL / NEXTAUTH_* / SMTP_* / OAUTH_*）
+    env_file:
+      - .env
+    expose:
+      - "3000"
+
+  # ===== Nginx 反向代理（HTTPS 终止） =====
+  nginx:
+    image: nginx:alpine
+    container_name: compass-nginx
+    restart: always
+    depends_on:
+      - app
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./certs:/etc/nginx/certs:ro
+
+volumes:
+  pgdata:

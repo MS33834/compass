@@ -1,0 +1,155 @@
+// Compass 数据库 Schema
+// 使用 PostgreSQL 作为数据源
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// 目标所在象限（罗盘四方向）
+enum Quadrant {
+  north
+  east
+  south
+  west
+}
+
+// 目标优先级
+enum Priority {
+  low
+  medium
+  high
+}
+
+// 目标状态
+enum GoalStatus {
+  active
+  paused
+  completed
+  archived
+}
+
+// 里程碑与任务状态
+enum TaskStatus {
+  todo
+  in_progress
+  done
+}
+
+// 用户
+model User {
+  id           String          @id @default(uuid())
+  email        String          @unique
+  name         String
+  passwordHash String?
+  image        String?
+  theme        String          @default("deep-sea")
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+
+  goals         Goal[]
+  logs          Log[]
+  passwordResets PasswordReset[]
+}
+
+// 目标
+model Goal {
+  id          String       @id @default(uuid())
+  userId      String
+  title       String
+  description String?
+  quadrant    Quadrant
+  priority    Priority
+  targetDate  DateTime?
+  progress    Int          @default(0)
+  status      GoalStatus   @default(active)
+  sortOrder   Int          @default(0)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  milestones Milestone[]
+  logs      GoalLogs[]
+
+  @@index([userId])
+}
+
+// 里程碑
+model Milestone {
+  id          String     @id @default(uuid())
+  goalId      String
+  title       String
+  description String?
+  dueDate     DateTime?
+  status      TaskStatus @default(todo)
+  sortOrder   Int        @default(0)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  goal  Goal   @relation(fields: [goalId], references: [id], onDelete: Cascade)
+  tasks Task[]
+
+  @@index([goalId])
+}
+
+// 任务
+model Task {
+  id          String     @id @default(uuid())
+  milestoneId String
+  title       String
+  status      TaskStatus @default(todo)
+  sortOrder   Int        @default(0)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  milestone Milestone @relation(fields: [milestoneId], references: [id], onDelete: Cascade)
+
+  @@index([milestoneId])
+}
+
+// 日志
+model Log {
+  id        String   @id @default(uuid())
+  userId    String
+  content   String
+  mood      Int
+  energy    Int
+  tags      String[] @default([])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user  User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  goals GoalLogs[]
+
+  @@index([userId])
+}
+
+// 目标与日志的多对多关联表
+model GoalLogs {
+  goalId String
+  logId  String
+
+  goal Goal @relation(fields: [goalId], references: [id], onDelete: Cascade)
+  log  Log  @relation(fields: [logId], references: [id], onDelete: Cascade)
+
+  @@id([goalId, logId])
+  @@index([logId])
+}
+
+// 密码重置令牌
+model PasswordReset {
+  id        String   @id @default(uuid())
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
+  used      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
